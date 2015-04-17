@@ -1,4 +1,4 @@
-Any file in this project that doesn't state otherwise, and isn't listed in the exceptions below, is Copyright 2015 The Pokefans Authors, and is licensed under the terms of the GNU Affero General Public Licese Version 3, or (at your option) any later version ("AGPL3+"). A copy of this license can be found in legal/AGPLV3.txt.
+Any file in this project that doesn't state otherwise, and isn't listed in the exceptions below, is Copyright 2015 The Pokefans Authors, and is licensed under the terms of the GNU Affero General Public License Version 3, or (at your option) any later version ("AGPL3+"). A copy of this license can be found in legal/AGPLV3.txt.
 
 The Pokefans Authors are:
 
@@ -6,6 +6,7 @@ The Pokefans Authors are:
 |-----------|-----------|--------|
 | Thomas Graf | The Libertine | kontakt@pokefans.net |
 | Matthias Bogad | Delirium | delirium@hacked.xyz |
+| Daniel Birnstiel | Birne94 | info@daniel-birnstiel.de |
 
 If you're a first-time commiter, add yourself to the above list. This is not just for legal reasons, but also to keep an overview of all involved nicknames.
 
@@ -13,15 +14,15 @@ A full list of all Pokefans authors ("contributors") can also be obtained from t
 
 This Program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITTNES FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License Version 3 for more details.
 
-If you wish to include a file from Pokefans in your project, make sure to include all required legal info. The easisest way to do this would probably be to include a copy of this file (`copying.md`) and to leave the file's copyright header untouched.
+If you wish to include a file from Pokefans in your project, make sure to include all required legal info. The easiest way to do this would probably be to include a copy of this file (`copying.md`) and to leave the file's copyright header untouched.
 
 Per-file license header guidelines:
-In addition to this file, to prevent legal caveats, every souce file **must** include a header:
-*pokefans-core-native*, that is, files that were created by **the pokefans-core authors**, require the following one-line header, preferrably in the first line, as a comment:
+In addition to this file, to prevent legal caveats, every source file **must** include a header:
+*pokefans-core-native*, that is, files that were created by **the pokefans-core authors**, require the following one-line header, preferably in the first line, as a comment:
 ```
 Copyright 20XX-20YY the pokefans-core authors. See copying.md for legal info.
 ```
-`XXXX` is the year when the file was created, and `YYYY` is the year when the file was last edited. When editing a file, male sure the last-modification year is still correct.
+`XXXX` is the year when the file was created, and `YYYY` is the year when the file was last edited. When editing a file, make sure the last-modification year is still correct.
 
 *3rd-party* source files, that is, files that were taken from other open-source projects, require the following, longer header:
 ```
@@ -47,4 +48,4 @@ List of all 3rd-party files in pokefans-core:
 **Currently, none.**
 
 Notes about this file:
-This file was originally created by Michael Enßlin for the (quite awesome) [openage project](https://github.com/SFTtech/openage/blob/master/copying.md). I (Delirium) adapted it for pokefans. Still, both of us are no lawyers. I also believe that file-level huge disclaimer blocks are a pest and should be treated as such, so I gladly took his approach. If you see any legal issues, feel free to contact me (and contact mic-e too, he'd apprecieate it).
+This file was originally created by Michael Enßlin for the (quite awesome) [openage project](https://github.com/SFTtech/openage/blob/master/copying.md). I (Delirium) adapted it for pokefans. Still, both of us are no lawyers. I also believe that file-level huge disclaimer blocks are a pest and should be treated as such, so I gladly took his approach. If you see any legal issues, feel free to contact me (and contact mic-e too, he'd appreciate it).

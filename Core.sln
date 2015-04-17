@@ -1,7 +1,7 @@
-﻿# Copyright 2015 the pokefans authors. See copying.md for legal info
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache", "Cache\Cache.csproj", "{62268D33-3152-442A-9F0E-562F9DEB5E60}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnifiedDisplay", "UnifiedDisplay\UnifiedDisplay.csproj", "{8BD5623B-181E-45AD-A917-7EAE262AD9E8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheTest", "CacheTest\CacheTest.csproj", "{C127D79C-3137-4FAA-A3FB-B8717272958A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C127D79C-3137-4FAA-A3FB-B8717272958A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C127D79C-3137-4FAA-A3FB-B8717272958A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C127D79C-3137-4FAA-A3FB-B8717272958A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C127D79C-3137-4FAA-A3FB-B8717272958A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
