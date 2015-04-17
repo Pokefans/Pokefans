@@ -1,0 +1,40 @@
+﻿# Copyright 2015 the pokefans authors. See copying.md for legal info
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30501.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cache", "Cache\Cache.csproj", "{62268D33-3152-442A-9F0E-562F9DEB5E60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Security", "Security\Security.csproj", "{93CD0E14-2B13-4F93-8D38-8715CC12806A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnifiedDisplay", "UnifiedDisplay\UnifiedDisplay.csproj", "{8BD5623B-181E-45AD-A917-7EAE262AD9E8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62268D33-3152-442A-9F0E-562F9DEB5E60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62268D33-3152-442A-9F0E-562F9DEB5E60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62268D33-3152-442A-9F0E-562F9DEB5E60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62268D33-3152-442A-9F0E-562F9DEB5E60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93CD0E14-2B13-4F93-8D38-8715CC12806A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93CD0E14-2B13-4F93-8D38-8715CC12806A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93CD0E14-2B13-4F93-8D38-8715CC12806A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93CD0E14-2B13-4F93-8D38-8715CC12806A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BD5623B-181E-45AD-A917-7EAE262AD9E8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
