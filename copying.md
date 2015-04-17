@@ -1,8 +1,9 @@
 Any file in this project that doesn't state otherwise, and isn't listed in the exceptions below, is Copyright 2015 The Pokefans Authors, and is licensed under the terms of the GNU Affero General Public Licese Version 3, or (at your option) any later version ("AGPL3+"). A copy of this license can be found in legal/AGPLV3.txt.
 
 The Pokefans Authors are:
+
 | Full Name | Alias(es) | E-Mail |
-----------------------------------
+|-----------|-----------|--------|
 | Thomas Graf | The Libertine | kontakt@pokefans.net |
 | Matthias Bogad | Delirium | delirium@hacked.xyz |
 
@@ -46,4 +47,4 @@ List of all 3rd-party files in pokefans-core:
 **Currently, none.**
 
 Notes about this file:
-This file was originally created by Michael Enﬂlin for the (quite awesome) [openage project](https://github.com/SFTtech/openage/blob/master/copying.md). I (Delirium) adapted it for pokefans. Still, both of us are no lawyers. I also believe that file-level huge disclaimer blocks are a pest and should be treated as such, so I gladly took his approach. If you see any legal issues, feel free to contact me (and contact mic-e too, he'd apprecieate it).
+This file was originally created by Michael En√ülin for the (quite awesome) [openage project](https://github.com/SFTtech/openage/blob/master/copying.md). I (Delirium) adapted it for pokefans. Still, both of us are no lawyers. I also believe that file-level huge disclaimer blocks are a pest and should be treated as such, so I gladly took his approach. If you see any legal issues, feel free to contact me (and contact mic-e too, he'd apprecieate it).
