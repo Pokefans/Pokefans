@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="512ab1a9ee0f4b25bf53244579159848" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.PermissionLogEntry" Width="1.5" PointX="0.625" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.Permission" Width="1.5" PointX="0.625" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.UserLogin" Width="1.5" PointX="0.5" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.UserPermission" Width="1.5" PointX="3.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.User" Width="1.5" PointX="3.5" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="Model.fk_affected_user" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_permission" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_user" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_metapermission" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_permissions" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_users_logins" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.fk_users" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

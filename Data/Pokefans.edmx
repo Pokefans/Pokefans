@@ -1,0 +1,470 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="system_permission_log">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="affected_user_id" Type="int" Nullable="false" />
+          <Property Name="permission_id" Type="int" Nullable="false" />
+          <Property Name="ip" Type="mediumtext" Nullable="false" />
+        </EntityType>
+        <EntityType Name="system_permissions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="friendly_name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="metapermission_id" Type="int" />
+        </EntityType>
+        <EntityType Name="system_user_logins">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="time" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="ip" Type="mediumtext" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="success" Type="tinyint" Nullable="false" />
+          <Property Name="reason" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="system_user_permissions">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="user_id" Type="int" Nullable="false" />
+          <Property Name="permission_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="system_users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="registered" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="registered_ip" Type="mediumtext" Nullable="false" />
+          <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="status" Type="tinyint" Nullable="false" />
+          <Property Name="ban_reason" Type="text" />
+          <Property Name="ban_time" Type="datetime" Precision="0" />
+          <Property Name="rank" Type="varchar" MaxLength="45" />
+          <Property Name="color" Type="varchar" MaxLength="9" />
+          <Property Name="unread_notifications" Type="smallint" />
+          <Property Name="password" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="salt" Type="varchar" MaxLength="44" Nullable="false" />
+          <Property Name="activationkey" Type="varchar" MaxLength="32" />
+        </EntityType>
+        <Association Name="fk_affected_user">
+          <End Role="system_users" Type="Self.system_users" Multiplicity="1" />
+          <End Role="system_permission_log" Type="Self.system_permission_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permission_log">
+              <PropertyRef Name="affected_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_metapermission">
+          <End Role="system_permissions" Type="Self.system_permissions" Multiplicity="0..1" />
+          <End Role="system_permissions1" Type="Self.system_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_permissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permissions1">
+              <PropertyRef Name="metapermission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_permission">
+          <End Role="system_permissions" Type="Self.system_permissions" Multiplicity="1" />
+          <End Role="system_permission_log" Type="Self.system_permission_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_permissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permission_log">
+              <PropertyRef Name="permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_permissions">
+          <End Role="system_permissions" Type="Self.system_permissions" Multiplicity="1" />
+          <End Role="system_user_permissions" Type="Self.system_user_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_permissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_user_permissions">
+              <PropertyRef Name="permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user">
+          <End Role="system_users" Type="Self.system_users" Multiplicity="1" />
+          <End Role="system_permission_log" Type="Self.system_permission_log" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permission_log">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users">
+          <End Role="system_users" Type="Self.system_users" Multiplicity="1" />
+          <End Role="system_user_permissions" Type="Self.system_user_permissions" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_user_permissions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users_logins">
+          <End Role="system_users" Type="Self.system_users" Multiplicity="1" />
+          <End Role="system_user_logins" Type="Self.system_user_logins" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_user_logins">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ModelStoreContainer">
+          <EntitySet Name="system_permission_log" EntityType="Self.system_permission_log" Schema="pf-neu" store:Type="Tables" />
+          <EntitySet Name="system_permissions" EntityType="Self.system_permissions" Schema="pf-neu" store:Type="Tables" />
+          <EntitySet Name="system_user_logins" EntityType="Self.system_user_logins" Schema="pf-neu" store:Type="Tables" />
+          <EntitySet Name="system_user_permissions" EntityType="Self.system_user_permissions" Schema="pf-neu" store:Type="Tables" />
+          <EntitySet Name="system_users" EntityType="Self.system_users" Schema="pf-neu" store:Type="Tables" />
+          <AssociationSet Name="fk_affected_user" Association="Self.fk_affected_user">
+            <End Role="system_users" EntitySet="system_users" />
+            <End Role="system_permission_log" EntitySet="system_permission_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_metapermission" Association="Self.fk_metapermission">
+            <End Role="system_permissions" EntitySet="system_permissions" />
+            <End Role="system_permissions1" EntitySet="system_permissions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_permission" Association="Self.fk_permission">
+            <End Role="system_permissions" EntitySet="system_permissions" />
+            <End Role="system_permission_log" EntitySet="system_permission_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_permissions" Association="Self.fk_permissions">
+            <End Role="system_permissions" EntitySet="system_permissions" />
+            <End Role="system_user_permissions" EntitySet="system_user_permissions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_user" Association="Self.fk_user">
+            <End Role="system_users" EntitySet="system_users" />
+            <End Role="system_permission_log" EntitySet="system_permission_log" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users" Association="Self.fk_users">
+            <End Role="system_users" EntitySet="system_users" />
+            <End Role="system_user_permissions" EntitySet="system_user_permissions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users_logins" Association="Self.fk_users_logins">
+            <End Role="system_users" EntitySet="system_users" />
+            <End Role="system_user_logins" EntitySet="system_user_logins" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="PermissionLogEntry">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="affected_user_id" Type="Int32" Nullable="false" />
+          <Property Name="permission_id" Type="Int32" Nullable="false" />
+          <Property Name="ip" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="system_users" Relationship="Self.fk_affected_user" FromRole="system_permission_log" ToRole="system_users" />
+          <NavigationProperty Name="system_permissions" Relationship="Self.fk_permission" FromRole="system_permission_log" ToRole="system_permissions" />
+          <NavigationProperty Name="system_users1" Relationship="Self.fk_user" FromRole="system_permission_log" ToRole="system_users" />
+        </EntityType>
+        <EntityType Name="Permission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="friendly_name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="metapermission_id" Type="Int32" />
+          <NavigationProperty Name="system_permission_log" Relationship="Self.fk_permission" FromRole="system_permissions" ToRole="system_permission_log" />
+          <NavigationProperty Name="system_permissions1" Relationship="Self.fk_metapermission" FromRole="system_permissions" ToRole="system_permissions1" />
+          <NavigationProperty Name="system_permissions2" Relationship="Self.fk_metapermission" FromRole="system_permissions1" ToRole="system_permissions" />
+          <NavigationProperty Name="system_user_permissions" Relationship="Self.fk_permissions" FromRole="system_permissions" ToRole="system_user_permissions" />
+        </EntityType>
+        <EntityType Name="UserLogin">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="time" Type="DateTime" Nullable="false" />
+          <Property Name="ip" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="success" Type="SByte" Nullable="false" />
+          <Property Name="reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="system_users" Relationship="Self.fk_users_logins" FromRole="system_user_logins" ToRole="system_users" />
+        </EntityType>
+        <EntityType Name="UserPermission">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="user_id" Type="Int32" Nullable="false" />
+          <Property Name="permission_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="system_permissions" Relationship="Self.fk_permissions" FromRole="system_user_permissions" ToRole="system_permissions" />
+          <NavigationProperty Name="system_users" Relationship="Self.fk_users" FromRole="system_user_permissions" ToRole="system_users" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="registered" Type="DateTime" Nullable="false" />
+          <Property Name="registered_ip" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="status" Type="SByte" Nullable="false" />
+          <Property Name="ban_reason" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="ban_time" Type="DateTime" />
+          <Property Name="rank" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="color" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="unread_notifications" Type="Int16" />
+          <Property Name="password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="salt" Type="String" MaxLength="44" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="activationkey" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="system_permission_log" Relationship="Self.fk_affected_user" FromRole="system_users" ToRole="system_permission_log" />
+          <NavigationProperty Name="system_permission_log1" Relationship="Self.fk_user" FromRole="system_users" ToRole="system_permission_log" />
+          <NavigationProperty Name="system_user_logins" Relationship="Self.fk_users_logins" FromRole="system_users" ToRole="system_user_logins" />
+          <NavigationProperty Name="system_user_permissions" Relationship="Self.fk_users" FromRole="system_users" ToRole="system_user_permissions" />
+        </EntityType>
+        <Association Name="fk_affected_user">
+          <End Role="system_users" Type="Model.User" Multiplicity="1" />
+          <End Role="system_permission_log" Type="Model.PermissionLogEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permission_log">
+              <PropertyRef Name="affected_user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_permission">
+          <End Role="system_permissions" Type="Model.Permission" Multiplicity="1" />
+          <End Role="system_permission_log" Type="Model.PermissionLogEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_permissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permission_log">
+              <PropertyRef Name="permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_user">
+          <End Role="system_users" Type="Model.User" Multiplicity="1" />
+          <End Role="system_permission_log" Type="Model.PermissionLogEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permission_log">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_metapermission">
+          <End Role="system_permissions" Type="Model.Permission" Multiplicity="0..1" />
+          <End Role="system_permissions1" Type="Model.Permission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_permissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_permissions1">
+              <PropertyRef Name="metapermission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_permissions">
+          <End Role="system_permissions" Type="Model.Permission" Multiplicity="1" />
+          <End Role="system_user_permissions" Type="Model.UserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_permissions">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_user_permissions">
+              <PropertyRef Name="permission_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users_logins">
+          <End Role="system_users" Type="Model.User" Multiplicity="1" />
+          <End Role="system_user_logins" Type="Model.UserLogin" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_user_logins">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_users">
+          <End Role="system_users" Type="Model.User" Multiplicity="1" />
+          <End Role="system_user_permissions" Type="Model.UserPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="system_users">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="system_user_permissions">
+              <PropertyRef Name="user_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="PermissionLog" EntityType="Model.PermissionLogEntry" />
+          <EntitySet Name="Permissions" EntityType="Model.Permission" />
+          <EntitySet Name="UserLogins" EntityType="Model.UserLogin" />
+          <EntitySet Name="UserPermissions" EntityType="Model.UserPermission" />
+          <EntitySet Name="Users" EntityType="Model.User" />
+          <AssociationSet Name="fk_affected_user" Association="Self.fk_affected_user">
+            <End Role="system_users" EntitySet="Users" />
+            <End Role="system_permission_log" EntitySet="PermissionLog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_permission" Association="Self.fk_permission">
+            <End Role="system_permissions" EntitySet="Permissions" />
+            <End Role="system_permission_log" EntitySet="PermissionLog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_user" Association="Self.fk_user">
+            <End Role="system_users" EntitySet="Users" />
+            <End Role="system_permission_log" EntitySet="PermissionLog" />
+          </AssociationSet>
+          <AssociationSet Name="fk_metapermission" Association="Self.fk_metapermission">
+            <End Role="system_permissions" EntitySet="Permissions" />
+            <End Role="system_permissions1" EntitySet="Permissions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_permissions" Association="Self.fk_permissions">
+            <End Role="system_permissions" EntitySet="Permissions" />
+            <End Role="system_user_permissions" EntitySet="UserPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users_logins" Association="Self.fk_users_logins">
+            <End Role="system_users" EntitySet="Users" />
+            <End Role="system_user_logins" EntitySet="UserLogins" />
+          </AssociationSet>
+          <AssociationSet Name="fk_users" Association="Self.fk_users">
+            <End Role="system_users" EntitySet="Users" />
+            <End Role="system_user_permissions" EntitySet="UserPermissions" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="Entities">
+          <EntitySetMapping Name="PermissionLog">
+            <EntityTypeMapping TypeName="Model.PermissionLogEntry">
+              <MappingFragment StoreEntitySet="system_permission_log">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="affected_user_id" ColumnName="affected_user_id" />
+                <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Permissions">
+            <EntityTypeMapping TypeName="Model.Permission">
+              <MappingFragment StoreEntitySet="system_permissions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="friendly_name" ColumnName="friendly_name" />
+                <ScalarProperty Name="metapermission_id" ColumnName="metapermission_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserLogins">
+            <EntityTypeMapping TypeName="Model.UserLogin">
+              <MappingFragment StoreEntitySet="system_user_logins">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="time" ColumnName="time" />
+                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="success" ColumnName="success" />
+                <ScalarProperty Name="reason" ColumnName="reason" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserPermissions">
+            <EntityTypeMapping TypeName="Model.UserPermission">
+              <MappingFragment StoreEntitySet="system_user_permissions">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="user_id" ColumnName="user_id" />
+                <ScalarProperty Name="permission_id" ColumnName="permission_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="Model.User">
+              <MappingFragment StoreEntitySet="system_users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="registered" ColumnName="registered" />
+                <ScalarProperty Name="registered_ip" ColumnName="registered_ip" />
+                <ScalarProperty Name="url" ColumnName="url" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="ban_reason" ColumnName="ban_reason" />
+                <ScalarProperty Name="ban_time" ColumnName="ban_time" />
+                <ScalarProperty Name="rank" ColumnName="rank" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="unread_notifications" ColumnName="unread_notifications" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="salt" ColumnName="salt" />
+                <ScalarProperty Name="activationkey" ColumnName="activationkey" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Kein" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
