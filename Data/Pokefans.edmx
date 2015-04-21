@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Model.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="5.6" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="system_permission_log">
           <Key>
             <PropertyRef Name="id" />
@@ -13,7 +13,7 @@
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="affected_user_id" Type="int" Nullable="false" />
           <Property Name="permission_id" Type="int" Nullable="false" />
-          <Property Name="ip" Type="mediumtext" Nullable="false" />
+          <Property Name="ip" Type="varchar" MaxLength="39" Nullable="false" />
         </EntityType>
         <EntityType Name="system_permissions">
           <Key>
@@ -30,7 +30,7 @@
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="time" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="ip" Type="mediumtext" Nullable="false" />
+          <Property Name="ip" Type="varchar" MaxLength="39" Nullable="false" />
           <Property Name="user_id" Type="int" Nullable="false" />
           <Property Name="success" Type="tinyint" Nullable="false" />
           <Property Name="reason" Type="varchar" MaxLength="100" />
@@ -50,7 +50,7 @@
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="registered" Type="datetime" Precision="0" Nullable="false" />
-          <Property Name="registered_ip" Type="mediumtext" Nullable="false" />
+          <Property Name="registered_ip" Type="varchar" MaxLength="39" Nullable="false" />
           <Property Name="url" Type="varchar" MaxLength="45" Nullable="false" />
           <Property Name="status" Type="tinyint" Nullable="false" />
           <Property Name="ban_reason" Type="text" />
@@ -58,9 +58,10 @@
           <Property Name="rank" Type="varchar" MaxLength="45" />
           <Property Name="color" Type="varchar" MaxLength="9" />
           <Property Name="unread_notifications" Type="smallint" />
-          <Property Name="password" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="44" Nullable="false" />
           <Property Name="salt" Type="varchar" MaxLength="44" Nullable="false" />
-          <Property Name="activationkey" Type="varchar" MaxLength="32" />
+          <Property Name="activationkey" Type="varchar" MaxLength="44" />
+          <Property Name="email" Type="varchar" MaxLength="45" Nullable="false" />
         </EntityType>
         <Association Name="fk_affected_user">
           <End Role="system_users" Type="Self.system_users" Multiplicity="1" />
@@ -181,8 +182,7 @@
             <End Role="system_user_logins" EntitySet="system_user_logins" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -194,7 +194,7 @@
           <Property Name="user_id" Type="Int32" Nullable="false" />
           <Property Name="affected_user_id" Type="Int32" Nullable="false" />
           <Property Name="permission_id" Type="Int32" Nullable="false" />
-          <Property Name="ip" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ip" Type="String" Nullable="false" MaxLength="39" />
           <NavigationProperty Name="system_users" Relationship="Self.fk_affected_user" FromRole="system_permission_log" ToRole="system_users" />
           <NavigationProperty Name="system_permissions" Relationship="Self.fk_permission" FromRole="system_permission_log" ToRole="system_permissions" />
           <NavigationProperty Name="system_users1" Relationship="Self.fk_user" FromRole="system_permission_log" ToRole="system_users" />
@@ -217,11 +217,11 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="time" Type="DateTime" Nullable="false" />
-          <Property Name="ip" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Time" Type="DateTime" Nullable="false" />
+          <Property Name="Ip" Type="String" Nullable="false" MaxLength="39" />
           <Property Name="user_id" Type="Int32" Nullable="false" />
-          <Property Name="success" Type="SByte" Nullable="false" />
-          <Property Name="reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Success" Type="SByte" Nullable="false" />
+          <Property Name="Reason" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="system_users" Relationship="Self.fk_users_logins" FromRole="system_user_logins" ToRole="system_users" />
         </EntityType>
         <EntityType Name="UserPermission">
@@ -239,23 +239,24 @@
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="registered" Type="DateTime" Nullable="false" />
-          <Property Name="registered_ip" Type="String" MaxLength="16777215" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="status" Type="SByte" Nullable="false" />
-          <Property Name="ban_reason" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
-          <Property Name="ban_time" Type="DateTime" />
-          <Property Name="rank" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="color" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
-          <Property Name="unread_notifications" Type="Int16" />
-          <Property Name="password" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="salt" Type="String" MaxLength="44" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="activationkey" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Registered" Type="DateTime" Nullable="false" />
+          <Property Name="RegisteredIp" Type="String" Nullable="false" MaxLength="39" />
+          <Property Name="Url" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="SByte" Nullable="false" />
+          <Property Name="BanReason" Type="String" MaxLength="65535" FixedLength="false" Unicode="false" />
+          <Property Name="BanTime" Type="DateTime" />
+          <Property Name="Rank" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+          <Property Name="Color" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="UnreadNotificationCount" Type="Int16" />
+          <Property Name="Password" Type="String" MaxLength="44" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Salt" Type="String" MaxLength="44" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Activationkey" Type="String" MaxLength="44" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="system_permission_log" Relationship="Self.fk_affected_user" FromRole="system_users" ToRole="system_permission_log" />
           <NavigationProperty Name="system_permission_log1" Relationship="Self.fk_user" FromRole="system_users" ToRole="system_permission_log" />
-          <NavigationProperty Name="system_user_logins" Relationship="Self.fk_users_logins" FromRole="system_users" ToRole="system_user_logins" />
+          <NavigationProperty Name="Logins" Relationship="Self.fk_users_logins" FromRole="system_users" ToRole="system_user_logins" />
           <NavigationProperty Name="system_user_permissions" Relationship="Self.fk_users" FromRole="system_users" ToRole="system_user_permissions" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" />
         </EntityType>
         <Association Name="fk_affected_user">
           <End Role="system_users" Type="Model.User" Multiplicity="1" />
@@ -407,11 +408,11 @@
             <EntityTypeMapping TypeName="Model.UserLogin">
               <MappingFragment StoreEntitySet="system_user_logins">
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="time" ColumnName="time" />
-                <ScalarProperty Name="ip" ColumnName="ip" />
+                <ScalarProperty Name="Time" ColumnName="time" />
+                <ScalarProperty Name="Ip" ColumnName="ip" />
                 <ScalarProperty Name="user_id" ColumnName="user_id" />
-                <ScalarProperty Name="success" ColumnName="success" />
-                <ScalarProperty Name="reason" ColumnName="reason" />
+                <ScalarProperty Name="Success" ColumnName="success" />
+                <ScalarProperty Name="Reason" ColumnName="reason" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -427,20 +428,21 @@
           <EntitySetMapping Name="Users">
             <EntityTypeMapping TypeName="Model.User">
               <MappingFragment StoreEntitySet="system_users">
+                <ScalarProperty Name="Email" ColumnName="email" />
                 <ScalarProperty Name="id" ColumnName="id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="registered" ColumnName="registered" />
-                <ScalarProperty Name="registered_ip" ColumnName="registered_ip" />
-                <ScalarProperty Name="url" ColumnName="url" />
-                <ScalarProperty Name="status" ColumnName="status" />
-                <ScalarProperty Name="ban_reason" ColumnName="ban_reason" />
-                <ScalarProperty Name="ban_time" ColumnName="ban_time" />
-                <ScalarProperty Name="rank" ColumnName="rank" />
-                <ScalarProperty Name="color" ColumnName="color" />
-                <ScalarProperty Name="unread_notifications" ColumnName="unread_notifications" />
-                <ScalarProperty Name="password" ColumnName="password" />
-                <ScalarProperty Name="salt" ColumnName="salt" />
-                <ScalarProperty Name="activationkey" ColumnName="activationkey" />
+                <ScalarProperty Name="Name" ColumnName="name" />
+                <ScalarProperty Name="Registered" ColumnName="registered" />
+                <ScalarProperty Name="RegisteredIp" ColumnName="registered_ip" />
+                <ScalarProperty Name="Url" ColumnName="url" />
+                <ScalarProperty Name="Status" ColumnName="status" />
+                <ScalarProperty Name="BanReason" ColumnName="ban_reason" />
+                <ScalarProperty Name="BanTime" ColumnName="ban_time" />
+                <ScalarProperty Name="Rank" ColumnName="rank" />
+                <ScalarProperty Name="Color" ColumnName="color" />
+                <ScalarProperty Name="UnreadNotificationCount" ColumnName="unread_notifications" />
+                <ScalarProperty Name="Password" ColumnName="password" />
+                <ScalarProperty Name="Salt" ColumnName="salt" />
+                <ScalarProperty Name="Activationkey" ColumnName="activationkey" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
