@@ -43,12 +43,14 @@ namespace Pokefans.SystemCache
             Port = port;
             Connected = false;
             _memcachedClient = null;
+
+            this.Connect();
         }
 
         /// <summary>
         /// Connects to the memcached server.
         /// </summary>
-        public void Connect()
+        protected void Connect()
         {
             if (Connected && _memcachedClient != null)
             {

@@ -57,7 +57,7 @@ namespace Pokefans.SystemCache
         /// <summary>
         /// Query an object from the cache.
         /// </summary>
-        /// <exception cref="CacheEntryNotAddedException">Fired when a cache-entry cannot be found.</exception>
+        /// <exception cref="CacheEntryNotFoundException">Fired when a cache-entry cannot be found.</exception>
         /// <typeparam name="T">Type of the element to be retrieved</typeparam>
         /// <param name="key">Key</param>
         /// <returns>Cached object</returns>
@@ -66,7 +66,7 @@ namespace Pokefans.SystemCache
         /// <summary>
         /// Query an object from the cache.
         /// </summary>
-        /// <exception cref="CacheEntryNotAddedException">Fired when a cache-entry cannot be found.</exception>
+        /// <exception cref="CacheEntryNotFoundException">Fired when a cache-entry cannot be found.</exception>
         /// <typeparam name="T">Type of the element to be retrieved</typeparam>
         /// <param name="key">Key</param>
         /// <param name="default_">Default value, if the key could not be found</param>
@@ -74,9 +74,35 @@ namespace Pokefans.SystemCache
         public abstract T Get<T>(string key, T default_);
 
         /// <summary>
+        /// Query an object from the cache.
+        /// </summary>
+        /// <typeparam name="T">Type of the element to be retrieved</typeparam>
+        /// <param name="key">Key</param>
+        /// <param name="result">If the key exists the cached object will be stored in <paramref name="result"/></param>
+        /// <returns>Cached object</returns>
+        public bool TryGet<T>(string key, out T result)
+        {
+            if (this.Contains(key))
+            {
+                try
+                {
+                    result = this.Get<T>(key);
+                    return true;
+                }
+                catch (Exception)
+                {
+                    
+                }
+            }
+
+            result = default(T);
+            return false;
+        }
+
+        /// <summary>
         /// Removes one entry from the cache.
         /// </summary>
-        /// <exception cref="CacheEntryNotAddedException">Fired when a cache-entry cannot be found.</exception>
+        /// <exception cref="CacheEntryNotFoundException">Fired when a cache-entry cannot be found.</exception>
         /// <param name="key">Key</param>
         public void Remove(string key)
         {
@@ -86,7 +112,7 @@ namespace Pokefans.SystemCache
         /// <summary>
         /// Removes one entry from the cache.
         /// </summary>
-        /// <exception cref="CacheEntryNotAddedException">Fired when a cache-entry cannot be found.</exception>
+        /// <exception cref="CacheEntryNotFoundException">Fired when a cache-entry cannot be found.</exception>
         /// <param name="key">Key</param>
         /// <param name="silent">If false an exception will be fired in case the key cannot be found.</param>
         public abstract void Remove(string key, bool silent);

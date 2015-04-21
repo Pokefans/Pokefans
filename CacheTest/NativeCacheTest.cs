@@ -50,6 +50,10 @@ namespace Pokefans.CacheTest
             Assert.AreEqual(cache.Get<string>("key2"), "Hallo Welt");
             Assert.AreEqual(cache.Get<double>("key3"), 123.456);
             Assert.AreEqual(cache.Get<int>("non-existing", -1), -1);
+
+            int val;
+            Assert.IsTrue(cache.TryGet("key1", out val));
+            Assert.AreEqual(val, 123456);
         }
 
         [TestMethod]

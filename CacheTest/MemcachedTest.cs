@@ -13,13 +13,12 @@ namespace Pokefans.CacheTest
         /// <summary>
         /// memcached instance the tests are performed on
         /// </summary>
-        private Memcached _cache;
+        private Cache _cache;
 
         [TestInitialize]
         public void TestInitialize()
         {
             _cache = new Memcached("87.106.30.51", 11211);
-            _cache.Connect();
         }
 
         [TestMethod]
@@ -37,6 +36,10 @@ namespace Pokefans.CacheTest
             Assert.AreEqual(_cache.Get<string>("key2"), "Hallo Welt");
             Assert.AreEqual(_cache.Get<double>("key3"), 123.456);
             Assert.AreEqual(_cache.Get<int>("non-existing", -1), -1);
+
+            int val;
+            Assert.IsTrue(_cache.TryGet("key1", out val));
+            Assert.AreEqual(val, 123456);
         }
 
         [TestMethod]
