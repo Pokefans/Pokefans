@@ -462,7 +462,7 @@ namespace Pokefans.Security
          * The following methods are here because they have to be. However,
          * they will not be used (neither by us nor by .net itself). It is 
          * therefore acceptable to just throw an NotImplementedException.
-         ********************************************************************/
+         *******************************************************************/
         public override MembershipUserCollection FindUsersByEmail(string emailToMatch, int pageIndex, int pageSize, out int totalRecords)
         {
             throw new NotImplementedException();
