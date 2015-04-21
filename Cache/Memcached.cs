@@ -1,6 +1,7 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 
 using System;
+using System.Configuration;
 using Enyim.Caching;
 using Enyim.Caching.Configuration;
 using Enyim.Caching.Memcached;
@@ -31,6 +32,13 @@ namespace Pokefans.SystemCache
         /// memcached client instance
         /// </summary>
         private MemcachedClient _memcachedClient;
+
+        /// <summary>
+        /// Creates a new instance of the Memcached-class using server information from the application config.
+        /// </summary>
+        public Memcached()
+            : this(ConfigurationManager.AppSettings["MemcachedHost"], int.Parse(ConfigurationManager.AppSettings["MemcachedPort"]))
+        { }
 
         /// <summary>
         /// Creates a new instance of the Memcached-class.
