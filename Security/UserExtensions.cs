@@ -1,10 +1,12 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pokefans.Data;
+using Pokefans.Security.Exceptions;
 using Pokefans.SystemCache;
 
 namespace Pokefans.Security
@@ -12,10 +14,10 @@ namespace Pokefans.Security
     public static class UserExtensions
     {
         /// <summary>
-        /// Generates the URL for this user based on his username.
+        /// Generates the URL for this user based on his email.
         /// </summary>
         /// <param name="u">The User.</param>
-        /// <returns>url-friendly username</returns>
+        /// <returns>url-friendly email</returns>
         public static string GenerateUrl(this User u)
         {
             return u.Name.ToLower().Replace(' ', '+');
@@ -53,9 +55,12 @@ namespace Pokefans.Security
                 permissions = cache.Get<List<Permission>>("permissions");
             }
 
-            int id = permissions.Where(x => x.name == permissionname).First().id;
+            if (!permissions.Any(x => x.Name == permissionname))
+                throw new PermissionNotFoundException();
 
-            return context.UserPermissions.Where(x => x.user_id == WebSecurity.CurrentCuser.id && x.permission_id == id).Count() > 0;
+            int id = permissions.Where(x => x.Name == permissionname).First().Id;
+
+            return context.UserPermissions.Any(x => x.UserId == WebSecurity.CurrentUser.id && x.PermissionId == id);
         }
     }
 }

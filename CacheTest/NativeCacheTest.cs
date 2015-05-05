@@ -2,7 +2,7 @@
 
 using System;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Pokefans.SystemCache;
 
 namespace Pokefans.CacheTest
@@ -25,16 +25,16 @@ namespace Pokefans.CacheTest
         }
     }
 
-    [TestClass]
+    [TestFixture]
     public class NativeCacheTest
     {
-        [TestMethod]
+        [Test]
         public void TestCreateCache()
         {
             Cache cache = new NativeCache();
         }
 
-        [TestMethod]
+        [Test]
         public void TestCachingAddGet()
         {
             Cache cache = new NativeCache();
@@ -56,7 +56,7 @@ namespace Pokefans.CacheTest
             Assert.AreEqual(val, 123456);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingExpiration()
         {
@@ -68,7 +68,7 @@ namespace Pokefans.CacheTest
             cache.Get<int>("entry");
         }
 
-        [TestMethod]
+        [Test]
         public void TestCachingRemoveSilent()
         {
             Cache cache = new NativeCache();
@@ -77,7 +77,7 @@ namespace Pokefans.CacheTest
             Assert.AreEqual(cache.Get<int>("key1", 0), 0);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingRemove()
         {
@@ -88,7 +88,7 @@ namespace Pokefans.CacheTest
             cache.Get<int>("key1");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingPurge()
         {
@@ -102,7 +102,7 @@ namespace Pokefans.CacheTest
             cache.Get<int>("key2");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestDifferentCaches()
         {
@@ -113,7 +113,7 @@ namespace Pokefans.CacheTest
             cache2.Get<int>("A");
         }
 
-        [TestMethod]
+        [Test]
         public void TestComplexObject()
         {
             Cache cache = new NativeCache();
@@ -123,7 +123,7 @@ namespace Pokefans.CacheTest
 
             ComplexObject obj2 = cache.Get<ComplexObject>("object");
 
-            Assert.AreEqual<int>(obj.Foo(), obj2.Foo());
+            Assert.AreEqual(obj.Foo(), obj2.Foo());
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,10 +8,8 @@ using Pokefans.Data;
 
 namespace Pokefans.Security
 {
-    class WebSecurity
+    public class WebSecurity
     {
-        public static User CurrentCuser { get; private set; }
-
-
+        public static User CurrentUser { get; set; }
     }
 }

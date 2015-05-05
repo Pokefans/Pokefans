@@ -2,12 +2,12 @@
 
 using System;
 using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 using Pokefans.SystemCache;
 
 namespace Pokefans.CacheTest
 {
-    [TestClass]
+    [TestFixture]
     public class MemcachedTest
     {
         /// <summary>
@@ -15,13 +15,13 @@ namespace Pokefans.CacheTest
         /// </summary>
         private Cache _cache;
 
-        [TestInitialize]
+        [TestFixtureSetUp]
         public void TestInitialize()
         {
             _cache = new Memcached("87.106.30.51", 11211);
         }
 
-        [TestMethod]
+        [Test]
         public void TestCachingAddGet()
         {
             _cache.Add("key1", 123456);
@@ -42,7 +42,7 @@ namespace Pokefans.CacheTest
             Assert.AreEqual(val, 123456);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingExpiration()
         {
@@ -53,7 +53,7 @@ namespace Pokefans.CacheTest
             _cache.Get<int>("entry");
         }
 
-        [TestMethod]
+        [Test]
         public void TestCachingRemoveSilent()
         {
             _cache.Add("key1", 123456);
@@ -61,7 +61,7 @@ namespace Pokefans.CacheTest
             Assert.AreEqual(_cache.Get<int>("key1", 0), 0);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingRemove()
         {
@@ -71,7 +71,7 @@ namespace Pokefans.CacheTest
             _cache.Get<int>("key1");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingPurge()
         {
@@ -84,7 +84,7 @@ namespace Pokefans.CacheTest
             _cache.Get<int>("key2");
         }
 
-        [TestMethod]
+        [Test]
         public void TestComplexObject()
         {
             ComplexObject obj = new ComplexObject(5, 7);
@@ -92,7 +92,7 @@ namespace Pokefans.CacheTest
 
             ComplexObject obj2 = _cache.Get<ComplexObject>("object");
 
-            Assert.AreEqual<int>(obj.Foo(), obj2.Foo());
+            Assert.AreEqual(obj.Foo(), obj2.Foo());
         }
     }
 }

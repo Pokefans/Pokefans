@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -14,16 +15,17 @@ using System.Data;
 
 namespace Pokefans.Security
 {
-    class PokefansAuthorizeAttribute : AuthorizeAttribute
+    public class PokefansAuthorizeAttribute : AuthorizeAttribute
     {
         private string permission = String.Empty;
         Entities context;
+        Cache c;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PokefansAuthorizeAttribute"/> class.
         /// </summary>
         public PokefansAuthorizeAttribute()
-            : this(String.Empty, new Entities())
+            : this(String.Empty, new Entities(), new Memcached())
         {
         }
 
@@ -32,7 +34,7 @@ namespace Pokefans.Security
         /// </summary>
         /// <param name="permission">The permission.</param>
         public PokefansAuthorizeAttribute(string permission)
-            : this(permission, new Entities())
+            : this(permission, new Entities(), new Memcached())
         {
         }
 
@@ -41,10 +43,11 @@ namespace Pokefans.Security
         /// </summary>
         /// <param name="permission">The permission.</param>
         /// <param name="e">The database context to use.</param>
-        public PokefansAuthorizeAttribute(string permission, Entities e)
+        public PokefansAuthorizeAttribute(string permission, Entities e, Cache c)
         {
             this.permission = permission;
             this.context = e;
+            this.c = c;
         }
 
         /// <summary>
@@ -56,13 +59,13 @@ namespace Pokefans.Security
         /// </returns>
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            if (WebSecurity.CurrentCuser != null)
+            if (WebSecurity.CurrentUser != null)
             {
                 if (String.IsNullOrEmpty(permission))
                 {
                     return true;
                 }
-                return WebSecurity.CurrentCuser.HasPermission(permission);
+                return WebSecurity.CurrentUser.HasPermission(permission, c, context);
             }
             return false;
         }

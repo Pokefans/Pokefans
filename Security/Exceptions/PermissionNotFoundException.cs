@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Pokefans.Security.Exceptions
 {
-    public class UserNotFoundException : Exception
+    public class PermissionNotFoundException : Exception
     {
     }
 }

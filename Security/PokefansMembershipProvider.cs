@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,12 +18,15 @@ using RazorEngine;
 using RazorEngine.Templating;
 using System.IO;
 using System.Net.Mail;
+using log4net;
 
 namespace Pokefans.Security
 {
-    class PokefansMembershipProvider : MembershipProvider
+    public class PokefansMembershipProvider : MembershipProvider
     {
+        protected static readonly ILog log = LogManager.GetLogger(typeof(PokefansMembershipProvider));
         private Entities context;
+        private HttpContextBase requestContext;
 
         #region Properties
         private string _applicationName;
@@ -99,19 +103,20 @@ namespace Pokefans.Security
         #endregion
 
         public PokefansMembershipProvider()
-            : this(new Entities())
+            : this(new Entities(), new HttpContextWrapper(HttpContext.Current))
         {
         }
 
-        public PokefansMembershipProvider(Entities e)
+        public PokefansMembershipProvider(Entities e, HttpContextBase b)
         {
             this.context = e;
+            this.requestContext = b;
         }
 
         /// <summary>
         /// Verarbeitet eine Anforderung zum Aktualisieren des Kennworts für einen Mitgliedschaftsbenutzer.
         /// </summary>
-        /// <param name="username">Der Benutzer, dessen Kennwort aktualisiert werden soll.</param>
+        /// <param name="email">Der Benutzer, dessen Kennwort aktualisiert werden soll.</param>
         /// <param name="oldPassword">Das aktuelle Kennwort für den angegebenen Benutzer.</param>
         /// <param name="newPassword">Das neue Kennwort für den angegebenen Benutzer.</param>
         /// <returns>
@@ -153,7 +158,7 @@ namespace Pokefans.Security
             Pbkdf2 pbkdf2 = new Pbkdf2(new HMACSHA256(), System.Text.Encoding.UTF8.GetBytes(newPassword), salt);
             u.Password = Convert.ToBase64String(pbkdf2.GetBytes(32));
 
-            context.Entry(u).State = EntityState.Modified;
+            context.SetModified(u);
 
             context.SaveChanges();
 
@@ -161,25 +166,9 @@ namespace Pokefans.Security
         }
 
         /// <summary>
-        /// Verarbeitet eine Anforderung zum Aktualisieren der Kennwortfrage und -antwort für einen Mitgliedschaftsbenutzer.
-        /// </summary>
-        /// <param name="username">Der Benutzer, für den die Kennwortfrage und -antwort geändert werden sollen.</param>
-        /// <param name="password">Das Kennwort für den angegebenen Benutzer.</param>
-        /// <param name="newPasswordQuestion">Die neue Kennwortfrage für den angegebenen Benutzer.</param>
-        /// <param name="newPasswordAnswer">Die neue Kennwortantwort für den angegebenen Benutzer.</param>
-        /// <returns>
-        /// true, wenn Kennwortfrage und -antwort erfolgreich aktualisiert wurden, andernfalls false.
-        /// </returns>
-        /// <exception cref="System.NotImplementedException"></exception>
-        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
-        {
-            throw new NotImplementedException();
-        }
-
-        /// <summary>
         /// Fügt der Datenquelle einen neuen Mitgliedschaftsbenutzer hinzu.
         /// </summary>
-        /// <param name="username">Der Benutzername für den neuen Benutzer.</param>
+        /// <param name="email">Der Benutzername für den neuen Benutzer.</param>
         /// <param name="password">Das Kennwort für den neuen Benutzer.</param>
         /// <param name="email">Die E-Mail-Adresse für den neuen Benutzer.</param>
         /// <param name="passwordQuestion">Die Kennwortfrage für den neuen Benutzer.</param>
@@ -195,7 +184,7 @@ namespace Pokefans.Security
         {
             ValidatePasswordEventArgs args = new ValidatePasswordEventArgs(username, password, true);
             OnValidatingPassword(args);
-
+            
             status = MembershipCreateStatus.ProviderError;
 
             if (args.Cancel)
@@ -216,96 +205,106 @@ namespace Pokefans.Security
                 return null;
             }
 
-            MembershipUser user = GetUser(username, true);
+            User user = context.Users.Where(x => x.Name == username).FirstOrDefault();
 
-            if(user != null)
+            if (user != null)
             {
-                // Enter basic user data
-                User u = new User();
-                u.Name = username;
-                u.Email = email;
-                u.Registered = DateTime.Now;
-                u.RegisteredIp = SecurityUtils.GetIPAddressAsString();
-                u.Url = u.GenerateUrl();
-                u.Status = (sbyte)UserStatus.NotActivated;
-                
-                // Generate a random password salt
-                byte[] salt = new byte[32];
-                Random r = new Random();
-                r.NextBytes(salt);
+                status = MembershipCreateStatus.DuplicateUserName;
+                return null;
+            }
 
-                // ... and use it to pbkdf2' the users' password
-                Pbkdf2 pbkdf2 = new Pbkdf2(new HMACSHA256(), System.Text.Encoding.UTF8.GetBytes(password), salt);
-                u.Salt = Convert.ToBase64String(salt);
-                u.Password = Convert.ToBase64String(pbkdf2.GetBytes(32));
+            // Enter basic user data
+            User u = new User();
+            u.Name = username;
+            u.Email = email;
+            u.Registered = DateTime.Now;
+            u.RegisteredIp = SecurityUtils.GetIPAddressAsString(requestContext);
+            u.Url = u.GenerateUrl();
+            u.Status = isApproved ? (byte)UserStatus.Activated : (byte)UserStatus.NotActivated;
 
-                // clear the password from the ram, we don't need it anymore
-                password = null;
+            // Generate a random password salt
+            byte[] salt = new byte[32];
+            Random r = new Random();
+            r.NextBytes(salt);
 
+            // ... and use it to pbkdf2' the users' password
+            Pbkdf2 pbkdf2 = new Pbkdf2(new HMACSHA256(), System.Text.Encoding.UTF8.GetBytes(password), salt);
+            u.Salt = Convert.ToBase64String(salt);
+            u.Password = Convert.ToBase64String(pbkdf2.GetBytes(32));
+
+            // clear the password from the ram, we don't need it anymore
+            password = null;
+
+            if ((UserStatus)u.Status == UserStatus.NotActivated)
+            {
                 // next, generate an activation key
                 byte[] activationkey = new byte[32];
                 r.NextBytes(activationkey);
                 u.Activationkey = Convert.ToBase64String(activationkey);
-
-                // save the whole thing to the database
-                context.Users.Add(u);
-                context.SaveChanges();
-
-                // Set up an SMTP Client to our desired mail server
-                SmtpClient smtpClient = new SmtpClient(ConfigurationManager.AppSettings["SMTPHost"], int.Parse(ConfigurationManager.AppSettings["SMTPPort"]));
-                smtpClient.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SMTPUser"], ConfigurationManager.AppSettings["SMTPPassword"]);
-                smtpClient.UseDefaultCredentials = true;
-                smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
-                smtpClient.EnableSsl = true;
-
-                // Set up a message
-                MailMessage mail = new MailMessage();
-                mail.From = new MailAddress(ConfigurationManager.AppSettings["FromEmail"], ConfigurationManager.AppSettings["FromEmailName"]);
-                mail.To.Add(new MailAddress(u.Email));
-                mail.IsBodyHtml = false;
-
-                // and send an email using the template.
-                DynamicViewBag vb = new DynamicViewBag();
-                vb.AddValue("Domain", ConfigurationManager.AppSettings["Domain"]);
-                mail.Body = Engine.Razor.RunCompile(new LoadedTemplateSource(File.ReadAllText(@".\EmailTemplates\RegisterTemplate.cshtml")), "register-email", typeof(User), u, vb);
-
-                smtpClient.Send(mail);
-
-                // Finally, we're done. Grab the user and return
-                status = MembershipCreateStatus.Success;
-                return GetUser(u.Email, true);
-                
             }
-            else
+            // save the whole thing to the database
+            context.Users.Add(u);
+            context.SaveChanges();
+
+            if ((UserStatus)u.Status == UserStatus.NotActivated)
             {
-                status = MembershipCreateStatus.DuplicateUserName;
+                try
+                {
+
+                    // Set up an SMTP Client to our desired mail server
+                    SmtpClient smtpClient = new SmtpClient(ConfigurationManager.AppSettings["SMTPHost"], int.Parse(ConfigurationManager.AppSettings["SMTPPort"]));
+                    smtpClient.Credentials = new System.Net.NetworkCredential(ConfigurationManager.AppSettings["SMTPUser"], ConfigurationManager.AppSettings["SMTPPassword"]);
+                    smtpClient.UseDefaultCredentials = true;
+                    smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;
+                    smtpClient.EnableSsl = true;
+
+                    // Set up a message
+                    MailMessage mail = new MailMessage();
+                    mail.From = new MailAddress(ConfigurationManager.AppSettings["FromEmail"], ConfigurationManager.AppSettings["FromEmailName"]);
+                    mail.To.Add(new MailAddress(u.Email));
+                    mail.IsBodyHtml = false;
+
+                    // and send an email using the template.
+                    DynamicViewBag vb = new DynamicViewBag();
+                    vb.AddValue("Domain", ConfigurationManager.AppSettings["Domain"]);
+                    mail.Body = Engine.Razor.RunCompile(new LoadedTemplateSource(File.ReadAllText(@".\EmailTemplates\RegisterTemplate.cshtml")), "register-email", typeof(User), u, vb);
+
+                    smtpClient.Send(mail);
+                }
+                catch (Exception e)
+                {
+                    log.Error("Failed to send registration email", e);
+                }
             }
 
-            return null;
+            // Finally, we're done. Grab the user and return
+            status = MembershipCreateStatus.Success;
+            return GetUser(u.Email, true);
+
         }
 
         /// <summary>
         /// Entfernt einen Benutzer aus der Mitgliedschaftsdatenquelle.
         /// </summary>
-        /// <param name="username">Der Name des zu löschenden Benutzers.</param>
+        /// <param name="email">Die Email des zu löschenden Benutzers.</param>
         /// <param name="deleteAllRelatedData">true, um die benutzerspezifischen Daten aus der Datenbank zu löschen; false, um die benutzerspezifischen Daten in der Datenbank zu belassen.</param>
         /// <returns>
         /// true, wenn der Benutzer erfolgreich gelöscht wurde, andernfalls false.
         /// </returns>
         /// <exception cref="Pokefans.Security.Exceptions.UserNotFoundException"></exception>
-        public override bool DeleteUser(string username, bool deleteAllRelatedData)
+        public override bool DeleteUser(string email, bool deleteAllRelatedData)
         {
-            User u = context.Users.Where(x => x.Email == username).FirstOrDefault();
-            
-            if(u == null)
+            User u = context.Users.Where(x => x.Email == email).FirstOrDefault();
+
+            if (u == null)
             {
                 throw new UserNotFoundException();
             }
             context.Users.Remove(u);
 
-            if(deleteAllRelatedData)
+            if (deleteAllRelatedData)
             {
-                // TODO: Implement
+                throw new NotImplementedException();
             }
 
             context.SaveChanges();
@@ -322,13 +321,15 @@ namespace Pokefans.Security
         /// <param name="email">The email.</param>
         /// <param name="userIsOnline">if set to <c>true</c> [user is online].</param>
         /// <returns></returns>
+        /// <remarks>This is only implemented because some part in the provider pipeline uses it. I have no Idea what and I don't want to examine. Using this in your code will automatically reject any merge request.</remarks>
         public override MembershipUser GetUser(string email, bool userIsOnline)
         {
             User u = context.Users.Where(x => x.Email == email).FirstOrDefault();
             if (u != null)
             {
-                MembershipUser muser = new MembershipUser("PokefansMembershipProvider", u.Name, u.id, u.Email, string.Empty, string.Empty, u.Status > 0, u.Status < 0, u.Registered, 
-                                                          u.Logins.Last().Time, DateTime.Now, DateTime.UtcNow, u.BanTime ?? DateTime.MinValue);
+                MembershipUser muser = new MembershipUser("PokefansMembershipProvider", u.Name, u.id, u.Email, string.Empty, string.Empty, u.Status > 0, u.Status < 0, u.Registered,
+                                                          DateTime.Now, DateTime.Now, DateTime.UtcNow, u.BanTime ?? DateTime.MinValue);
+                return muser;
             }
             return null;
         }
@@ -341,13 +342,15 @@ namespace Pokefans.Security
         /// <returns>
         /// Ein mit den Informationen des angegebenen Benutzers aus der Datenquelle aufgefülltes <see cref="T:System.Web.Security.MembershipUser" />-Objekt.
         /// </returns>
+        /// <remarks>This is only implemented because some part in the provider pipeline uses it. I have no Idea what and I don't want to examine. Using this in your code will automatically reject any merge request.</remarks>
         public override MembershipUser GetUser(object providerUserKey, bool userIsOnline)
         {
-            User u = context.Users.Where(x => x.id == (int) providerUserKey).FirstOrDefault();
+            User u = context.Users.Where(x => x.id == (int)providerUserKey).FirstOrDefault();
             if (u != null)
             {
                 MembershipUser muser = new MembershipUser("PokefansMembershipProvider", u.Name, u.id, u.Email, string.Empty, string.Empty, u.Status > 0, u.Status < 0, u.Registered,
-                                                          u.Logins.Last().Time, DateTime.Now, DateTime.UtcNow, u.BanTime ?? DateTime.MinValue);
+                                                          DateTime.Now, DateTime.Now, DateTime.UtcNow, u.BanTime ?? DateTime.MinValue);
+                return muser;
             }
             return null;
         }
@@ -364,8 +367,8 @@ namespace Pokefans.Security
         public override string ResetPassword(string email, string answer)
         {
             User u = context.Users.Where(x => x.Email == email).FirstOrDefault();
-            
-            if(u == null)
+
+            if (u == null)
             {
                 throw new UserNotFoundException();
             }
@@ -375,12 +378,12 @@ namespace Pokefans.Security
             StringBuilder b = new StringBuilder();
             Random r = new Random();
             for (int i = 0; i < 11; i++)
-                b.Append(chars[r.Next(chars.Length + 1)]);
+                b.Append(chars[r.Next(chars.Length)]);
 
             Pbkdf2 pbkdf2 = new Pbkdf2(new HMACSHA256(), System.Text.Encoding.UTF8.GetBytes(b.ToString()), Convert.FromBase64String(u.Salt));
             u.Password = Convert.ToBase64String(pbkdf2.GetBytes(32));
 
-            context.Entry(u).State = EntityState.Modified;
+            context.SetModified(u);
             context.SaveChanges();
 
             return b.ToString();
@@ -405,8 +408,8 @@ namespace Pokefans.Security
             if (u.Activationkey == activationkey)
             {
                 u.Activationkey = "";
-                u.Status = (sbyte)UserStatus.Activated;
-                context.Entry(u).State = EntityState.Modified;
+                u.Status = (byte)UserStatus.Activated;
+                context.SetModified(u);
                 context.SaveChanges();
                 return true;
             }
@@ -415,26 +418,24 @@ namespace Pokefans.Security
         }
 
         /// <summary>
-        /// Überprüft, ob der angegebene Benutzername und das Kennwort in der Datenquelle vorhanden sind.
+        /// Überprüft, ob die angegebene Email und das Kennwort in der Datenquelle vorhanden sind.
         /// </summary>
-        /// <param name="username">Der Name des zu überprüfenden Benutzers.</param>
+        /// <param name="email">Die Email des zu überprüfenden Benutzers.</param>
         /// <param name="password">Das Kennwort für den angegebenen Benutzer.</param>
         /// <returns>
-        /// true, wenn der angegebene Benutzername und das angegebene Kennwort gültig sind, andernfalls false.
+        /// true, wenn die angegebene Email und das angegebene Kennwort gültig sind, andernfalls false.
         /// </returns>
         public override bool ValidateUser(string email, string password)
         {
             User u = context.Users.Where(x => x.Email == email).FirstOrDefault();
 
             if (u == null)
-            { 
+            {
                 return false;
             }
 
-            Pbkdf2 pbkdf2 = new Pbkdf2(new HMACSHA256(), System.Text.Encoding.UTF8.GetBytes(password), Convert.FromBase64String(u.Salt));
-            
-            if (u.Password == Convert.ToBase64String(pbkdf2.GetBytes(32)))
-            { 
+            if (CheckPassword(u, password))
+            {
                 return true;
             }
             return false;
@@ -490,7 +491,8 @@ namespace Pokefans.Security
 
         public override string GetUserNameByEmail(string email)
         {
-            throw new NotImplementedException();
+            User u = context.Users.Where(x => x.Email == email).FirstOrDefault();
+            return u != null ? u.Name : null;
         }
 
         public override bool UnlockUser(string userName)
@@ -499,6 +501,11 @@ namespace Pokefans.Security
         }
 
         public override void UpdateUser(MembershipUser user)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override bool ChangePasswordQuestionAndAnswer(string username, string password, string newPasswordQuestion, string newPasswordAnswer)
         {
             throw new NotImplementedException();
         }
