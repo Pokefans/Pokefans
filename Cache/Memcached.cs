@@ -67,6 +67,7 @@ namespace Pokefans.SystemCache
 
             MemcachedClientConfiguration config = new MemcachedClientConfiguration();
             config.AddServer(Server, Port);
+            config.Transcoder = new DataContractTranscoder();
             _memcachedClient = new MemcachedClient(config);
 
             Connected = true;
