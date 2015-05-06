@@ -33,7 +33,7 @@ It's licensed under the terms of the 3-clause BSD license.
   such as a reference to a copy of the $PROJECT's README or AUTHORS file >
 < if third-party files from more than the one project were used in this
   file, copy the above any number of times >
-(Modifications|Other (data|code)|Everything else) Copyright 2014-2014 the openage authors.
+(Modifications|Other (data|code)|Everything else) Copyright 2014-2014 the pokefans authors.
 See copying.md for further legal info.
 ```
 
@@ -45,7 +45,7 @@ All 3rd-party files *must* be included in the following list:
 
 List of all 3rd-party files in pokefans-core:
 
-**Currently, none.**
+ - Security/Cryptography/Pbkdf2.cs
 
 Notes about this file:
 This file was originally created by Michael Enßlin for the (quite awesome) [openage project](https://github.com/SFTtech/openage/blob/master/copying.md). I (Delirium) adapted it for pokefans. Still, both of us are no lawyers. I also believe that file-level huge disclaimer blocks are a pest and should be treated as such, so I gladly took his approach. If you see any legal issues, feel free to contact me (and contact mic-e too, he'd appreciate it).
