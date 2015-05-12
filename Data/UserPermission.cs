@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace Pokefans.Data
 {
     [Table("system_user_persmissions")]
-    public partial class UserPermission
+    public partial class UserRole
     {
         [Key]
         [Column("id")]
@@ -27,7 +27,7 @@ namespace Pokefans.Data
 
 
         [ForeignKey("PermissionId")]
-        public virtual Permission Permission { get; set; }
+        public virtual Role Permission { get; set; }
 
         [ForeignKey("UserId")]
         public virtual User User { get; set; }

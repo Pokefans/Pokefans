@@ -32,7 +32,7 @@ namespace Pokefans.Data
 
         [Column("success")]
         [Required]
-        public byte Success { get; set; }
+        public bool Success { get; set; }
 
         [Column("reason")]
         public string Reason { get; set; }

@@ -2,7 +2,10 @@
 namespace Pokefans.Data
 {
     using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
     using System.Data.Entity;
+    using System.Diagnostics;
     using System.Linq;
     using MySql.Data.Entity;
 
@@ -26,27 +29,29 @@ namespace Pokefans.Data
         /// <param name="entity">The entity.</param>
         public virtual void SetModified(object entity)
         {
-            Entry(entity).State = EntityState.Modified;
+            this.Entry(entity).State = EntityState.Modified;
         }
 
         // Fügen Sie ein 'DbSet' für jeden Entitätstyp hinzu, den Sie in das Modell einschließen möchten. Weitere Informationen 
         // zum Konfigurieren und Verwenden eines Code First-Modells finden Sie unter 'http://go.microsoft.com/fwlink/?LinkId=390109'.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
+        public virtual DbSet<Role> Roles { get; set; }
 
-        public virtual DbSet<PermissionLogEntry> PermissionLogEntries { get; set; }
+        public virtual DbSet<RoleLogEntry> RoleLogEntries { get; set; }
 
         public virtual DbSet<User> Users { get; set; }
 
         public virtual DbSet<UserLogin> UserLogins { get; set; }
 
-        public virtual DbSet<UserPermission> UserPermissions { get; set; }
+        public virtual DbSet<UserRole> UserRoles { get; set; }
+
+        public virtual DbSet<UserLoginProvider> UserLoginProvides { get; set; }
     }
 
     //public class MyEntity
     //{
     //    public int Id { get; set; }
-    //    public string Name { get; set; }
+    //    public string UserName { get; set; }
     //}
 }

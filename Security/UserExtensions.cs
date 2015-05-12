@@ -14,13 +14,13 @@ namespace Pokefans.Security
     public static class UserExtensions
     {
         /// <summary>
-        /// Generates the URL for this user based on his email.
+        /// Generates the URL for this user based on his Username.
         /// </summary>
         /// <param name="u">The User.</param>
         /// <returns>url-friendly email</returns>
         public static string GenerateUrl(this User u)
         {
-            return u.Name.ToLower().Replace(' ', '+');
+            return u.UserName.ToLower().Replace(' ', '+');
         }
 
         /// <summary>
@@ -44,15 +44,15 @@ namespace Pokefans.Security
         /// <returns></returns>
         public static bool HasPermission(this User u, string permissionname, Cache cache, Entities context)
         {
-            List<Permission> permissions;
+            List<Role> permissions;
             if (!cache.Contains("permissions"))
             {
-                permissions = context.Permissions.ToList();
-                cache.Add<List<Permission>>("permissions", permissions);
+                permissions = context.Roles.ToList();
+                cache.Add<List<Role>>("permissions", permissions);
             }
             else
             {
-                permissions = cache.Get<List<Permission>>("permissions");
+                permissions = cache.Get<List<Role>>("permissions");
             }
 
             if (!permissions.Any(x => x.Name == permissionname))
@@ -60,7 +60,7 @@ namespace Pokefans.Security
 
             int id = permissions.Where(x => x.Name == permissionname).First().Id;
 
-            return context.UserPermissions.Any(x => x.UserId == WebSecurity.CurrentUser.id && x.PermissionId == id);
+            return context.UserRoles.Any(x => x.UserId == WebSecurity.CurrentUser.Id && x.PermissionId == id);
         }
     }
 }

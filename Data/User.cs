@@ -4,104 +4,155 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Microsoft.AspNet.Identity;
 using Pokefans.Data.Attributes;
 
 namespace Pokefans.Data
 {
     [Table("system_users")]
-    public partial class User
+    public partial class User : IUser<int>
     {
         public User()
         {
-            this.PermissionLogs = new HashSet<PermissionLogEntry>();
-            this.GivenPermissionLogs = new HashSet<PermissionLogEntry>();
-            this.Logins = new HashSet<UserLogin>();
-            this.Permissions = new HashSet<UserPermission>();
         }
 
 
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
-        public int id { get; set; }
+        public virtual int Id { get; set; }
 
         [Required(ErrorMessage = "Du musst einen Benutzernamen angeben")]
         [MaxLength(45, ErrorMessage = "Dein Benutzername darf maximal 45 Zeichen lang sein.")]
         [RegularExpression(@"^[a-zA-Z][a-zA-Z0-9-_ ]{0,43}[a-zA-Z0-9]$", ErrorMessage = "Dein Benutzername darf nur aus Großbuchstaben, Kleinbuchstaben, Bindestrich (-) und Unterstich(_) bestehen. Außerdem muss er mit einem Buchstaben beginnen und darf nicht mit Bindestrich oder Unterstrich aufhören.")]
         [Column("name", TypeName = "VARCHAR")]
         [Index]
-        public string Name { get; set; }
+        public virtual string UserName { get; set; }
 
         [Required]
         [Column("registered")]
-        public DateTime Registered { get; set; }
+        public virtual DateTime Registered { get; set; }
 
         [Required]
         [MaxLength(39)]
         [Column("registered_ip")]
-        public string RegisteredIp { get; set; }
+        public virtual string RegisteredIp { get; set; }
 
         [Required]
         [MaxLength(45)]
         [Column("url")]
         [Index]
-        public string Url { get; set; }
+        public virtual string Url { get; set; }
 
         [Required]
-        [Column("status")]
-        public byte Status { get; set; }
+        [Column("email_confirmed")]
+        public virtual bool EmailConfirmed { get; set; }
 
-        [Column("ban_reason")]
-        public string BanReason { get; set; }
-
-        [Column("ban_time")]
-        public Nullable<DateTime> BanTime { get; set; }
+        [Column("two_factor_enabled")]
+        public virtual bool TwoFactorEnabled { get; set; }
 
         [MaxLength(45)]
         [Column("rank")]
-        public string Rank { get; set; }
+        public virtual string Rank { get; set; }
 
         [MaxLength(9)]
         [Column("color")]
-        public string Color { get; set; }
+        public virtual string Color { get; set; }
 
         [Column("unread_notifications")]
-        public Nullable<short> UnreadNotificationCount { get; set; }
+        public virtual Nullable<short> UnreadNotificationCount { get; set; }
 
-        [Required]
-        [MaxLength(44)]
+        [MaxLength(89)]
         [Column("password")]
-        public string Password { get; set; }
-
-
-        [Required]
-        [MaxLength(44)]
-        [Column("salt")]
-        public string Salt { get; set; }
+        public virtual string Password { get; set; }
 
         [MaxLength(32)]
         [Column("activationkey")]
-        public string Activationkey { get; set; }
+        public virtual string Activationkey { get; set; }
+
+        [Column("security_stamp")]
+        public virtual string SecurityStamp { get; set; }
 
         [Required]
         [Column("email")]
         [MaxLength(45, ErrorMessage = "Deine E-Mail-Addresse darf maximal 45 Zeichen lang sein.")]
         [RegularExpressionWithOptions(@"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", ErrorMessage = "Deine E-Mail-Adresse ist fehlerhaft.", RegexOptions = RegexOptions.IgnoreCase)]
-        public string Email { get; set; }
+        public virtual string Email { get; set; }
 
+        [Column("is_locked_out")]
+        public virtual bool IsLockedOut { get; set; }
+
+        [Column("locked_out_date")]
+        private Nullable<DateTime> lockedOutDate { get; set; }
+
+        [NotMapped]
+        public virtual Nullable<DateTimeOffset> LockedOutDate
+        {
+            get 
+            {
+                return lockedOutDate.HasValue ? new DateTimeOffset(lockedOutDate.Value) : (Nullable<DateTimeOffset>)null;
+            }
+            set 
+            {
+                lockedOutDate = value.Value.LocalDateTime;
+            }
+        }
+
+        [Column("access_failed_count")]
+        public virtual int AccessFailedCount { get; set; }
+
+        private ICollection<RoleLogEntry> roleLogs;
         [InverseProperty("AffectedUser")]
-        public virtual ICollection<PermissionLogEntry> PermissionLogs { get; set; }
+        public virtual ICollection<RoleLogEntry> RoleLogs 
+        {
+            get { return roleLogs ?? (roleLogs = new HashSet<RoleLogEntry>()); }
+            set { roleLogs = value; }
+        }
 
+        private ICollection<RoleLogEntry> givenRoleLogs;
         [InverseProperty("User")]
-        public virtual ICollection<PermissionLogEntry> GivenPermissionLogs { get; set; }
+        public virtual ICollection<RoleLogEntry> GivenRoleLogs
+        {
+            get { return givenRoleLogs ?? (givenRoleLogs = new HashSet<RoleLogEntry>()); }
+            set { givenRoleLogs = value; }
+        }
 
+        private ICollection<UserLogin> logins;
         [InverseProperty("User")]
-        public virtual ICollection<UserLogin> Logins { get; set; }
+        public virtual ICollection<UserLogin> Logins 
+        {
+            get { return logins ?? (logins = new HashSet<UserLogin>()); }
+            set { logins = value; }
+        }
 
+        private ICollection<UserRole> roles;
         [InverseProperty("User")]
-        public virtual ICollection<UserPermission> Permissions { get; set; }
+        public virtual ICollection<UserRole> Roles 
+        {
+            get { return roles ?? (roles = new HashSet<UserRole>()); }
+            set { roles = value; }
+        }
+
+        private ICollection<UserLoginProvider> providers;
+        [InverseProperty("User")]
+        public virtual ICollection<UserLoginProvider> LoginProviders 
+        {
+            get { return providers ?? (providers = new HashSet<UserLoginProvider>()); }
+            set { providers = value; }
+        }
+
+        public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
+        {
+            // Note the authenticationType must match the one 
+            // defined in CookieAuthenticationOptions.AuthenticationType
+            var userIdentity = await manager.CreateIdentityAsync(this, DefaultAuthenticationTypes.ApplicationCookie);
+            // Add custom user claims here
+            return userIdentity;
+        }
+
     }
 }
