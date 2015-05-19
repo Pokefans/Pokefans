@@ -10,7 +10,25 @@
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div id="search" class="hidden-xs">
+        <div class="container clearfix">
+            <form action="http://pokefans.net/search" method="post"> @* Sobald die Suche portiert wird, hier den HTML-Helper einsetzen.*@
+                <span>Suche<span class="hidden-sm hidden-xs"> auf Pokefans</span>:</span>
+                <span id="searchbox">
+                    <input type="text" name="search"><select name="search-index">
+                        <option value="pokefans">Website</option>
+                        <option value="pokedex">Pokedex</option>
+                        <option value="forum">Forum</option>
+                        <option value="mainpage">ohne Forum</option>
+                        <option value="user">User</option>
+                        <option value="internet">Internet</option>
+                    </select>
+                </span>
+                <input type="submit" value="Jetzt suchen" class="button">
+            </form>
+        </div>
+    </div>
+    <div class="navbar navbar-inverse" id="menu">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -18,25 +36,48 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Anwendungsname", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("POKEFANS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand visible-xs visible-sm" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Startseite", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Info", "About", "Home")</li>
-                    <li>@Html.ActionLink("Kontakt", "Contact", "Home")</li>
+                    <li>@Html.ActionLink("Pokefans", "Index", "Home", new { area = "" }, new { @class = "hidden-xs hidden-sm" })</li>
+                    <li>@Html.ActionLink("Pokémon-Spiele", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Pokedex", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Kampf & Strategie", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Fanart & Zeichnungen", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Tauschbörse", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Forum", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Mitarbeit", "Index", "Home")</li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Meine ASP.NET-Anwendung</p>
-        </footer>
+    <div class="container">
+        <div id="content" class="content @(IsSectionDefined("Sidebar") ? "column" : "article-100")">
+            @RenderBody()
+        </div>
+        @if (IsSectionDefined("Sidebar"))
+        {
+            <div id="sidebar" class="column">
+                @RenderSection("Sidebar")
+            </div>
+        }
     </div>
+    <footer id="footer">
+        <div id="breadcrumbs">
+            <div class="container">
+                Du befindest dich hier:
+                <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://pokefans.net/" itemprop="url"><span itemprop="title">Pokefans</span></a></div>
+            </div>
+        </div>
+        <div id="copyright">
+            <div class="container clearfix">
+                <div class="copyright-note"><p>&copy; 2006 - @DateTime.Now.Year. Pokefans ist eine private Pokémon-Fanseite.</p></div>
+                <div class="copyright-links"><p><a href="http://pokefans.net/pokefans/impressum">Kontakt</a> | <a href="http://pokefans.net/pokefans/impressum#datenschutz">Datenschutz</a> | <a href="http://pokefans.net/sitemap">Sitemap</a>  | <img src="http://pokefans.net/images/facebook.png" alt="Facebook" title="Facebook" class="icon"><a href="http://www.facebook.com/pokefans.net">Facebook</a> | <img src="http://pokefans.net/images/symbole/favicons/pinterest.png" alt="Pinterest" title="Pinterest" class="icon"><a href="http://pinterest.com/pokefans/pins/">Pinterest</a> | <img src="http://pokefans.net/images/symbole/favicons/youtube.png" alt="YouTube" title="YouTube" class="icon"><a href="http://www.youtube.com/user/pokefansnet">YouTube</a> | <img src="http://pokefans.net/images/twitter.png" alt="Twitter" title="Twitter" class="icon"><a href="http://twitter.com/PokefansNET">Twitter</a></p></div>
+            </div>
+        </div>
+    </footer>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

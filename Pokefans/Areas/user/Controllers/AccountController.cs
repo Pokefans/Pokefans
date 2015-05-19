@@ -63,7 +63,7 @@ namespace Pokefans.Controllers
         public ActionResult Login(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View("~/Areas/user/Views/Account/Login");
+            return View("~/Areas/user/Views/Account/Login.cshtml");
         }
 
         //
@@ -71,38 +71,38 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Areas/user/Views/Account/Login", model);
+                return View("~/Areas/user/Views/Account/Login.cshtml", model);
             }
 
             // Anmeldefehler werden bezüglich einer Kontosperre nicht gezählt.
             // Wenn Sie aktivieren möchten, dass Kennwortfehler eine Sperre auslösen, ändern Sie in "shouldLockout: true".
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = SignInManager.PasswordSignIn(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
-                    return View("~/Areas/user/Views/Account/Lockout");
+                    return View("Lockout");
                 case SignInStatus.RequiresVerification:
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
-                    return View("~/Areas/user/Views/Account/Login", model);
+                    return View("~/Areas/user/Views/Account/Login.cshtml", model);
             }
         }
 
         //
         // GET: /Account/VerifyCode
         [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl, bool rememberMe)
+        public ActionResult VerifyCode(string provider, string returnUrl, bool rememberMe)
         {
             // Verlangen, dass sich der Benutzer bereits mit seinem Benutzernamen/Kennwort oder einer externen Anmeldung angemeldet hat.
-            if (!await SignInManager.HasBeenVerifiedAsync())
+            if (!SignInManager.HasBeenVerified())
             {
                 return View("Error");
             }
@@ -114,28 +114,28 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+        public ActionResult VerifyCode(VerifyCodeViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Areas/user/Views/Account/VerifyCode",model);
+                return View("~/Areas/user/Views/Account/VerifyCode.cshtml",model);
             }
 
             // Der folgende Code schützt vor Brute-Force-Angriffen der zweistufigen Codes. 
             // Wenn ein Benutzer in einem angegebenen Zeitraum falsche Codes eingibt, wird das Benutzerkonto 
             // für einen bestimmten Zeitraum gesperrt. 
             // Sie können die Einstellungen für Kontosperren in "IdentityConfig" konfigurieren.
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = SignInManager.TwoFactorSignIn(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
                     return RedirectToLocal(model.ReturnUrl);
                 case SignInStatus.LockedOut:
-                    return View("~/Areas/user/Views/Account/Lockout");
+                    return View("Lockout");
                 case SignInStatus.Failure:
                 default:
                     ModelState.AddModelError("", "Ungültiger Code.");
-                    return View("~/Areas/user/Views/Account/VerifyCode", model);
+                    return View("~/Areas/user/Views/Account/VerifyCode.cshtml", model);
             }
         }
 
@@ -144,7 +144,7 @@ namespace Pokefans.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
-            return View("~/Areas/user/Views/Account/Register");
+            return View("~/Areas/user/Views/Account/Register.cshtml");
         }
 
         //
@@ -152,7 +152,7 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -168,10 +168,10 @@ namespace Pokefans.Controllers
 
                 user.Url = user.GenerateUrl();
 
-                var result = await UserManager.CreateAsync(user, model.Password);
+                var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
+                    SignInManager.SignIn(user, isPersistent:false, rememberBrowser:false);
                     
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
@@ -185,20 +185,20 @@ namespace Pokefans.Controllers
             }
 
             // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
-            return View("~/Areas/user/Views/Account/Register", model);
+            return View("~/Areas/user/Views/Account/Register.cshtml", model);
         }
 
         //
         // GET: /Account/ConfirmEmail
         [AllowAnonymous]
-        public async Task<ActionResult> ConfirmEmail(int userId, string code)
+        public ActionResult ConfirmEmail(int userId, string code)
         {
             if (userId == null || code == null)
             {
                 return View("Error");
             }
-            var result = await UserManager.ConfirmEmailAsync(userId, code);
-            return View(result.Succeeded ? "~/Areas/user/Views/Account/ConfirmEmail" : "~/Areas/user/Views/Account/Error");
+            var result = UserManager.ConfirmEmail(userId, code);
+            return View(result.Succeeded ? "~/Areas/user/Views/Account/ConfirmEmail.cshtml" : "~/Areas/user/Views/Account/Error");
         }
 
         //
@@ -206,7 +206,7 @@ namespace Pokefans.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
-            return View("~/Areas/user/Views/Account/ForgotPassword");
+            return View("~/Areas/user/Views/Account/ForgotPassword.cshtml");
         }
 
         //
@@ -214,15 +214,15 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public ActionResult ForgotPassword(ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
+                var user = UserManager.FindByName(model.Email);
+                if (user == null || !(UserManager.IsEmailConfirmed(user.Id)))
                 {
                     // Nicht anzeigen, dass der Benutzer nicht vorhanden ist oder nicht bestätigt wurde.
-                    return View("~/Areas/user/Views/Account/ForgotPasswordConfirmation");
+                    return View("~/Areas/user/Views/Account/ForgotPasswordConfirmation.cshtml");
                 }
 
                 // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
@@ -234,7 +234,7 @@ namespace Pokefans.Controllers
             }
 
             // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
-            return View("~/Areas/user/Views/Account/ForgotPassword", model);
+            return View("~/Areas/user/Views/Account/ForgotPassword.cshtml", model);
         }
 
         //
@@ -242,7 +242,7 @@ namespace Pokefans.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPasswordConfirmation()
         {
-            return View("~/Areas/user/Views/Account/ForgotPasswordConfirmation");
+            return View("~/Areas/user/Views/Account/ForgotPasswordConfirmation.cshtml");
         }
 
         //
@@ -250,7 +250,7 @@ namespace Pokefans.Controllers
         [AllowAnonymous]
         public ActionResult ResetPassword(string code)
         {
-            return code == null ? View("Error") : View("~/Areas/user/Views/Account/ResetPassword");
+            return code == null ? View("Error") : View("~/Areas/user/Views/Account/ResetPassword.cshtml");
         }
 
         //
@@ -258,25 +258,25 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public ActionResult ResetPassword(ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
+            var user = UserManager.FindByName(model.Email);
             if (user == null)
             {
                 // Nicht anzeigen, dass der Benutzer nicht vorhanden ist.
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+            var result = UserManager.ResetPassword(user.Id, model.Code, model.Password);
             if (result.Succeeded)
             {
                 return RedirectToAction("ResetPasswordConfirmation", "Account");
             }
             AddErrors(result);
-            return View("~/Areas/user/Views/Account/ResetPassword");
+            return View("~/Areas/user/Views/Account/ResetPassword.cshtml");
         }
 
         //
@@ -284,7 +284,7 @@ namespace Pokefans.Controllers
         [AllowAnonymous]
         public ActionResult ResetPasswordConfirmation()
         {
-            return View("~/Areas/user/Views/Account/ResetPasswordConfirmation");
+            return View("~/Areas/user/Views/Account/ResetPasswordConfirmation.cshtml");
         }
 
         //
@@ -301,16 +301,16 @@ namespace Pokefans.Controllers
         //
         // GET: /Account/SendCode
         [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl, bool rememberMe)
+        public ActionResult SendCode(string returnUrl, bool rememberMe)
         {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
+            var userId = SignInManager.GetVerifiedUserId();
             if (userId == null)
             {
                 return View("Error");
             }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
+            var userFactors = UserManager.GetValidTwoFactorProviders(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View("~/Areas/user/Views/Account/SendCode", new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
+            return View("~/Areas/user/Views/Account/SendCode.cshtml", new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
 
         //
@@ -318,15 +318,15 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
+        public ActionResult SendCode(SendCodeViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Areas/user/Views/Account/SendCode");
+                return View("~/Areas/user/Views/Account/SendCode.cshtml");
             }
 
             // Token generieren und senden
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
+            if (!SignInManager.SendTwoFactorCode(model.SelectedProvider))
             {
                 return View("Error");
             }
@@ -336,16 +336,16 @@ namespace Pokefans.Controllers
         //
         // GET: /Account/ExternalLoginCallback
         [AllowAnonymous]
-        public async Task<ActionResult> ExternalLoginCallback(string returnUrl)
+        public ActionResult ExternalLoginCallback(string returnUrl)
         {
-            var loginInfo = await AuthenticationManager.GetExternalLoginInfoAsync();
+            var loginInfo = AuthenticationManager.GetExternalLoginInfo();
             if (loginInfo == null)
             {
                 return RedirectToAction("Login");
             }
 
             // Benutzer mit diesem externen Anmeldeanbieter anmelden, wenn der Benutzer bereits eine Anmeldung besitzt
-            var result = await SignInManager.ExternalSignInAsync(loginInfo, isPersistent: false);
+            var result = SignInManager.ExternalSignIn(loginInfo, isPersistent: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -359,7 +359,7 @@ namespace Pokefans.Controllers
                     // Benutzer auffordern, ein Konto zu erstellen, wenn er kein Konto besitzt
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
-                    return View("~/Areas/user/Views/Account/ExternalLoginConfirmation", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                    return View("~/Areas/user/Views/Account/ExternalLoginConfirmation.cshtml", new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -368,7 +368,7 @@ namespace Pokefans.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
+        public ActionResult ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model, string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
             {
@@ -378,19 +378,19 @@ namespace Pokefans.Controllers
             if (ModelState.IsValid)
             {
                 // Informationen zum Benutzer aus dem externen Anmeldeanbieter abrufen
-                var info = await AuthenticationManager.GetExternalLoginInfoAsync();
+                var info = AuthenticationManager.GetExternalLoginInfo();
                 if (info == null)
                 {
-                    return View("~/Areas/user/Views/Account/ExternalLoginFailure");
+                    return View("~/Areas/user/Views/Account/ExternalLoginFailure.cshtml");
                 }
                 var user = new User { UserName = model.Email, Email = model.Email };
-                var result = await UserManager.CreateAsync(user);
+                var result = UserManager.Create(user);
                 if (result.Succeeded)
                 {
-                    result = await UserManager.AddLoginAsync(user.Id, info.Login);
+                    result = UserManager.AddLogin(user.Id, info.Login);
                     if (result.Succeeded)
                     {
-                        await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                        SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
                         return RedirectToLocal(returnUrl);
                     }
                 }
@@ -398,7 +398,7 @@ namespace Pokefans.Controllers
             }
 
             ViewBag.ReturnUrl = returnUrl;
-            return View("~/Areas/user/Views/Account/ExternalLoginConfirmation", model);
+            return View("~/Areas/user/Views/Account/ExternalLoginConfirmation.cshtml", model);
         }
 
         //
@@ -416,7 +416,7 @@ namespace Pokefans.Controllers
         [AllowAnonymous]
         public ActionResult ExternalLoginFailure()
         {
-            return View("~/Areas/user/Views/Account/ExternalLoginFailure");
+            return View("~/Areas/user/Views/Account/ExternalLoginFailure.cshtml");
         }
 
         protected override void Dispose(bool disposing)
