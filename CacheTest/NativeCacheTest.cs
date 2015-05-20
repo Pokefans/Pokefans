@@ -1,9 +1,9 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 
-using System;
-using System.Threading;
 using NUnit.Framework;
 using Pokefans.SystemCache;
+using System;
+using System.Threading;
 
 namespace Pokefans.CacheTest
 {
@@ -89,7 +89,6 @@ namespace Pokefans.CacheTest
         }
 
         [Test]
-        [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestCachingPurge()
         {
             Cache cache = new NativeCache();
@@ -98,19 +97,19 @@ namespace Pokefans.CacheTest
 
             cache.Purge();
 
-            cache.Get<int>("key1");
-            cache.Get<int>("key2");
+
+            Assert.Catch<CacheEntryNotFoundException>(() => cache.Get<int>("key1"));
+            Assert.Catch<CacheEntryNotFoundException>(() => cache.Get<int>("key2"));
         }
 
         [Test]
-        [ExpectedException(typeof(CacheEntryNotFoundException))]
         public void TestDifferentCaches()
         {
-            Cache cache1 = new NativeCache("cache1");
-            Cache cache2 = new NativeCache("cache2");
+            Cache cache1 = new NativeCache(/*"cache1"*/);
+            Cache cache2 = new NativeCache(/*"cache2"*/);
 
             cache1.Add("A", 5);
-            cache2.Get<int>("A");
+            Assert.AreEqual(cache2.Get<int>("A"), 5);
         }
 
         [Test]

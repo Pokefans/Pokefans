@@ -1,6 +1,8 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Caching;
 
 namespace Pokefans.SystemCache
@@ -11,33 +13,24 @@ namespace Pokefans.SystemCache
     public class NativeCache : Cache
     {
         /// <summary>
-        /// default cache name
-        /// </summary>
-        private const string DefaultCacheName = "pokefans-cache";
-
-        /// <summary>
-        /// cache name
-        /// </summary>
-        public string CacheName { get; private set; }
-
-        /// <summary>
         /// cache instance
         /// </summary>
-        private MemoryCache _cacheInstance;
+        private static MemoryCache _cacheInstance = null;
+
+        /// <summary>
+        /// mutex object for synchronization
+        /// </summary>
+        private readonly object _cacheMutex = new object();
 
         /// <summary>
         /// Creates a new instance of the NativeCache-class.
         /// </summary>
-        public NativeCache() : this(DefaultCacheName) { }
-
-        /// <summary>
-        /// Creates a new instance of the NativeCache-class.
-        /// </summary>
-        /// <param name="name">Gibt den Namen des Caches an</param>
-        public NativeCache(string name)
+        public NativeCache()
         {
-            CacheName = name;
-            _cacheInstance = new MemoryCache(CacheName);
+            if (_cacheInstance == null)
+            {
+                _cacheInstance = MemoryCache.Default;
+            }
         }
 
         /// <summary>
@@ -96,13 +89,16 @@ namespace Pokefans.SystemCache
         /// <param name="silent">If false an exception will be fired in case the key cannot be found.</param>
         public override void Remove(string key, bool silent)
         {
-            if (_cacheInstance.Contains(key))
+            lock (_cacheMutex)
             {
-                _cacheInstance.Remove(key);
-            }
-            else if (!silent)
-            {
-                throw new CacheEntryNotFoundException(key);
+                if (_cacheInstance.Contains(key))
+                {
+                    _cacheInstance.Remove(key);
+                }
+                else if (!silent)
+                {
+                    throw new CacheEntryNotFoundException(key);
+                }
             }
         }
 
@@ -111,10 +107,20 @@ namespace Pokefans.SystemCache
         /// </summary>
         public override void Purge()
         {
-            // Note: Creating a new cache object is faster than removing all stored entries.
+            lock (_cacheMutex)
+            {
+                // Note:
+                //      Even though removing every single item is a lot slower than just creating a new MemoryCache object
+                //      it is thread-safe and we won't run into some weird race conditions.
+                //      Also the NativeCache class should only be used for local testing and not for live production, so
+                //      the speed shouldn't be that much of an issue.
 
-            _cacheInstance.Dispose();
-            _cacheInstance = new MemoryCache(CacheName);
+                var cacheItems = (from n in _cacheInstance.AsParallel() select n);
+                foreach (KeyValuePair<String, Object> a in cacheItems)
+                {
+                    _cacheInstance.Remove(a.Key);
+                }
+            }
         }
 
         /// <summary>
