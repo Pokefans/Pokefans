@@ -16,10 +16,5 @@ namespace Pokefans.Security
             : base(store)
         {
         }
-        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-        {
-            var roleStore = new RoleStore(context.Get<Entities>());
-            return new ApplicationRoleManager(roleStore);
-        }
     }
 }

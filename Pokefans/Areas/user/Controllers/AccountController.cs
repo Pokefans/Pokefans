@@ -22,22 +22,26 @@ namespace Pokefans.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+        private IAuthenticationManager _authenticationManager;
+        private Entities _entities;
 
         public AccountController()
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager, IAuthenticationManager authenticationManager, Entities ents)
         {
             UserManager = userManager;
             SignInManager = signInManager;
+            _authenticationManager = authenticationManager;
+            _entities = ents;
         }
 
         public ApplicationSignInManager SignInManager
         {
             get
             {
-                return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
+                return _signInManager;
             }
             private set 
             { 
@@ -49,7 +53,7 @@ namespace Pokefans.Controllers
         {
             get
             {
-                return _userManager ?? HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+                return _userManager;
             }
             private set
             {
@@ -80,7 +84,17 @@ namespace Pokefans.Controllers
 
             // Anmeldefehler werden bezüglich einer Kontosperre nicht gezählt.
             // Wenn Sie aktivieren möchten, dass Kennwortfehler eine Sperre auslösen, ändern Sie in "shouldLockout: true".
-            var result = SignInManager.PasswordSignIn(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+
+            SignInStatus result = SignInStatus.Failure;
+
+            // Temporary Solution: Resolve User here. But we want to resolve the email in the Manager class, just like it works for the username
+            // see https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Owin/SignInManager.cs
+            User u = _entities.Users.Where(g => g.Email == model.Email).FirstOrDefault();
+            if(u != null)
+            {
+                result = SignInManager.PasswordSignIn(u.UserName, model.Password, model.RememberMe, shouldLockout: false);
+            }
+            
             switch (result)
             {
                 case SignInStatus.Success:
@@ -447,7 +461,7 @@ namespace Pokefans.Controllers
         {
             get
             {
-                return HttpContext.GetOwinContext().Authentication;
+                return _authenticationManager;
             }
         }
 

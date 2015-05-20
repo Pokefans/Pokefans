@@ -97,6 +97,10 @@
       <Project>{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}</Project>
       <Name>Pokefans</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{7b25ba24-692f-46c5-8fd5-8c5b735e8978}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

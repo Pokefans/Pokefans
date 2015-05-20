@@ -49,7 +49,6 @@
                     <li>@Html.ActionLink("Forum", "Index", "Home")</li>
                     <li>@Html.ActionLink("Mitarbeit", "Index", "Home")</li>
                 </ul>
-                @*@Html.Partial("_LoginPartial")*@
             </div>
         </div>
     </div>
@@ -67,8 +66,14 @@
     <footer id="footer">
         <div id="breadcrumbs">
             <div class="container">
-                Du befindest dich hier:
-                <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="http://pokefans.net/" itemprop="url"><span itemprop="title">Pokefans</span></a></div>
+                <div class="col-sm-6">
+                    @Html.Partial("_BreadcrumbPartial")
+                </div>
+                <div class="col-sm-6">
+                    <div class="pull-right">
+                        @Html.Partial("_LoginPartial")
+                    </div>
+                </div>
             </div>
         </div>
         <div id="copyright">

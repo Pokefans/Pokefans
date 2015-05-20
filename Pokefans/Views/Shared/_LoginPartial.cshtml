@@ -1,5 +1,4 @@
 ﻿@using Microsoft.AspNet.Identity
-@using Pokefans.Util
 @using System.Configuration;
 @if (Request.IsAuthenticated)
 {
@@ -7,18 +6,12 @@
     {
     @Html.AntiForgeryToken()
 
-    <ul class="nav navbar-nav navbar-right">
-        <li>
             @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </li>
-        <li><a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a></li>
-    </ul>
+        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default">Abmelden</a>
     }
 }
 else
 {
-    <ul class="nav navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
-        <li>@Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
-    </ul>
+        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: null, htmlAttributes: new { id = "registerLink", @class="btn btn-default" })
+        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default" })
 }

@@ -1,0 +1,6 @@
+﻿Du befindest dich hier:
+
+@foreach(var crumb in Breadcrumbs.Current)
+{ 
+    <div itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="@Url.Action(crumb.Action, crumb.Controller, crumb.RouteValues)" itemprop="url"><span itemprop="title">@crumb.Text</span></a></div> @(crumb == Breadcrumbs.Current.Last() ? "" : "»")
+}

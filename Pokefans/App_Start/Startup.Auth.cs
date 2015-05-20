@@ -10,6 +10,7 @@ using Pokefans.Data;
 using System.Threading.Tasks;
 using System.Security.Claims;
 using Pokefans.Security;
+using System.Web.Mvc;
 
 namespace Pokefans
 {
@@ -18,13 +19,7 @@ namespace Pokefans
         // Weitere Informationen zum Konfigurieren der Authentifizierung finden Sie unter "http://go.microsoft.com/fwlink/?LinkId=301864".
         public void ConfigureAuth(IAppBuilder app)
         {
-            // Konfigurieren des db-Kontexts, des Benutzer-Managers und des Anmelde-Managers für die Verwendung einer einzelnen Instanz pro Anforderung.
-            app.CreatePerOwinContext(() =>
-            {
-                return new Entities();
-            });
-            app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<ApplicationUserManager>(() => DependencyResolver.Current.GetService<ApplicationUserManager>());
 
             // Anwendung für die Verwendung eines Cookies zum Speichern von Informationen für den angemeldeten Benutzer aktivieren
             // und ein Cookie zum vorübergehenden Speichern von Informationen zu einem Benutzer zu verwenden, der sich mit dem Anmeldeanbieter eines Drittanbieters anmeldet.

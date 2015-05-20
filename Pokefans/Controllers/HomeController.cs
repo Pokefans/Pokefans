@@ -3,13 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Pokefans.Util;
 
 namespace Pokefans.Controllers
 {
     public class HomeController : Controller
     {
+        IBreadcrumbs breadcrumbs;
+
+        public HomeController(IBreadcrumbs crumbs)
+        {
+            this.breadcrumbs = crumbs;
+        }
+
         public ActionResult Index()
         {
+            breadcrumbs.Add("Startseite");
             return View();
         }
 

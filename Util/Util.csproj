@@ -73,9 +73,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Breadcrumbs.cs" />
     <Compile Include="DomainRoute.cs" />
     <Compile Include="EmailService.cs" />
+    <Compile Include="IBreadcrumbs.cs" />
     <Compile Include="LinkExtensions.cs" />
+    <Compile Include="PokefansWebViewPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
