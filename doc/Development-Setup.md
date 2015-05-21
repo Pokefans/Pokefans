@@ -2,7 +2,7 @@
 
 These steps are neccessary to go debugging:
 ## Windows
-1. Download and Install Visual Studio Community, 2015 or greater.
+1. Download and Install Visual Studio (Community), 2013 or greater.
 2. Download the git distribution of your trust
 3. Clone the project
 4. Open Visual Studio as Administrator (**important**)
