@@ -1,11 +1,8 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 using System;
-using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Pokefans.Data
 {
@@ -15,16 +12,24 @@ namespace Pokefans.Data
     /// Ready         = Content finished, waiting for review and publish
     /// Published     = self-explanatory
     /// </summary>
-    public enum ContentStatus { WorkInProcess, Ready, Published }
+    public enum ContentStatus { WorkInProcess, Ready, Published, Discarded }
 
     public enum HomePageOptions { Normal, NotOnHomePage, FixedOnHomePage }
-    class Content
+
+    public enum ContentType { Article, News, Special, Boilerplate }
+
+    [Table("content")]
+    public class Content
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        [DefaultValue(ContentStatus.WorkInProcess)]
         public ContentStatus Status { get; set; }
+
+        [DefaultValue(ContentType.Article)]
+        public ContentType Type { get; set; }
 
         [Required]
         public int Version { get; set; }
@@ -34,7 +39,7 @@ namespace Pokefans.Data
         [MaxLength(255, ErrorMessage="Der Titel darf maximal 255 Zeichen lang sein.")]
         public string Title { get; set; }
 
-        public string Content { get; set; }
+        public string UnparsedContent { get; set; }
 
         public string ParsedContent { get; set; }
 
@@ -69,6 +74,18 @@ namespace Pokefans.Data
 
         public int UpdateCharsDeleted { get; set; }
 
-        public string DefaultUrl { get; set; }
+        public int DefaultUrlId { get; set; }
+
+        [ForeignKey("CategoryId")]
+        public virtual ContentCategory Category { get; set; }
+
+        [ForeignKey("PublishedByUserId")]
+        public virtual User PublishedByUser { get; set; }
+
+        [ForeignKey("UpdatedByUserId")]
+        public virtual User UpdatedByUser { get; set; }
+
+        [ForeignKey("DefaultUrlId")]
+        public virtual ContentUrl DefaultUrl { get; set; }
     }
 }

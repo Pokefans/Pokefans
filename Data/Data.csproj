@@ -95,7 +95,9 @@
     <Compile Include="Content.cs" />
     <Compile Include="ContentBoilerplate.cs" />
     <Compile Include="ContentCategory.cs" />
+    <Compile Include="ContentFeedback.cs" />
     <Compile Include="ContentUrl.cs" />
+    <Compile Include="ContentVersion.cs" />
     <Compile Include="Migrations\201505122041186_Identity.cs" />
     <Compile Include="Migrations\201505122041186_Identity.Designer.cs">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
