@@ -22,3 +22,7 @@ These steps are neccessary to go debugging:
 
 ## Mac OSX
 I have no Idea. But it should be similar to Linux, except you don't have a package manager and are left to yourself. If you have a working setup, edit this.
+
+# Code-Style
+
+There will be a document about this, for now: just use the default style from Visual Studio; that is: Spaces for everything, four spaces (in letters: F-O-U-R) for a tab; curly braces on their own line. And please do everyone a favor and xmldoc your stuff. Thanks!
