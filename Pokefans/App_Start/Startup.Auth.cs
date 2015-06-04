@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using Pokefans.Security;
 using System.Web.Mvc;
+using System.Configuration;
 
 namespace Pokefans
 {
@@ -49,23 +50,35 @@ namespace Pokefans
             app.UseTwoFactorRememberBrowserCookie(DefaultAuthenticationTypes.TwoFactorRememberBrowserCookie);
 
             // Auskommentierung der folgenden Zeilen aufheben, um die Anmeldung mit Anmeldeanbietern von Drittanbietern zu ermöglichen
-            //app.UseMicrosoftAccountAuthentication(
-            //    clientId: "",
-            //    clientSecret: "");
+            if (bool.Parse(ConfigurationManager.AppSettings["UseMicrosoftAuthentication"]))
+            {
+                app.UseMicrosoftAccountAuthentication(
+                    clientId: ConfigurationManager.AppSettings["MicrosoftAuthenticationClientId"],
+                    clientSecret: ConfigurationManager.AppSettings["MicrosoftAuthenticationClientSecret"]);
+            }
 
-            //app.UseTwitterAuthentication(
-            //   consumerKey: "",
-            //   consumerSecret: "");
+            if (bool.Parse(ConfigurationManager.AppSettings["UseTwitterAuthentication"]))
+            {
+                app.UseTwitterAuthentication(
+                   consumerKey: ConfigurationManager.AppSettings["TwitterAuthenticationConsumerKey"],
+                   consumerSecret: ConfigurationManager.AppSettings["TwitterAuthenticationConsumerSecret"]);
+            }
 
-            //app.UseFacebookAuthentication(
-            //   appId: "",
-            //   appSecret: "");
+            if (bool.Parse(ConfigurationManager.AppSettings["UseFacebookAuthentication"]))
+            {
+                app.UseFacebookAuthentication(
+                   appId: ConfigurationManager.AppSettings["FacebookAuthenticationAppId"],
+                   appSecret: ConfigurationManager.AppSettings["FacebookAuthenticationAppSecret"]);
+            }
 
-            //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
-            //{
-            //    ClientId = "",
-            //    ClientSecret = ""
-            //});
+            if (bool.Parse(ConfigurationManager.AppSettings["UseGoogleAuthentication"]))
+            {
+                app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+                {
+                    ClientId = ConfigurationManager.AppSettings["GoogleAuthenticationClientId"],
+                    ClientSecret = ConfigurationManager.AppSettings["GoogleAuthenticationClientSecret"]
+                });
+            }
         }
     }
 }

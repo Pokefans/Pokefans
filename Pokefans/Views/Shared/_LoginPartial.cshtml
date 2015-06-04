@@ -7,11 +7,11 @@
     @Html.AntiForgeryToken()
 
             @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        <a href="javascript:document.getElementById('logoutForm').submit()" class="btn btn-default">Abmelden</a>
+        <a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a>
     }
 }
 else
 {
-        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: null, htmlAttributes: new { id = "registerLink", @class="btn btn-default" })
-        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "btn btn-default" })
+        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: null, htmlAttributes: new { id = "registerLink" })<span> | </span>
+        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: null, htmlAttributes: new { id = "loginLink" })
 }

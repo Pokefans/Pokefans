@@ -8,6 +8,8 @@ using System.Web.Routing;
 using Pokefans.App_Start;
 using Microsoft.Practices.Unity;
 using Pokefans.Util;
+using Pokefans.SystemCache;
+using System.Configuration;
 
 namespace Pokefans
 {
@@ -24,6 +26,15 @@ namespace Pokefans
         protected void Application_BeginRequest()
         {
             UnityConfig.GetConfiguredContainer().RegisterInstance<IBreadcrumbs>(new Breadcrumbs(), new PerRequestLifetimeManager());
+            
+            if(ConfigurationManager.AppSettings["CachingBackend"].ToLower() == "native")
+            {
+                UnityConfig.GetConfiguredContainer().RegisterType<Cache, NativeCache>(new PerRequestLifetimeManager());
+            }
+            else
+            {
+                UnityConfig.GetConfiguredContainer().RegisterType<Cache, Memcached>(new PerRequestLifetimeManager());
+            }
         }
     }
 }
