@@ -7,6 +7,7 @@ The Pokefans Authors are:
 | Thomas Graf | The Libertine | kontakt@pokefans.net |
 | Matthias Bogad | Delirium | delirium@hacked.xyz |
 | Daniel Birnstiel | Birne94 | info@daniel-birnstiel.de |
+| Peter Jeschke | looper/looperhacks | looperhacks@gmail.com |
 
 If you're a first-time commiter, add yourself to the above list. This is not just for legal reasons, but also to keep an overview of all involved nicknames.
 
