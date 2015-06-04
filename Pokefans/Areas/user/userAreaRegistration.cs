@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System.Configuration;
 using System.Web.Mvc;
 using Pokefans.Util;
 

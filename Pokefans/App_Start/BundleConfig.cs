@@ -1,4 +1,5 @@
-﻿using System.Web;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System.Web;
 using System.Web.Optimization;
 
 namespace Pokefans
