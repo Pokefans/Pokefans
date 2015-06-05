@@ -14,77 +14,120 @@ namespace Pokefans.Data
     /// </summary>
     public enum ContentStatus { WorkInProcess, Ready, Published, Discarded }
 
+    /// <summary>
+    /// Normal          = Will be listed on home page
+    /// NotOnHomePage   = Will be excluded from home page
+    /// FixedOnHomePage = Will be fixed on home page
+    /// </summary>
     public enum HomePageOptions { Normal, NotOnHomePage, FixedOnHomePage }
 
+    /// <summary>
+    /// Article         = normal article
+    /// News            = news entry
+    /// Special         = sidebars, teasers...
+    /// Boilerplate     = boilerplate for use in other articles
+    /// </summary>
     public enum ContentType { Article, News, Special, Boilerplate }
 
+    /// <summary>
+    /// 
+    /// </summary>
     [Table("content")]
     public class Content
     {
+        /// <summary>
+        /// Unique Id for the Content Object
+        /// </summary>
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
+        /// <summary>
+        /// Publication Status
+        /// </summary>
         [DefaultValue(ContentStatus.WorkInProcess)]
         public ContentStatus Status { get; set; }
 
+        /// <summary>
+        /// Content Type
+        /// </summary>
         [DefaultValue(ContentType.Article)]
         public ContentType Type { get; set; }
 
+        /// <summary>
+        /// Current Version of the Content
+        /// </summary>
         [Required]
         public int Version { get; set; }
 
+        /// <summary>
+        /// Id of the corresponding ContentCategory Object
+        /// </summary>
         public int CategoryId { get; set; }
 
-        [MaxLength(255, ErrorMessage="Der Titel darf maximal 255 Zeichen lang sein.")]
-        public string Title { get; set; }
-
-        public string UnparsedContent { get; set; }
-
-        public string ParsedContent { get; set; }
-
-        public string Description { get; set; }
-
-        public string Teaser { get; set; }
-
-        public string Notes { get; set; }
-
+        /// <summary>
+        /// Id of the Permission required to edit this Content
+        /// </summary>
         public int EditPermissionId { get; set; }
 
+        /// <summary>
+        /// Publication Options for the Home Page
+        /// </summary>
+        [DefaultValue(HomePageOptions.Normal)]
         public HomePageOptions HomePageOptions { get; set; }
 
-        [MaxLength(100)]
-        public string StylesheetName { get; set; }
-
-        public string StylesheetCode { get; set; }
-
+        /// <summary>
+        /// Number of Views
+        /// </summary>
         public string ViewCount { get; set; }
 
+        /// <summary>
+        /// Time of Publication
+        /// </summary>
         public DateTime Published { get; set; }
 
+        /// <summary>
+        /// Id of the publicator
+        /// </summary>
         public int PublishedByUserId { get; set; }
 
+        /// <summary>
+        /// Time of last Change
+        /// </summary>
         public DateTime Updated { get; set; }
 
-        public int UpdatedByUserId { get; set; }
+        /// <summary>
+        /// Id of the Creator
+        /// </summary>
+        [Required]
+        public int AuthorUserId { get; set; }
 
-        public double UpdateMagnificance { get; set; }
-
-        public int UpdateCharsChanged { get; set; }
-
-        public int UpdateCharsDeleted { get; set; }
-
+        /// <summary>
+        /// Id of the default Url
+        /// </summary>
         public int DefaultUrlId { get; set; }
 
+        /// <summary>
+        /// Category the Content is published in
+        /// </summary>
         [ForeignKey("CategoryId")]
         public virtual ContentCategory Category { get; set; }
 
+        /// <summary>
+        /// User that published the Content
+        /// </summary>
         [ForeignKey("PublishedByUserId")]
         public virtual User PublishedByUser { get; set; }
 
-        [ForeignKey("UpdatedByUserId")]
-        public virtual User UpdatedByUser { get; set; }
+        /// <summary>
+        /// User that created the Content
+        /// </summary>
+        [ForeignKey("AuthorUserId")]
+        public virtual User Author { get; set; }
 
+        /// <summary>
+        /// Default Url
+        /// </summary>
         [ForeignKey("DefaultUrlId")]
         public virtual ContentUrl DefaultUrl { get; set; }
     }
