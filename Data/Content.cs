@@ -43,6 +43,48 @@ namespace Pokefans.Data
         public int Id { get; set; }
 
         /// <summary>
+        /// Title/Headline
+        /// </summary>
+        [MaxLength(255, ErrorMessage = "Der Titel darf maximal 255 Zeichen lang sein.")]
+        public string Title { get; set; }
+
+        /// <summary>
+        /// Plain Content (HTML/Zing/BB)
+        /// </summary>
+        public string UnparsedContent { get; set; }
+
+        /// <summary>
+        /// Parsed Content (only HTML)
+        /// </summary>
+        public string ParsedContent { get; set; }
+
+        /// <summary>
+        /// Content Description
+        /// </summary>
+        public string Description { get; set; }
+
+        /// <summary>
+        /// Name of the compiled less Source
+        /// </summary>
+        [MaxLength(100)]
+        public string StylesheetName { get; set; }
+
+        /// <summary>
+        /// Less Code for the Stylesheet
+        /// </summary>
+        public string StylesheetCode { get; set; }
+
+        /// <summary>
+        /// Small Teaser for Content Overviews
+        /// </summary>
+        public string Teaser { get; set; }
+
+        /// <summary>
+        /// Editors' Notes
+        /// </summary>
+        public string Notes { get; set; }
+
+        /// <summary>
         /// Publication Status
         /// </summary>
         [DefaultValue(ContentStatus.WorkInProcess)]
