@@ -1,0 +1,325 @@
+﻿<!DOCTYPE html>
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>@SiteTitle</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+
+    @Styles.Render("~/bundles/adminlte")
+
+    <!-- Font Awesome Icons -->
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+    <!-- Ionicons -->
+    <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body class="skin-blue sidebar-mini fixed">
+    <div class="wrapper">
+
+        <!-- Main Header -->
+        <header class="main-header">
+
+            <!-- Logo -->
+            <a href="#" class="logo">
+                <!-- mini logo for sidebar mini 50x50 pixels -->
+                <span class="logo-mini"><b>PF</b></span>
+                <!-- logo for regular state and mobile devices -->
+                <span class="logo-lg"><b>Pokefans</b>:admin</span>
+            </a>
+
+            <!-- Header Navbar -->
+            <nav class="navbar navbar-static-top" role="navigation">
+                <!-- Sidebar toggle button-->
+                <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+                    <span class="sr-only">Toggle navigation</span>
+                </a>
+                <!-- Navbar Right Menu -->
+                <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                        <!-- Messages: style can be found in dropdown.less-->
+                        <li class="dropdown messages-menu">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="label label-success">0</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Du hast 0 neue private Nachrichten.</li>
+                                <li>
+                                    <!-- inner menu: contains the messages -->
+                                    <ul class="menu">
+                                        <li>
+                                        </li><!-- end message -->
+                                    </ul><!-- /.menu -->
+                                </li>
+                                <li class="footer"><a href="#">Zu deinem PM-Postfach</a></li>
+                            </ul>
+                        </li><!-- /.messages-menu -->
+                        <!-- Notifications Menu -->
+                        <li class="dropdown notifications-menu">
+                            <!-- Menu toggle button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-bell-o"></i>
+                                <span class="label label-warning">0</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Du hast 0 neue Benachrichtigungen.</li>
+                                <li>
+                                    <!-- Inner Menu: contains the notifications -->
+                                    <ul class="menu"></ul>
+                                </li>
+                                <li class="footer"><a href="#">Zum Benachrichtigungscenter</a></li>
+                            </ul>
+                        </li>
+                        <!-- Tasks Menu -->
+                        <li class="dropdown tasks-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-flag-o"></i>
+                                <span class="label label-danger">0</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li class="header">Du hast 0 ToDos wartend.</li>
+                                <li>
+                                    <!-- Inner menu: contains the tasks -->
+                                    <ul class="menu"></ul>
+                                </li>
+                                <li class="footer">
+                                    <a href="#">Zur ToDo-Liste</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- User Account Menu -->
+                        <li class="dropdown user user-menu">
+                            <!-- Menu Toggle Button -->
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <!-- The user image in the navbar-->
+                                <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="user-image" alt="User Image" />
+                                <!-- hidden-xs hides the username on small devices so only the image appears. -->
+                                <span class="hidden-xs">Delirium</span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <!-- The user image in the menu -->
+                                <li class="user-header">
+                                    <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="img-circle" alt="User Image" />
+                                    <p>
+                                        @CurrentUser.UserName
+                                        <small>Mitglied seit @CurrentUser.Registered.Year</small>
+                                    </p>
+                                </li>
+                                @*<!-- Menu Body -->
+                                  <!--<li class="user-body">
+                                      <div class="col-xs-4 text-center">
+                                          <a href="#">Followers</a>
+                                      </div>
+                                      <div class="col-xs-4 text-center">
+                                          <a href="#">Sales</a>
+                                      </div>
+                                      <div class="col-xs-4 text-center">
+                                          <a href="#">Friends</a>
+                                      </div>
+                                  </li>-->*@
+                                <!-- Menu Footer-->
+                                <li class="user-footer">
+                                    <div class="pull-left">
+                                        <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                    </div>
+                                    <div class="pull-right">
+                                        <a href="#" class="btn btn-default btn-flat">Abmelden</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- Control Sidebar Toggle Button -->
+                        <li>
+                            <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </header>
+        <!-- Left side column. contains the logo and sidebar -->
+        <aside class="main-sidebar">
+
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+
+                <!-- Sidebar user panel (optional) -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="img-circle" alt="Miniavatar" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>@CurrentUser.UserName</p>
+                        <!-- Status -->
+                        <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    </div>
+                </div>
+
+                <!-- search form (Optional) -->
+                <form action="#" method="get" class="sidebar-form">
+                    <div class="input-group">
+                        <input type="text" name="q" class="form-control" placeholder="Search..." />
+                        <span class="input-group-btn">
+                            <button type='submit' name='search' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+                        </span>
+                    </div>
+                </form>
+                <!-- /.search form -->
+                <!-- Sidebar Menu -->
+                <ul class="sidebar-menu">
+                    @if(User.IsInRole("moderator"))
+                    { 
+                    <li class="header">Benutzer</li>
+                    <!-- Optionally, you can add icons to the links -->
+                    <li><a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-user'></i> <span>Benutzerverwaltung</span></a></li>
+                    <li class="treeview">
+                        <a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-list'></i> <span>Benutzerlisten</span> <i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="@Url.Action("BbsList", "UserLists", new { Area ="mitarbeit"}, true)">BBS-Vergaben</a></li>
+                            <li><a href="@Url.Action("Posthunter", "UserLists", new { Area ="mitarbeit"}, true)">Posthunter</a></li>
+                            <li><a href="@Url.Action("Trashhunter", "UserLists", new { Area ="mitarbeit"}, true)">Müllschlucker-Posthunter</a></li>
+                            <li><a href="@Url.Action("Multiaccounts", "UserLists", new { Area ="mitarbeit"}, true)">Doppelacounts</a></li>
+                            <li><a href="@Url.Action("Bans", "UserLits", new { Area ="mitarbeit"}, true)">Sperrliste</a></li>
+                        </ul>
+                    </li>
+                    }
+                  @*<li class="header">Inhalte</li>
+                    <li><a href="#"><i class='fa fa-newspaper-o'></i> <span>Artikel- &amp; Newsverwaltung</span></a></li>
+                    <li><a href="#"><i class='fa fa-puzzle-piece'></i> <span>Bausteine</span></a></li>
+                    <li><a href="#"><i class='fa fa-comments'></i> <span>Feedback</span></a></li>
+                    <li><a href="#"><i class='fa fa-calendar'></i> <span>Terminkalender</span></a></li>
+
+                    <li class="header">Pokedex</li>
+                    <li><a href="#"><i class='fa fa-book'></i> <span>Pokedex</span></a></li>
+                    <li><a href="#"><i class='fa fa-bolt'></i> <span>Attackendex</span></a></li>
+                    <li><a href="#"><i class='fa fa-flask'></i> <span>Itemdex</span></a></li>
+
+                    <li class="header">Strategie</li>
+                    <li><a href="#"><i class='fa fa-book'></i> <span>Lexikon</span></a></li>
+                    <li><a href="#"><i class='fa fa-tachometer'></i> <span>Movesets</span></a></li>
+                    <li><a href="#"><i class='fa fa-list-ol'></i> <span>Ladder</span></a></li>
+
+                    <li class="header">Tauschbörse</li>
+                    <li><a href="#"><i class='fa fa-cart-arrow-down'></i> <span>Angebot bearbeiten</span></a></li>
+                    <li><a href="#"><i class='fa fa-bug'></i> <span>Gemeldete Tauschvorgänge</span></a></li>
+                    <li><a href="#"><i class='fa fa-list'></i> <span>Sperrliste</span></a></li>
+
+                    <li class="header">Fanart</li>
+                    <li><a href="#"><i class='fa fa-trash-o'></i> <span>Fanart löschen</span></a></li>
+                    <li><a href="#"><i class='fa fa-arrow-circle-right'></i> <span>Fanart verschieben</span></a></li>
+
+                    <li class="header">Diverses</li>
+                    <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
+                    <li><a href="#"><i class='fa fa-clock-o'></i> <span>Cronjobs</span></a></li>*@
+
+                </ul><!-- /.sidebar-menu -->
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <h1>
+                    @ViewBag.SiteHeader
+                    <small>@ViewBag.SiteDescription</small>
+                </h1>
+                <ol class="breadcrumb">
+                    @foreach (var crumb in Breadcrumbs.Current)
+                    {
+                        <li class="@(crumb == Breadcrumbs.Current.Last() ? "" : "active")" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                            <a href="@Url.Action(crumb.Action, crumb.Controller, crumb.RouteValues)" itemprop="url">
+                                <span itemprop="title">@crumb.Text</span>
+                            </a>
+                        </li>
+                    }
+                </ol>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+            @RenderBody()
+
+            </section><!-- /.content -->
+        </div><!-- /.content-wrapper -->
+        <!-- Main Footer -->
+        <footer class="main-footer">
+            <!-- To the right -->
+            <div class="pull-right hidden-xs">
+                Gebaut mit <i class="fa fa-heart"></i> und <i class="fa fa-coffee"></i> von <a href="https://github.com/Pokefans/Pokefans/graphs/contributors">vielen Pokefans</a>. Fehler gefunden? <i class='fa fa-code-fork'></i> Fork us on <a href="https://github.com/Pokefans/Pokefans"><i class="fa fa-github"></i> GitHub</a>.
+            </div>
+            <!-- Default to the left -->
+            <strong>&copy; 2015. @Html.ActionLink("Pokefans", "Index", "Home", true) </strong>ist eine private Pokémon-Fanseite.
+        </footer>
+
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Create the tabs -->
+            <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
+                <li class="active"><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!-- Home tab content -->
+                <!-- Settings tab content -->
+                <div class="tab-pane active" id="control-sidebar-settings-tab">
+                    <form method="post">
+                        <h3 class="control-sidebar-heading">Einstellungen</h3>
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Mitarbeitschat benutzen
+                                <input type="checkbox" class="pull-right" checked />
+                            </label>
+                            <p>
+                                Entferne den Haken, um nicht am Mitarbeitschat teilzunehmen. Dies betrifft nur den Chatraum mit allen Mitarbeitern, direkte Gespräche mit einzelnen Mitarbeitern kannst du trotzdem führen.
+                            </p>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Beim Chat-Server anmelden
+                                <input type="checkbox" class="pull-right" checked />
+                            </label>
+                            <p>
+                                Entferne den Haken, um dich komplett vom Mitarbeitschatserver abzumelden. Auch Einzelgespräche sind dann nicht mehr möglich.
+                            </p>
+                        </div><!-- /.form-group -->
+                        <div class="form-group">
+                            <label class="control-sidebar-subheading">
+                                Zeit-Estimate in ToDos verwenden
+                                <input type="checkbox" class="pull-right" checked />
+                            </label>
+                            <p>
+                                Wenn du dieses Feature aktivierst, kannst du Zeit-Estimates in deinen ToDos angeben. Keine Sorge: außer dir sieht das niemand.
+                            </p>
+                        </div><!-- /.form-group -->
+                    </form>
+                </div><!-- /.tab-pane -->
+            </div>
+        </aside><!-- /.control-sidebar -->
+        <!-- Add the sidebar's background. This div must be placed
+             immediately after the control sidebar -->
+        <div class='control-sidebar-bg'></div>
+    </div><!-- ./wrapper -->
+    <!-- REQUIRED JS SCRIPTS -->
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/adminlte-js")
+
+    @RenderSection("scripts", false)
+    <!-- Optionally, you can add Slimscroll and FastClick plugins.
+          Both of these plugins are recommended to enhance the
+          user experience. Slimscroll is required when using the
+          fixed layout. -->
+</body>
+</html>
