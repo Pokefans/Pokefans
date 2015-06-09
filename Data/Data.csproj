@@ -102,6 +102,10 @@
     <Compile Include="Migrations\201505122041186_Identity.Designer.cs">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201506091406455_MiniAvatar.cs" />
+    <Compile Include="Migrations\201506091406455_MiniAvatar.Designer.cs">
+      <DependentUpon>201506091406455_MiniAvatar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\201506091958040_Content.cs" />
     <Compile Include="Migrations\201506091958040_Content.Designer.cs">
       <DependentUpon>201506091958040_Content.cs</DependentUpon>
@@ -130,6 +134,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201505122041186_Identity.resx">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506091406455_MiniAvatar.resx">
+      <DependentUpon>201506091406455_MiniAvatar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506091958040_Content.resx">
       <DependentUpon>201506091958040_Content.cs</DependentUpon>
