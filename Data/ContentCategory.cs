@@ -1,6 +1,9 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Pokefans.Data
 {
@@ -50,5 +53,16 @@ namespace Pokefans.Data
         [ForeignKey("SidebarContentId")]
         public virtual Content SidebarContent { get; set; }
 
+        private ICollection<Content> _contents;
+
+        /// <summary>
+        /// All content objects for this category
+        /// </summary>
+        [InverseProperty("Category")]
+        public ICollection<Content> Contents
+        {
+            get { return _contents ?? (_contents = new HashSet<Content>()); }
+            set { _contents = value; }
+        }
     }
 }

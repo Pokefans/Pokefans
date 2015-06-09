@@ -24,7 +24,8 @@ namespace Pokefans.Data
     /// <summary>
     /// 
     /// </summary>
-    public class Feedback
+    [Table("feedback")]
+    public abstract class Feedback
     {
         /// <summary>
         /// Unique Id for the Feedback Object

@@ -19,6 +19,7 @@ namespace Pokefans.Data
     /// <summary>
     /// 
     /// </summary>
+    [Table("todos")]
     public class ToDo
     {
         /// <summary>
@@ -39,12 +40,6 @@ namespace Pokefans.Data
         /// </summary>
         [Required]
         public int AuthorId { get; set; }
-
-        /// <summary>
-        /// Ip-Address the ToDo was submitted from
-        /// </summary>
-        [Required]
-        public string IpAddress { get; set; }
 
         /// <summary>
         /// Time the ToDo was submitted

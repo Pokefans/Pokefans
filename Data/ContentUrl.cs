@@ -29,6 +29,7 @@ namespace Pokefans.Data
         /// Unique Url
         /// </summary>
         [Required]
+        [MaxLength(90)]
         [Index("idx_content_url", IsUnique = true)]
         public string Url { get; set; }
 

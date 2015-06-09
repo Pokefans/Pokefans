@@ -1,5 +1,6 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -172,5 +173,65 @@ namespace Pokefans.Data
         /// </summary>
         [ForeignKey("DefaultUrlId")]
         public virtual ContentUrl DefaultUrl { get; set; }
+
+        private ICollection<ContentUrl> _urls;
+
+        /// <summary>
+        /// All urls for this content
+        /// </summary>
+        [InverseProperty("Content")]
+        public ICollection<ContentUrl> Contents
+        {
+            get { return _urls ?? (_urls = new HashSet<ContentUrl>()); }
+            set { _urls = value; }
+        }
+
+        private ICollection<ContentFeedback> _feedback;
+
+        /// <summary>
+        /// All feedback for this content
+        /// </summary>
+        [InverseProperty("Content")]
+        public ICollection<ContentFeedback> Feedbacks
+        {
+            get { return _feedback ?? (_feedback = new HashSet<ContentFeedback>()); }
+            set { _feedback = value; }
+        }
+
+        private ICollection<ContentVersion> _versions;
+
+        /// <summary>
+        /// All versions of this content
+        /// </summary>
+        [InverseProperty("Content")]
+        public ICollection<ContentVersion> Versions
+        {
+            get { return _versions ?? (_versions = new HashSet<ContentVersion>()); }
+            set { _versions = value; }
+        }
+
+        private ICollection<ContentBoilerplate> _boilerplates;
+
+        /// <summary>
+        /// All boilerplates used in this content
+        /// </summary>
+        [InverseProperty("Content")]
+        public ICollection<ContentBoilerplate> Boilerplates
+        {
+            get { return _boilerplates ?? (_boilerplates = new HashSet<ContentBoilerplate>()); }
+            set { _boilerplates = value; }
+        }
+
+        private ICollection<ContentBoilerplate> _boilerplatesUsed;
+
+        /// <summary>
+        /// All contents this content is used for as a boilerplate
+        /// </summary>
+        [InverseProperty("Boilerplate")]
+        public ICollection<ContentBoilerplate> BoilerplatesUsed
+        {
+            get { return _boilerplatesUsed ?? (_boilerplatesUsed = new HashSet<ContentBoilerplate>()); }
+            set { _boilerplatesUsed = value; }
+        }
     }
 }

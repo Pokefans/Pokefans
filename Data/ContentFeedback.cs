@@ -7,6 +7,7 @@ namespace Pokefans.Data
     /// <summary>
     /// 
     /// </summary>
+    [Table("content_feedback")]
     public class ContentFeedback : Feedback
     {
         /// <summary>
