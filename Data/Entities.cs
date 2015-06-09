@@ -47,6 +47,22 @@ namespace Pokefans.Data
         public virtual DbSet<UserRole> UserRoles { get; set; }
 
         public virtual DbSet<UserLoginProvider> UserLoginProvides { get; set; }
+
+        public virtual DbSet<Content> Contents { get; set; }
+
+        public virtual DbSet<ContentBoilerplate> ContentBoilerplates { get; set; }
+
+        public virtual DbSet<ContentCategory> ContentCategories { get; set; }
+
+        public virtual DbSet<ContentFeedback> ContentFeedbacks { get; set; }
+
+        public virtual DbSet<ContentUrl> ContentUrls { get; set; }
+
+        public virtual DbSet<ContentVersion> ContentVersions { get; set; }
+
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
+
+        public virtual DbSet<ToDo> ToDos { get; set; }
     }
 
     //public class MyEntity

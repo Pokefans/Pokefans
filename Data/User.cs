@@ -145,6 +145,28 @@ namespace Pokefans.Data
             set { providers = value; }
         }
 
+        private ICollection<Content> publishedContents;
+        /// <summary>
+        /// All contents published by this user
+        /// </summary>
+        [InverseProperty("PublishedByUser")]
+        public virtual ICollection<Content> PublishedContents
+        {
+            get { return publishedContents ?? (publishedContents = new HashSet<Content>()); }
+            set { publishedContents = value; }
+        }
+
+        private ICollection<Content> createdContents;
+        /// <summary>
+        /// All contents published by this user
+        /// </summary>
+        [InverseProperty("Author")]
+        public virtual ICollection<Content> CreatedContents
+        {
+            get { return createdContents ?? (createdContents = new HashSet<Content>()); }
+            set { createdContents = value; }
+        }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
         {
             // Note the authenticationType must match the one 
