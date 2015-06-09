@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Text;
@@ -106,19 +108,22 @@ namespace Pokefans.Data
         public virtual int AccessFailedCount { get; set; }
 
         [Column("mini_avatar_filename")]
-        private string miniAvatarFileName { get; set; }
+        protected string _miniAvatarFileName { get; set; }
 
+        [NotMapped]
         public virtual string MiniAvatarFileName
         {
             get
             {
-                return miniAvatarFileName ?? "no-avatar.png";
+                return _miniAvatarFileName ?? "no-avatar.png";
             }
             set
             {
-                miniAvatarFileName = value;
+                _miniAvatarFileName = value;
             }
         }
+
+        internal static readonly Expression<Func<User, string>> MiniAvatarFileNameExpression = u => u._miniAvatarFileName;
 
         private ICollection<RoleLogEntry> roleLogs;
         [InverseProperty("AffectedUser")]
@@ -180,6 +185,22 @@ namespace Pokefans.Data
         {
             get { return createdContents ?? (createdContents = new HashSet<Content>()); }
             set { createdContents = value; }
+        }
+
+        private ICollection<UserNote> notes;
+        [InverseProperty("User")]
+        public virtual ICollection<UserNote> Notes
+        {
+            get { return notes ?? (notes = new HashSet<UserNote>()); }
+            set { notes = value; }
+        }
+
+        private ICollection<UserNote> authorNotes;
+        [InverseProperty("Author")]
+        public virtual ICollection<UserNote> AuthoredNotes
+        {
+            get { return authorNotes ?? (authorNotes = new HashSet<UserNote>()); }
+            set { authorNotes = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)

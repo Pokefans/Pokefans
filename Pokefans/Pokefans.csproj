@@ -189,12 +189,15 @@
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
     <Compile Include="Areas\mitarbeit\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\UserController.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\UserListsController.cs" />
     <Compile Include="Areas\mitarbeit\mitarbeitAreaRegistration.cs" />
+    <Compile Include="Areas\mitarbeit\Models\UserSerachViewModel.cs" />
     <Compile Include="Areas\tools\toolsAreaRegistration.cs" />
     <Compile Include="Areas\user\userAreaRegistration.cs" />
     <Compile Include="Areas\user\Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Areas\user\Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -232,8 +235,13 @@
     <Content Include="Areas\tools\Views\web.config" />
     <Content Include="Areas\tools\Views\_ViewStart.cshtml" />
     <Content Include="Areas\mitarbeit\Views\web.config" />
+    <Content Include="Areas\mitarbeit\Controllers\readme.md" />
     <Content Include="Areas\mitarbeit\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\tools\Controllers\readme.md" />
     <Content Include="Areas\mitarbeit\Views\_Layout.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\_Layout.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\User\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Filesystem.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\adminlte\app.js" />
@@ -286,10 +294,10 @@
     <Content Include="Areas\user\Views\Account\ResetPasswordConfirmation.cshtml" />
     <Content Include="Areas\user\Views\Account\SendCode.cshtml" />
     <Content Include="Areas\user\Views\Account\VerifyCode.cshtml" />
-    <Content Include="Views\Manage\ChangePassword.cshtml" />
-    <Content Include="Views\Manage\Index.cshtml" />
-    <Content Include="Views\Manage\ManageLogins.cshtml" />
-    <Content Include="Views\Manage\SetPassword.cshtml" />
+    <Content Include="Areas\user\Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Areas\user\Views\Manage\Index.cshtml" />
+    <Content Include="Areas\user\Views\Manage\ManageLogins.cshtml" />
+    <Content Include="Areas\user\Views\Manage\SetPassword.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_BreadcrumbPartial.cshtml" />
@@ -298,7 +306,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\mitarbeit\Models\" />
     <Folder Include="Areas\mitarbeit\Views\Shared\" />
-    <Folder Include="Areas\tools\Controllers\" />
+    <Folder Include="Areas\mitarbeit\Views\UserLists\" />
     <Folder Include="Areas\tools\Models\" />
     <Folder Include="Areas\tools\Views\Shared\" />
     <Folder Include="Areas\user\Models\" />
@@ -339,16 +347,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
-          <AutoAssignPort>True</AutoAssignPort>
-          <DevelopmentServerPort>1943</DevelopmentServerPort>
-          <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:1943/</IISUrl>
-          <NTLMAuthentication>False</NTLMAuthentication>
-          <UseCustomServer>False</UseCustomServer>
-          <CustomServerUrl>
-          </CustomServerUrl>
-          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+          <SaveServerSettingsInUserFile>True</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

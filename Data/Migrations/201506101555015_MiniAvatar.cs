@@ -7,12 +7,12 @@ namespace Pokefans.Data.Migrations
     {
         public override void Up()
         {
-            AddColumn("dbo.system_users", "MiniAvatarFileName", c => c.String(unicode: false));
+            AddColumn("dbo.system_users", "mini_avatar_filename", c => c.String(unicode: false));
         }
         
         public override void Down()
         {
-            DropColumn("dbo.system_users", "MiniAvatarFileName");
+            DropColumn("dbo.system_users", "mini_avatar_filename");
         }
     }
 }

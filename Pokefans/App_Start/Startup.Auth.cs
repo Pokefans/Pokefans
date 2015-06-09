@@ -32,13 +32,16 @@ namespace Pokefans
                 LoginPath = new PathString("/Account/Login"),
                 Provider = new CookieAuthenticationProvider
                 {
+                    OnApplyRedirect = ApplyRedirect, 
                     // Aktiviert die Anwendung für die Überprüfung des Sicherheitsstempels, wenn sich der Benutzer anmeldet.
                     // Dies ist eine Sicherheitsfunktion, die verwendet wird, wenn Sie ein Kennwort ändern oder Ihrem Konto eine externe Anmeldung hinzufügen.  
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, User, int>(
                         validateInterval: TimeSpan.FromMinutes(30),
                         regenerateIdentityCallback: (manager, user) => { return user.GenerateUserIdentityAsync(manager); },
                         getUserIdCallback: (id) => { return id.GetUserId<int>(); })
-                }
+                },
+                CookieDomain = ConfigurationManager.AppSettings["CookieDomain"],
+                CookieName = ConfigurationManager.AppSettings["CookieName"]
             });            
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
@@ -80,6 +83,28 @@ namespace Pokefans
                     ClientSecret = ConfigurationManager.AppSettings["GoogleAuthenticationClientSecret"]
                 });
             }
+        }
+
+        private static void ApplyRedirect(CookieApplyRedirectContext context)
+        {
+            Uri absoluteUri;
+            if (Uri.TryCreate(context.RedirectUri, UriKind.Absolute, out absoluteUri))
+            {
+                var path = PathString.FromUriComponent(absoluteUri);
+                if (path == context.OwinContext.Request.PathBase + context.Options.LoginPath)
+                {
+                    if (bool.Parse(ConfigurationManager.AppSettings["HttpsLoginPage"]))
+                        context.RedirectUri = "https://";
+                    else
+                        context.RedirectUri = "http://";
+                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + "/Account/Login";
+                    context.RedirectUri += new QueryString(
+                            context.Options.ReturnUrlParameter,
+                            context.Request.Uri.AbsoluteUri).ToString();
+                }
+            }
+
+            context.Response.Redirect(context.RedirectUri);
         }
     }
 }

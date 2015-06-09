@@ -134,6 +134,7 @@
     <Compile Include="ApplicationSignInManager.cs" />
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="Cryptography\Pbkdf2.cs" />
+    <Compile Include="EmailService.cs" />
     <Compile Include="Exceptions\PasswordMismatchException.cs" />
     <Compile Include="Exceptions\PermissionNotFoundException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
@@ -153,10 +154,6 @@
     <ProjectReference Include="..\Data\Data.csproj">
       <Project>{8a5414f6-0e1f-45e7-ab59-4fc2495c7697}</Project>
       <Name>Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Util\Util.csproj">
-      <Project>{7b25ba24-692f-46c5-8fd5-8c5b735e8978}</Project>
-      <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

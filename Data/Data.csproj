@@ -95,20 +95,24 @@
     <Compile Include="ContentBoilerplate.cs" />
     <Compile Include="ContentCategory.cs" />
     <Compile Include="ContentFeedback.cs" />
-    <Compile Include="Feedback.cs" />
     <Compile Include="ContentUrl.cs" />
     <Compile Include="ContentVersion.cs" />
+    <Compile Include="Feedback.cs" />
     <Compile Include="Migrations\201505122041186_Identity.cs" />
     <Compile Include="Migrations\201505122041186_Identity.Designer.cs">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201506091406455_MiniAvatar.cs" />
-    <Compile Include="Migrations\201506091406455_MiniAvatar.Designer.cs">
-      <DependentUpon>201506091406455_MiniAvatar.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\201506091958040_Content.cs" />
     <Compile Include="Migrations\201506091958040_Content.Designer.cs">
       <DependentUpon>201506091958040_Content.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506101555015_MiniAvatar.cs" />
+    <Compile Include="Migrations\201506101555015_MiniAvatar.Designer.cs">
+      <DependentUpon>201506101555015_MiniAvatar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201506101601282_UserNotes.cs" />
+    <Compile Include="Migrations\201506101601282_UserNotes.Designer.cs">
+      <DependentUpon>201506101601282_UserNotes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -120,6 +124,7 @@
     <Compile Include="User.cs" />
     <Compile Include="UserLogin.cs" />
     <Compile Include="UserLoginProvider.cs" />
+    <Compile Include="UserNote.cs" />
     <Compile Include="UserPermission.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -135,11 +140,14 @@
     <EmbeddedResource Include="Migrations\201505122041186_Identity.resx">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201506091406455_MiniAvatar.resx">
-      <DependentUpon>201506091406455_MiniAvatar.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506091958040_Content.resx">
       <DependentUpon>201506091958040_Content.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506101555015_MiniAvatar.resx">
+      <DependentUpon>201506101555015_MiniAvatar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201506101601282_UserNotes.resx">
+      <DependentUpon>201506101601282_UserNotes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

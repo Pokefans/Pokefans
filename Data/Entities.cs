@@ -63,6 +63,15 @@ namespace Pokefans.Data
         public virtual DbSet<Feedback> Feedbacks { get; set; }
 
         public virtual DbSet<ToDo> ToDos { get; set; }
+
+        public virtual DbSet<UserNote> UserNotes { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().Property(User.MiniAvatarFileNameExpression);
+            
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
     //public class MyEntity

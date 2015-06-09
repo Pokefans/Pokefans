@@ -7,13 +7,13 @@ namespace Pokefans.Data.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class MiniAvatar : IMigrationMetadata
+    public sealed partial class UserNotes : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(MiniAvatar));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UserNotes));
         
         string IMigrationMetadata.Id
         {
-            get { return "201506091406455_MiniAvatar"; }
+            get { return "201506101601282_UserNotes"; }
         }
         
         string IMigrationMetadata.Source

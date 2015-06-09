@@ -2,19 +2,23 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Configuration;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Routing;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Pokefans.Data;
 using Pokefans.Models;
 using Pokefans.Security;
+using Pokefans.Util;
 
 namespace Pokefans.Controllers
 {
@@ -476,11 +480,13 @@ namespace Pokefans.Controllers
 
         private ActionResult RedirectToLocal(string returnUrl)
         {
-            if (Url.IsLocalUrl(returnUrl))
+            if (returnUrl != null && Regex.IsMatch(returnUrl, @"http(s)?://[a-z\.]+"+ConfigurationManager.AppSettings["Domain"]))
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            string blubb = Url.Action("Index", "Home", new RouteValueDictionary(new { area = "" }), 
+                HttpContext.Request.IsSecureConnection ? "https" : "http", ConfigurationManager.AppSettings["Domain"]);
+            return Redirect(blubb);
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

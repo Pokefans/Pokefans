@@ -30,6 +30,35 @@ namespace Pokefans.Data.Migrations
             //      new Person { FullName = "Rowan Miller" }
             //    );
             //
+
+
+            // If you add a Role in Code, be sure to add it here.
+            // Although it shouldn't matter, please add it *to the end of the list*.
+
+            if (!context.Roles.Any(x => x.Name == "superadmin"))
+                context.Roles.Add(new Role()
+                {
+                    Name = "superadmin",
+                    FriendlyName = "Super-Administrator"
+                });
+
+            if (!context.Roles.Any(x => x.Name == "moderator"))
+                context.Roles.Add(
+                new Role()
+                {
+                    Name = "moderator",
+                    FriendlyName = "Moderator"
+                });
+            if (!context.Roles.Any(x => x.Name == "mitarbeiter"))
+                context.Roles.Add(
+                new Role()
+                {
+                    Name = "mitarbeiter",
+                    FriendlyName = "Mitarbeiter"
+                });
+            context.SaveChanges();
+
+
         }
     }
 }
