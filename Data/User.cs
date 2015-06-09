@@ -105,6 +105,21 @@ namespace Pokefans.Data
         [Column("access_failed_count")]
         public virtual int AccessFailedCount { get; set; }
 
+        [Column("mini_avatar_filename")]
+        private string miniAvatarFileName { get; set; }
+
+        public virtual string MiniAvatarFileName
+        {
+            get
+            {
+                return miniAvatarFileName ?? "no-avatar.png";
+            }
+            set
+            {
+                miniAvatarFileName = value;
+            }
+        }
+
         private ICollection<RoleLogEntry> roleLogs;
         [InverseProperty("AffectedUser")]
         public virtual ICollection<RoleLogEntry> RoleLogs 
@@ -175,6 +190,5 @@ namespace Pokefans.Data
             // Add custom user claims here
             return userIdentity;
         }
-
     }
 }
