@@ -74,6 +74,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Breadcrumbs.cs" />
+    <Compile Include="ControllerExtensions.cs" />
     <Compile Include="DomainRoute.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="IBreadcrumbs.cs" />
@@ -82,7 +83,18 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{8a5414f6-0e1f-45e7-ab59-4fc2495c7697}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Security\Security.csproj">
+      <Project>{93cd0e14-2b13-4f93-8d38-8715cc12806a}</Project>
+      <Name>Security</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

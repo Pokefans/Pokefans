@@ -64,5 +64,21 @@ namespace Pokefans.Data
             set { userRoles = value; }
         }
 
+        private ICollection<RoleChainEntry> roleChildren;
+        [InverseProperty("Child")]
+        public virtual ICollection<RoleChainEntry> ChainChildren
+        {
+            get { return roleChildren ?? (roleChildren = new HashSet<RoleChainEntry>()); }
+            set { roleChildren = value; }
+        }
+
+        private ICollection<RoleChainEntry> roleParents;
+        [InverseProperty("Parent")]
+        public virtual ICollection<RoleChainEntry> ChainParents
+        {
+            get { return roleParents ?? (roleParents = new HashSet<RoleChainEntry>()); }
+            set { roleParents = value; }
+        }
+
     }
 }

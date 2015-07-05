@@ -1,0 +1,114 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Data
+@using Pokefans.Areas.mitarbeit.Models
+@model UserMultiaccountViewModel
+@{
+    SiteTitle = "Accountübersicht";
+    SiteHeader = "Benutzerverwaltung";
+    SiteDescription = "Accounts eintragen & Multiaccountübersicht";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Doppelaccounts zu @Model.User.UserName</h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <td>Username</td>
+                            <td>IP-Adresse</td>
+                            <td>E-Mail</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var account in Model.Accounts)
+                        {
+                            User u = account.UserTo;
+
+                            if (account.UserToId == CurrentUser.Id)
+                            {
+                                u = account.UserFrom;
+                            }
+                            <tr>
+                                <td>
+                                    @u.UserName
+                                </td>
+                                <td>
+                                    @u.RegisteredIp
+                                </td>
+                                <td>
+                                    @u.Email
+                                </td>
+                                <td>
+                                    <button class="btn btn-default"
+                                            data-content="@account.Note"
+                                            data-time="@account.Time.ToString("dd.MM.yyyy HH:mm")"
+                                            data-moderator="@account.Moderator.UserName"
+                                            data-id="@account.Id"
+                                            data-user="@u.UserName"
+                                            data-toggle="modal"
+                                            data-target="#multiaccount-infoModal">
+                                        <i class="fa fa-info-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-header"><h3 class="box-title">Account eintragen</h3></div>
+            <div class="box-body">
+                @using (Html.BeginForm("Multiaccount", "User", FormMethod.Post, new { role = "form" }))
+                {
+                    <div class="form-group">
+                        <label for="username">Benutzername</label>
+                        @Html.TextBoxFor(g => g.MultiaccountToAdd.UserName, new { id = "username", @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="reason">Begründung</label>
+                        @Html.TextAreaFor(g => g.MultiaccountToAdd.Reason, new { rows = 10, @class="form-control" })
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-success">Eintragen</button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="multiaccount-infoModal" tabindex="-1" role="dialog" aria-labelledby="infoModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="infoModalLabel">Informationen zu <span id="account-title"></span></h4>
+            </div>
+            <div class="modal-body">
+                <div id="alert-container"></div>
+                <p id="account-text"></p>
+            </div>
+            <div class="modal-footer">
+                <p class="help-block">Dieser Account wurde am <span id="account-date"></span> von <span id="account-moderator"></span> eingetragen. <a id="modal-direct-link" href="#">Direktlink</a>.</p>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Schließen</button>
+                <button type="button" class="btn btn-success" id="account-exception">Erlaubte Ausnahme</button>
+                <button type="button" class="btn btn-danger" id="account-no-multiaccount">Kein Doppelaccount</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/backend")
+}
+
+@section BvsSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_BvsUserMenuPartial.cshtml", new UserMenuModel() { Id = Model.User.Id, Url = Model.User.Url, Active = "multiaccounts" })
+}

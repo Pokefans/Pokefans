@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Pokefans.Data;
+using Pokefans.SystemCache;
 
 namespace Pokefans.Security
 {
@@ -20,10 +21,12 @@ namespace Pokefans.Security
                       IUserTwoFactorStore<User, int>
     {
         private Entities entities;
+        private Cache cache;
 
-        public UserStore() : this(new Entities()) { }
 
-        public UserStore(Entities ents)
+        public UserStore() : this(new Entities(), null) { }
+
+        public UserStore(Entities ents, Cache cache)
         {
             this.entities = ents;
         }
@@ -305,12 +308,12 @@ namespace Pokefans.Security
 
         public Task<bool> IsInRoleAsync(User user, string roleName)
         {
-            return Task.FromResult<bool>(user.HasPermission(roleName));
+            return Task.FromResult<bool>(user.IsInRole(roleName, cache, entities));
         }
 
         public Task RemoveFromRoleAsync(User user, string roleName)
         {
-            if(user.HasPermission(roleName))
+            if (user.IsInRole(roleName, cache, entities))
             {
                 var userperm = (from s in entities.UserRoles
                                 join t in entities.Roles on s.PermissionId equals t.Id

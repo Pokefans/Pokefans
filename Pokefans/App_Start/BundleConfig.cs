@@ -26,6 +26,25 @@ namespace Pokefans
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css"));
+
+            // Admin Area specific bundles
+            bundles.Add(new StyleBundle("~/bundles/adminlte").Include(
+                      "~/Content/adminlte/bootstrap.css",
+                      "~/Content/adminlte/AdminLTE.css",
+                      "~/Content/adminlte/skin-blue.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
+                      "~/Scripts/adminlte/bootstrap.js",
+                      "~/Scripts/adminlte/app.js",
+                      "~/Scripts/adminlte/jquery.slimscroll.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/backend").Include(
+                      "~/Scripts/backend/advertising.js",
+                      "~/Scripts/backend/multiaccounts.js",
+                      "~/Scripts/backend/rolemanager.js"
+                ));
         }
     }
 }

@@ -43,7 +43,10 @@ namespace Pokefans.Areas.user
                 "einstellungen/{action}/{id}",
                 new { action = "Index", controller = "Account", id = UrlParameter.Optional }));
 
-
+            context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "einstellungen/passwort/{action}/{id}", 
+                new { action = "Index", controller = "Manage", id = UrlParameter.Optional }));
         }
     }
 }

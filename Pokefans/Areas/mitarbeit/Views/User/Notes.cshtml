@@ -1,0 +1,66 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@using Pokefans.Data
+@using Base36Encoder
+@model UserNoteViewModel
+@{
+    SiteTitle = "Benutzernotizen: " + Model.User.UserName;
+    SiteHeader = "Benutzerverwaltung: " + Model.User.UserName;
+    SiteDescription = "Benutzernotizen";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+@Html.Partial("~/Areas/mitarbeit/Views/Shared/_BvsUserPartial.cshtml", Model.User)
+
+@if (Model.Notes.Count() <= 0)
+{
+    <div class="alert alert-info">Gute Nachrichten! Wir haben keine Notizen zu diesem Benutzer gefunden.</div>
+}
+else
+{
+    DateTime lastDate  = Model.Notes[0].Created;
+    <ul class="timeline">
+        <li class="time-label">
+            <span class="bg-blue">@lastDate.ToString("d.M.yyyy")</span>
+        </li>
+        @foreach (UserNote note in Model.Notes)
+        {
+            if (note.Created.DayOfYear < lastDate.DayOfYear || note.Created.Year != lastDate.Year)
+            {
+                <li class="time-label">
+                    <span class="bg-blue">@lastDate.ToString("d.M.yyyy")</span>
+                </li>
+            }
+            <li>
+                <a id="@String.Format("note{0}", note.Id)" href="@String.Format("{1}#note{0}", note.Id, Request.Url.AbsoluteUri)" class="ion bg-green"><i class="fa fa-comment"></i></a>
+                <div class="timeline-item">
+                    <span class="time">
+                        @if (note.IsDeletable && (User.IsInRole("superadmin") || CurrentUser.Id == note.AuthorId))
+                        {
+                            <a href="@Url.Action("DeleteNote", new { id = note.Id })" class="btn btn-xs btn-danger"><i class="fa fa-trash"></i></a>
+                        }
+                        <i class="fa fa-clock-o"></i> @note.Created.ToString("HH:mm") { @Base36.Encode(CurrentUser.Id) }
+                    </span>
+                    <h3 class="timeline-header">
+                        <strong>@Model.Actions[note.ActionId]</strong> von
+                        @if (note.AuthorId == null)
+                        {
+                            <strong>System</strong>
+                        }
+                        else
+                        {
+                            <strong><a href="@Url.Action("Profil", "User", new { id = note.Author.Url }, "user", null)" 
+                                       class="@note.Author.Color">@note.Author.UserName</a></strong>
+                        }
+                    </h3>
+                    <div class="timeline-body">
+                        @Html.Raw(note.Content)
+                    </div>
+                </div>
+            </li>
+        }
+    </ul>
+}
+
+@section BvsSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_BvsUserMenuPartial.cshtml", new UserMenuModel() { Id = Model.User.Id, Url = Model.User.Url, Active = "notes" })
+}

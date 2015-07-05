@@ -19,7 +19,7 @@ namespace Pokefans.Data
         // Wenn Sie eine andere Datenbank und/oder einen anderen Anbieter als Ziel verwenden möchten, ändern Sie die Pokefans-Zeichenfolge 
         // in der Anwendungskonfigurationsdatei.
         public Entities()
-            : base()
+            : base("Entities")
         {
         }
 
@@ -63,6 +63,25 @@ namespace Pokefans.Data
         public virtual DbSet<Feedback> Feedbacks { get; set; }
 
         public virtual DbSet<ToDo> ToDos { get; set; }
+
+        public virtual DbSet<UserNote> UserNotes { get; set; }
+
+        public virtual DbSet<UserAdvertising> UserAdvertising { get; set; }
+
+        public virtual DbSet<UserAdvertisingForm> UserAdvertisingForms { get; set; }
+
+        public virtual DbSet<UserNoteAction> UserNoteActions { get; set; }
+
+        public virtual DbSet<UserMultiaccount> UserMultiaccounts { get; set; }
+
+        public virtual DbSet<RoleChainEntry> RoleChain { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<User>().Property(User.MiniAvatarFileNameExpression);
+            
+            base.OnModelCreating(modelBuilder);
+        }
     }
 
     //public class MyEntity

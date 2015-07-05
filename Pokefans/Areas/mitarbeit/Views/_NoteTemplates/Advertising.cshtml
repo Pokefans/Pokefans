@@ -1,0 +1,13 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@model UserAdvertisingNoteViewModel
+@{
+    Layout = null;
+}
+@*This should be XSS-safe, altough I'm glad to be proven otherwise.*@
+Werbung für Webseite <a href="@Html.Raw(Uri.EscapeDataString(Model.Uaavm.Url))">@Model.Uaavm.Url</a> in <strong>@Model.AdvertisingForm</strong> 
+@if (Model.Uaavm.UserName != null)
+{
+    <text>(Ziel: <strong>@Url.Action("Profile", "User", new { id = Model.Uaavm.UserName }, "user", null)</strong>)</text>
+}
+.

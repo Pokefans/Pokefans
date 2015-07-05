@@ -8,6 +8,7 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Pokefans.Data;
 using Pokefans.Security;
+using Pokefans.SystemCache;
 using Pokefans.Util;
 
 namespace Pokefans.App_Start
@@ -43,13 +44,13 @@ namespace Pokefans.App_Start
             // NOTE: To load from web.config uncomment the line below. Make sure to add a Microsoft.Practices.Unity.Configuration to the using statements.
             // container.LoadConfiguration();
 
-            container.RegisterType<Entities>();
-            container.RegisterType<IUserStore<User, int>, UserStore>(new InjectionConstructor(typeof(Entities)));
+            container.RegisterType<Entities>(new PerResolveLifetimeManager());
+            container.RegisterType(typeof(IUserStore<User, int>), typeof(UserStore));
             container.RegisterType<ApplicationSignInManager>();
             container.RegisterType<ApplicationUserManager>();
             container.RegisterType<IAuthenticationManager>(new InjectionFactory( c => HttpContext.Current.GetOwinContext().Authentication));
             container.RegisterType<IRoleStore<Role, int>, RoleStore>(new InjectionConstructor(typeof(Entities)));
-            
+
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
         }

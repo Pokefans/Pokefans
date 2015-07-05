@@ -69,7 +69,7 @@ namespace Pokefans.SecurityTest
             emock.Setup(x => x.Roles).Returns(mockSet.Object);
             emock.Setup(x => x.UserRoles).Returns(jmockSet.Object);
 
-            bool permResult = u.HasPermission("testperm", new Mock<Cache>().Object, emock.Object);
+            bool permResult = u.IsInRole("testperm", new Mock<Cache>().Object, emock.Object);
 
             Assert.IsTrue(permResult);
         }
@@ -115,7 +115,7 @@ namespace Pokefans.SecurityTest
             emock.Setup(x => x.Roles).Returns(mockSet.Object);
             emock.Setup(x => x.UserRoles).Returns(jmockSet.Object);
 
-            bool permResult = u.HasPermission("testperm2", new Mock<Cache>().Object, emock.Object);
+            bool permResult = u.IsInRole("testperm2", new Mock<Cache>().Object, emock.Object);
 
             Assert.IsFalse(permResult);
         }
@@ -162,7 +162,7 @@ namespace Pokefans.SecurityTest
             emock.Setup(x => x.Roles).Returns(mockSet.Object);
             emock.Setup(x => x.UserRoles).Returns(jmockSet.Object);
 
-            bool permResult = u.HasPermission("testperm", new Mock<Cache>().Object, emock.Object);
+            bool permResult = u.IsInRole("testperm", new Mock<Cache>().Object, emock.Object);
 
             Assert.IsFalse(permResult);
         }

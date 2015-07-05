@@ -1,0 +1,93 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@using Pokefans.Data
+@using System.Linq;
+@model UserAdvertisingViewModel
+@{
+    SiteTitle = "Werbung melden";
+    SiteHeader = "Benutzerverwaltung";
+    SiteDescription = "Werbung melden & Vergangene Meldungen einsehen";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Bisherige Werbemeldungen für @Model.User.UserName</h3>
+            </div>
+            <div class="box-body no-padding">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Benutzer</th>
+                            <th>Webseite</th>
+                            <th>Form</th>
+                            <th>Meldezeit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(UserAdvertising ua in Model.RecordedAdvertisings)
+                        {
+                            <tr>
+                                <td>@ua.AdvertisingFrom.UserName</td>
+                                <td>@ua.Url</td>
+                                <td>@ViewBag.AdvertisingFormIds[ua.AdvertisingFormId]</td>
+                                <td>@ua.ReportTime.ToString("dd.MM.yyyy HH:mm")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Werbemeldung eintragen</h3>
+            </div>
+            @using (Html.BeginForm("AddAdvertising", "User", FormMethod.Post, new { role = "form" }))
+            { 
+                @Html.AntiForgeryToken()
+                <div class="box-body">
+                    @if(ViewBag.Error != null)
+                    {
+                        <div class="alert alert-danger">Fehler beim Eintragen. Hast du dich vielleicht beim Benutzernamen der Zielperson vertippt?</div>
+                    }
+                    <div class="form-group">
+                        <label for="Url">Webseite</label>
+                        @Html.TextBoxFor(s => s.AdvertisingToAdd.Url, new { @class = "form-control", placeholder = "http://example.com" })
+                    </div>
+                    <div class="form-group">
+                        <label for="AdvertisingFormId">Werbeform</label>
+                        <select class="form-control" id="advertisingform" name="@Html.NameFor(g => g.AdvertisingToAdd.AdvertisingFormId)">
+                            @foreach (UserAdvertisingForm af in ViewBag.AdvertisingForms)
+                            {
+                                <option data-is-targeted="@af.IsTargeted" value="@af.Id">@af.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group" id="targetuser">
+                        <label for="UserName">Zielperson</label>
+                        @Html.TextBoxFor(g => g.AdvertisingToAdd.UserName, new { @class = "form-control", placeholder = "Legomeister" })
+                    </div>
+                    <div class="form-group">
+                        <label for="ScreenshotUrl">Screenshot-Url</label>
+                        @Html.TextBoxFor(g => g.AdvertisingToAdd.ScreenshotUrl, new { @class = "form-control" })
+                        <p class="help-block">Du musst die volle Screenshot-Url inklusive <code>http(s)?://</code> angeben.</p>
+                    </div>
+                </div>
+                <div class="box-footer">
+                    <button class="btn btn-primary" type="submit">Speichern</button>
+                </div>
+                <p class="help-block">Bei Werbung in Signaturen muss die Signatur extra gelöscht werden. Eine automatische Löschung findet nicht statt.</p>
+            }
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/backend")
+}
+
+@section BvsSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_BvsUserMenuPartial.cshtml", new UserMenuModel() { Id = Model.User.Id, Url = Model.User.Url, Active = "advertising" })
+}
