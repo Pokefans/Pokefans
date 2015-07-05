@@ -6,7 +6,7 @@ Das ist der neue Kern von Pokefans - eine der größten Pokemon-Fanseiten im DAC
 # Lizenz
 ![AGPLv3](https://www.gnu.org/graphics/agplv3-155x51.png)
 
-Pokefans Core ist lizensiert unter den Bedingungen der GNU Affero General Public License Version 3 (oder jeder späteren Version dieser Lizenz; Terminus: AGPLv3+). Was heißt das? Jeder darf den Code herunterladen, verändern und ausführen, unter der Bedingung, dass der verändete Code klar gekennzeichnet wird und wieder unter der GNU Affero General Public License Version 3 lizensiert wird. Im Unterschied zur GPL muss der Code aber auch bereit gestellt werden, wenn die Software nur als Dienst (also z.B. als Teil einer Webseite) bereit gestellt wird.
+Pokefans Core ist lizenziert unter den Bedingungen der GNU Affero General Public License Version 3 (oder jeder späteren Version dieser Lizenz; Terminus: AGPLv3+). Was heißt das? Jeder darf den Code herunterladen, verändern und ausführen, unter der Bedingung, dass der verändete Code klar gekennzeichnet wird und wieder unter der GNU Affero General Public License Version 3 lizenziert wird. Im Unterschied zur GPL muss der Code aber auch bereit gestellt werden, wenn die Software nur als Dienst (also z.B. als Teil einer Webseite) bereit gestellt wird.
 
 # Techniken
 Und darauf bauen wir auf:
