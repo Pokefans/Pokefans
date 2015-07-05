@@ -105,6 +105,11 @@ namespace Pokefans.Util
         }
 
         // @Url.Action("Index", "User", new { Area = "mitarbeit" }, HttpContext.Current.Request.IsSecureConnection ? "https" : "http", )
+        public static string Action(this UrlHelper helper, string actionName, string controllerName, object RouteValues, string subdomain, object dummy)
+        {
+            return helper.Action(actionName, controllerName, new RouteValueDictionary(RouteValues), (HttpContext.Current.Request.IsSecureConnection ? "https" : "http"), subdomain + "." + ConfigurationManager.AppSettings["Domain"]);
+        }
+
         public static string Action(this UrlHelper helper, string actionName, string controllerName, object routeValues, bool requireAbsoluteUrl)
         {
             if (requireAbsoluteUrl)

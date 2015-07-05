@@ -1,8 +1,11 @@
-﻿<!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
+﻿@*  This file was adapted from AdminLTE (https://github.com/almasaeed2010/AdminLTE),
+    Copyright 2015 Almaseed Studios.
+    It's licensed under the terms of the MIT License.
+    Please visit http://opensource.org/licenses/MIT for more information.
+    Modifications Copyright 2015 the pokefans authors.
+    See copying.md for further legal info.
+*@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -178,11 +181,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
-                    @if(User.IsInRole("moderator"))
+                    @if (User.IsInRole("moderator"))
                     { 
-                    <li class="header">Benutzer</li>
-                    <!-- Optionally, you can add icons to the links -->
-                    <li><a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-user'></i> <span>Benutzerverwaltung</span></a></li>
+                    @*<li class="header">Benutzer</li>*@
+                    string liclass = "";
+                    if (IsSectionDefined("BvsSubMenu"))
+                    {
+                        liclass = "treeview active";
+                    }
+                    <li class="@liclass"><a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-user'></i> <span>Benutzerverwaltung</span>@if (IsSectionDefined("BvsSubMenu"))
+                    {  <i class="fa fa-angle-left pull-right"></i> }</a> @RenderSection("BvsSubMenu", false) </li>
                     <li class="treeview">
                         <a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-list'></i> <span>Benutzerlisten</span> <i class="fa fa-angle-left pull-right"></i></a>
                         <ul class="treeview-menu">

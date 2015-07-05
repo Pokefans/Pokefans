@@ -28,21 +28,10 @@ namespace Pokefans.Security
         /// </summary>
         /// <param name="u">The u.</param>
         /// <param name="permissionname">The permissionname.</param>
-        /// <returns></returns>
-        public static bool HasPermission(this User u, string permissionname)
-        {
-            return u.HasPermission(permissionname, new Memcached(ConfigurationManager.AppSettings["MemcachedHost"], int.Parse(ConfigurationManager.AppSettings["MemcachedPort"])), new Entities());
-        }
-
-        /// <summary>
-        /// Determines whether the User has the given permission.
-        /// </summary>
-        /// <param name="u">The u.</param>
-        /// <param name="permissionname">The permissionname.</param>
         /// <param name="cache">The cache.</param>
         /// <param name="context">The context.</param>
         /// <returns></returns>
-        public static bool HasPermission(this User u, string permissionname, Cache cache, Entities context)
+        public static bool IsInRole(this User u, string permissionname, Cache cache, Entities context)
         {
             List<Role> permissions;
             if (!cache.Contains("permissions"))
@@ -60,7 +49,7 @@ namespace Pokefans.Security
 
             int id = permissions.Where(x => x.Name == permissionname).First().Id;
 
-            return context.UserRoles.Any(x => x.UserId == WebSecurity.CurrentUser.Id && x.PermissionId == id);
+            return context.UserRoles.Any(x => x.UserId == u.Id && x.PermissionId == id);
         }
     }
 }

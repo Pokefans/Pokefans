@@ -15,6 +15,8 @@ namespace Pokefans
 {
     public class MvcApplication : System.Web.HttpApplication
     {
+        private bool cacheInitialized = false;
+
         protected void Application_Start()
         {
             AreaRegistration.RegisterAllAreas();
@@ -30,10 +32,16 @@ namespace Pokefans
             if(ConfigurationManager.AppSettings["CachingBackend"].ToLower() == "native")
             {
                 UnityConfig.GetConfiguredContainer().RegisterType<Cache, NativeCache>(new PerRequestLifetimeManager());
+                cacheInitialized = false;
             }
             else
             {
                 UnityConfig.GetConfiguredContainer().RegisterType<Cache, Memcached>(new PerRequestLifetimeManager());
+            }
+
+            if(!cacheInitialized)
+            {
+                UnityConfig.GetConfiguredContainer().Resolve<CacheFill>();
             }
         }
     }

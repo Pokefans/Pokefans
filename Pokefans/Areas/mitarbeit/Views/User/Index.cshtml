@@ -1,4 +1,5 @@
-﻿@using Pokefans.Areas.mitarbeit.Models
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
 @model UserSerachViewModel
 @{
     SiteTitle = "Benutzerverwaltung";
@@ -7,23 +8,27 @@
     Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
     
 }
-
-<div class="panel panel-default col-lg-6 col-xs-12">
-    @if(!String.IsNullOrEmpty(ViewBag.Error))
-    {
-        <div class="alert alert-error alert-dismissable">@ViewBag.Error</div>
-    }
-    @using (Html.BeginForm("Index", "User", new { area = "mitarbeit" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="panel-body">
-            <div class="input-group">
-                @Html.TextBoxFor(g => g.UserToFind, new { @class = "form-control", placeholder="Benutzername / -id" })
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="submit">Anzeigen</button>
-                </span>
+@if (!String.IsNullOrEmpty(ViewBag.Error))
+{
+    <div class="row">
+        <div class="alert alert-error alert-dismissable col-lg-6 col-xs-12"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        @ViewBag.Error</div>
+    </div>
+}
+<div class="row">
+    <div class="panel panel-default col-lg-6 col-xs-12">
+        @using (Html.BeginForm("Index", "User", null, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="panel-body">
+                <div class="input-group">
+                    @Html.TextBoxFor(g => g.UserToFind, new { @class = "form-control", placeholder = "Benutzername / -id" })
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Anzeigen</button>
+                    </span>
+                </div>
+                <p class="help-block">Zahleneingaben werden als Benutzer-ID verstanden. Namen, welche ausschließlich aus Ziffern zusammengesetzt sind, können daher nicht gefunden werden. Diese Benutzer kannst du anhand der Benutzer-ID auswählen.</p>
             </div>
-            <p class="help-block">Zahleneingaben werden als Benutzer-ID verstanden. Namen, welche ausschließlich aus Ziffern zusammengesetzt sind, können daher nicht gefunden werden. Diese Benutzer kannst du anhand der Benutzer-ID auswählen.</p>
-        </div>
-    }
+        }
+    </div>
 </div>

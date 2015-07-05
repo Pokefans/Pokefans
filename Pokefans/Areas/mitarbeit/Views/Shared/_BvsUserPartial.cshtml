@@ -1,0 +1,70 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Data
+@model User
+
+<div class="panel panel-default">
+    <div class="panel-body row">
+        <div class="collapse navbar-collapse" id="userdata-overview">
+            <div class="col-xs-1 hidden-sm hidden-xs"><img class="img-thumbnail" src="@Html.ResourceLink("user/avatare/" + Model.MiniAvatarFileName, "files")" /></div>
+            <div class="col-xs-11">
+                <div class="col-sm-4">
+                    <h4>Stammdaten</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Registriert:</dt>
+                        <dd>@Model.Registered.ToString("d.M.yyyy HH:mm:ss")</dd>
+                        <dt>Anmeldung (Hauptseite):</dt>
+                        <dd>
+                            @if (Model.LastLogin.HasValue)
+                            {
+                                @Model.LastLogin.Value.ToString("d.M.yyyy HH:mm:ss")
+                            }
+                            else
+                            {
+                                <text>Noch nie</text>
+                            }
+                        </dd>
+                        <dt>Sperrstatus:</dt>
+                        <dd>
+                            @if (Model.IsLockedOut)
+                            {
+                                if (Model.LockedOutDate.HasValue)
+                                {
+                                    <text>Gesperrt bis zum @Model.LockedOutDate.Value.ToString("d.M.yyyy, HH:mm:ss")</text>
+                                }
+                                else
+                                {
+                                    <text>Dauerhaft gesperrt</text>
+                                }
+                            }
+                            else
+                            {
+                                <text>Nicht gesperrt</text>
+                            }
+                        </dd>
+                    </dl>
+                </div>
+                <div class="col-sm-4">
+                    <h4>Moderatives</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Werbemeldungen:</dt>
+                        <dd>@Model.UserAdvertisings.Count</dd>
+                        <dt>Doppelaccounts:</dt>
+                        <dd>(Noch nicht verfügbar)</dd>
+                    </dl>
+                </div>
+                <div class="col-sm-4">
+                    <h4>Forum</h4>
+                    <dl class="dl-horizontal">
+                        <dt>Signaturlöschungen:</dt>
+                        <dd>(Noch nicht verfügbar)</dd>
+                        <dt>Avatarlöschungen:</dt>
+                        <dd>(Noch nicht verfügbar)</dd>
+                        <dt>Posts im Forum:</dt>
+                        <dd>(Noch nicht verfügbar)</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="navbar-toggle collapsed btn btn-default btn-sm" data-toggle="collapse" data-target="#userdata-overview">Benutzerdaten ein/ausklappen</button>
+    </div>
+</div>

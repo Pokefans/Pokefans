@@ -16,18 +16,13 @@ namespace Pokefans
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
-            routes.Add("Home", new DomainRoute(
-                ConfigurationManager.AppSettings["Domain"],
-                url: "",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            ));
-
-            routes.MapRoute(
+            var route = routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "Pokefans.Controllers" }  
             );
-
+            route.DataTokens["UseNamespaceFallback"] = false;
             AreaRegistration.RegisterAllAreas();
         }
     }

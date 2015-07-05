@@ -1,0 +1,26 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@using Pokefans.Data
+@model UserMenuModel
+<!-- @Model.Active -->
+<ul class="treeview-menu menu-open">
+    <li class="@(Model.Active == "notes" ? "active" : null)"><a href="@Url.Action("Notes", "User", new { id = Model.Id }, true)">Notizen</a></li>
+    <li class="@(Model.Active == "addnote" ? "active" : null)"><a href="@Url.Action("AddNote", "User", new { id = Model.Id }, true)">Notiz anlegen</a></li>
+    <li class="@(Model.Active == "advertising" ? "active" : null)"><a href="@Url.Action("AddAdvertising", "User", new { id = Model.Id }, true)">Werbemeldungen</a></li>
+    <li class="@(Model.Active == "multiaccounts" ? "active" : null)"><a href="@Url.Action("Multiaccount", "User", new { id = Model.Id }, true)">Doppelaccounts</a></li>
+    @if (User.IsInRole("role-manager"))
+    {
+        <li class="@(Model.Active == "roles" ? "active" : null)"><a href="@Url.Action("Roles", "User", new { id = Model.Id }, true)">Rechte</a></li>
+    }
+    @if (User.IsInRole("administrator"))
+    {
+        <li class="@(Model.Active == "userdata" ? "active" : null)"><a href="@Url.Action("UserData", "User", new {id = Model.Id }, true)">Stammdaten bearbeiten</a></li>
+    }
+    @if (User.IsInRole("global-moderator"))
+    {
+        <li class="@(Model.Active == "userpage" ? "active" : null)"><a href="@Url.Action("ManageUserpage", "User", new {id = Model.Id}, true)">Nutzerseite sperren</a></li>
+        <li class="@(Model.Active == "ban" ? "active" : null)"><a href="@Url.Action("Ban", "User", new {id = Model.Id}, true)">Benutzer sperren</a></li>
+    }
+    <li><a href="@Url.Action("Profil", "User", new { id = Model.Url }, "user", null)">Profil anzeigen</a></li>
+</ul>
+

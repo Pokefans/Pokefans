@@ -1,0 +1,41 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@model UserRolesViewModel
+@{
+    ViewBag.Title = "Rechteverwaltung";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+    SiteHeader = "Benutzerverwaltung: " + Model.User.UserName;
+    SiteDescription = "Rechteverwaltung";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+<div id="alert-container"></div>
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <form>
+                    <input type="hidden" id="currentUserId" value="@Model.User.Id" />
+                    @foreach (var r in Model.Roles)
+                    {
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"
+                                       class="role-checkbox"
+                                       @if (Model.UserRoles.Any(x => x.PermissionId == r.Id)) { <text> checked="checked" </text>      }
+                                       data-children="@String.Join(",", Model.RoleChain.Where(g => g.ParentRoleId == r.Id).Select(g => g.ChildRoleId))"
+                                       value="@r.Id" />
+                                @r.FriendlyName
+                            </label>
+                        </div>
+                    }
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+@section BvsSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_BvsUserMenuPartial.cshtml", new UserMenuModel() { Id = Model.User.Id, Url = Model.User.Url, Active = "roles" })
+}
+@section scripts {
+    @Scripts.Render("~/Bundles/backend")
+}

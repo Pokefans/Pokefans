@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -24,9 +25,8 @@ namespace Pokefans.Data
         public string UnparsedContent { get; set; }
 
         [Required]
-        [Column("action")]
-        [MaxLength(100)]
-        public string Action { get; set; }
+        [Column("action_id")]
+        public int ActionId { get; set; }
 
         [Column("author_id")]
         public int AuthorId { get; set; }
@@ -42,6 +42,10 @@ namespace Pokefans.Data
         [Required]
         [Column("role_id_needed")]
         public int RoleIdNeeded { get; set; }
+
+        [Required]
+        [Column("deleteable")]
+        public bool IsDeletable { get; set; }
 
         [ForeignKey("RoleIdNeeded")]
         public virtual Role RoleNeeded { get; set; }

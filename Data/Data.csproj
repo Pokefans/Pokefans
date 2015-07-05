@@ -114,17 +114,38 @@
     <Compile Include="Migrations\201506101601282_UserNotes.Designer.cs">
       <DependentUpon>201506101601282_UserNotes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507032127430_BVSAdvertisingNotesMultiaccount.cs" />
+    <Compile Include="Migrations\201507032127430_BVSAdvertisingNotesMultiaccount.Designer.cs">
+      <DependentUpon>201507032127430_BVSAdvertisingNotesMultiaccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507040225079_BVSAdvertisingTargeted.cs" />
+    <Compile Include="Migrations\201507040225079_BVSAdvertisingTargeted.Designer.cs">
+      <DependentUpon>201507040225079_BVSAdvertisingTargeted.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507040326094_BVSAdvertisingScreenshotOptional.cs" />
+    <Compile Include="Migrations\201507040326094_BVSAdvertisingScreenshotOptional.Designer.cs">
+      <DependentUpon>201507040326094_BVSAdvertisingScreenshotOptional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507041355386_RoleChain.cs" />
+    <Compile Include="Migrations\201507041355386_RoleChain.Designer.cs">
+      <DependentUpon>201507041355386_RoleChain.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Role.cs" />
     <Compile Include="PermissionLogEntry.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RoleChainEntry.cs" />
     <Compile Include="ToDo.cs" />
     <Compile Include="User.cs" />
+    <Compile Include="UserAdvertising.cs" />
+    <Compile Include="UserAdvertisingForm.cs" />
     <Compile Include="UserLogin.cs" />
     <Compile Include="UserLoginProvider.cs" />
+    <Compile Include="UserMultiaccount.cs" />
     <Compile Include="UserNote.cs" />
+    <Compile Include="UserNoteAction.cs" />
     <Compile Include="UserPermission.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -148,6 +169,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506101601282_UserNotes.resx">
       <DependentUpon>201506101601282_UserNotes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507032127430_BVSAdvertisingNotesMultiaccount.resx">
+      <DependentUpon>201507032127430_BVSAdvertisingNotesMultiaccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507040225079_BVSAdvertisingTargeted.resx">
+      <DependentUpon>201507040225079_BVSAdvertisingTargeted.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507040326094_BVSAdvertisingScreenshotOptional.resx">
+      <DependentUpon>201507040326094_BVSAdvertisingScreenshotOptional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507041355386_RoleChain.resx">
+      <DependentUpon>201507041355386_RoleChain.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

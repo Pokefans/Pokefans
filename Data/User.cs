@@ -123,6 +123,19 @@ namespace Pokefans.Data
             }
         }
 
+        [NotMapped]
+        public virtual Nullable<DateTime> LastLogin
+        {
+            get
+            {
+                if (this.Logins.Where(s => s.Success).Count() > 0)
+                {
+                    return this.Logins.Where(s => s.Success).Max(s => s.Time);
+                }
+                return null;
+            }
+        }
+
         internal static readonly Expression<Func<User, string>> MiniAvatarFileNameExpression = u => u._miniAvatarFileName;
 
         private ICollection<RoleLogEntry> roleLogs;
@@ -201,6 +214,14 @@ namespace Pokefans.Data
         {
             get { return authorNotes ?? (authorNotes = new HashSet<UserNote>()); }
             set { authorNotes = value; }
+        }
+
+        private ICollection<UserAdvertising> userAdvertisings;
+        [InverseProperty("AdvertisingFrom")]
+        public virtual ICollection<UserAdvertising> UserAdvertisings
+        {
+            get { return userAdvertisings ?? (userAdvertisings = new HashSet<UserAdvertising>()); }
+            set { userAdvertisings = value; }
         }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<User, int> manager)
