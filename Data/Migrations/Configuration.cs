@@ -57,6 +57,27 @@ namespace Pokefans.Data.Migrations
                     Name = "mitarbeiter",
                     FriendlyName = "Mitarbeiter"
                 });
+            if (!context.Roles.Any(x => x.Name == "artikel-redakteur"))
+                context.Roles.Add(
+                new Role()
+                {
+                    Name = "artikel-redakteur",
+                    FriendlyName = "Redakteur"
+                });
+            if (!context.Roles.Any(x => x.Name == "artikel-top-redakteur"))
+                context.Roles.Add(
+                new Role()
+                {
+                    Name = "artikel-top-redakteur",
+                    FriendlyName = "Top-Redakteur"
+                });
+            if (!context.Roles.Any(x => x.Name == "artikel-administrator"))
+                context.Roles.Add(
+                new Role()
+                {
+                    Name = "artikel-administrator",
+                    FriendlyName = "Content-Administrator"
+                });
             if (!context.Roles.Any(x => x.Name == "role-manager"))
                 context.Roles.Add(
                 new Role()

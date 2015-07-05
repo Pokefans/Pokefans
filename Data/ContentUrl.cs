@@ -7,16 +7,26 @@ namespace Pokefans.Data
 {
     /// <summary>
     /// Default = Default Content Url
-    /// Active  = Alternative Content Url
+    /// Alternative  = Alternative Content Url
     /// System  = System assigned Content Url 
     /// </summary>
-    public enum UrlStatus { Default, Active, System }
+    public enum UrlType
+    {
+        [Display(Name = "Primär-URL")]
+        Default,
+
+        [Display(Name = "Alternativ-URL")]
+        Alternative,
+
+        [Display(Name = "System-URL")]
+        System
+    }
 
     /// <summary>
     /// 
     /// </summary>
     [Table("content_urls")]
-    public class ContentUrl
+    public partial class ContentUrl
     {
         /// <summary>
         /// Unique Id for the ContentUrl Object
@@ -40,10 +50,13 @@ namespace Pokefans.Data
         public int ContentId { get; set; }
 
         /// <summary>
-        /// Url Status
+        /// Url Type
         /// </summary>
-        [DefaultValue(UrlStatus.Active)]
-        public UrlStatus Status { get; set; }
+        [DefaultValue(UrlType.Alternative)]
+        public UrlType Type { get; set; }
+
+        [DefaultValue(true)]
+        public bool Enabled { get; set; }
 
         /// <summary>
         /// Corresponding Content Object

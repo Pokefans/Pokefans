@@ -1,0 +1,78 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using System.Globalization
+@using System.Web.UI.WebControls
+@using Pokefans.Areas.mitarbeit.Models
+@model ContentVersionListViewModel
+@{
+    SiteTitle = "Verwaltung: Inhalte - Versionen";
+    SiteDescription = "Versionshistorie";
+    SiteHeader = Model.Content.Title;
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+
+    Breadcrumbs.Add("Mitarbeit");
+    Breadcrumbs.Add("Inhalte");
+    Breadcrumbs.Add(Model.Content.Title);
+    Breadcrumbs.Add("Versionen");
+}
+
+<div class="row">
+    <div class="col-lg-12 col-xs-12">
+        @if (Model.Versions.Any())
+        {
+            <div class="box box-primary">
+                <div class="box-body">
+                    <p>In der folgenden Übersicht sind frühere Versionen dieses Artikels verzeichnet:</p>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>#</th>
+                                <th>Ansicht</th>
+                                <th>Quellcode</th>
+                                <th>Erstellungszeit</th>
+                                <th>Autor</th>
+                                <th>Änderungsumfang</th>
+                            </tr>
+                            @foreach (var version in Model.Versions)
+                            {
+                                <tr>
+                                    <td>@version.Version</td>
+                                    <td>
+                                        <i class="fa fa-eye"></i>
+                                        @Html.RouteLink(version.Title, "ContentDetail", new { contentId = version.ContentId, detailId = version.Id, action = "versions" })
+                                    </td>
+                                    <td>
+                                        <i class="fa fa-code"></i>
+                                        @if (version.Version == Model.Content.Version)
+                                        {
+                                            @Html.RouteLink("Bearbeiten", "ContentDetail", new { contentId = version.ContentId, action = "edit" })
+                                            @Html.Raw(" - ")
+                                            @Html.RouteLink("Diff", "ContentDetail", new { contentId = version.ContentId, detailId = version.Id, action = "versions" })
+                                        }
+                                        else
+                                        {
+                                            @Html.RouteLink("Quellcode", "ContentDetail", new { contentId = version.ContentId, detailId = version.Id, action = "versions" })
+                                        }
+                                    </td>
+                                    <td>@version.Updated</td>
+                                    <td>@version.User.UserName</td>
+                                    <td>
+                                        <div style="background-color: #ddd; border-radius: 3px; width: 120px;" title="@((int)(version.UpdateMagnificance * 100))%">
+                                            <div style="width:@((int)(version.UpdateMagnificance * 100))%; background-color: #FF9933; height: 12px; border-radius: 3px;"></div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="alert alert-info">Es sind keine Versionen zum Anzeigen verfügbar.</div>
+        }
+    </div>
+</div>
+@section ContentSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_ContentMenuPartial.cshtml", new ContentMenuModel { Active = ContentMenuViewType.Versions, Id = Model.Content.Id })
+}

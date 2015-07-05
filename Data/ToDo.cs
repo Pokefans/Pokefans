@@ -20,7 +20,7 @@ namespace Pokefans.Data
     /// 
     /// </summary>
     [Table("todos")]
-    public class ToDo
+    public partial class ToDo
     {
         /// <summary>
         /// Unique Id for the ToDoObject
@@ -55,7 +55,7 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the User who is assigned to the ToDo
         /// </summary>
-        public int AssigneeId { get; set; }
+        public int? AssigneeId { get; set; }
 
         /// <summary>
         /// ToDo Title

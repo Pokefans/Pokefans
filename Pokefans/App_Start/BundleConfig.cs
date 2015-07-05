@@ -25,7 +25,8 @@ namespace Pokefans
                       "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css"));
+                      "~/Content/bootstrap.css",
+                      "~/Content/css/font-awesome.min.css"));
 
             // Admin Area specific bundles
             bundles.Add(new StyleBundle("~/bundles/adminlte").Include(
@@ -35,9 +36,24 @@ namespace Pokefans
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
-                      "~/Scripts/adminlte/bootstrap.js",
-                      "~/Scripts/adminlte/app.js",
-                      "~/Scripts/adminlte/jquery.slimscroll.js"
+                      "~/Scripts/adminlte/bootstrap.min.js",
+                      "~/Scripts/adminlte/app.min.js",
+                      "~/Scripts/adminlte/jquery.slimscroll.min.js"
+                ));
+
+            // Ace Editor
+
+            bundles.Add(new ScriptBundle("~/bundles/ace").Include(
+                "~/Scripts/ace/ace.js",
+                "~/Scripts/ace/theme-clouds.js",
+                "~/Scripts/ace/theme-monokai.js",
+                "~/Scripts/ace/mode-html.js",
+                "~/Scripts/ace/mode-less.js",
+                "~/Scripts/ace/mode-css.js",
+                "~/Scripts/ace/worker-html.js",
+                "~/Scripts/ace/worker-css.js",
+                "~/Scripts/ace/loadace.js",
+                "~/Scripts/ace/content-edit.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(

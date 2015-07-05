@@ -140,6 +140,12 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PagedList">
+      <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
+    </Reference>
+    <Reference Include="PagedList.Mvc">
+      <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -214,10 +220,12 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\UnityMvcActivator.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\ContentController.cs" />
     <Compile Include="Areas\mitarbeit\Controllers\DashboardController.cs" />
     <Compile Include="Areas\mitarbeit\Controllers\UserController.cs" />
     <Compile Include="Areas\mitarbeit\Controllers\UserListsController.cs" />
     <Compile Include="Areas\mitarbeit\mitarbeitAreaRegistration.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentMenuModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserAddAdvertisingViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserAddNoteViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserAdvertisingNoteViewModel.cs" />
@@ -228,7 +236,14 @@
     <Compile Include="Areas\mitarbeit\Models\UserNoteViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserRoleAddNoteViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserRolesViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentEditViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentIncludesViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentListViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentStatisticsViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentUrlsViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentVersionViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserSerachViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentVersionListViewModel.cs" />
     <Compile Include="Areas\tools\toolsAreaRegistration.cs" />
     <Compile Include="Areas\user\userAreaRegistration.cs" />
     <Compile Include="Areas\user\Controllers\AccountController.cs" />
@@ -239,11 +254,26 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ContentViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\css\font-awesome.css" />
+    <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\PagedList.css" />
+    <Content Include="Scripts\ace\ace.js" />
+    <Content Include="Scripts\ace\content-edit.js" />
+    <Content Include="Scripts\ace\loadace.js" />
+    <Content Include="Scripts\ace\mode-css.js" />
+    <Content Include="Scripts\ace\mode-html.js" />
+    <Content Include="Scripts\ace\mode-less.js" />
+    <Content Include="Scripts\ace\theme-clouds.js" />
+    <Content Include="Scripts\ace\theme-monokai.js" />
+    <Content Include="Scripts\ace\worker-css.js" />
+    <Content Include="Scripts\ace\worker-html.js" />
     <Content Include="Content\adminlte\AdminLTE.css" />
     <Content Include="Content\adminlte\AdminLTE.min.css" />
     <Content Include="Content\adminlte\bootstrap.css" />
@@ -264,6 +294,7 @@
     <Content Include="Content\img\default-50x50.gif" />
     <Content Include="Content\img\icons.png" />
     <Content Include="favicon.ico" />
+    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Areas\user\Views\web.config" />
@@ -290,6 +321,24 @@
     <Content Include="Areas\mitarbeit\Views\_NoteTemplates\NoMultiaccount.cshtml" />
     <Content Include="Areas\mitarbeit\Views\_NoteTemplates\MultiaccountException.cshtml" />
     <Content Include="Areas\mitarbeit\Views\_NoteTemplates\Multiaccount.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Index.cshtml" />
+    <Content Include="fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Areas\mitarbeit\Views\Content\Edit.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Versions.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Version.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Statistics.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Includes.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Urls.cshtml" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\fonts\FontAwesome.otf" />
+    <Content Include="Areas\mitarbeit\Views\Shared\_ContentMenuPartial.cshtml" />
     <None Include="Properties\PublishProfiles\Filesystem.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\adminlte\app.js" />
@@ -352,6 +401,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_BreadcrumbPartial.cshtml" />
+    <Content Include="Views\Home\ViewContent.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

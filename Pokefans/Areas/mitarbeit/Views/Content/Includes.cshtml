@@ -1,0 +1,144 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@model ContentIncludesViewModel
+@{
+    SiteTitle = "Verwaltung: Inhalte - Einbettungen";
+    SiteDescription = "Einbettungen";
+    SiteHeader = Model.Content.Title;
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+
+    Breadcrumbs.Add("Mitarbeit");
+    Breadcrumbs.Add("Inhalte");
+    Breadcrumbs.Add(Model.Content.Title);
+    Breadcrumbs.Add("Einbettungen");
+}
+
+<div class="row">
+    <div class="col-lg-12 col-xs-12">
+        @if (!String.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-error alert-dismissable">@ViewBag.Error</div>
+        }
+
+        @if (Model.Saved)
+        {
+            <div class="alert alert-success alert-dismissable">Textbaustein hinzugefügt.</div>
+        }
+
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Inhalte, die in diesen eingebettet sind</h3>
+            </div>
+            <div class="box-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th width="15px"></th>
+                            <th>Einbettungstyp</th>
+                            <th>Inhalt</th>
+                            <th>Platzierung</th>
+                        </tr>
+                        @if (Model.Content.Boilerplates.Any())
+                        {
+                            foreach (var boilerplate in Model.Content.Boilerplates)
+                            {
+                                <tr>
+                                    <td>
+                                        <a href="@Url.RouteUrl("ContentDetail", new { contentId = Model.Content.Id, action = "includes", detailId = boilerplate.Id })" title="Einbettung entfernen">
+                                            <i class="fa fa-trash"></i>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        Statischer Textbaustein
+                                    </td>
+                                    <td>
+                                        @Html.RouteLink(boilerplate.Boilerplate.Title, "ContentDetail", new { contentId = boilerplate.Boilerplate.Id, action = "includes" })
+                                    </td>
+                                    <td>
+                                        <code>%@boilerplate.ContentBoilerplateName%</code>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3">Dieser Inhalt verwendet keine Textbausteine.</td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Content.BoilerplatesUsed.Any())
+        {
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Inhalte, in die dieser eingebettet ist</h3>
+                </div>
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <tr>
+                                <th>Eingebettet in</th>
+                                <th>Platzierung</th>
+                            </tr>
+
+                            @foreach (var boilerplate in Model.Content.BoilerplatesUsed)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.RouteLink(boilerplate.Content.Title, "ContentDetail", new { contentId = boilerplate.Content.Id, action = "includes" })
+                                    </td>
+                                    <td>
+                                        <code>%@boilerplate.ContentBoilerplateName%</code>
+                                    </td>
+                                </tr>
+
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (Model.AvailableBoilerplates.Any())
+        {
+            using (Html.BeginRouteForm("ContentDetail", new { contentId = Model.Content.Id, action = "includes" }, FormMethod.Post, new { role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(c => c.ContentId)
+
+                <div class="box box-primary">
+                    <div class="box-header">
+                        <button class="btn btn-success pull-right" type="submit">Speichern</button>
+
+                        <h3 class="box-title">Neue Einbettung hinzufügen</h3>
+                    </div>
+                    <div class="box-body">
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.BoilerplateId)
+                            @Html.ValidationMessageFor(m => m.BoilerplateId, "", new { @class = "text-danger" })
+                            @Html.DropDownListFor(c => c.BoilerplateId, Model.AvailableBoilerplates, "", new { @class = "form-control" })
+                            <p class="help-block">Anmerkung: Der Artikel muss zuerst als Typ "Textbaustein" definiert werden, damit er ausgewählt werden kann.</p>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(c => c.BoilerplateName)
+                            @Html.ValidationMessageFor(m => m.BoilerplateName, "", new { @class = "text-danger" })
+                            <div class="input-group">
+                                <span class="input-group-addon">%</span>
+                                @Html.TextBoxFor(c => c.BoilerplateName, new { @class = "form-control", placeholder = "" })
+                                <span class="input-group-addon">%</span>
+                            </div>
+                            <p class="help-block">Wenn du <code>TEXTBAUSTEIN_TRAINERLISTE</code> als Platzierung festlegst, wird der Text <code>%TEXTBAUSTEIN_TRAINERLISTE%</code> im Artikel ersetzt.</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+@section ContentSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_ContentMenuPartial.cshtml", new ContentMenuModel { Active = ContentMenuViewType.Includes, Id = Model.ContentId })
+}

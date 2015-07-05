@@ -11,7 +11,7 @@ namespace Pokefans.Data
     /// 
     /// </summary>
     [Table("content_categories")]
-    public class ContentCategory
+    public partial class ContentCategory
     {
         /// <summary>
         /// Unique Id for the ContentCategory Object
@@ -35,12 +35,12 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the corresponding Subforum
         /// </summary>
-        public int ForumId { get; set; }
+        public int? ForumId { get; set; }
 
         /// <summary>
         /// Id of the Content operating as a Sidebar
         /// </summary>
-        public int SidebarContentId { get; set; }
+        public int? SidebarContentId { get; set; }
 
         /// <summary>
         /// Position for Category Ordering

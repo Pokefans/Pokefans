@@ -1,0 +1,193 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Microsoft.AspNet.Identity
+@using Pokefans.Areas.mitarbeit.Models
+@using PagedList.Mvc;
+@model ContentListViewModel
+@{
+    SiteTitle = "Verwaltung: Inhalte";
+    SiteHeader = "Verwaltung: Inhalte";
+    SiteDescription = "Artkelliste";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+
+    Breadcrumbs.Add("Mitarbeit");
+    Breadcrumbs.Add("Inhalte");
+}
+@helper ShowFilter(string filter, string title, string icon)
+{
+    var includes = Model.IncludesFilter(filter);
+    
+    if (includes)
+    {
+        filter = filter.Split(':')[0] + ":";
+    }
+    <li class="@(includes ? "active" : null)">
+        <a href="@Url.RouteUrl("ContentIndex", new { Page = Model.Page, Filter = Model.Filter, AdditionalFilter = filter }).Replace("%3A", ":").Replace("%20", "+")">
+            <i class="fa fa-@icon"></i>
+            @title
+        </a>
+    </li>
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        @if (!String.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-error alert-dismissable">@ViewBag.Error</div>
+        }
+
+        <div class="box box-primary">
+            <div class="box-body">
+                <p>In der folgenden Übersicht sind alle Artikel auf Pokefans verzeichnet:</p>
+
+                @using (Html.BeginRouteForm("ContentIndex", new { }, FormMethod.Get, new { role = "form" }))
+                {
+                    <p>
+                        <div class="input-group">
+                            @Html.TextBoxFor(m => m.Filter, new { @class = "form-control", placeholder = "Gib hier einen Suchbegriff ein." })
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" type="submit">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </p>
+                }
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Titel</th>
+                            <th>Status</th>
+                            <th>Autor</th>
+                            <th>Stat</th>
+                            <th>V#</th>
+                        </tr>
+                        @if (!Model.Contents.Any())
+                        {
+                            <tr>
+                                <td colspan="5">
+                                    @(string.IsNullOrEmpty(Model.Filter) ? "Derzeit sind keine Inhalte zum Anzeigen verfügbar" : "Kein Inhalt entspricht deinen Kriterien!")
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var content in Model.Contents)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.RouteLink(content.Title, "ContentDetail", new { contentId = content.Id, action = "" })
+                                </td>
+                                <td>
+                                    <div class="small blur">
+                                        @content.Type.GetDisplayName()<br />
+                                        @content.Status.GetDisplayName()
+                                    </div>
+                                </td>
+                                <td><strong>@content.Author.UserName</strong></td>
+                                <td>
+                                    <a href="@Url.RouteUrl("ContentDetail", new { contentId = content.Id, action = "statistics" })"><i class="fa fa-bar-chart"></i></a>
+                                    <span class="small blur">
+                                        @content.ViewCount
+                                    </span>
+                                </td>
+                                <td>
+                                    <a href="@Url.RouteUrl("ContentDetail", new { contentId = content.Id, action = "versions" })"><i class="fa fa-history"></i></a>
+                                    <span class="small blur">
+                                        @content.Version
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+
+                @if (Model.Contents.PageCount > 1)
+                {
+                    @Html.PagedListPager(Model.Contents, page => Url.RouteUrl("ContentIndex", new { Page = page, Filter = Model.Filter }))
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12 col-lg-4">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <a data-toggle="collapse" href="#collapse-type">Typ und Status</a>
+                </h3>
+            </div>
+            <div class="collapse in" style="margin-top: -30px" id="collapse-type">
+                <div class="box-body">
+                    <menu class="nav nav-pills nav-stacked col-lg-6 col-md-12">
+                        @ShowFilter("type:news", "News", "file-text-o")
+                        @ShowFilter("type:article", "Artikel", "file-text-o")
+                        @ShowFilter("type:element", "Spezialelemente", "file-text-o")
+                        @ShowFilter("type:boilerplate", "Textbausteine", "file-text-o")
+                    </menu>
+                    <menu class="nav nav-pills nav-stacked col-lg-6 col-md-12">
+                        @ShowFilter("status:public", "Öffentlich", "clock-o")
+                        @ShowFilter("status:ready", "Fertig", "clock-o")
+                        @ShowFilter("status:progress", "In Arbeit", "clock-o")
+                        @ShowFilter("status:discarded", "Verworfen", "clock-o")
+                    </menu>
+                    <menu class="nav nav-pills nav-stacked col-md-12 col-lg-12">
+                        <li>
+                            <a href="@Url.RouteUrl("ContentIndex", new { Page = Model.Page })">
+                                <i class="fa fa-times"></i> Alle Filter aufheben
+                            </a>
+                        </li>
+                    </menu>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <a data-toggle="collapse" href="#collapse-cat">Kategorien</a>
+                </h3>
+            </div>
+            <div class="collapse in" style="margin-top: -30px" id="collapse-cat">
+                <div class="box-body">
+                    <menu class="nav nav-pills nav-stacked">
+                        @ShowFilter("index:index", "Allgemeines", "tag")
+                        @ShowFilter("index:spiele", "Pokémon-Spiele", "tag")
+                        @ShowFilter("index:fanart", "Fanart / Fanfiction", "tag")
+                        @ShowFilter("index:strategie", "Strategie / Simulatoren", "tag")
+                        @ShowFilter("index:nintendo", "Nintendo / Videospiele", "tag")
+                        <li>
+                            <a href="@Url.RouteUrl("ContentIndex", new { Page = Model.Page })">
+                                <i class="fa fa-times"></i> Alle Filter aufheben
+                            </a>
+                        </li>
+                    </menu>
+                </div>
+            </div>
+        </div>
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">
+                    <a data-toggle="collapse" href="#collapse-bookmarks">Lesezeichen</a>
+                </h3>
+            </div>
+            <div class="collapse in" style="margin-top: -30px" id="collapse-bookmarks">
+                <div class="box-body">
+                    <menu class="nav nav-pills nav-stacked">
+                        @ShowFilter("cat:76", "Super Mystery Dungeon", "thumb-tack")
+                        @ShowFilter("cat:71", "Omega Rubin und Alpha Saphir", "thumb-tack")
+                        @ShowFilter("special:routen", "ORAS Routen", "thumb-tack")
+                        @ShowFilter("cat:65", "Pokémon X und Y", "thumb-tack")
+                        @ShowFilter("user:" + User.Identity.GetUserId<int>(), "Meine erstellten Artikel", "thumb-tack")
+                        <li>
+                            <a href="@Url.RouteUrl("ContentIndex", new { Page = Model.Page })">
+                                <i class="fa fa-times"></i> Alle Filter aufheben
+                            </a>
+                        </li>
+                    </menu>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section ContentSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_ContentMenuPartial.cshtml", new ContentMenuModel { Active = ContentMenuViewType.Index })
+}

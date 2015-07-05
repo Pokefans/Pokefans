@@ -200,6 +200,17 @@ namespace Pokefans.Data
             set { createdContents = value; }
         }
 
+        private ICollection<ContentVersion> createdContentVersions;
+        /// <summary>
+        /// All contents published by this user
+        /// </summary>
+        [InverseProperty("User")]
+        public virtual ICollection<ContentVersion> CreatedContentVersions
+        {
+            get { return createdContentVersions ?? (createdContentVersions = new HashSet<ContentVersion>()); }
+            set { createdContentVersions = value; }
+        }
+
         private ICollection<UserNote> notes;
         [InverseProperty("User")]
         public virtual ICollection<UserNote> Notes

@@ -130,6 +130,10 @@
     <Compile Include="Migrations\201507041355386_RoleChain.Designer.cs">
       <DependentUpon>201507041355386_RoleChain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201507051957204_Content1.cs" />
+    <Compile Include="Migrations\201507051957204_Content1.Designer.cs">
+      <DependentUpon>201507051957204_Content1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Role.cs" />
@@ -181,6 +185,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507041355386_RoleChain.resx">
       <DependentUpon>201507041355386_RoleChain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507051957204_Content1.resx">
+      <DependentUpon>201507051957204_Content1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

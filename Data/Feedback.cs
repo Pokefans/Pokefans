@@ -25,7 +25,7 @@ namespace Pokefans.Data
     /// 
     /// </summary>
     [Table("feedback")]
-    public abstract class Feedback
+    public abstract partial class Feedback
     {
         /// <summary>
         /// Unique Id for the Feedback Object
@@ -43,8 +43,7 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the Author
         /// </summary>
-        [Required]
-        public int AuthorId { get; set; }
+        public int? AuthorId { get; set; }
 
         /// <summary>
         /// Ip-Address the Feedback was submitted from
@@ -66,7 +65,7 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the User who edited the Feedback
         /// </summary>
-        public int EditorId { get; set; }
+        public int? EditorId { get; set; }
 
         /// <summary>
         /// Note for the Feedback
