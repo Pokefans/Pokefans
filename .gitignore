@@ -157,3 +157,6 @@ $RECYCLE.BIN/
 
 # Backup files from whatever
 *.bak
+
+# MonoDevelop stuff
+*.userprefs
