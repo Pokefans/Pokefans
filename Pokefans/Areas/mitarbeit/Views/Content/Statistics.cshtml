@@ -25,6 +25,32 @@
                 {
                     <p>Der Artikel wurde bisher noch nicht aufgerufen.</p>
                 }
+
+                @if (Model.TrackerSources.Any())
+                {
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover vertical-center">
+                            <tr>
+                                <th>Website</th>
+                                <th>Klicks</th>
+                            </tr>
+                            @foreach (var sourceHost in Model.TrackerSources)
+                            {
+                                <tr>
+                                    <td><strong>@sourceHost.Host</strong></td>
+                                    <td>@sourceHost.Count</td>
+                                </tr>
+                                foreach (var sourceLink in sourceHost.Urls)
+                                {
+                                    <tr>
+                                        <td>@sourceLink.Url</td>
+                                        <td>@sourceLink.Count</td>
+                                    </tr>
+                                }
+                            }
+                        </table>
+                    </div>
+                }
             </div>
         </div>
     </div>

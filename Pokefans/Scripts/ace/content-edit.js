@@ -45,10 +45,32 @@
         editors[0].insert($(this).attr("data-code"));
     });
 
+    $("#content-form").submit = function() {
+        window.onbeforeunload = null;
+        return true;
+    };
 });
+
 function resetEditorWrapping() {
-    for (i = 0; i < editors.length; i++) {
+    for (var i = 0; i < editors.length; i++) {
         editors[i].getSession().setUseWrapMode(false);
         editors[i].getSession().setUseWrapMode(true);
     }
 }
+
+window.onbeforeunload = function (e) {
+    console.log(e);
+    console.log("test");
+    var message = "Du hast deine Änderungen nicht gespeichert. Willst du die Seite wirklich verlassen?";
+
+    if (editors[0].session.getUndoManager().isClean() && editors[1].session.getUndoManager().isClean()) {
+        return null;
+    }
+
+    if (e) {
+        e.returnValue = message;
+    }
+
+    return message;
+};
+console.log("HIU");

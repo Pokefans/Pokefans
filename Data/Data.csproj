@@ -95,6 +95,16 @@
     <Compile Include="ContentBoilerplate.cs" />
     <Compile Include="ContentCategory.cs" />
     <Compile Include="ContentFeedback.cs" />
+    <Compile Include="Migrations\201507071704102_TrackingSource.cs" />
+    <Compile Include="Migrations\201507071704102_TrackingSource.Designer.cs">
+      <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507071733530_TrackingSourceNullValues.cs" />
+    <Compile Include="Migrations\201507071733530_TrackingSourceNullValues.Designer.cs">
+      <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackingSource.cs" />
+    <Compile Include="ContentTrackingSource.cs" />
     <Compile Include="ContentUrl.cs" />
     <Compile Include="ContentVersion.cs" />
     <Compile Include="Feedback.cs" />
@@ -188,6 +198,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507051957204_Content1.resx">
       <DependentUpon>201507051957204_Content1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507071704102_TrackingSource.resx">
+      <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507071733530_TrackingSourceNullValues.resx">
+      <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

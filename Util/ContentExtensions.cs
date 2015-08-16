@@ -6,10 +6,10 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Web;
 using dotless.Core;
 using dotless.Core.configuration;
 using Pokefans.Data;
-using Pokefans.Util.Parser;
 
 namespace Pokefans.Util
 {
@@ -19,7 +19,7 @@ namespace Pokefans.Util
         /// Compiles the Content's Stylesheet and stores it.
         /// </summary>
         /// <param name="content"></param>
-        public static void CompileLess(this Data.Content content)
+        public static void CompileLess(this Content content)
         {
             var lessPath = ConfigurationManager.AppSettings["VariableLessPath"];
             var less = "#content { " + content.StylesheetCode + "}";
@@ -48,19 +48,15 @@ namespace Pokefans.Util
         /// Parse the Content and evaluate BB-Codes/Zing etc.
         /// </summary>
         /// <param name="content"></param>
-        public static void Parse(this Data.Content content)
+        public static void Parse(this Content content)
         {
             // Apply BbCodes
             var parser = new Parser.Parser();
             content.ParsedContent = parser.Parse(content.UnparsedContent);
 
             // Apply includes
-            foreach (var boilerplate in content.Boilerplates)
+            foreach (var boilerplate in content.Boilerplates.Where(boilerplate => boilerplate.ContentId != boilerplate.BoilerplateId))
             {
-                // better safe than sorry
-                if (boilerplate.ContentId == boilerplate.BoilerplateId)
-                    continue;
-
                 content.ParsedContent = content.ParsedContent.Replace(String.Format("%{0}%", boilerplate.ContentBoilerplateName),
                     boilerplate.Boilerplate.ParsedContent);
             }
@@ -220,6 +216,57 @@ namespace Pokefans.Util
             var filterItems = filter.Split(' ');
 
             return filterItems.Aggregate(data, (current, filterItem) => current.Where(c => c.MatchesFilter(filterItem)));
+        }
+
+        /// <summary>
+        /// Process a content view.
+        /// </summary>
+        /// <param name="content"></param>
+        /// <param name="request"></param>
+        /// <param name="context"></param>
+        public static void TrackView(this Content content, HttpRequestBase request, Entities context)
+        {
+            // Local requests or requests to unpublished content doesn't need to be tracked.
+#if !DEBUG
+            if (request.IsLocal || content.Status != ContentStatus.Published || request.)
+            {
+                return;
+            }
+#endif
+
+            // Ignore internal referrals
+            if (request.UrlReferrer != null &&
+                request.UrlReferrer.Host.Contains(ConfigurationManager.AppSettings["Domain"]))
+            {
+                return;
+            }
+
+            content.ViewCount++;
+
+            var trackingEntry = new ContentTrackingSource
+            {
+                ContentId = content.Id,
+                IpAdress = request.UserHostAddress,
+                RequestTime = DateTime.Now,
+                TargetUrl = (request.Url == null ? null : request.Url.AbsoluteUri),
+            };
+
+            if (request.UrlReferrer != null)
+            {
+                var searchHosts = new[] { "google.", "bing.", "suche.", "search.", "seach/", "pokefans" };
+
+                trackingEntry.SourceUrl = request.UrlReferrer.AbsoluteUri;
+                trackingEntry.SourceHost = request.UrlReferrer.Host;
+
+                if (searchHosts.Any(h => trackingEntry.SourceUrl.Contains(h)))
+                {
+                    var queryString = HttpUtility.ParseQueryString(request.UrlReferrer.Query);
+                    trackingEntry.SearchTerm = queryString["query"] ?? queryString["q"];
+                }
+            }
+
+            context.ContentTrackingSources.Add(trackingEntry);
+            context.SaveChanges();
         }
     }
 }

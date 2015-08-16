@@ -4111,3 +4111,8 @@ table.text-center th {
     white-space: normal!important;
   }
 }
+
+/* table vertical alignment */
+.table.vertical-center tbody>tr>td{
+    vertical-align: middle;
+}

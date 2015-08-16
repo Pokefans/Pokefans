@@ -22,7 +22,7 @@
 
 <div class="row">
     <div class="col-lg-12 col-xs-12">
-        @using (Html.BeginRouteForm("ContentDetail", new { contentId = Model.ContentId, action = "edit" }, FormMethod.Post, new { role = "form" }))
+        @using (Html.BeginRouteForm("ContentDetail", new { contentId = Model.ContentId, action = "edit" }, FormMethod.Post, new { role = "form", id = "content-form" }))
         {
             if (!String.IsNullOrEmpty(ViewBag.Error))
             {
@@ -37,7 +37,7 @@
             }
 
             @Html.AntiForgeryToken()
-            <input type="hidden" value="@Html.AttributeEncode(Model.ContentId)" id= id="ContentId" name="ContentId" />
+            <input type="hidden" value="@Html.AttributeEncode(Model.ContentId)" id="ContentId" name="ContentId" />
 
 
             <div class="box box-primary">
@@ -49,7 +49,10 @@
                             @Html.TextBoxFor(c => c.Title, new { @class = "form-control", placeholder = "Gib hier einen aussagekräftigen Titel ein!" })
                         </div>
                         <div class="col-lg-4">
-                            <button class="btn btn-success pull-right" type="submit" style="margin-top:23px;">Speichern</button>
+                            <div class="btn-group pull-right">
+                                <button class="btn btn-primary" type="button" onclick="previewContent();" style="margin-top:23px;">Vorschau</button>
+                                <button class="btn btn-success" type="submit" style="margin-top:23px;">Speichern</button>
+                            </div>
                         </div>
                     </div>
 
@@ -176,12 +179,10 @@
                             @Html.ValidationMessageFor(m => m.PermissionId, "", new { @class = "text-danger" })
                             @Html.DropDownListFor(c => c.PermissionId, Model.ContentPermissionList, "(keine)", new { @class = "form-control" })
                         </div>
-                        <div class="form-group col-md-6">
-                            @Html.LabelFor(c => c.Url)
-                            @Html.ValidationMessageFor(m => m.Url, "", new { @class = "text-danger" })
-                            @Html.TextBoxFor(c => c.Url, new { @class = "form-control" })
-                        </div>
                     }
+                    <div class="form-group col-md-6">
+
+                    </div>
                 </div>
             </div>
         }
@@ -190,6 +191,28 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/ace")
+
+    <script>
+        function previewContent() {
+            // Workaround for Ace Editor, it doesn't propagate a changed value.
+            var formData = {};
+            $.each($('#content-form').serializeArray(), function (_, kv) {
+                formData[kv.name] = kv.value;
+            });
+            formData["UnparsedContent"] = editors[0].getValue();
+            formData["StylesheetCode"] = editors[1].getValue();
+
+            $.post("@Url.RouteUrl("ContentDetail", new { contentId = Model.ContentId, action = "preview" })", $.param(formData))
+                .done(function (data) {
+                    var win = window.open('about:blank');
+                    with (win.document) {
+                        open();
+                        write(data);
+                        close();
+                    }
+                });
+        }
+    </script>
 }
 @section ContentSubMenu {
     @Html.Partial("~/Areas/mitarbeit/Views/Shared/_ContentMenuPartial.cshtml", new ContentMenuModel { Active = ContentMenuViewType.Edit, Id = Model.ContentId })

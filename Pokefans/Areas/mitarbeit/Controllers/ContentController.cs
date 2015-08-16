@@ -1,16 +1,18 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 
+using System;
+using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Text.RegularExpressions;
+using System.Threading;
+using System.Web.Mvc;
 using DiffMatchPatch;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using Pokefans.Areas.mitarbeit.Models;
 using Pokefans.Data;
 using Pokefans.Util;
-using System;
-using System.Data.Entity;
-using System.Linq;
-using System.Web.Mvc;
 
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
@@ -597,10 +599,51 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 return RedirectToRoute("ContentIndex");
             }
 
+            var trackerSources = _entities.ContentTrackingSources
+                .Where(s => s.ContentId == content.Id)
+                .Where(s => !string.IsNullOrEmpty(s.SourceHost))
+                .GroupBy(s => s.SourceHost)
+                .Select(grp => new ContentStatisticsHostEntry
+                {
+                    Host = grp.Key,
+                    Count = grp.Count(),
+                    Urls = grp
+                        .GroupBy(g => g.SourceUrl)
+                        .Select(g => new ContentStatisticsLinkEntry
+                                            {
+                                                Url = g.Key,
+                                                Count = g.Count()
+                                            })
+                        .OrderByDescending(g => g.Count),
+                })
+                .OrderByDescending(g => g.Count);
+
+            var sources = _entities.ContentTrackingSources
+                .Where(s => s.ContentId == content.Id)
+                .Where(s => !string.IsNullOrEmpty(s.SourceHost))
+                .GroupBy(s => new {s.SourceHost, s.SourceUrl})
+                .OrderBy(s => s.Key.SourceHost);
+
+            var trackerSources2 = sources
+                .GroupBy(s => s.Key.SourceHost)
+                .Select(s => new ContentStatisticsHostEntry
+                {
+                    Host = s.Key,
+                    Count = s.Sum(x => x.Count()),
+                    Urls = sources
+                        .Where(x => x.Key.SourceHost == s.Key)
+                        .Select(x => new ContentStatisticsLinkEntry
+                        {
+                            Url = x.Key.SourceUrl,
+                            Count = x.Count()
+                        })
+                });
+
             var model = new ContentStatisticsViewModel
             {
                 Content = content,
-                ViewCount = content.ViewCount
+                ViewCount = content.ViewCount,
+                TrackerSources = trackerSources2
             };
             return View("~/Areas/mitarbeit/Views/Content/Statistics.cshtml", model);
         }
@@ -841,7 +884,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
                     if (model.SetDefault)
                     {
-                        if (content.DefaultUrl != null)
+                        if (content.DefaultUrl != null && content.DefaultUrl.Type != UrlType.System)
                         {
                             content.DefaultUrl.Type = UrlType.Alternative;
                         }
@@ -863,6 +906,74 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             model.IsContentAdministrator = User.IsInRole("artikel-administrator");
 
             return View("~/Areas/mitarbeit/Views/Content/Urls.cshtml", model);
+        }
+
+        /// <summary>
+        /// Display a content preview
+        /// </summary>
+        /// <param name="contentId"></param>
+        /// <returns></returns>
+        public ActionResult Preview(int? contentId)
+        {
+            var content = _entities.Contents
+               .Include(c => c.Urls)
+               .FirstOrDefault(c => c.Id == contentId);
+
+            if (content == null)
+            {
+                return RedirectToRoute("ContentIndex");
+            }
+
+
+            var model = new ContentPreviewViewModel
+            {
+                Title = content.Title,
+                ContentId = content.Id,
+                Contents = content.ParsedContent,
+                Stylesheet = content.StylesheetCss,
+                Teaser = content.Teaser
+            };
+
+            return View("~/Areas/mitarbeit/Views/Content/Preview.cshtml", model);
+        }
+
+        /// <summary>
+        /// Display a content preview
+        /// </summary>
+        /// <param name="editModel"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult Preview(ContentEditViewModel editModel)
+        {
+            Content content = null;
+            if (editModel.ContentId != null)
+            {
+                content = _entities.Contents
+                    .Include(c => c.Urls)
+                    .FirstOrDefault(c => c.Id == editModel.ContentId);
+            }
+
+            if (content == null)
+            {
+                content = new Content();
+            }
+
+            editModel.UpdateContent(content);
+            content.CompileLess();
+            content.Parse();
+
+            var model = new ContentPreviewViewModel
+            {
+                Title = content.Title,
+                ContentId = editModel.ContentId ?? 0,
+                Contents = content.ParsedContent,
+                Stylesheet = content.StylesheetCss,
+                Teaser = content.Teaser
+            };
+
+
+            return View("~/Areas/mitarbeit/Views/Content/Preview.cshtml", model);
         }
     }
 }

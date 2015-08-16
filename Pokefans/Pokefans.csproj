@@ -226,6 +226,7 @@
     <Compile Include="Areas\mitarbeit\Controllers\UserListsController.cs" />
     <Compile Include="Areas\mitarbeit\mitarbeitAreaRegistration.cs" />
     <Compile Include="Areas\mitarbeit\Models\ContentMenuModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\ContentPreviewViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserAddAdvertisingViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserAddNoteViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Models\UserAdvertisingNoteViewModel.cs" />
@@ -339,6 +340,7 @@
     <Content Include="Content\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Areas\mitarbeit\Views\Shared\_ContentMenuPartial.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Content\Preview.cshtml" />
     <None Include="Properties\PublishProfiles\Filesystem.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\adminlte\app.js" />

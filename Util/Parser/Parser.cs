@@ -133,6 +133,11 @@ namespace Pokefans.Util.Parser
                 CurrentTokenParser = nextTokenParser ?? new TextTokenParser(Configuration);
             }
 
+            if (CurrentTokenParser != null)
+            {
+                Stack.Push(CurrentTokenParser.CreateToken());
+            }
+
             var result = string.Empty;
             while (Stack.Count > 0)
             {

@@ -61,6 +61,8 @@ namespace Pokefans.Controllers
                     .ToList()
             };
 
+            content.TrackView(Request, _entities);
+
             return View("~/Views/Home/ViewContent.cshtml", model);
         }
 
