@@ -7,7 +7,7 @@ namespace Pokefans.Data.Migrations
     using System.Linq;
     using MySql.Data.Entity;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Entities>
+    public sealed class Configuration : DbMigrationsConfiguration<Entities>
     {
         public Configuration()
         {

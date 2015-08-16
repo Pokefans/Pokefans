@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2015 the pokefans authors. See copying.md for legal info -->
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -31,70 +31,62 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
-    </Reference>
-    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <Private>True</Private>
-      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
-    </Reference>
-    <Reference Include="MySql.Data.Entity.EF6, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
-    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data">
+      <HintPath>..\packages\MySql.Data.6.9.6\lib\net45\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.Entity.EF6">
+      <HintPath>..\packages\MySql.Data.Entity.6.9.6\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RegularExpressionWithOptionsAttribute.cs" />
-    <Compile Include="Content.cs" />
-    <Compile Include="ContentBoilerplate.cs" />
-    <Compile Include="ContentCategory.cs" />
-    <Compile Include="ContentFeedback.cs" />
+    <Compile Include="Content\Content.cs" />
+    <Compile Include="Content\ContentBoilerplate.cs" />
+    <Compile Include="Content\ContentCategory.cs" />
+    <Compile Include="Content\ContentFeedback.cs" />
+    <Compile Include="Content\ContentUrl.cs" />
+    <Compile Include="Content\ContentVersion.cs" />
+    <Compile Include="Content\Feedback.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.Designer.cs">
       <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
@@ -105,9 +97,6 @@
     </Compile>
     <Compile Include="TrackingSource.cs" />
     <Compile Include="ContentTrackingSource.cs" />
-    <Compile Include="ContentUrl.cs" />
-    <Compile Include="ContentVersion.cs" />
-    <Compile Include="Feedback.cs" />
     <Compile Include="Migrations\201505122041186_Identity.cs" />
     <Compile Include="Migrations\201505122041186_Identity.Designer.cs">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
@@ -146,21 +135,42 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
-    <Compile Include="Role.cs" />
-    <Compile Include="PermissionLogEntry.cs" />
+    <Compile Include="Pokedex\Ability.cs" />
+    <Compile Include="Pokedex\Item.cs" />
+    <Compile Include="Pokedex\ItemLocation.cs" />
+    <Compile Include="Pokedex\Location.cs" />
+    <Compile Include="Pokedex\Pokemon.cs" />
+    <Compile Include="Pokedex\PokemonAbilities.cs" />
+    <Compile Include="Pokedex\PokemonBodyForm.cs" />
+    <Compile Include="Pokedex\PokemonBreedingGroup.cs" />
+    <Compile Include="Pokedex\PokemonColor.cs" />
+    <Compile Include="Pokedex\PokemonEditions.cs" />
+    <Compile Include="Pokedex\PokemonEvolutionMethod.cs" />
+    <Compile Include="Pokedex\PokemonFootprint.cs" />
+    <Compile Include="Pokedex\PokemonId.cs" />
+    <Compile Include="Pokedex\PokemonName.cs" />
+    <Compile Include="Pokedex\PokemonPokeathlon.cs" />
+    <Compile Include="Pokedex\PokemonPokedexDescriptions.cs" />
+    <Compile Include="Pokedex\PokemonStatusvalues.cs" />
+    <Compile Include="Pokedex\PokemonStrategy.cs" />
+    <Compile Include="Pokedex\PokemonTier.cs" />
+    <Compile Include="Pokedex\PokemonTiers.cs" />
+    <Compile Include="Pokedex\PokemonType.cs" />
+    <Compile Include="System\Role.cs" />
+    <Compile Include="System\PermissionLogEntry.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RoleChainEntry.cs" />
-    <Compile Include="ToDo.cs" />
-    <Compile Include="User.cs" />
-    <Compile Include="UserAdvertising.cs" />
-    <Compile Include="UserAdvertisingForm.cs" />
-    <Compile Include="UserLogin.cs" />
-    <Compile Include="UserLoginProvider.cs" />
-    <Compile Include="UserMultiaccount.cs" />
-    <Compile Include="UserNote.cs" />
-    <Compile Include="UserNoteAction.cs" />
-    <Compile Include="UserPermission.cs" />
+    <Compile Include="System\RoleChainEntry.cs" />
+    <Compile Include="Content\ToDo.cs" />
+    <Compile Include="System\User.cs" />
+    <Compile Include="User\UserAdvertising.cs" />
+    <Compile Include="User\UserAdvertisingForm.cs" />
+    <Compile Include="System\UserLogin.cs" />
+    <Compile Include="System\UserLoginProvider.cs" />
+    <Compile Include="User\UserMultiaccount.cs" />
+    <Compile Include="User\UserNote.cs" />
+    <Compile Include="User\UserNoteAction.cs" />
+    <Compile Include="System\UserPermission.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -205,6 +215,9 @@
     <EmbeddedResource Include="Migrations\201507071733530_TrackingSourceNullValues.resx">
       <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Wifi\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
