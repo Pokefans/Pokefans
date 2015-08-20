@@ -189,7 +189,7 @@ namespace Pokefans.Util
         private Regex CreateRegex(string source)
         {
             source = source.Replace("/", @"\/?").Replace(".", @"\.?").Replace("-", @"\-?");
-            source = source.Replace("{", @"(?<").Replace("}", @">([a-zA-Z0-9_]*))");
+            source = source.Replace("{", @"(?<").Replace("}", @">([a-zA-Z0-9_\-]*))");
 
             return new Regex("^" + source + "$");
         }

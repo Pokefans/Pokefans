@@ -109,7 +109,7 @@
                                 <!-- The user image in the navbar-->
                                 <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="user-image" alt="User Image" />
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                                <span class="hidden-xs">Delirium</span>
+                                <span class="hidden-xs">@CurrentUser.UserName</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
@@ -181,26 +181,43 @@
                 <!-- /.search form -->
                 <!-- Sidebar Menu -->
                 <ul class="sidebar-menu">
+                    @if (User.IsInRole("mitarbeiter"))
+                    {
+                        string liclass = "";
+                        if (IsSectionDefined("ContentSubMenu"))
+                        {
+                            liclass = "treeview active";
+                        }
+                        <li class="@liclass">
+                            <a href="@Url.RouteUrl("ContentIndex")">
+                                <i class='fa fa-newspaper-o'></i> <span>Artikelverwaltung</span>
+                            @if (IsSectionDefined("ContentSubMenu"))
+                                {  <i class="fa fa-angle-left pull-right"></i> }
+                            </a> @RenderSection("ContentSubMenu", false)
+                        </li>
+
+                    }
+
                     @if (User.IsInRole("moderator"))
                     { 
                     @*<li class="header">Benutzer</li>*@
-                    string liclass = "";
-                    if (IsSectionDefined("BvsSubMenu"))
-                    {
-                        liclass = "treeview active";
-                    }
-                    <li class="@liclass"><a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-user'></i> <span>Benutzerverwaltung</span>@if (IsSectionDefined("BvsSubMenu"))
-                    {  <i class="fa fa-angle-left pull-right"></i> }</a> @RenderSection("BvsSubMenu", false) </li>
-                    <li class="treeview">
-                        <a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-list'></i> <span>Benutzerlisten</span> <i class="fa fa-angle-left pull-right"></i></a>
-                        <ul class="treeview-menu">
-                            <li><a href="@Url.Action("BbsList", "UserLists", new { Area ="mitarbeit"}, true)">BBS-Vergaben</a></li>
-                            <li><a href="@Url.Action("Posthunter", "UserLists", new { Area ="mitarbeit"}, true)">Posthunter</a></li>
-                            <li><a href="@Url.Action("Trashhunter", "UserLists", new { Area ="mitarbeit"}, true)">Müllschlucker-Posthunter</a></li>
-                            <li><a href="@Url.Action("Multiaccounts", "UserLists", new { Area ="mitarbeit"}, true)">Doppelacounts</a></li>
-                            <li><a href="@Url.Action("Bans", "UserLits", new { Area ="mitarbeit"}, true)">Sperrliste</a></li>
-                        </ul>
-                    </li>
+                        string liclass = "";
+                        if (IsSectionDefined("BvsSubMenu"))
+                        {
+                            liclass = "treeview active";
+                        }
+                        <li class="@liclass"><a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-user'></i> <span>Benutzerverwaltung</span>@if (IsSectionDefined("BvsSubMenu"))
+                                                                                                                                                                              {  <i class="fa fa-angle-left pull-right"></i> }</a> @RenderSection("BvsSubMenu", false) </li>
+                        <li class="treeview">
+                            <a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-list'></i> <span>Benutzerlisten</span> <i class="fa fa-angle-left pull-right"></i></a>
+                            <ul class="treeview-menu">
+                                <li><a href="@Url.Action("BbsList", "UserLists", new { Area ="mitarbeit"}, true)">BBS-Vergaben</a></li>
+                                <li><a href="@Url.Action("Posthunter", "UserLists", new { Area ="mitarbeit"}, true)">Posthunter</a></li>
+                                <li><a href="@Url.Action("Trashhunter", "UserLists", new { Area ="mitarbeit"}, true)">Müllschlucker-Posthunter</a></li>
+                                <li><a href="@Url.Action("Multiaccounts", "UserLists", new { Area ="mitarbeit"}, true)">Doppelacounts</a></li>
+                                <li><a href="@Url.Action("Bans", "UserLits", new { Area ="mitarbeit"}, true)">Sperrliste</a></li>
+                            </ul>
+                        </li>
                     }
                   @*<li class="header">Inhalte</li>
                     <li><a href="#"><i class='fa fa-newspaper-o'></i> <span>Artikel- &amp; Newsverwaltung</span></a></li>
@@ -231,6 +248,7 @@
                     <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
                     <li><a href="#"><i class='fa fa-clock-o'></i> <span>Cronjobs</span></a></li>*@
 
+    
                 </ul><!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->
@@ -326,8 +344,25 @@
 
     @RenderSection("scripts", false)
     <!-- Optionally, you can add Slimscroll and FastClick plugins.
-          Both of these plugins are recommended to enhance the
-          user experience. Slimscroll is required when using the
-          fixed layout. -->
+        Both of these plugins are recommended to enhance the
+        user experience. Slimscroll is required when using the
+        fixed layout. -->
+    
+    <!-- Piwik -->
+    <script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="//localhost:8000/piwik/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId', 1]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+    </script>
+    <noscript><p><img src="//localhost:8000/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
+    <!-- End Piwik Code -->
+
 </body>
 </html>

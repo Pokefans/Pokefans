@@ -8,7 +8,7 @@ namespace Pokefans.Data
     /// 
     /// </summary>
     [Table("content_feedback")]
-    public class ContentFeedback : Feedback
+    public partial class ContentFeedback : Feedback
     {
         /// <summary>
         /// Id of the corresponding Content Object

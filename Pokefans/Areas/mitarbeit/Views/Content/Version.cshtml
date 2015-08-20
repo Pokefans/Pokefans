@@ -1,0 +1,60 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@model ContentVersionViewModel
+@{
+    SiteTitle = "Verwaltung: Inhalte - Version";
+    SiteDescription = String.Format("{0} (#{1})", Model.PreviousVersion == null ? "Version anzeigen" : "Version vergleichen", Model.CurrentVersion.Version);
+    SiteHeader = Model.CurrentVersion.Title;
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+
+    Breadcrumbs.Add("Mitarbeit");
+    Breadcrumbs.Add("Inhalte");
+    Breadcrumbs.Add(Model.CurrentVersion.Title);
+    Breadcrumbs.Add(String.Format("Version #{0}", Model.CurrentVersion.Version));
+}
+
+<div class="row">
+    <div class="col-lg-12 col-xs-12">
+        <div class="box box-primary">
+            <div class="box-body">
+                <p>Im folgenden siehst du den Quellcode einer archivierten Version dieses Artikels:</p>
+                <div role="tabpanel">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li role="presentation" class="active"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li>
+                        <li role="presentation"><a href="#css" aria-controls="css" role="tab" data-toggle="tab">CSS</a></li>
+                    </ul>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="html">
+                            <div class="form-group">
+                                @if (Model.PreviousVersion == null)
+                                {
+                                    <pre>@Model.CurrentVersion.UnparsedContent</pre>
+                                }
+                                else
+                                {
+                                    <pre>@Html.Raw(Model.ContentDiff)</pre>
+                                }
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="css">
+                            <div class="form-group">
+                                @if (Model.PreviousVersion == null)
+                                {
+                                    <pre>@Model.CurrentVersion.StylesheetCode</pre>
+                                }
+                                else
+                                {
+                                    <pre>@Html.Raw(Model.StylesheetDiff)</pre>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section ContentSubMenu {
+    @Html.Partial("~/Areas/mitarbeit/Views/Shared/_ContentMenuPartial.cshtml", new ContentMenuModel { Active = ContentMenuViewType.Versions, Id = Model.CurrentVersion.Id })
+}

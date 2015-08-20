@@ -1,5 +1,6 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -9,7 +10,7 @@ namespace Pokefans.Data
     /// 
     /// </summary>
     [Table("content_versions")]
-    public class ContentVersion
+    public partial class ContentVersion
     {
         /// <summary>
         /// Unique Id for the ContentVersion Object
@@ -34,42 +35,49 @@ namespace Pokefans.Data
         /// Title/Headline
         /// </summary>
         [MaxLength(255, ErrorMessage = "Der Titel darf maximal 255 Zeichen lang sein.")]
+        [DefaultValue("")]
         public string Title { get; set; }
 
         /// <summary>
         /// Plain Content (HTML/Zing/BB)
         /// </summary>
+        [DefaultValue("")]
         public string UnparsedContent { get; set; }
 
         /// <summary>
         /// Parsed Content (only HTML)
         /// </summary>
+        [DefaultValue("")]
         public string ParsedContent { get; set; }
 
         /// <summary>
         /// Content Description
         /// </summary>
+        [DefaultValue("")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Name of the compiled less Source
+        /// Compiled less Source
         /// </summary>
-        [MaxLength(100)]
-        public string StylesheetName { get; set; }
+        [DefaultValue("")]
+        public string StylesheetCss { get; set; }
 
         /// <summary>
         /// Less Code for the Stylesheet
         /// </summary>
+        [DefaultValue("")]
         public string StylesheetCode { get; set; }
 
         /// <summary>
         /// Small Teaser for Content Overviews
         /// </summary>
+        [DefaultValue("")]
         public string Teaser { get; set; }
 
         /// <summary>
         /// Editors' Notes
         /// </summary>
+        [DefaultValue("")]
         public string Notes { get; set; }
 
         /// <summary>
@@ -81,6 +89,7 @@ namespace Pokefans.Data
         /// <summary>
         /// Change Note
         /// </summary>
+        [DefaultValue("")]
         public string Note { get; set; }
 
         /// <summary>

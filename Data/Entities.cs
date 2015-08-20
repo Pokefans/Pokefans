@@ -81,6 +81,10 @@ namespace Pokefans.Data
 
         public virtual DbSet<ContentVersion> ContentVersions { get; set; }
 
+        public virtual DbSet<TrackingSource> TrackingSources { get; set; }
+
+        public virtual DbSet<ContentTrackingSource> ContentTrackingSources { get; set; }
+
         public virtual DbSet<Feedback> Feedbacks { get; set; }
 
         public virtual DbSet<ToDo> ToDos { get; set; }

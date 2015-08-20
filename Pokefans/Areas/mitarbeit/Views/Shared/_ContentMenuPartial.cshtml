@@ -1,0 +1,16 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Areas.mitarbeit.Models
+@using Pokefans.Data
+@model ContentMenuModel
+<ul class="treeview-menu menu-open">
+    <li class="@(Model.Active == ContentMenuViewType.Index ? "active" : null)"><a href="@Url.RouteUrl("ContentIndex")">Artikelliste</a></li>
+    <li class="@(Model.Active == ContentMenuViewType.New ? "active" : null)"><a href="@Url.RouteUrl("ContentNew")">Neuen Artikel anlegen</a></li>
+    @if (Model.Id != null)
+    {
+        <li class="@(Model.Active == ContentMenuViewType.Edit ? "active" : null)"><a href="@Url.RouteUrl("ContentDetail", new {contentId = Model.Id, action = "edit"})"><i class="fa fa-angle-right"></i> Bearbeiten</a></li>
+        <li class="@(Model.Active == ContentMenuViewType.Versions ? "active" : null)"><a href="@Url.RouteUrl("ContentDetail", new {contentId = Model.Id, action = "versions"})"><i class="fa fa-angle-right"></i> Versionen</a></li>
+        <li class="@(Model.Active == ContentMenuViewType.Includes ? "active" : null)"><a href="@Url.RouteUrl("ContentDetail", new {contentId = Model.Id, action = "includes"})"><i class="fa fa-angle-right"></i> Einbettungen</a></li>
+        <li class="@(Model.Active == ContentMenuViewType.Statistics ? "active" : null)"><a href="@Url.RouteUrl("ContentDetail", new {contentId = Model.Id, action = "statistics"})"><i class="fa fa-angle-right"></i> Statistiken</a></li>
+        <li class="@(Model.Active == ContentMenuViewType.Urls ? "active" : null)"><a href="@Url.RouteUrl("ContentDetail", new {contentId = Model.Id, action = "urls"})"><i class="fa fa-angle-right"></i> URL-Aliase</a></li>
+    }
+</ul>

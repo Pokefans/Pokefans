@@ -8,7 +8,7 @@ namespace Pokefans.Data
     /// 
     /// </summary>
     [Table("content_boilerplates")]
-    public class ContentBoilerplate
+    public partial class ContentBoilerplate
     {
         /// <summary>
         /// Unique Id for the ContentBoilerplate Object

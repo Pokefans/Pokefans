@@ -13,14 +13,37 @@ namespace Pokefans.Data
     /// Ready         = Content finished, waiting for review and publish
     /// Published     = self-explanatory
     /// </summary>
-    public enum ContentStatus { WorkInProcess, Ready, Published, Discarded }
+    public enum ContentStatus
+    {
+        [Display(Name = "In Arbeit")]
+        WorkInProcess,
+
+        [Display(Name = "Fertig")]
+        Ready,
+
+        [Display(Name = "Veröffentlicht")]
+        Published,
+
+        [Display(Name = "Verworfen")]
+        Discarded
+    }
 
     /// <summary>
     /// Normal          = Will be listed on home page
     /// NotOnHomePage   = Will be excluded from home page
     /// FixedOnHomePage = Will be fixed on home page
     /// </summary>
-    public enum HomePageOptions { Normal, NotOnHomePage, FixedOnHomePage }
+    public enum HomePageOptions
+    {
+        [Display(Name = "Normal")]
+        Normal,
+
+        [Display(Name = "Ausgeblendet")]
+        NotOnHomePage,
+
+        [Display(Name = "Fixiert")]
+        FixedOnHomePage
+    }
 
     /// <summary>
     /// Article         = normal article
@@ -28,13 +51,26 @@ namespace Pokefans.Data
     /// Special         = sidebars, teasers...
     /// Boilerplate     = boilerplate for use in other articles
     /// </summary>
-    public enum ContentType { Article, News, Special, Boilerplate }
+    public enum ContentType
+    {
+        [Display(Name = "Artikel")]
+        Article,
+
+        [Display(Name = "Newsmeldung")]
+        News,
+
+        [Display(Name = "Spezialelement")]
+        Special,
+
+        [Display(Name = "Textbaustein")]
+        Boilerplate
+    }
 
     /// <summary>
     /// 
     /// </summary>
     [Table("content")]
-    public class Content
+    public partial class Content
     {
         /// <summary>
         /// Unique Id for the Content Object
@@ -47,42 +83,49 @@ namespace Pokefans.Data
         /// Title/Headline
         /// </summary>
         [MaxLength(255, ErrorMessage = "Der Titel darf maximal 255 Zeichen lang sein.")]
+        [DefaultValue("")]
         public string Title { get; set; }
 
         /// <summary>
         /// Plain Content (HTML/Zing/BB)
         /// </summary>
+        [DefaultValue("")]
         public string UnparsedContent { get; set; }
 
         /// <summary>
         /// Parsed Content (only HTML)
         /// </summary>
+        [DefaultValue("")]
         public string ParsedContent { get; set; }
 
         /// <summary>
         /// Content Description
         /// </summary>
+        [DefaultValue("")]
         public string Description { get; set; }
 
         /// <summary>
-        /// Name of the compiled less Source
+        /// Compiled less Source
         /// </summary>
-        [MaxLength(100)]
-        public string StylesheetName { get; set; }
+        [DefaultValue("")]
+        public string StylesheetCss { get; set; }
 
         /// <summary>
         /// Less Code for the Stylesheet
         /// </summary>
+        [DefaultValue("")]
         public string StylesheetCode { get; set; }
 
         /// <summary>
         /// Small Teaser for Content Overviews
         /// </summary>
+        [DefaultValue("")]
         public string Teaser { get; set; }
 
         /// <summary>
         /// Editors' Notes
         /// </summary>
+        [DefaultValue("")]
         public string Notes { get; set; }
 
         /// <summary>
@@ -106,12 +149,12 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the corresponding ContentCategory Object
         /// </summary>
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
 
         /// <summary>
         /// Id of the Permission required to edit this Content
         /// </summary>
-        public int EditPermissionId { get; set; }
+        public int? EditPermissionId { get; set; }
 
         /// <summary>
         /// Publication Options for the Home Page
@@ -122,7 +165,7 @@ namespace Pokefans.Data
         /// <summary>
         /// Number of Views
         /// </summary>
-        public string ViewCount { get; set; }
+        public int ViewCount { get; set; }
 
         /// <summary>
         /// Time of Publication
@@ -132,12 +175,17 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the publicator
         /// </summary>
-        public int PublishedByUserId { get; set; }
+        public int? PublishedByUserId { get; set; }
 
         /// <summary>
         /// Time of last Change
         /// </summary>
         public DateTime Updated { get; set; }
+
+        /// <summary>
+        /// Time of creation
+        /// </summary>
+        public DateTime Created { get; set; }
 
         /// <summary>
         /// Id of the Creator
@@ -148,7 +196,7 @@ namespace Pokefans.Data
         /// <summary>
         /// Id of the default Url
         /// </summary>
-        public int DefaultUrlId { get; set; }
+        public int? DefaultUrlId { get; set; }
 
         /// <summary>
         /// Category the Content is published in
@@ -174,13 +222,19 @@ namespace Pokefans.Data
         [ForeignKey("DefaultUrlId")]
         public virtual ContentUrl DefaultUrl { get; set; }
 
+        /// <summary>
+        /// Permission required to edit this Content
+        /// </summary>
+        [ForeignKey("EditPermissionId")]
+        public virtual Role EditPermission { get; set; }
+
         private ICollection<ContentUrl> _urls;
 
         /// <summary>
         /// All urls for this content
         /// </summary>
         [InverseProperty("Content")]
-        public ICollection<ContentUrl> Contents
+        public ICollection<ContentUrl> Urls
         {
             get { return _urls ?? (_urls = new HashSet<ContentUrl>()); }
             set { _urls = value; }

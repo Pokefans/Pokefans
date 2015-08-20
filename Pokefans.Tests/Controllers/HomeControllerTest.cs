@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Pokefans;
 using Pokefans.Controllers;
+using Pokefans.Data;
 using Pokefans.Util;
 
 namespace Pokefans.Tests.Controllers
@@ -17,7 +18,7 @@ namespace Pokefans.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController(new Breadcrumbs());
+            HomeController controller = new HomeController(new Breadcrumbs(), new Entities());
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
@@ -30,7 +31,7 @@ namespace Pokefans.Tests.Controllers
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController(new Breadcrumbs());
+            HomeController controller = new HomeController(new Breadcrumbs(), new Entities());
 
             // Act
             ViewResult result = controller.About() as ViewResult;
@@ -43,7 +44,7 @@ namespace Pokefans.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            HomeController controller = new HomeController(new Breadcrumbs());
+            HomeController controller = new HomeController(new Breadcrumbs(), new Entities());
 
             // Act
             ViewResult result = controller.Contact() as ViewResult;

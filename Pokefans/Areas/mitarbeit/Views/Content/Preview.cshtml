@@ -1,0 +1,50 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@model ContentPreviewViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    Breadcrumbs.Add("Mitarbeit");
+    Breadcrumbs.Add("Inhalte");
+    Breadcrumbs.Add(Model.Title);
+    Breadcrumbs.Add("Vorschau");
+}
+<h1 itemprop="heading">@Model.Title</h1>
+
+<div itemscope itemtype="http://schema.org/Article">
+    @if (!string.IsNullOrEmpty(Model.Teaser))
+    {
+        <p class="intro" itemprop="description"><strong>@Html.Raw(Model.Teaser)</strong></p>
+    }
+
+    <div itemprop="articleBody">
+        @Html.Raw(Model.Contents)
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Stylesheet))
+{
+    @section CustomHeaders {
+        <!-- Content specific stylesheet -->
+        <style>
+        @Html.Raw(Model.Stylesheet)
+        </style>
+    }
+}
+
+@section Sidebar {
+    <div class="h3">Sidebar placeholder</div>
+    <p class="blur">
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+        ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+        magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+        sanctus est Lorem ipsum dolor sit amet.
+    </p>
+    <p class="blur">
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem
+        ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore
+        magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata
+        sanctus est Lorem ipsum dolor sit amet.
+    </p>
+}

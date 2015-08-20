@@ -87,6 +87,16 @@
     <Compile Include="Content\ContentUrl.cs" />
     <Compile Include="Content\ContentVersion.cs" />
     <Compile Include="Content\Feedback.cs" />
+    <Compile Include="Migrations\201507071704102_TrackingSource.cs" />
+    <Compile Include="Migrations\201507071704102_TrackingSource.Designer.cs">
+      <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507071733530_TrackingSourceNullValues.cs" />
+    <Compile Include="Migrations\201507071733530_TrackingSourceNullValues.Designer.cs">
+      <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
+    </Compile>
+    <Compile Include="TrackingSource.cs" />
+    <Compile Include="ContentTrackingSource.cs" />
     <Compile Include="Migrations\201505122041186_Identity.cs" />
     <Compile Include="Migrations\201505122041186_Identity.Designer.cs">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
@@ -118,6 +128,10 @@
     <Compile Include="Migrations\201507041355386_RoleChain.cs" />
     <Compile Include="Migrations\201507041355386_RoleChain.Designer.cs">
       <DependentUpon>201507041355386_RoleChain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201507051957204_Content1.cs" />
+    <Compile Include="Migrations\201507051957204_Content1.Designer.cs">
+      <DependentUpon>201507051957204_Content1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -275,6 +289,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507041355386_RoleChain.resx">
       <DependentUpon>201507041355386_RoleChain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507051957204_Content1.resx">
+      <DependentUpon>201507051957204_Content1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507071704102_TrackingSource.resx">
+      <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201507071733530_TrackingSourceNullValues.resx">
+      <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

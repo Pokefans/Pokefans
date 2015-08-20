@@ -30,10 +30,21 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="dotless.Core">
+      <HintPath>..\packages\dotless.1.5.0\lib\dotless.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core">
       <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.1\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Routing" />
@@ -68,8 +79,22 @@
   <ItemGroup>
     <Compile Include="Breadcrumbs.cs" />
     <Compile Include="ControllerExtensions.cs" />
+    <Compile Include="ContentExtensions.cs" />
+    <Compile Include="ContentRoute.cs" />
+    <Compile Include="Parser\BbCode.cs" />
+    <Compile Include="Parser\BbCodeTokenParser.cs" />
+    <Compile Include="Parser\InsideCode.cs" />
+    <Compile Include="Parser\InsideCodeTokenParser.cs" />
+    <Compile Include="Parser\Parser.cs" />
+    <Compile Include="Parser\ParserConfiguration.cs" />
+    <Compile Include="Parser\TextTokenParser.cs" />
+    <Compile Include="Parser\Token.cs" />
+    <Compile Include="Parser\TokenParser.cs" />
+    <Compile Include="Validation\NoJavascriptAttribute.cs" />
+    <Compile Include="DiffMatchPatch.cs" />
     <Compile Include="DomainRoute.cs" />
     <Compile Include="EmailService.cs" />
+    <Compile Include="EnumExtensions.cs" />
     <Compile Include="IBreadcrumbs.cs" />
     <Compile Include="LinkExtensions.cs" />
     <Compile Include="PokefansWebViewPage.cs" />
@@ -89,6 +114,7 @@
       <Name>Security</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

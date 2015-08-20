@@ -17,6 +17,27 @@ namespace Pokefans.Areas.mitarbeit
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
+            context.Routes.Add("ContentNew",
+                new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "inhalte/neu",
+                new { action = "New", Controller = "Content" })
+            );
+
+            context.Routes.Add("ContentIndex",
+                new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "inhalte",
+                new { action = "Index", Controller = "Content" })
+            );
+
+            context.Routes.Add("ContentDetail",
+                new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "inhalte/{contentId}/{action}/{detailId}",
+                new { action = "Edit", Controller = "Content", detailId = UrlParameter.Optional })
+            );
+
             context.Routes.Add(new DomainRoute(
                 "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
                 "user/liste/bbs",
