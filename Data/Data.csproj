@@ -87,6 +87,8 @@
     <Compile Include="Content\ContentUrl.cs" />
     <Compile Include="Content\ContentVersion.cs" />
     <Compile Include="Content\Feedback.cs" />
+    <Compile Include="Content\TrackingSource.cs" />
+    <Compile Include="Content\ContentTrackingSource.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.Designer.cs">
       <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
@@ -95,8 +97,6 @@
     <Compile Include="Migrations\201507071733530_TrackingSourceNullValues.Designer.cs">
       <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
     </Compile>
-    <Compile Include="TrackingSource.cs" />
-    <Compile Include="ContentTrackingSource.cs" />
     <Compile Include="Migrations\201505122041186_Identity.cs" />
     <Compile Include="Migrations\201505122041186_Identity.Designer.cs">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
@@ -132,6 +132,14 @@
     <Compile Include="Migrations\201507051957204_Content1.cs" />
     <Compile Include="Migrations\201507051957204_Content1.Designer.cs">
       <DependentUpon>201507051957204_Content1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508202004223_OldDbPort.cs" />
+    <Compile Include="Migrations\201508202004223_OldDbPort.Designer.cs">
+      <DependentUpon>201508202004223_OldDbPort.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508202041145_FanartTags.cs" />
+    <Compile Include="Migrations\201508202041145_FanartTags.Designer.cs">
+      <DependentUpon>201508202041145_FanartTags.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -266,8 +274,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Migrations\201508202041145_FanartTags.resx">
+      <DependentUpon>201508202041145_FanartTags.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201505122041186_Identity.resx">
       <DependentUpon>201505122041186_Identity.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508202004223_OldDbPort.resx">
+      <DependentUpon>201508202004223_OldDbPort.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201506091958040_Content.resx">
       <DependentUpon>201506091958040_Content.cs</DependentUpon>

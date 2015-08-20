@@ -58,7 +58,7 @@ namespace Pokefans.Data.Pokedex
 
         public int? Type2 { get; set; }
 
-        public int? EvolutionBaseId { get; set; }
+        public Nullable<int> EvolutionBaseId { get; set; }
 
         public int? EvolutionItemId { get; set; }
 
@@ -69,7 +69,7 @@ namespace Pokefans.Data.Pokedex
 
         public string EvolutionDescription { get; set; }
 
-        public int? EvolutionParentId { get; set; }
+        public Nullable<int> EvolutionParentId { get; set; }
 
         public decimal GenderProbabilityFemale { get; set; }
 
@@ -162,6 +162,16 @@ namespace Pokefans.Data.Pokedex
 
         internal static void OnModelCreating(DbModelBuilder builder)
         {
+            builder.Entity<Pokemon>()
+                .HasOptional(a => a.EvolutionBase)
+                .WithMany()
+                .HasForeignKey(a => a.EvolutionBaseId);
+
+            builder.Entity<Pokemon>()
+                .HasOptional(a => a.EvolutionParent)
+                .WithMany()
+                .HasForeignKey(a => a.EvolutionParentId);
+
             builder.Entity<Pokemon>().Property(a => a.Name.German).HasColumnName("name_german").HasMaxLength(100);
             builder.Entity<Pokemon>().Property(a => a.Name.Chinese).HasColumnName("name_chinese").HasMaxLength(100);
             builder.Entity<Pokemon>().Property(a => a.Name.ChineseTranscribed).HasColumnName("name_chinese_trans").HasMaxLength(100);

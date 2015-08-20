@@ -18,7 +18,7 @@ namespace Pokefans.Controllers
         {
         }
 
-        public HomeController(IBreadcrumbs crumbs)
+        public HomeController(IBreadcrumbs crumbs, Entities entities)
         {
             this.breadcrumbs = crumbs;
             _entities = entities;

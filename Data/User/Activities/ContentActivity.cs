@@ -8,7 +8,7 @@ namespace Pokefans.Data.UserData.Activities
         public int ContentId { get; set; }
 
         [ForeignKey("ContentId")]
-        public int Content { get; set; }
+        public Content Content { get; set; }
     }
 }
 

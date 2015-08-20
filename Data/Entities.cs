@@ -303,12 +303,16 @@ namespace Pokefans.Data
         {
             modelBuilder.Entity<User>().Property(User.MiniAvatarFileNameExpression);
 
+            modelBuilder.Entity<FanartTag>().ToTable("fanart_tags");
+            modelBuilder.Entity<FanartTags>().ToTable("fanarts_tags");
+
             Ability.OnModelCreating(modelBuilder);
             Attack.OnModelCreating(modelBuilder);
             Berry.OnModelCreating(modelBuilder);
             Pokefans.Data.Pokedex.Pokemon.OnModelCreating(modelBuilder);
             Offer.OnModelCreating(modelBuilder);
             Item.OnModelCreating(modelBuilder);
+            Fanart.OnModelCreating(modelBuilder);
 
             base.OnModelCreating(modelBuilder);
         }

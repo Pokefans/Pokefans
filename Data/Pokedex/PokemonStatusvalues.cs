@@ -9,16 +9,16 @@ namespace Pokefans.Data.Pokedex
 {
     public class PokemonStatusvalues
     {
-        public uint HP { get; set; }
+        public int HP { get; set; }
 
-        public uint Attack { get; set; }
+        public int Attack { get; set; }
 
-        public uint Defense { get; set; }
+        public int Defense { get; set; }
 
-        public uint SpecialAttack { get; set; }
+        public int SpecialAttack { get; set; }
 
-        public uint SpeicalDefense { get; set; }
+        public int SpeicalDefense { get; set; }
 
-        public uint Speed { get; set; }
+        public int Speed { get; set; }
     }
 }

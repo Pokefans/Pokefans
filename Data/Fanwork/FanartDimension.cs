@@ -5,9 +5,9 @@ namespace Pokefans.Data.Fanwork
 {
     public class FanartDimension
     {
-        public ushort X { get; set; }
+        public short X { get; set; }
 
-        public ushort Y { get; set; }
+        public short Y { get; set; }
     }
 }
 

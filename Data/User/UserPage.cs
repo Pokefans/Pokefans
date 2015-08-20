@@ -32,6 +32,7 @@ namespace Pokefans.Data.UserData
 
         public bool UsesTabs { get; set; }
 
+        [MaxLength(255)]
         public string RedirectUrl { get; set; }
 
         public DateTime LastUpdate { get; set; }

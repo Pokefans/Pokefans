@@ -394,10 +394,6 @@
       <Project>{62268D33-3152-442A-9F0E-562F9DEB5E60}</Project>
       <Name>Cache</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Data\Data.csproj">
-      <Project>{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}</Project>
-      <Name>Data</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Security\Security.csproj">
       <Project>{93CD0E14-2B13-4F93-8D38-8715CC12806A}</Project>
       <Name>Security</Name>
@@ -405,6 +401,10 @@
     <ProjectReference Include="..\Util\Util.csproj">
       <Project>{7B25BA24-692F-46C5-8FD5-8C5B735E8978}</Project>
       <Name>Util</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{8A5414F6-0E1F-45E7-AB59-4FC2495C7697}</Project>
+      <Name>Data</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

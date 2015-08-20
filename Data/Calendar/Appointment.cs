@@ -12,10 +12,10 @@ namespace Pokefans.Data.Calendar
         [Key]
         public int Id { get; set; }
 
-        [Key]
+        [Index]
         public DateTime Begin { get; set; }
 
-        [Key]
+        [Index]
         public DateTime End { get; set; }
 
         public int AppointmentTypeId { get; set; }
@@ -33,16 +33,16 @@ namespace Pokefans.Data.Calendar
         [MaxLength(250)]
         public string Teaser { get; set; }
 
-        [Key]
+        [Index]
         public bool DisplayInForum { get; set; }
 
         [MaxLength(100)]
-        [Key]
+        [Index]
         public string Url { get; set; }
 
         public bool CanParticipate { get; set; }
 
-        [Key]
+        [Index]
         public bool IsHidden { get; set; }
 
         public int AuthorId { get; set; }

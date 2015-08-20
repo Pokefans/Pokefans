@@ -30,7 +30,7 @@ namespace Pokefans.Data.Strategy
 
         public int TierId { get; set; }
 
-        [ForeignKey("Tier")]
+        [ForeignKey("TierId")]
         public PokemonTier Tier { get; set; }
 
         public int MetagameVersusId { get; set; }

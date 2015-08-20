@@ -17,13 +17,13 @@ namespace Pokefans.Data.Pokedex
 
         public bool Recoil { get; set; }
 
-        public UInt16 RecoilAmount { get; set; }
+        public short RecoilAmount { get; set; }
 
         public bool SelfHeal { get; set; }
 
         public bool HealIsAbsorbing { get; set; }
 
-        public UInt16 HealAmount { get; set; }
+        public short HealAmount { get; set; }
 
         public bool ChangeDamage { get; set; }
     }
