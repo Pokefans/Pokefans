@@ -11,6 +11,10 @@ namespace Pokefans.Controllers
     {
         IBreadcrumbs breadcrumbs;
 
+        public HomeController()
+        {
+        }
+
         public HomeController(IBreadcrumbs crumbs)
         {
             this.breadcrumbs = crumbs;

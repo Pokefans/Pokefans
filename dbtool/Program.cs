@@ -10,9 +10,9 @@ namespace dbtool
 {
     class MainClass
     {
-        public static void Main (string[] args)
+        public static void Main(string[] args)
         {
-            switch (args [0]) 
+            switch (args[0])
             {
                 case "Add-Migration":
                     addMigration(args);

@@ -94,11 +94,11 @@ namespace Pokefans.Data
         [NotMapped]
         public virtual Nullable<DateTimeOffset> LockedOutDate
         {
-            get 
+            get
             {
                 return lockedOutDate.HasValue ? new DateTimeOffset(lockedOutDate.Value) : (Nullable<DateTimeOffset>)null;
             }
-            set 
+            set
             {
                 lockedOutDate = value.Value.LocalDateTime;
             }
@@ -139,14 +139,16 @@ namespace Pokefans.Data
         internal static readonly Expression<Func<User, string>> MiniAvatarFileNameExpression = u => u._miniAvatarFileName;
 
         private ICollection<RoleLogEntry> roleLogs;
+
         [InverseProperty("AffectedUser")]
-        public virtual ICollection<RoleLogEntry> RoleLogs 
+        public virtual ICollection<RoleLogEntry> RoleLogs
         {
             get { return roleLogs ?? (roleLogs = new HashSet<RoleLogEntry>()); }
             set { roleLogs = value; }
         }
 
         private ICollection<RoleLogEntry> givenRoleLogs;
+
         [InverseProperty("User")]
         public virtual ICollection<RoleLogEntry> GivenRoleLogs
         {
@@ -155,30 +157,34 @@ namespace Pokefans.Data
         }
 
         private ICollection<UserLogin> logins;
+
         [InverseProperty("User")]
-        public virtual ICollection<UserLogin> Logins 
+        public virtual ICollection<UserLogin> Logins
         {
             get { return logins ?? (logins = new HashSet<UserLogin>()); }
             set { logins = value; }
         }
 
         private ICollection<UserRole> roles;
+
         [InverseProperty("User")]
-        public virtual ICollection<UserRole> Roles 
+        public virtual ICollection<UserRole> Roles
         {
             get { return roles ?? (roles = new HashSet<UserRole>()); }
             set { roles = value; }
         }
 
         private ICollection<UserLoginProvider> providers;
+
         [InverseProperty("User")]
-        public virtual ICollection<UserLoginProvider> LoginProviders 
+        public virtual ICollection<UserLoginProvider> LoginProviders
         {
             get { return providers ?? (providers = new HashSet<UserLoginProvider>()); }
             set { providers = value; }
         }
 
         private ICollection<Content> publishedContents;
+
         /// <summary>
         /// All contents published by this user
         /// </summary>
@@ -190,6 +196,7 @@ namespace Pokefans.Data
         }
 
         private ICollection<Content> createdContents;
+
         /// <summary>
         /// All contents published by this user
         /// </summary>
@@ -201,6 +208,7 @@ namespace Pokefans.Data
         }
 
         private ICollection<UserNote> notes;
+
         [InverseProperty("User")]
         public virtual ICollection<UserNote> Notes
         {
@@ -209,6 +217,7 @@ namespace Pokefans.Data
         }
 
         private ICollection<UserNote> authorNotes;
+
         [InverseProperty("Author")]
         public virtual ICollection<UserNote> AuthoredNotes
         {
@@ -217,6 +226,7 @@ namespace Pokefans.Data
         }
 
         private ICollection<UserAdvertising> userAdvertisings;
+
         [InverseProperty("AdvertisingFrom")]
         public virtual ICollection<UserAdvertising> UserAdvertisings
         {

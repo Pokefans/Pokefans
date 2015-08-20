@@ -26,6 +26,13 @@ struct CompletelyUselsessPokedexInfo {
     public string Røfëlkøptør; //!< Unicode is totally fine too! And that includes that you have to save your files as UTF8.
 }
 
+public class SomeFooMappedWithEF 
+{
+    public int Id { get; set; }
+    // Always name Descripton Fields like this:
+    public string FooDescription { get; set; }
+}
+
 
 // Namespaces should be named CamelCase
 // Exception: Areas, which are lowercase

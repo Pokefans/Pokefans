@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 namespace Pokefans.Data.Pokedex
 {
     [Table("dex_pokemon_tiers")]
-    class PokemonTiers
+    public class PokemonTiers
     {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -21,7 +22,7 @@ namespace Pokefans.Data.Pokedex
         public int TierId { get; set; }
 
         public PokemonGeneration Generation { get; set; }
-        
+
         [ForeignKey("PokemonId")]
         public Pokemon Pokemon { get; set; }
 

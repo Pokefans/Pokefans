@@ -118,7 +118,7 @@ namespace Pokefans.Data.Pokedex
 
         public override string ToString()
         {
-            return National.ToString();
+            return National.ToString("D3");
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pokefans.Data.Pokedex
 {
-    class PokemonPokedexDescriptions
+    public class PokemonPokedexDescription
     {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -18,6 +19,8 @@ namespace Pokefans.Data.Pokedex
         public int EditionId { get; set; }
 
         public string Description { get; set; }
+
+        public string DescriptionEnglish { get; set; }
 
         public int PokemonId { get; set; }
 

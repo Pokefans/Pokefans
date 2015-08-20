@@ -1,11 +1,12 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace Pokefans.Data.Pokedex
 {
-    public class MultlanguageName
+    public class MultilanguageName
     {
         /// <summary>
         /// Gets or sets the german name.

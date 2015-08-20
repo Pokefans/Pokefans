@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Pokefans.Data.Pokedex
 {
-    class ItemLocation
+    public class ItemLocation
     {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,6 +24,11 @@ namespace Pokefans.Data.Pokedex
 
         [ForeignKey("EditionId")]
         public PokemonEdition Edition { get; set; }
+
+        public int PokemonEditionGroupId { get; set; }
+
+        [ForeignKey("PokemonEditionGroupId")]
+        public PokemonEditionGroup EditionGroup { get; set; }
 
         [ForeignKey("LocationId")]
         public Location Location { get; set; }

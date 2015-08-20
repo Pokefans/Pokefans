@@ -1,4 +1,18 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+using Pokefans.Data.Calendar;
+using Pokefans.Data.Contents;
+using Pokefans.Data.Fanwork;
+using Pokefans.Data.FriendCodes;
+using Pokefans.Data.Pokedex;
+using Pokefans.Data.Pokedex.Ranger;
+using Pokefans.Data.Reviews;
+using Pokefans.Data.Service;
+using Pokefans.Data.Strategy;
+using Pokefans.Data.Tracker;
+using Pokefans.Data.UserData;
+using Pokefans.Data.Wifi;
+
+
 namespace Pokefans.Data
 {
     using System;
@@ -12,11 +26,11 @@ namespace Pokefans.Data
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class Entities : DbContext
     {
-        // Der Kontext wurde für die Verwendung einer Pokefans-Verbindungszeichenfolge aus der 
-        // Konfigurationsdatei ('App.config' oder 'Web.config') der Anwendung konfiguriert. Diese Verbindungszeichenfolge hat standardmäßig die 
-        // Datenbank 'Pokefans.Data.Pokefans' auf der LocalDb-Instanz als Ziel. 
-        // 
-        // Wenn Sie eine andere Datenbank und/oder einen anderen Anbieter als Ziel verwenden möchten, ändern Sie die Pokefans-Zeichenfolge 
+        // Der Kontext wurde für die Verwendung einer Pokefans-Verbindungszeichenfolge aus der
+        // Konfigurationsdatei ('App.config' oder 'Web.config') der Anwendung konfiguriert. Diese Verbindungszeichenfolge hat standardmäßig die
+        // Datenbank 'Pokefans.Data.Pokefans' auf der LocalDb-Instanz als Ziel.
+        //
+        // Wenn Sie eine andere Datenbank und/oder einen anderen Anbieter als Ziel verwenden möchten, ändern Sie die Pokefans-Zeichenfolge
         // in der Anwendungskonfigurationsdatei.
         public Entities()
             : base("Entities")
@@ -32,10 +46,13 @@ namespace Pokefans.Data
             this.Entry(entity).State = EntityState.Modified;
         }
 
-        // Fügen Sie ein 'DbSet' für jeden Entitätstyp hinzu, den Sie in das Modell einschließen möchten. Weitere Informationen 
+        // Fügen Sie ein 'DbSet' für jeden Entitätstyp hinzu, den Sie in das Modell einschließen möchten. Weitere Informationen
         // zum Konfigurieren und Verwenden eines Code First-Modells finden Sie unter 'http://go.microsoft.com/fwlink/?LinkId=390109'.
 
         // public virtual DbSet<MyEntity> MyEntities { get; set; }
+
+        #region System
+
         public virtual DbSet<Role> Roles { get; set; }
 
         public virtual DbSet<RoleLogEntry> RoleLogEntries { get; set; }
@@ -47,6 +64,10 @@ namespace Pokefans.Data
         public virtual DbSet<UserRole> UserRoles { get; set; }
 
         public virtual DbSet<UserLoginProvider> UserLoginProvides { get; set; }
+
+        #endregion
+
+        #region Content
 
         public virtual DbSet<Content> Contents { get; set; }
 
@@ -64,6 +85,12 @@ namespace Pokefans.Data
 
         public virtual DbSet<ToDo> ToDos { get; set; }
 
+        public virtual DbSet<LexiconEntry> Lexicon { get; set; }
+
+        #endregion
+
+        #region UserAdmin
+
         public virtual DbSet<UserNote> UserNotes { get; set; }
 
         public virtual DbSet<UserAdvertising> UserAdvertising { get; set; }
@@ -76,10 +103,209 @@ namespace Pokefans.Data
 
         public virtual DbSet<RoleChainEntry> RoleChain { get; set; }
 
+        #endregion
+
+        #region Calendar
+
+        public virtual DbSet<Appointment> Appointments { get; set; }
+
+        public virtual DbSet<AppointmentArea> AppointmentAreas { get; set; }
+
+        public virtual DbSet<AppointmentNotification> AppointmentNotifications { get; set; }
+
+        public virtual DbSet<AppointmentSentNotification> AppointmentSentNotifications { get; set; }
+
+        public virtual DbSet<AppointmentParticipation> AppointmentParticipation { get; set; }
+
+        public virtual DbSet<AppointmentType> AppointmentType { get; set; }
+
+        #endregion
+
+        #region Fanart
+
+        public virtual DbSet<Fanart> Fanarts { get; set; }
+
+        public virtual DbSet<FanartCategory> FanartCategories { get; set; }
+
+        public virtual DbSet<FanartFavorite> FanartFavorites { get; set; }
+
+        public virtual DbSet<FanartTags> FanartsTags { get; set; }
+
+        public virtual DbSet<FanartTag> FanartTags { get; set; }
+
+        #endregion
+
+        #region Friendcode
+
+        public virtual DbSet<Friendcode> Friendcodes { get; set; }
+
+        public virtual DbSet<FriendcodeGame> FriendcodeGames { get; set; }
+
+        #endregion
+
+        #region Pokedex
+
+        public virtual DbSet<Ability> Abilities { get; set; }
+
+        public virtual DbSet<Attack> Attacks { get; set; }
+
+        public virtual DbSet<AttackHiddenMachine> AttackHiddenMachines { get; set; }
+
+        public virtual DbSet<AttackTarget> AttackTargets { get; set; }
+
+        public virtual DbSet<AttackTargetType> AttackTargetTypes { get; set; }
+
+        public virtual DbSet<AttackTechnicalMachine> AttackTechnicalMachines { get; set; }
+
+        public virtual DbSet<Berry> Berries { get; set; }
+
+        public virtual DbSet<Item> Items { get; set; }
+
+        public virtual DbSet<ItemLocation> ItemLocations { get; set; }
+
+        public virtual DbSet<Location> Locations { get; set; }
+
+        public virtual DbSet<Nature> Natures { get; set; }
+
+        public virtual DbSet<Pokeball> Pokeballs { get; set; }
+
+        public virtual DbSet<Pokemon> Pokemon { get; set; }
+
+        public virtual DbSet<PokemonAbility> PokemonAbilities { get; set; }
+
+        public virtual DbSet<PokemonAttack> PokemonAttacks { get; set; }
+
+        public virtual DbSet<PokemonBodyForm> PokemonBodyForms { get; set; }
+
+        public virtual DbSet<PokemonColor> PokemonColors { get; set; }
+
+        public virtual DbSet<PokemonContestType> PokemonContestTypes { get; set; }
+
+        public virtual DbSet<PokemonEdition> PokemonEditions { get; set; }
+
+        public virtual DbSet<PokemonEditionGroup> PokemonEditionGroups { get; set; }
+
+        public virtual DbSet<PokemonFootprint> PokemonFootprints { get; set; }
+
+        public virtual DbSet<PokemonImage> PokemonImages { get; set; }
+
+        public virtual DbSet<PokemonItem> PokemonItems { get; set; }
+
+        public virtual DbSet<PokemonLocation> PokemonLocations { get; set; }
+
+        public virtual DbSet<PokemonLocationMethod> PokemonLocationMethods { get; set; }
+
+        public virtual DbSet<PokemonPokedexDescription> PokemonPokedexDescriptions { get; set; }
+
+        public virtual DbSet<PokemonStrategy> PokemonStrategies { get; set; }
+
+        public virtual DbSet<PokemonTier> PokemonTiers { get; set; }
+
+        public virtual DbSet<PokemonTiers> PokemonTiersJointable { get; set; }
+
+        public virtual DbSet<PokemonType> PokemonTypes { get; set; }
+
+        public virtual DbSet<PokemonTypeEffectivity> PokemonTypeEffectivities { get; set; }
+
+        public virtual DbSet<PokePower> PokePowers { get; set; }
+
+        public virtual DbSet<RangerAbility> RangerAbilities { get; set; }
+
+        public virtual DbSet<RangerLocation> RangerLocations { get; set; }
+
+        public virtual DbSet<RangerPokemon> RangerPokemon { get; set; }
+
+        public virtual DbSet<RangerPokemonLocation> RangerPokemonLocations { get; set; }
+
+        public virtual DbSet<MysteryDungeonReach> MysteryDungeonReaches { get; set; }
+
+        #endregion
+
+        #region Reviews
+
+        public virtual DbSet<Review> Reviews { get; set; }
+
+        public virtual DbSet<ReviewIndex> ReviewIndices { get; set; }
+
+        public virtual DbSet<ReviewItem> ReviewItems { get; set; }
+
+        #endregion
+
+        #region Service
+
+        public virtual DbSet<FriendSafari> FriendSafaris { get; set; }
+
+        public virtual DbSet<QrCode> QrCodes { get; set; }
+
+        #endregion
+
+        #region Strategy
+
+        public virtual DbSet<Counter> Counters { get; set; }
+
+        public virtual DbSet<Metagame> Metagames { get; set; }
+
+        public virtual DbSet<MetagameVersus> MetagameVersi { get; set; }
+
+        public virtual DbSet<Moveset> Movesets { get; set; }
+
+        public virtual DbSet<Tournament> Tournament { get; set; }
+
+        public virtual DbSet<TournamentClass> TournamentClasses { get; set; }
+
+        public virtual DbSet<TournamentParticipation> TournamentParticipation { get; set; }
+
+        #endregion
+
+        #region Tracker
+
+        public virtual DbSet<ChatAppletTracker> ChatAppletTracker { get; set; }
+
+        public virtual DbSet<RefLinkTracker> RefLinkTracker { get; set; }
+
+        public virtual DbSet<SearchTracker> SearchTracker { get; set; }
+
+        public virtual DbSet<UserAdminTracker> UserAdminTracker { get; set; }
+
+        #endregion
+
+        #region UserData
+
+        public virtual DbSet<UserActivity> UserActivities { get; set; }
+
+        public virtual DbSet<UserEmployeeOfTheMonth> UserEmployeesOfTheMonth { get; set; }
+
+        public virtual DbSet<UserNotification> UserNotifications { get; set; }
+
+        public virtual DbSet<UserPage> UserPages { get; set; }
+
+        public virtual DbSet<UserProfile> UserProfile { get; set; }
+
+        public virtual DbSet<UserUpload> UserUploads { get; set; }
+
+        #endregion
+
+        #region Wifi
+
+        public virtual DbSet<Offer> WifiOffers { get; set; }
+
+        public virtual DbSet<Interest> WifiInterests { get; set; }
+
+        public virtual DbSet<TradeLog> TradeLogs { get; set; }
+
+        #endregion
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<User>().Property(User.MiniAvatarFileNameExpression);
-            
+
+            Ability.OnModelCreating(modelBuilder);
+            Attack.OnModelCreating(modelBuilder);
+            Berry.OnModelCreating(modelBuilder);
+            Pokefans.Data.Pokedex.Pokemon.OnModelCreating(modelBuilder);
+            Offer.OnModelCreating(modelBuilder);
+            Item.OnModelCreating(modelBuilder);
+
             base.OnModelCreating(modelBuilder);
         }
     }
