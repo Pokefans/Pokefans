@@ -1,0 +1,42 @@
+﻿.stripe {
+  background-color: #ffeb0f;
+  height: 25px;
+}
+html, body {
+  padding: 0;
+  margin: 0;
+}
+.navbar {
+  -webkit-box-shadow: 0px 11px 34px -1px rgba(0,0,0,0.75);
+  -moz-box-shadow: 0px 11px 34px -1px rgba(0,0,0,0.75);
+  box-shadow: 0px 11px 34px -1px rgba(0,0,0,0.75);
+}
+@media(min-width: 768px) {
+  #inhalt {
+    -webkit-box-shadow: 14px 0px 14px -11px rgba(0,0,0,0.75);
+    -moz-box-shadow: 14px 0px 14px -11px rgba(0,0,0,0.75);
+    box-shadow: 14px 0px 14px -11px rgba(0,0,0,0.75);
+    background: transparent;
+  }
+}
+footer {
+  margin-top: 25px;
+}
+
+textarea.arcrypt-form {
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    height: 500px;
+}
+.arcrypt-buttons {
+    text-align: center;
+}
+
+@media (max-width: 991px) {
+    textarea.arcrypt-form {
+        height: 150px;
+    }
+    .arcrypt-buttons {
+        text-align: left;
+    }
+}
+

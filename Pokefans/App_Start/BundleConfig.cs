@@ -10,56 +10,77 @@ namespace Pokefans
         public static void RegisterBundles(BundleCollection bundles)
         {
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+                    "~/Scripts/jquery-{version}.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
+                    "~/Scripts/jquery.validate*"));
 
             // Verwenden Sie die Entwicklungsversion von Modernizr zum Entwickeln und Erweitern Ihrer Kenntnisse. Wenn Sie dann
             // für die Produktion bereit sind, verwenden Sie das Buildtool unter "http://modernizr.com", um nur die benötigten Tests auszuwählen.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
+                    "~/Scripts/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js",
-                      "~/Scripts/respond.js"));
+                    "~/Scripts/bootstrap.js",
+                    "~/Scripts/respond.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/css/font-awesome.min.css"));
+                    "~/Content/bootstrap.css",
+                    "~/Content/css/font-awesome.min.css"));
+
+            // SFC
+            bundles.Add(new StyleBundle("~/Content/sfc/css").Include(
+                    "~/Content/sfc/bootstrap.css",
+                    "~/Content/sfc/site.css",
+                    "~/Content/css/font-awesome.min.css"
+                ));
+
+            bundles.Add(new StyleBundle("~/Content/lightbox/css").Include(
+                    "~/Content/lightbox/dark.css",
+                    "~/Content/lightbox/ekko-lightbox.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/Content/lightbox/js").Include(
+                    "~/Content/ekko-lightbox.js",
+                    "~/Content/lightboxstart.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/sfc/arcrypt").Include(
+                    "~/Scripts/sfc/arcrypt2.js",
+                    "~/Scripts/sfc/arcrypt.js"
+                ));
 
             // Admin Area specific bundles
             bundles.Add(new StyleBundle("~/bundles/adminlte").Include(
-                      "~/Content/adminlte/bootstrap.css",
-                      "~/Content/adminlte/AdminLTE.css",
-                      "~/Content/adminlte/skin-blue.css"
+                    "~/Content/adminlte/bootstrap.css",
+                    "~/Content/adminlte/AdminLTE.css",
+                    "~/Content/adminlte/skin-blue.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
-                      "~/Scripts/adminlte/bootstrap.min.js",
-                      "~/Scripts/adminlte/app.min.js",
-                      "~/Scripts/adminlte/jquery.slimscroll.min.js"
+                    "~/Scripts/adminlte/bootstrap.min.js",
+                    "~/Scripts/adminlte/app.min.js",
+                    "~/Scripts/adminlte/jquery.slimscroll.min.js"
                 ));
 
             // Ace Editor
-
             bundles.Add(new ScriptBundle("~/bundles/ace").Include(
-                "~/Scripts/ace/ace.js",
-                "~/Scripts/ace/theme-clouds.js",
-                "~/Scripts/ace/theme-monokai.js",
-                "~/Scripts/ace/mode-html.js",
-                "~/Scripts/ace/mode-less.js",
-                "~/Scripts/ace/mode-css.js",
-                "~/Scripts/ace/worker-html.js",
-                "~/Scripts/ace/worker-css.js",
-                "~/Scripts/ace/loadace.js",
-                "~/Scripts/ace/content-edit.js"
+                    "~/Scripts/ace/ace.js",
+                    "~/Scripts/ace/theme-clouds.js",
+                    "~/Scripts/ace/theme-monokai.js",
+                    "~/Scripts/ace/mode-html.js",
+                    "~/Scripts/ace/mode-less.js",
+                    "~/Scripts/ace/mode-css.js",
+                    "~/Scripts/ace/worker-html.js",
+                    "~/Scripts/ace/worker-css.js",
+                    "~/Scripts/ace/loadace.js",
+                    "~/Scripts/ace/content-edit.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(
-                      "~/Scripts/backend/advertising.js",
-                      "~/Scripts/backend/multiaccounts.js",
-                      "~/Scripts/backend/rolemanager.js"
+                    "~/Scripts/backend/advertising.js",
+                    "~/Scripts/backend/multiaccounts.js",
+                    "~/Scripts/backend/rolemanager.js"
                 ));
         }
     }

@@ -50,6 +50,7 @@ namespace Pokefans.Controllers
             var allNews = _entities.Contents
                 .Where(c => c.Type == ContentType.News)
                 .Where(c => c.Status == ContentStatus.Published)
+                .Where(c => c.Category.AreaName != "sfc") //TODO: Consider adding a Code Handle to the data class for this. Referring to the Name feels kinda hacky
                 .OrderByDescending(c => c.Published);
 
             // TODO: The LINQs here use .ToList() because otherwise MySQL would throw an exception, which I couldn't find a solution for.

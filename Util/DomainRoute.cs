@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using System.Diagnostics;
 
 namespace Pokefans.Util
 {
@@ -31,8 +32,9 @@ namespace Pokefans.Util
         /// <param name="url">The URL.</param>
         /// <param name="defaults">The defaults.</param>
         public DomainRoute(string domain, string url, RouteValueDictionary defaults)
-            : this(domain, url, defaults, new MvcRouteHandler())
-        { }
+            : this(domain, url, defaults, new MvcRouteHandler(), new RouteValueDictionary())
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DomainRoute"/> class.
@@ -42,7 +44,13 @@ namespace Pokefans.Util
         /// <param name="defaults">The defaults.</param>
         public DomainRoute(string domain, string url, object defaults)
             : this(domain, url, new RouteValueDictionary(defaults))
-        { }
+        {
+        }
+
+        public DomainRoute(string domain, string url, object defaults, RouteValueDictionary dataTokens)
+            : this(domain, url, new RouteValueDictionary(defaults), new MvcRouteHandler(), dataTokens)
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DomainRoute"/> class.
@@ -52,8 +60,9 @@ namespace Pokefans.Util
         /// <param name="defaults">The defaults.</param>
         /// <param name="handler">The handler.</param>
         public DomainRoute(string domain, string url, object defaults, IRouteHandler handler)
-            : this(domain, url, new RouteValueDictionary(defaults), handler)
-        { }
+            : this(domain, url, new RouteValueDictionary(defaults), handler, new RouteValueDictionary())
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DomainRoute"/> class.
@@ -62,10 +71,23 @@ namespace Pokefans.Util
         /// <param name="url">The URL.</param>
         /// <param name="defaults">The defaults.</param>
         /// <param name="handler">The handler.</param>
-        public DomainRoute(string domain, string url, RouteValueDictionary defaults, IRouteHandler handler)
-            : base(url, defaults, handler)
+        public DomainRoute(string domain, string url, RouteValueDictionary defaults, IRouteHandler handler, RouteValueDictionary dataTokens)
+            : base(url, defaults, null, dataTokens, handler)
         {
             this.Domain = domain;
+
+            StackTrace trace = new StackTrace();
+
+            for (int i = 0; i < trace.FrameCount; i++)
+            {
+                Type t = trace.GetFrame(i).GetMethod().DeclaringType;
+                if (t.BaseType == typeof(AreaRegistration))
+                {
+                    object instance = Activator.CreateInstance(t);
+                    this.DataTokens.Add("area", ((AreaRegistration)instance).AreaName);
+                    break;
+                }
+            }
         }
 
         /// <summary>
@@ -97,29 +119,29 @@ namespace Pokefans.Util
             Match dMatch = domainRegex.Match(requestDomain);
             Match pMatch = pathRegex.Match(requestPath);
 
-            if(dMatch.Success && pMatch.Success)
+            if (dMatch.Success && pMatch.Success)
             {
                 RouteData data = new RouteData(this, RouteHandler);
 
-                if(Defaults != null)
+                if (Defaults != null)
                 {
-                    foreach(var item in Defaults)
+                    foreach (var item in Defaults)
                     {
                         data.Values[item.Key] = item.Value;
                     }
                 }
 
                 // match subdomains
-                for(int i = 1; i < dMatch.Groups.Count; i++)
+                for (int i = 1; i < dMatch.Groups.Count; i++)
                 {
                     Group g = dMatch.Groups[i];
-                    if(g.Success)
+                    if (g.Success)
                     { 
                         string key = domainRegex.GroupNameFromNumber(i);
 
-                        if(!string.IsNullOrEmpty(key) && !char.IsNumber(key, 0))
+                        if (!string.IsNullOrEmpty(key) && !char.IsNumber(key, 0))
                         {
-                            if(!string.IsNullOrEmpty(g.Value))
+                            if (!string.IsNullOrEmpty(g.Value))
                             {
                                 data.Values[key] = g.Value;
                             }
@@ -145,6 +167,14 @@ namespace Pokefans.Util
                     }
                 }
 
+                if (this.DataTokens != null && this.DataTokens.Count > 0)
+                {
+                    foreach (var token in this.DataTokens)
+                    {
+                        data.DataTokens.Add(token.Key, token.Value);
+                    }
+                }
+
                 return data;
             }
             return null;
@@ -167,7 +197,7 @@ namespace Pokefans.Util
         {
             string hostname = Domain;
 
-            foreach(var rv in values)
+            foreach (var rv in values)
             {
                 hostname = hostname.Replace("{" + rv.Key + "}", rv.Value.ToString());
             }

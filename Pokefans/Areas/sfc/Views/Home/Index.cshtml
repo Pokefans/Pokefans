@@ -1,0 +1,32 @@
+﻿@*Copyright 2015 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Data
+@using Pokefans.Util
+@model List<Content>
+@{
+    Layout = "~/Areas/sfc/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">The Search For Cheats</h1>
+<p>Welcome to SearchForCheats.de.vu.</p>
+<p>This page can be considered as Mastermind_X' laboratory. It's also the home of some interesting documents like the Emerald (GER) Cheats or the Shinyhack.</p>
+<p>Additionally you can find some tutorials, in-depth-guides and tools. Maybe you want to check out all sprites of the newest Platinum Version? Feel free to use them - but always remember that their copyright belongs to Nintendo.</p>
+<p>If you're a romhacker, you can look forward to the most-wanted hack add-on ever. The D/N hack will come very soon... =)</p>
+<img class="img-responsive" src="http://sfc.pokefans.net/pictures/comingsoon.jpg" />
+<hr />
+<h2>News</h2>
+@if(Model.Count > 0)
+{
+    foreach(Content c in Model)
+    {
+        <div class="panel panel-default">
+          <div class="panel-heading"><a href="@Url.Map(c.DefaultUrl.Url, "sfc")"><h3 class="panel-title">@c.Title</h3></a></div>
+          <div class="panel-body">@c.Teaser</div>
+          <div class="panel-footer"><small><a href="@Url.Map("profile/"+@c.Author.Url, "user")">@c.Author.UserName</a>, @c.Published.ToString("d.M.Y HH:mm")</small></div>
+        </div>
+    }
+    <a href="@Url.Action("Archive","Home", new { start = Model.Last().Published.Ticks })" class="btn btn-default pull-right">Older entries &rarr;</a>
+}
+else
+{
+    <text>No News :( I think you should check back later.</text>
+}

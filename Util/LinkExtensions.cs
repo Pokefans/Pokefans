@@ -129,6 +129,46 @@ namespace Pokefans.Util
             }
             return helper.Action(actionName, controllerName, routeValues);
         }
+
+        #endregion
+
+        #region url
+
+        /// <summary>
+        /// Map the specified helper, url and domain with an explicit setting of the subdomain.
+        /// set domain NULL if no subdomain is to be used.
+        /// </summary>
+        /// <param name="helper">Helper.</param>
+        /// <param name="url">URL.</param>
+        /// <param name="domain">Domain.</param>
+        public static string Map(this UrlHelper helper, string url, string domain)
+        {
+            if (domain == null)
+            {
+                return String.Format("{0}://{1}/{2}",
+                    HttpContext.Current.Request.IsSecureConnection ? "https" : "http",
+                    ConfigurationManager.AppSettings["Domain"],
+                    url
+                );
+            }
+            return String.Format("{0}://{1}.{2}/{3}",
+                HttpContext.Current.Request.IsSecureConnection ? "https" : "http",
+                domain,
+                ConfigurationManager.AppSettings["Domain"],
+                url
+            );
+        }
+
+        /// <summary>
+        /// Map the specified helper and url. This uses the current subdomain as base.
+        /// </summary>
+        /// <param name="helper">Helper.</param>
+        /// <param name="url">URL.</param>
+        public static string Map(this UrlHelper helper, string url)
+        {
+            return helper.Map(url, HttpContext.Current.Request.Url.Host.Replace("." + ConfigurationManager.AppSettings["Domain"], ""));
+        }
+
         #endregion
     }
 

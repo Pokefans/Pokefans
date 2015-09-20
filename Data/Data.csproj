@@ -141,6 +141,10 @@
     <Compile Include="Migrations\201508202041145_FanartTags.Designer.cs">
       <DependentUpon>201508202041145_FanartTags.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508240906140_FanartImageUpdate.cs" />
+    <Compile Include="Migrations\201508240906140_FanartImageUpdate.Designer.cs">
+      <DependentUpon>201508240906140_FanartImageUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -312,6 +316,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201507071733530_TrackingSourceNullValues.resx">
       <DependentUpon>201507071733530_TrackingSourceNullValues.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508240906140_FanartImageUpdate.resx">
+      <DependentUpon>201508240906140_FanartImageUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

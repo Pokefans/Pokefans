@@ -1,0 +1,25 @@
+﻿@*Copyright 2015 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Data
+@using Pokefans.Areas.sfc.Models
+@model NewsArchiveViewModel
+@{
+    Layout = "~/Areas/sfc/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">News archive</h1>
+@foreach (Content c in Model.News)
+{
+  <div class="panel panel-default">
+    <div class="panel-heading"><a href="@Url.Map(c.DefaultUrl.Url, "sfc")"><h3 class="panel-title">@c.Title</h3></a></div>
+    <div class="panel-body">@c.Teaser</div>
+    <div class="panel-footer"><small><a href="@Url.Map("profile/"+@c.Author.Url, "user")">@c.Author.UserName</a>, @c.Published.ToString("d.M.Y HH:mm")</small></div>
+ </div>
+}
+@if(Model.HasPrev)
+{
+  <a href="@Url.Action("Archive", "Home", new { start = Model.Prev })" class="btn btn-default pull-left">&larr; Newer entries</a>
+}
+@if(Model.HasNext)
+{
+  <a href="@Url.Action("Archive", "Home", new { start = Model.Next })" class="btn btn-default pull-right">Older entries &rarr;</a>
+}

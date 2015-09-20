@@ -1,4 +1,5 @@
-﻿using Microsoft.Owin;
+﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using Owin;
 using Pokefans.Security;

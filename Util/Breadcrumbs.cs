@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.WebPages.Html;
+using System.Web.Routing;
 
 
 
@@ -19,7 +20,25 @@ namespace Pokefans.Util
         public Breadcrumbs()
         {
             this.crumbs = new List<Breadcrumb>();
-            this.Add("Pokefans", "Home", "Index", new { area = ""});
+
+            HttpContextBase currentContext = new HttpContextWrapper(HttpContext.Current);
+            RouteData routeData = RouteTable.Routes.GetRouteData(currentContext);
+
+            string areaName = "";
+            if (routeData != null && routeData.DataTokens.ContainsKey("area"))
+            {
+                areaName = (string)routeData.DataTokens["area"];
+            }
+
+            switch (areaName)
+            {
+                case "sfc":
+                    this.Add("The Search For Cheats", "Home", "Index", new { area = "sfc" });
+                    break;
+                default:
+                    this.Add("Pokefans", "Home", "Index", new { area = "" });
+                    break;
+            }
         }
 
         /// <summary>
@@ -40,9 +59,9 @@ namespace Pokefans.Util
         public void Add(string text)
         {
             crumbs.Add(new Breadcrumb
-            {
-                Text = text
-            });
+                {
+                    Text = text
+                });
         }
 
         /// <summary>
@@ -71,14 +90,15 @@ namespace Pokefans.Util
         public void Add(string text, string controller, string action, object routeValues)
         {
             crumbs.Add(new Breadcrumb
-            {
-                Text = text,
-                Controller = controller,
-                Action = action,
-                RouteValues = routeValues
-            });
+                {
+                    Text = text,
+                    Controller = controller,
+                    Action = action,
+                    RouteValues = routeValues
+                });
         }
     }
+
     public class Breadcrumb
     {
         /// <summary>

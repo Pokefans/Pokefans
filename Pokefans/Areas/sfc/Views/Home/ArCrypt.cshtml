@@ -1,0 +1,27 @@
+﻿@*Copyright 2015 the pokefans authors. See copying.md for legal info.*@
+@{
+    ViewBag.Title = "ArCrypt";
+    Layout = "~/Areas/sfc/Views/Shared/_Layout.cshtml";
+}
+
+<h1 class="page-title">ARCrypt Online Version</h1>
+
+<p>This is a 1:1 copy of ARCrypt. It is used to encrypt or decrypt Action-Replay-Codes for the GBA's cheating devices.
+    For those interested how it works, you can find the source code on <a href="https://github.com/Pokefans/Pokefans">GitHub</a>.</p>
+
+<div class="col-md-5"><textarea class="form-control arcrypt-form" id="input"></textarea></div>
+<div class="col-md-2 arcrypt-buttons">
+    <button class="btn btn-default" id="encrypt">Encrypt</button>
+    <button class="btn btn-default" id="decrypt">Decrypt</button>
+    <button class="btn btn-default" id="copy-to-input">Copy to input</button>
+    <div class="checkbox">
+        <label>
+            <input type="checkbox" id="arv3" checked="checked"> ARv3
+        </label>
+    </div>
+</div>
+<div class="col-md-5"><textarea rows="20" class="form-control arcrypt-form" readonly="readonly" id="output"></textarea></div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/sfc/arcrypt")
+}

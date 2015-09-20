@@ -233,6 +233,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="Authorize.cs" />
+    <Compile Include="Areas\sfc\sfcAreaRegistration.cs" />
+    <Compile Include="Areas\sfc\Controllers\SfcHomeController.cs" />
+    <Compile Include="Areas\sfc\Models\NewsArchiveViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\font-awesome.css" />
@@ -314,6 +317,7 @@
     <Content Include="Content\fonts\FontAwesome.otf" />
     <Content Include="Areas\mitarbeit\Views\Shared\_ContentMenuPartial.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Content\Preview.cshtml" />
+    <Content Include="Areas\sfc\Views\Home\ArCrypt.cshtml" />
     <None Include="Properties\PublishProfiles\Filesystem.pubxml" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\adminlte\app.js" />
@@ -340,6 +344,8 @@
     <Content Include="Scripts\respond.matchmedia.addListener.js" />
     <Content Include="Scripts\respond.matchmedia.addListener.min.js" />
     <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\sfc\arcrypt.js" />
+    <Content Include="Scripts\sfc\arcrypt2.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -377,6 +383,17 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_BreadcrumbPartial.cshtml" />
     <Content Include="Views\Home\ViewContent.cshtml" />
+    <Content Include="Content\sfc\bootstrap.min.css" />
+    <Content Include="Content\sfc\bootstrap.css" />
+    <Content Include="Content\sfc\site.css" />
+    <Content Include="Content\lightbox\dark.css" />
+    <Content Include="Content\lightbox\ekko-lightbox.css" />
+    <Content Include="Content\lightbox\ekko-lightbox.js" />
+    <Content Include="Areas\sfc\Views\web.config" />
+    <Content Include="Areas\sfc\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\sfc\Views\Home\Index.cshtml" />
+    <Content Include="Content\lightbox\lightboxstart.js" />
+    <Content Include="Areas\sfc\Views\Home\Archive.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
