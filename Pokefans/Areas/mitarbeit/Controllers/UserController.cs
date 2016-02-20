@@ -137,7 +137,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 Notes = (from s in db.UserNotes
                          join ur in db.UserRoles on s.RoleIdNeeded equals ur.PermissionId
                          where s.UserId == id && ur.UserId == cuid
-                         select s).Include(g => g.Author).ToList(),
+                         select s).OrderByDescending(g => g.Created).Include(g => g.Author).ToList(),
                 Actions = cache.Get<Dictionary<int, string>>("UserNoteActions")
             };
 
@@ -669,6 +669,26 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 if (uRole != null)
                 {
                     db.UserRoles.Remove(uRole);
+                    UserRoleAddNoteViewModel uranvm = new UserRoleAddNoteViewModel()
+                    {
+                        User = userManager.FindByNameAsync(User.Identity.Name).Result,
+                        Role = db.Roles.Find(role)
+                    };
+
+                    Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
+                    Dictionary<int, string> bvsroles = cache.Get<Dictionary<int, string>>("BvsRoles");
+                    UserNote n = new UserNote()
+                    {
+                        AuthorId = uranvm.User.Id,
+                        ActionId = actions["roles"],
+                        Created = DateTime.Now,
+                        IsDeletable = false,
+                        RoleIdNeeded = bvsroles.First(g => g.Value == "Bereichsassistent").Key,
+                        UserId = id,
+                        Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/RoleRemoved.cshtml", uranvm),
+                        UnparsedContent = ""
+                    };
+                    db.UserNotes.Add(n);
                     db.SaveChanges();
                 }
             }
@@ -700,7 +720,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 UserRoleAddNoteViewModel uranvm = new UserRoleAddNoteViewModel()
                 {
                     User = userManager.FindByNameAsync(User.Identity.Name).Result,
-                    Role = db.Roles.Find(id)
+                    Role = db.Roles.Find(role)
                 };
 
                 Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
