@@ -1,4 +1,5 @@
-﻿using Pokefans.Data;
+﻿// Copyright 2016 the pokefans authors. See copying.md for legal info.
+using Pokefans.Data;
 using Pokefans.Data.Fanwork;
 using Pokefans.Caching;
 using System;

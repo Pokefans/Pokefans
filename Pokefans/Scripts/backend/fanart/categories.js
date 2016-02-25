@@ -1,4 +1,5 @@
-﻿$.fn.editableform.buttons = '<button type="submit" class="editable-submit btn btn-primary btn-sm"><i class="fa fa-check"></i></button>' +
+﻿// Copyright 2016 the pokefans authors. See copying.md for legal info.
+$.fn.editableform.buttons = '<button type="submit" class="editable-submit btn btn-primary btn-sm"><i class="fa fa-check"></i></button>' +
     '<button type="button" class="editable-cancel btn btn-default btn-sm"><i class="fa fa-times"></i></button>';
 
 $("#fanartAddCategory").click(function (e) {

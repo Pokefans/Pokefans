@@ -1,4 +1,5 @@
-﻿using Pokefans.App_Start;
+﻿// Copyright 2016 the pokefans authors. See copying.md for legal info.
+using Pokefans.App_Start;
 using Pokefans.Data;
 using Pokefans.Util;
 using System.Configuration;
