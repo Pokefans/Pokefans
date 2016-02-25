@@ -84,7 +84,10 @@ namespace Pokefans.Util
                 if (t.BaseType == typeof(AreaRegistration))
                 {
                     object instance = Activator.CreateInstance(t);
-                    this.DataTokens.Add("area", ((AreaRegistration)instance).AreaName);
+                    // maybe we want to reuse the datatokens array, so we have to check first
+                    // if the area already has been added.
+                    if(!DataTokens.ContainsKey("area"))
+                        this.DataTokens.Add("area", ((AreaRegistration)instance).AreaName);
                     break;
                 }
             }

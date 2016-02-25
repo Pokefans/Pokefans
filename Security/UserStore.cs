@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Pokefans.Data;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 
 namespace Pokefans.Security
 {

@@ -2,7 +2,7 @@
 
 using System;
 
-namespace Pokefans.SystemCache
+namespace Pokefans.Caching
 {
     /// <summary>
     /// Basic exception class for caching operations.

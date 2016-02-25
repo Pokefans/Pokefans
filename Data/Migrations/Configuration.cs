@@ -120,6 +120,15 @@ namespace Pokefans.Data.Migrations
                     Name = "mitarbeit-manager",
                     FriendlyName = "Mitarbeitsleiter"
                 });
+
+            if (!context.Roles.Any(x => x.Name == "fanart-manager"))
+                context.Roles.Add(
+                    new Role()
+                    {
+                        Name = "fanart-manager",
+                        FriendlyName = "Fanart-Manager"
+                    }
+                    );
             context.SaveChanges();
             #endregion
 

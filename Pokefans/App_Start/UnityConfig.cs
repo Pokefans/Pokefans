@@ -1,4 +1,4 @@
-// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+// Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info.
 using System;
 using System.Web;
 using Microsoft.AspNet.Identity;
@@ -8,8 +8,9 @@ using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Pokefans.Data;
 using Pokefans.Security;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 using Pokefans.Util;
+using Amib.Threading;
 
 namespace Pokefans.App_Start
 {
@@ -50,6 +51,7 @@ namespace Pokefans.App_Start
             container.RegisterType<ApplicationUserManager>();
             container.RegisterType<IAuthenticationManager>(new InjectionFactory( c => HttpContext.Current.GetOwinContext().Authentication));
             container.RegisterType<IRoleStore<Role, int>, RoleStore>(new InjectionConstructor(typeof(Entities)));
+            container.RegisterType<SmartThreadPool>(new InjectionFactory(c => new SmartThreadPool()));
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();

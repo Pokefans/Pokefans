@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Pokefans.Data;
 using Pokefans.Security.Exceptions;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 
 namespace Pokefans.Security
 {

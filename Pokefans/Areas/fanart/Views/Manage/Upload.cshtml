@@ -1,0 +1,88 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@{
+    SiteTitle = "Bild hochladen";
+    SiteHeader = "Bild hochladen";
+    SiteDescription = "";
+    ActiveMenuKey = "fanart";
+}
+
+<h2>@SiteHeader</h2>
+<form id="fanartUploadForm" action="@Url.Action("Upload")" method="post">
+    <div id="fanartUploadImage" class="dropzone">
+        <div class="fallback">
+            <input name="file" type="file" /> <button type="submit" class="btn btn-success">Hochladen</button>
+        </div>
+    </div>
+    <div class="alert alert-danger fanart-warning">
+        <i class="fa fa-exclamation-triangle fa-2x pull-left" style="margin-top:7px;"></i> Du darfst Bilder nur hochladen, wenn du deren Urheber bist oder eine entsprechende Erlaubnis des Rechteinhabers hast. Andernfalls machst du dich strafbar!
+    </div>
+    <div class="form-group">
+        <label for="Category">Hochladen in Kategorie:</label>
+        <select class="form-control" id="Category" name="Category">
+            @foreach (var cat in ViewBag.Categories)
+            {
+                <option value="@cat.Id">@cat.Name</option>
+            }
+        </select>
+    </div>
+    <strong>Lizenz:</strong>
+    <div class="radio">
+        <label>
+            <input type="radio" name="License" value="0" checked />
+            Ich erlaube die freie Nutzung ausschließlich auf Pokefans.
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="License" value="1" />
+            Jeder darf dieses Bild verwenden, wenn das Original verlinkt und mein Namen genannt wird.
+        </label>
+    </div>
+    <div class="radio">
+        <label>
+            <input type="radio" name="License" value="2" />
+            Ich lizenziere dieses Bild unter den Lizenzbedingungen von <a href="http://creativecommons.org/licenses/by-nc-sa/2.0/de/">Creative Commons BY-NC-SA</a>.
+        </label>
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary" type="submit" id="send">Hochladen!</button>
+    </div>
+</form>
+
+@section Submenu {
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", "upload")
+}
+
+@section Sidebar {
+
+    @Html.Partial("~/Areas/fanart/Views/Shared/_diskspacePartial.cshtml")
+    <hr />
+
+    <div>
+        <h3>Maximale Bildgrößen</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Kategorie</th>
+                    <th>Bild</th>
+                    <th>Datei</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var cat in ViewBag.Categories)
+                {
+                    <tr><td>@cat.Name</td><td>@cat.MaximumDimension x @cat.MaximumDimension</td><td>@(string.Format("{0:0} KiB", cat.MaxFileSize / 1024))</td></tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/dropzone")
+    @Scripts.Render("~/bundles/fanart")
+}
+
+@section CustomHeaders {
+    @Styles.Render("~/bundles/dropzone/css")
+}

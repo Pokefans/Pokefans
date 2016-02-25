@@ -1,4 +1,4 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info.
 using System.Configuration;
 using System.Web.Mvc;
 using Pokefans.Util;
@@ -116,6 +116,13 @@ namespace Pokefans.Areas.mitarbeit
                     new { action = "UserData", Controller = "User" }
                 ));
 
+            // Fanart
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
+                    "fanart/kategorien",
+                    new { action = "Categories", Controller = "Fanart" }
+                ));
+
             // AJAX API below
             context.Routes.Add(new DomainRoute(
                     "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
@@ -127,6 +134,24 @@ namespace Pokefans.Areas.mitarbeit
                     "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
                     "api/multiaccount/{id}/set-no-multiaccount",
                     new { action = "SetNoMultiaccount", Controller = "User" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/fanart/categories/add",
+                    new { action = "AddCategory", Controller = "Fanart"}
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/fanart/categories/edit",
+                    new { action = "EditCategory", Controller = "Fanart" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/fanart/categories/delete",
+                    new { action = "DeleteCategory", Controller = "Fanart" }
                 ));
 
             // Default Route

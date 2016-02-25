@@ -10,6 +10,7 @@ namespace Pokefans.Security
 {
     public class WebSecurity
     {
+        [Obsolete]
         public static User CurrentUser { get; set; }
     }
 }

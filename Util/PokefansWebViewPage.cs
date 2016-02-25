@@ -1,4 +1,4 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +37,11 @@ namespace Pokefans.Util
             }
         }
 
+        public string ActiveMenuKey {
+            get { return ViewBag.ActiveMenuKey; }
+            set { ViewBag.ActiveMenuKey = value; }
+        }
+
         public string SiteHeader
         {
             get
@@ -68,6 +73,11 @@ namespace Pokefans.Util
 
                 return mgr.FindByNameAsync(User.Identity.Name).Result;
             }
+        }
+
+        public string isActive(string index)
+        {
+            return ActiveMenuKey == index ? "active" : "";
         }
     }
 

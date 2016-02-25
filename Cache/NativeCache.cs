@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Caching;
 
-namespace Pokefans.SystemCache
+namespace Pokefans.Caching
 {
     /// <summary>
     /// Represents a cache object based on a local cache.

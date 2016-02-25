@@ -6,7 +6,7 @@ using Enyim.Caching;
 using Enyim.Caching.Configuration;
 using Enyim.Caching.Memcached;
 
-namespace Pokefans.SystemCache
+namespace Pokefans.Caching
 {
     /// <summary>
     /// Represents a cache object based on memcached.

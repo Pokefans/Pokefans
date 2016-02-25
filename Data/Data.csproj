@@ -89,6 +89,8 @@
     <Compile Include="Content\Feedback.cs" />
     <Compile Include="Content\TrackingSource.cs" />
     <Compile Include="Content\ContentTrackingSource.cs" />
+    <Compile Include="Fanwork\FanartBanlist.cs" />
+    <Compile Include="Fanwork\FanartRating.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.Designer.cs">
       <DependentUpon>201507071704102_TrackingSource.cs</DependentUpon>
@@ -144,6 +146,38 @@
     <Compile Include="Migrations\201508240906140_FanartImageUpdate.cs" />
     <Compile Include="Migrations\201508240906140_FanartImageUpdate.Designer.cs">
       <DependentUpon>201508240906140_FanartImageUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602201712053_FanartCategoryUrl.cs" />
+    <Compile Include="Migrations\201602201712053_FanartCategoryUrl.Designer.cs">
+      <DependentUpon>201602201712053_FanartCategoryUrl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602211728506_FanartCategoryProperties.cs" />
+    <Compile Include="Migrations\201602211728506_FanartCategoryProperties.Designer.cs">
+      <DependentUpon>201602211728506_FanartCategoryProperties.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602211834522_FanartCategoryOrder.cs" />
+    <Compile Include="Migrations\201602211834522_FanartCategoryOrder.Designer.cs">
+      <DependentUpon>201602211834522_FanartCategoryOrder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602242121318_FanartOrderSigned.cs" />
+    <Compile Include="Migrations\201602242121318_FanartOrderSigned.Designer.cs">
+      <DependentUpon>201602242121318_FanartOrderSigned.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602250006319_FanartFileSize.cs" />
+    <Compile Include="Migrations\201602250006319_FanartFileSize.Designer.cs">
+      <DependentUpon>201602250006319_FanartFileSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602250008472_BiggerFanartFileSize.cs" />
+    <Compile Include="Migrations\201602250008472_BiggerFanartFileSize.Designer.cs">
+      <DependentUpon>201602250008472_BiggerFanartFileSize.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602250302075_FanartUpdate.cs" />
+    <Compile Include="Migrations\201602250302075_FanartUpdate.Designer.cs">
+      <DependentUpon>201602250302075_FanartUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201602251814124_FanartBanlistRatings.cs" />
+    <Compile Include="Migrations\201602251814124_FanartBanlistRatings.Designer.cs">
+      <DependentUpon>201602251814124_FanartBanlistRatings.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -320,19 +354,32 @@
     <EmbeddedResource Include="Migrations\201508240906140_FanartImageUpdate.resx">
       <DependentUpon>201508240906140_FanartImageUpdate.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602201712053_FanartCategoryUrl.resx">
+      <DependentUpon>201602201712053_FanartCategoryUrl.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602211728506_FanartCategoryProperties.resx">
+      <DependentUpon>201602211728506_FanartCategoryProperties.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602211834522_FanartCategoryOrder.resx">
+      <DependentUpon>201602211834522_FanartCategoryOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602242121318_FanartOrderSigned.resx">
+      <DependentUpon>201602242121318_FanartOrderSigned.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602250006319_FanartFileSize.resx">
+      <DependentUpon>201602250006319_FanartFileSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602250008472_BiggerFanartFileSize.resx">
+      <DependentUpon>201602250008472_BiggerFanartFileSize.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602250302075_FanartUpdate.resx">
+      <DependentUpon>201602250302075_FanartUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201602251814124_FanartBanlistRatings.resx">
+      <DependentUpon>201602251814124_FanartBanlistRatings.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Wifi\" />
-    <Folder Include="Fanwork\" />
-    <Folder Include="FriendCodes\" />
-    <Folder Include="Strategy\" />
-    <Folder Include="Reviews\" />
-    <Folder Include="Pokedex\Ranger\" />
-    <Folder Include="Service\" />
-    <Folder Include="Tracker\" />
-    <Folder Include="User\Activities\" />
-    <Folder Include="Calendar\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

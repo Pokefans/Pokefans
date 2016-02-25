@@ -1,4 +1,4 @@
-﻿// Copyright 2015 the pokefans authors. See copying.md for details.
+﻿// Copyright 2015-2016 the pokefans authors. See copying.md for details.
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Data.Entity;
 using Pokefans.Areas.mitarbeit.Models;
 using Pokefans.Data;
 using Pokefans.Security;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 using Pokefans.Util;
 using Ganss.XSS;
 using System.Data.Entity.Validation;

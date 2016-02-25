@@ -8,7 +8,7 @@ using System.Web.Routing;
 using Pokefans.App_Start;
 using Microsoft.Practices.Unity;
 using Pokefans.Util;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 using System.Configuration;
 
 namespace Pokefans

@@ -4,13 +4,15 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 using Pokefans.Data.Pokedex;
 using System.Data.Entity;
+using System.Collections.Generic;
 
 namespace Pokefans.Data.Fanwork
 {
     public enum FanartStatus
     {
         OK = 0,
-        Deleted = -1}
+        Deleted = -1
+    }
 
     ;
 
@@ -46,9 +48,7 @@ namespace Pokefans.Data.Fanwork
 
         public decimal SmartRating { get; set; }
 
-        public ushort Order { get; set; }
-
-        public bool ForceComments { get; set; }
+        public short Order { get; set; }
 
         public bool IsTileset { get; set; }
 
@@ -66,12 +66,33 @@ namespace Pokefans.Data.Fanwork
         [MaxLength(47)]
         public string UploadIp { get; set; }
 
-        public ushort FileSize { get; set; }
+        public int FileSize { get; set; }
+
+        private ICollection<FanartTags> tags;
+
+        [InverseProperty("Fanart")]
+        public virtual ICollection<FanartTags> Tags
+        {
+            get { return tags ?? (tags = new HashSet<FanartTags>()); }
+            set { tags = value; }
+        }
+
+        [ForeignKey("UploadUserId")]
+        public User UploadUser { get; set; }
 
         public static void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Fanart>().Property(g => g.Size.X).HasColumnName("image_width");
             modelBuilder.Entity<Fanart>().Property(g => g.Size.Y).HasColumnName("image_height");
+        }
+
+        private ICollection<FanartRating> ratings;
+
+        [InverseProperty("Fanart")]
+        public virtual ICollection<FanartRating> Ratings
+        {
+            get { return ratings ?? (ratings = new HashSet<FanartRating>()); }
+            set { ratings = value; }
         }
     }
 }

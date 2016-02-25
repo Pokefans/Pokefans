@@ -1,11 +1,11 @@
-﻿@* Copyright 2015 the pokefans-core authors. See copying.md for legal info. *@
+﻿@* Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info. *@
 <!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Meine ASP.NET-Anwendung</title>
+    <title>@SiteTitle</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     @if (IsSectionDefined("CustomHeaders"))
@@ -48,7 +48,7 @@
                     <li>@Html.ActionLink("Pokémon-Spiele", "Index", "Home")</li>
                     <li>@Html.ActionLink("Pokedex", "Index", "Home")</li>
                     <li>@Html.ActionLink("Kampf & Strategie", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Fanart & Zeichnungen", "Index", "Home")</li>
+                    <li class="@isActive("fanart")"><a href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
                     <li>@Html.ActionLink("Tauschbörse", "Index", "Home")</li>
                     <li>@Html.ActionLink("Forum", "Index", "Home")</li>
                     <li>@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: null)</li>
@@ -56,6 +56,7 @@
             </div>
         </div>
     </div>
+    @RenderSection("Submenu", false)
     <div class="container">
         <div id="content" class="content @(IsSectionDefined("Sidebar") ? "column" : "article-100")">
             @RenderBody()
