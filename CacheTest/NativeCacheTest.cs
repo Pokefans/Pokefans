@@ -124,5 +124,17 @@ namespace Pokefans.CacheTest
 
             Assert.AreEqual(obj.Foo(), obj2.Foo());
         }
+
+        [Test]
+        public void TestCacheIndexer()
+        {
+            Cache cache = new NativeCache();
+            cache["key"] = 123;
+
+            var result = cache["key"] as int?;
+            
+            Assert.NotNull(result);
+            Assert.AreEqual(result, 123);
+        }
     }
 }

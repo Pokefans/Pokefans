@@ -77,6 +77,22 @@ namespace Pokefans.SystemCache
         /// <summary>
         /// Query an object from the cache.
         /// </summary>
+        /// <exception cref="CacheEntryNotFoundException">Fired when a cache-entry cannot be found.</exception>
+        /// <param name="key">Key</param>
+        /// <returns></returns>
+        public object this[string key]
+        {
+            get { return Get<object>(key); }
+
+            set
+            {
+                Add(key, value);
+            }
+        }
+
+        /// <summary>
+        /// Query an object from the cache.
+        /// </summary>
         /// <typeparam name="T">Type of the element to be retrieved</typeparam>
         /// <param name="key">Key</param>
         /// <param name="result">If the key exists the cached object will be stored in <paramref name="result"/></param>
