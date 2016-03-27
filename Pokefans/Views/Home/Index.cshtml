@@ -3,6 +3,7 @@
 @using Pokefans.Data.Fanwork
 @using System.Collections
 @using System.Collections.Generic
+@using Pokefans.Data
 @{
     SiteTitle = "Pokefans.net - die Pokémon-Fanseite";
 }
@@ -13,7 +14,7 @@
     <text>Config error: teaser article not found</text>
 }
 else {
-    <text>@Html.Raw(@Model.StartTeaser.ParsedContent)</text>
+    <text>@Html.Raw(Model.StartTeaser.ParsedContent)</text>
 }
 
 <h2>News</h2>
@@ -77,6 +78,12 @@ else {
 }
 
 @section CustomHeaders {
-<link rel="stylesheet" href="@Model.StartTeaser.StylesheetUrl" />
-<link rel="stylesheet" href="@Model.Recommendations.StylesheetUrl" />
+    @if(Model.StartTeaser != null)
+    {
+        <link rel="stylesheet" href="@Model.StartTeaser.StylesheetUrl" />
+    }
+    @if(Model.Recommendations != null)
+    {
+        <link rel="stylesheet" href="@Model.Recommendations.StylesheetUrl" />
+    }
 }
