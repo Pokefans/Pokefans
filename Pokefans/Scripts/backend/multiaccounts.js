@@ -1,4 +1,5 @@
-﻿var currentUserId = 0;
+﻿// Copyright 2016 the pokefans authors. See copying.md for legal info.
+var currentUserId = 0;
 $('#multiaccount-infoModal').on('show.bs.modal', function (event) {
     $('#alert-container').html('');
     var button = $(event.relatedTarget); // Button that triggered the modal

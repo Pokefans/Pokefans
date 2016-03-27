@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
 using Pokefans.Data;
 using Pokefans.Util;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 using Pokefans.Areas.sfc.Models;
 
 namespace Pokefans.Areas.sfc.Controllers

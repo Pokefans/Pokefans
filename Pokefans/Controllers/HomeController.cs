@@ -6,6 +6,8 @@ using System.Web.Mvc;
 using Pokefans.Data;
 using Pokefans.Models;
 using Pokefans.Util;
+using System.Configuration;
+using Pokefans.Caching;
 
 namespace Pokefans.Controllers
 {
@@ -13,21 +15,65 @@ namespace Pokefans.Controllers
     {
         IBreadcrumbs breadcrumbs;
         private readonly Entities _entities;
+        Cache cache;
 
         public HomeController()
         {
         }
 
-        public HomeController(IBreadcrumbs crumbs, Entities entities)
+        public HomeController(IBreadcrumbs crumbs, Entities entities, Cache c)
         {
             this.breadcrumbs = crumbs;
             _entities = entities;
+            cache = c;
         }
 
         public ActionResult Index()
         {
             breadcrumbs.Add("Startseite");
-            return View();
+
+            MainPageViewModel mpvm = new MainPageViewModel();
+            if (!cache.Contains("StartTeaser"))
+            {
+                int teaserid = int.Parse(ConfigurationManager.AppSettings["StartTeaserId"]);
+                mpvm.StartTeaser = _entities.Contents.FirstOrDefault(g => g.Id == teaserid);
+                if (mpvm.StartTeaser != null)
+                    cache.Add("StartTeaser", mpvm.StartTeaser, TimeSpan.FromDays(1));
+            }
+            else
+            {
+                mpvm.StartTeaser = cache.Get<Content>("StartTeaser");
+            }
+
+            if (!cache.Contains("StartRecommendations"))
+            {
+                int recommendationsid = int.Parse(ConfigurationManager.AppSettings["StartRecommendationsId"]);
+                mpvm.Recommendations = _entities.Contents.FirstOrDefault(g => g.Id == recommendationsid);
+                if (mpvm.Recommendations != null)
+                    cache.Add("StartRecommendations", mpvm.Recommendations, TimeSpan.FromDays(1));
+            }
+            else
+            {
+                mpvm.Recommendations = cache.Get<Content>("StartRecommendations");
+            }
+
+            if (!cache.Contains("StartTrivia"))
+            {
+                int triviaid = int.Parse(ConfigurationManager.AppSettings["StartTriviaId"]);
+                mpvm.Trivia = _entities.Contents.FirstOrDefault(g => g.Id == triviaid);
+                if (mpvm.Trivia != null)
+                    cache.Add("StartTrivia", mpvm.Trivia, TimeSpan.FromDays(1));
+            }
+            else
+            {
+                mpvm.Trivia = cache.Get<Content>("StartTrivia");
+            }
+
+            mpvm.News = _entities.Contents.Where(g => g.Type == ContentType.News).OrderByDescending(g => g.Published).Take(10).ToList();
+            mpvm.LatestArticles = _entities.Contents.Where(g => g.Type == ContentType.Article).OrderByDescending(g => g.Published).Take(10).ToList();
+            mpvm.Fanarts = _entities.Fanarts.OrderByDescending(g => g.UploadTime).Take(4 * 4).ToList();
+
+            return View(mpvm);
         }
 
         public ActionResult About()

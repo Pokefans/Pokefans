@@ -2,7 +2,7 @@
     Copyright 2015 Almaseed Studios.
     It's licensed under the terms of the MIT License.
     Please visit http://opensource.org/licenses/MIT for more information.
-    Modifications Copyright 2015 the pokefans authors.
+    Modifications Copyright 2015-2016 the pokefans authors.
     See copying.md for further legal info.
 *@
 <!DOCTYPE html>
@@ -238,13 +238,17 @@
                     <li class="header">Tauschbörse</li>
                     <li><a href="#"><i class='fa fa-cart-arrow-down'></i> <span>Angebot bearbeiten</span></a></li>
                     <li><a href="#"><i class='fa fa-bug'></i> <span>Gemeldete Tauschvorgänge</span></a></li>
-                    <li><a href="#"><i class='fa fa-list'></i> <span>Sperrliste</span></a></li>
-
+                    <li><a href="#"><i class='fa fa-list'></i> <span>Sperrliste</span></a></li>*@
+                    @if(User.IsInRole("fanart-manager")) {
                     <li class="header">Fanart</li>
+                    if (User.IsInRole("superadmin"))
+                    { 
+                        <li><a href="@Url.Action("Categories", "Fanart")"><i class="fa fa-tags"></i> <span>Fanart-Kategorien</span></a></li> 
+                    }
                     <li><a href="#"><i class='fa fa-trash-o'></i> <span>Fanart löschen</span></a></li>
                     <li><a href="#"><i class='fa fa-arrow-circle-right'></i> <span>Fanart verschieben</span></a></li>
-
-                    <li class="header">Diverses</li>
+                    }
+                    @*<li class="header">Diverses</li>
                     <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
                     <li><a href="#"><i class='fa fa-clock-o'></i> <span>Cronjobs</span></a></li>*@
 
@@ -347,22 +351,5 @@
         Both of these plugins are recommended to enhance the
         user experience. Slimscroll is required when using the
         fixed layout. -->
-    
-    <!-- Piwik -->
-    <script type="text/javascript">
-  var _paq = _paq || [];
-  _paq.push(['trackPageView']);
-  _paq.push(['enableLinkTracking']);
-  (function() {
-    var u="//localhost:8000/piwik/";
-    _paq.push(['setTrackerUrl', u+'piwik.php']);
-    _paq.push(['setSiteId', 1]);
-    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
-  })();
-    </script>
-    <noscript><p><img src="//localhost:8000/piwik/piwik.php?idsite=1" style="border:0;" alt="" /></p></noscript>
-    <!-- End Piwik Code -->
-
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info.
 using System.Web;
 using System.Web.Optimization;
 
@@ -22,11 +22,15 @@ namespace Pokefans
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                     "~/Scripts/bootstrap.js",
-                    "~/Scripts/respond.js"));
+                    "~/Scripts/respond.js",
+                    "~/Scripts/cookieconsent.js"
+                ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/Content/bootstrap.css",
-                    "~/Content/css/font-awesome.min.css"));
+                    "~/Content/Site.css",
+                    "~/Content/css/font-awesome.min.css",
+                    "~/Content/bootstrap-tagsinput.css"));
 
             // SFC
             bundles.Add(new StyleBundle("~/Content/sfc/css").Include(
@@ -54,7 +58,8 @@ namespace Pokefans
             bundles.Add(new StyleBundle("~/bundles/adminlte").Include(
                     "~/Content/adminlte/bootstrap.css",
                     "~/Content/adminlte/AdminLTE.css",
-                    "~/Content/adminlte/skin-blue.css"
+                    "~/Content/adminlte/skin-blue.css",
+                    "~/Content/editable/bootstrap-editable.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
@@ -80,7 +85,34 @@ namespace Pokefans
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(
                     "~/Scripts/backend/advertising.js",
                     "~/Scripts/backend/multiaccounts.js",
-                    "~/Scripts/backend/rolemanager.js"
+                    "~/Scripts/backend/rolemanager.js",
+                    "~/Scripts/editable/bootstrap-editable.js",
+                    "~/Scripts/backend/fanart/categories.js"
+                ));
+
+            // waypoints
+
+            bundles.Add(new ScriptBundle("~/bundles/waypoints").Include(
+                    "~/Scripts/waypoints/jquery.waypoints.js",
+                    "~/Scripts/waypoints/shortcuts/infinite.js",
+                    "~/Scripts/waypoints/shortcuts/inview.js",
+                    "~/Scripts/waypoints/shortcuts/sticky.js"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/fanart").Include(
+                    "~/Scripts/typeahead.bundle.js",
+                    "~/Scripts/bootstrap-tagsinput.js",
+                    "~/Scripts/fanart/fanart.js",
+                    "~/Scripts/fanart/upload.js",
+                    "~/Scripts/fanart/edit.js"
+
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(
+                    "~/Scripts/dropzone/dropzone.js"
+                ));
+            bundles.Add(new StyleBundle("~/bundles/dropzone/css").Include(
+                    "~/Scripts/dropzone/dropzone.css"
                 ));
         }
     }

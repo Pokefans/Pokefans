@@ -1,10 +1,10 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info.
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Pokefans.Data;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 
 namespace Pokefans.App_Start
 {
@@ -55,6 +55,13 @@ namespace Pokefans.App_Start
                       .ForEach(x => bvsRoles.Add(x.Id, x.FriendlyName));
 
             cache.Add<Dictionary<int, string>>("BvsRoles", bvsRoles);
+
+            // Fanart-Categories
+            Dictionary<int, string> fanartCategories = new Dictionary<int, string>();
+
+            var catlist = ents.FanartCategories.ToList();
+            catlist.ForEach(x => fanartCategories.Add(x.Id, x.Name));
+            cache.Add("FanartCategories", fanartCategories);
 
         }
     }

@@ -11,30 +11,31 @@ namespace Pokefans
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
+            routes.IgnoreRoute("glimpse.axd");
 
             routes.Add("Home", new DomainRoute(
-                ConfigurationManager.AppSettings["Domain"],
-                url: "",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            ));
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "",
+                    defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                ));
 
             routes.Add("News", new DomainRoute(
-                ConfigurationManager.AppSettings["Domain"],
-                url: "news/{name}/{contentId}",
-                defaults: new { controller = "Home", action = "ViewContent", name = UrlParameter.Optional }
-            ));
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "news/{name}/{contentId}",
+                    defaults: new { controller = "Home", action = "ViewContent", name = UrlParameter.Optional }
+                ));
 
             // Default route for handling content urls
             routes.Add("Content", new ContentRoute(
-                "Home", "ViewContent"
-            ));
+                    "Home", "ViewContent"
+                ));
 
             var route = routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
-                namespaces: new[] { "Pokefans.Controllers" }  
-            );
+                            name: "Default",
+                            url: "{controller}/{action}/{id}",
+                            defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                            namespaces: new[] { "Pokefans.Controllers" }  
+                        );
             route.DataTokens["UseNamespaceFallback"] = false;
         }
     }

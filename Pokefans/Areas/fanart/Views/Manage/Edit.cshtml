@@ -1,0 +1,106 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Areas.fanart.Models.FanartEdit
+@using System.Configuration
+@using Microsoft.AspNet.Identity
+@{
+    SiteTitle = "Einreichung bearbeiten";
+    SiteHeader = "Einreichung bearbeiten";
+    SiteDescription = "";
+    ActiveMenuKey = "fanart";
+}
+
+<h2>Einreichung bearbeiten</h2>
+@if (ViewBag.Success)
+{
+    <div class="alert alert-success fade in" id="editsuccess"><strong>Wunderbar!</strong> Änderungen gespeichert.</div>
+}
+<dl class="dl-horizontal">
+    <dt>Bildadresse:</dt>
+    <dd><code>//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@ViewBag.Url</code></dd>
+    <dt>BB-Code zum <br class="hidden-sm hidden-xs" />Einbinden:</dt>
+    <dd><code>[url=@ConfigurationManager.AppSettings["PreferedProtocol"]://fanart.@ConfigurationManager.AppSettings["Domain"]/@ViewBag.CategoryUrl/@ViewBag.Id][img]//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@ViewBag.Url<text>[/img][/url]</text></code></dd>
+</dl>
+@using (Html.BeginForm("Edit", "Manage", new { id = ViewBag.Id }, FormMethod.Post, new { role = "form" }))
+{
+    @Html.AntiForgeryToken();
+    <div class="form-group">
+        @Html.LabelFor(g => g.Title)
+        @Html.EditorFor(g => g.Title, new { htmlattributes = new { @class = "form-control" } })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(g => g.Description)
+        <p class="help-block">Hier kannst du einen längeren Kommentar zu deiner Einreichung verfassen. Die Verwendung von elementaren BB-Codes ist möglich.</p>
+        <div class="btn-toolbar" role="toolbar" id="comment-toolbar" aria-label="BB-Codes Einfügen">
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" data-template="[b]%s[/b]"><i class="fa fa-bold"></i></button>
+                <button type="button" class="btn btn-default" data-template="[i]%s[/i]"><i class="fa fa-italic"></i></button>
+                <button type="button" class="btn btn-default" data-template="[u]%s[/u]"><i class="fa fa-underline"></i></button>
+            </div>
+            <div class="btn-group" role="group" aria-label="...">
+                <button type="button" class="btn btn-default" data-template="[url=]%s[/url]"><i class="fa fa-link"></i></button>
+                <button type="button" class="btn btn-default" data-template="[quote]%s[/quote]"><i class="fa fa-quote"></i></button>
+                <button type="button" class="btn btn-default" data-template="[s]%s[/s]"><i class="fa fa-strikethrough"></i></button>
+            </div>
+        </div>
+        @Html.TextAreaFor(g => g.Description, new { id = "description-code", @class = "form-control", rows = 5 })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(g => g.Taglist)
+        <p class="help-block">Hier kannst du einige Schlagwörter (Tags) angeben, unter denen dein Bild gefunden werden soll. Das können z.B. die sichtbaren Pokémon, eine Klassifizierung deines Bildes oder vorkommende Farben sein.</p>
+        @Html.EditorFor(g => g.Taglist, new { htmlattributes = new { id = "fanart-tags", @class = "form-control" } })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(g => g.Order)
+        <p class="help-block">Gib hier einen Zahlenwert zwischen +1000 und -1000 an. Je höher dieser Wert ist, desto weiter vorne wird diese Einreichung in der Auflistung deiner Werke angezeigt. Hat keine Auswirkung auf die globale Galerie.</p>
+        @Html.EditorFor(g => g.Order, new { htmlattributes = new { @class = "form-control" } })
+    </div>
+    <button class="btn btn-primary" type="submit">Speichern</button>
+}
+<div>
+    <h2>Einreichung löschen</h2>
+    @if (!ViewBag.IsProtected)
+    {
+        <div class="alert alert-danger">
+            <strong>Achtung!</strong> Das Löschen eines Fanarts kann nicht rückgängig gemacht werden. Alle Kommentare, Bewertungen sowie das Bild
+            werden von unserem Server gelöscht. Es kann noch einige Zeit dauern, bis das Bild auch aus Caches von Drittanbietern (bspw. Google) entfernt wurde (darauf haben wir keinen
+            Einfluss).
+        </div>
+        <p>Wenn du dein Fanart wirklich löschen möchtest, tippe bitte folgende ID in das Textfeld und drücke auf Löschen: <code>@ViewBag.Id</code></p>
+        using (Html.BeginForm("Delete", "Manage", new { id = ViewBag.Id }, FormMethod.Post, new { role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="input-group">
+                <input type="text" id="delete-validator" class="form-control" data-validate="@ViewBag.Id" />
+                <span class="input-group-btn">
+                    <button class="btn btn-danger" id="delete-button" type="submit">Löschen</button>
+                </span>
+            </div>
+        }
+    }
+    else
+    {
+        <p>Diese Einreichung ist zu beliebt, um gelöscht zu werden. In begründeten Fällen kontaktiere bitte einen
+           Administrator, um die Löschung durchführen zu lassen.</p>
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/fanart")
+}
+
+@section Sidebar {
+    <div>
+        <h3>Bild</h3>
+        <img src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@(ViewBag.Url.Split('.')[0] + "_t4.png")" />
+    </div>
+    <hr />
+    @Html.Partial("~/Areas/fanart/Views/Shared/_diskspacePartial.cshtml")
+    <hr />
+    <menu class="nav nav-pills">
+        <li><a href="@ConfigurationManager.AppSettings["PreferedProtocol"]://fanart.@ConfigurationManager.AppSettings["Domain"]/@ViewBag.CategoryUrl/@ViewBag.Id"><i class="fa fa-picture-o"></i> Zu deinem Bild</a></li>
+        <li><a href="@Url.Action("UserRss", "FanartHome", new { id = @User.Identity.GetUserId<int>() })"><i class="fa fa-rss"></i> Dein RSS-Feed</a></li>
+    </menu>
+}

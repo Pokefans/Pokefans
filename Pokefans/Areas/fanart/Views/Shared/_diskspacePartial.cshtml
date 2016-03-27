@@ -1,0 +1,32 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+<div>
+    <h3>Speicherplatz</h3>
+    @{
+        string pcl = "success";
+        if (ViewBag.Usage / ViewBag.Max > 0.7)
+        {
+            pcl = "warning";
+        }
+        if (ViewBag.Usage / ViewBag.Max > 0.9)
+        {
+            pcl = "danger";
+        }
+        string usage = string.Format("{0:0.00} KiB", (double)ViewBag.Usage / 1024);
+        if (ViewBag.Usage > 1024 * 1024)
+        {
+            usage = string.Format("{0:0.00} MiB", (double)ViewBag.Usage / 1024 / 1024);
+        }
+
+        int width = (ViewBag.Usage / (int)ViewBag.Max) * 100;
+
+    }
+    <div class="progress">
+        <div class="progress-bar progress-bar-@pcl progress-bar-striped" role="progressbar" aria-valuenow="@ViewBag.Usage" aria-valuemin="0" aria-valuemax="@ViewBag.Max" style="min-width: 1em; width: @width%">
+
+        </div>
+    </div>
+    <strong>@usage</strong> von <strong>@(ViewBag.Max / 1024 / 1024) MiB</strong> verbraucht
+</div>
+
+
+

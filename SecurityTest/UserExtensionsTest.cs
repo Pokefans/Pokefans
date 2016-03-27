@@ -10,7 +10,7 @@ using NUnit.Framework;
 using Pokefans.Data;
 using Pokefans.Security;
 using Pokefans.Security.Exceptions;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 
 namespace Pokefans.SecurityTest
 {

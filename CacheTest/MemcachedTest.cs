@@ -3,7 +3,7 @@
 using System;
 using System.Threading;
 using NUnit.Framework;
-using Pokefans.SystemCache;
+using Pokefans.Caching;
 
 namespace Pokefans.CacheTest
 {

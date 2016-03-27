@@ -1,0 +1,28 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Data.Content
+@{
+    SiteTitle = "Fanart-Übersicht";
+    SiteHeader = "Pokémon-Fanart: Zeichnungen, Sprites und Maps";
+    SiteDescription = "";
+    ActiveMenuKey = "fanart";
+}
+
+<h1>@SiteHeader</h1>
+@if (Model == null)
+{
+    <text>Config error: teaser article not found</text>
+}
+else {
+    <text>@Html.Raw(@Model.ParsedContent)</text>
+}
+<hr />
+<div id="fanartcontainer"></div>
+
+@section Submenu {
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", "")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/waypoints")
+    @Scripts.Render("~/bundles/fanart")
+}

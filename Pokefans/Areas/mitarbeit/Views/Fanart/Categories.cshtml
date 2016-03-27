@@ -1,0 +1,57 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model List<Pokefans.Data.Fanwork.FanartCategory>
+@{
+    SiteTitle = "Fanart: Kategorieverwaltung";
+    SiteHeader = "Fanart: Kategorieverwaltung";
+    SiteDescription = "Hinzufügen | Editieren | Löschen";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+
+}
+<div class="box box-primary">
+    <div class="box-body">
+        <p>Hier kannst du neue Fanart-Kategorien hinzufügen und bestehende bearbeiten.</p>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover vertical-center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>URI</th>
+                        <th>Maximale Dateigröße (Byte)</th>
+                        <th>Maximale Dimensionen (Länge × Breite)</th>
+                        <th>Sortierwert</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="fanart-categories">
+                    @foreach (var cat in Model)
+                    {
+                        <tr id="@("cat" + cat.Id.ToString())">
+                            <td>@cat.Id</td>
+                            <td><a href="#" class="fanart-cat-editable" data-name="name" data-mode="inline" data-type="text" data-pk="@cat.Id" data-url="@Url.Action("EditCategory")" data-title="Neuer Name">@cat.Name</a></td>
+                            <td><code>@cat.Uri</code></td>
+                            <td><a href="#" class="fanart-cat-editable" data-name="size" data-mode="inline" data-type="text" data-pk="@cat.Id" data-url="@Url.Action("EditCategory")" data-title="Neue Größe">@cat.MaxFileSize</a></td>
+                            <td><a href="#" class="fanart-cat-editable" data-name="dimension" data-mode="inline" data-type="text" data-pk="@cat.Id" data-url="@Url.Action("EditCategory")" data-title="Neue Dimension">@cat.MaximumDimension</a></td>
+                            <td><a href="#" class="fanart-cat-editable" data-name="order" data-mode="inline" data-type="text" data-pk="@cat.Id" data-url="@Url.Action("EditCategory")" data-title="Neuer Sortierwert">@cat.Order</a></td>
+                            <td><button data-id="@cat.Id" class="delete btn btn-danger"><i class="fa fa-trash"></i></button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            <div>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputName2">Kategorie hinzufügen:</label>
+                        <input type="text" class="form-control" id="fanart-new-cat-name" name="name" placeholder="Name">
+                    </div>
+                    <button id="fanartAddCategory" class="btn btn-success"><i class="fa fa-plus"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/backend")
+}

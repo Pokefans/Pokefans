@@ -1,0 +1,32 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model List<Pokefans.Data.Fanwork.Fanart>
+@using System.Configuration;
+@{
+    Layout = null;
+}
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+    <channel>
+        <link>@ConfigurationManager.AppSettings["PreferedProtocol"]://fanart.@ConfigurationManager.AppSettings["Domain"]</link>
+        <description>Neue Einreichungen in der Fanart-Galerie.</description>
+        <pubDate>@Model[0].UploadTime.ToString("r")</pubDate>
+        <title>Fanart: Index</title>
+        <language>de-de</language>
+        <ttl>30</ttl>
+        <lastBuildDate>@DateTime.Now.ToString("r")</lastBuildDate>
+        <docs>http://www.rssboard.org/rss-specification</docs>
+        @foreach (var fanart in Model)
+        {
+            <item>
+                <guid>@ConfigurationManager.AppSettings["PreferedProtocol"]://fanart.@ConfigurationManager.AppSettings["Domain"]/@fanart.Category.Uri/@fanart.Id</guid>
+                <dc:creator>@fanart.UploadUser.UserName</dc:creator>
+                <title>@fanart.Title</title>
+                <dc:date>@fanart.UploadTime.ToString("r")</dc:date>
+                <description>
+                    &lt;img src=&quot;//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@fanart.Url&quot; alt=&quot;&quot; /&gt;
+                    @fanart.Description
+                </description>
+            </item>
+        }
+    </channel>
+</rss>
