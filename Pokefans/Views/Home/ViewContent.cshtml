@@ -65,3 +65,17 @@ else if (Model.Content.Category != null && Model.Content.Category.SidebarContent
         @Html.Raw(Model.Content.Category.SidebarContent.ParsedContent)
     }
 }
+
+@section CustomHeaders {
+    @if(File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], @Model.Content.Id + ".css"))) 
+    {
+        <link rel="stylesheet" href="@Model.Content.StylesheetUrl" />
+    }
+    @foreach(ContentBoilerplate b in Model.Content.Boilerplates) {
+        string css = b.ContentId.ToString() + ".css";
+        if(File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], css)))
+        {
+            <link rel="stylesheet" href="//static.@ConfigurationManager.AppSettings["Domain"]/stylesheets/content/@css" />
+        }
+    }
+}

@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Web.Mvc;
+using System.IO;
 using DiffMatchPatch;
 using Microsoft.AspNet.Identity;
 using PagedList;
 using Pokefans.Areas.mitarbeit.Models;
 using Pokefans.Data;
 using Pokefans.Util;
+using System.Configuration;
 
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
@@ -460,11 +462,16 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 try
                 {
                     content.CompileLess();
+                    System.IO.File.WriteAllText(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], content.Id + ".css"), content.StylesheetCss);
                 }
                 catch (ArgumentException)
                 {
                     ViewBag.Error =
                         "Dein artikelspezifischer CSS-Code enthält Fehler und wurde daher nicht in den Artikel übernommen (aber in der Datenbank gespeichert).";
+                }
+                catch (UnauthorizedAccessException)
+                {
+                    ViewBag.Error = "Fehler beim Speichern des artikelspezifischen Stylesheets (dein Code ist aber in Ordnung).";
                 }
 
                 content.Parse();
@@ -498,7 +505,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
                     updateMagnificance =
                         Math.Min(updateCharsInserted * 0.9 / Math.Max(1, latestVersion.UnparsedContent.Length) +
-                                 updateCharsDeleted * 0.1 / Math.Max(1, latestVersion.UnparsedContent.Length), 1);
+                        updateCharsDeleted * 0.1 / Math.Max(1, latestVersion.UnparsedContent.Length), 1);
                     updateMagnificance = Math.Min(1, Math.Tan(updateMagnificance));
                 }
 
@@ -570,10 +577,10 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             }
 
             model.ContentStatusList = statusOptions.Select(e => new SelectListItem
-            {
-                Text = e.GetDisplayName(),
-                Value = ((int)e).ToString()
-            });
+                {
+                    Text = e.GetDisplayName(),
+                    Value = ((int)e).ToString()
+                });
             model.ContentPermissionList = _entities.Roles
                 .Where(r => r.Metapermission.Name == "mitarbeiter")
                 .Select(r => new SelectListItem
@@ -610,10 +617,10 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     Urls = grp
                         .GroupBy(g => g.SourceUrl)
                         .Select(g => new ContentStatisticsLinkEntry
-                                            {
-                                                Url = g.Key,
-                                                Count = g.Count()
-                                            })
+                        {
+                            Url = g.Key,
+                            Count = g.Count()
+                        })
                         .OrderByDescending(g => g.Count),
                 })
                 .OrderByDescending(g => g.Count);
@@ -693,10 +700,10 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     .Where(c => _entities.ContentBoilerplates.All(b => b.BoilerplateId != c.Id || b.ContentId != content.Id))
                     .AsEnumerable()
                     .Select(c => new SelectListItem
-                        {
-                            Text = string.Format("{0}: {1}", c.Id, c.Title),
-                            Value = c.Id.ToString()
-                        })
+                    {
+                        Text = string.Format("{0}: {1}", c.Id, c.Title),
+                        Value = c.Id.ToString()
+                    })
             };
             return View("~/Areas/mitarbeit/Views/Content/Includes.cshtml", model);
         }

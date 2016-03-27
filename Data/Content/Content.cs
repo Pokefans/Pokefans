@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 
 namespace Pokefans.Data
 {
@@ -286,6 +287,15 @@ namespace Pokefans.Data
         {
             get { return _boilerplatesUsed ?? (_boilerplatesUsed = new HashSet<ContentBoilerplate>()); }
             set { _boilerplatesUsed = value; }
+        }
+
+        [NotMapped]
+        public string StylesheetUrl
+        {
+            get
+            {
+                return "//static." + ConfigurationManager.AppSettings["Domain"] + "/stylesheets/content/" + this.Id + ".css";
+            }
         }
     }
 }
