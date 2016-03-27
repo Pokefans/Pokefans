@@ -1,7 +1,8 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015-2016 the pokefans authors. See copying.md for legal info.
 using System.Configuration;
 using System.Web.Mvc;
 using Pokefans.Util;
+using System.Web.Routing;
 
 namespace Pokefans.Areas.user
 {
@@ -17,36 +18,43 @@ namespace Pokefans.Areas.user
 
         public override void RegisterArea(AreaRegistrationContext context)
         {
-            //context.MapRoute(
-            //    "user_default",
-            //    "user/{controller}/{action}/{id}",
-            //    new { action = "Index", id = UrlParameter.Optional }
-            //);
+            RouteValueDictionary dataTokens = new RouteValueDictionary();
+            dataTokens["Namespaces"] = new string[] { "Pokefans.Areas.user.Controllers" }; 
+            dataTokens["UseNamespaceFallback"] = false;
+            var route = new DomainRoute(
+                            "user." + ConfigurationManager.AppSettings["Domain"],
+                            "{controller}/{action}/{id}",
+                            new { action = "Index", controller = "Home", id = UrlParameter.Optional }, 
+                            dataTokens
+                        );
+
 
             context.Routes.Add(new DomainRoute(
-                "user." + ConfigurationManager.AppSettings["Domain"],
-                "anmeldung",
-                new { action = "Login", controller = "Account", id = UrlParameter.Optional }));
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "anmeldung",
+                    new { action = "Login", controller = "Account", id = UrlParameter.Optional }));
 
             context.Routes.Add(new DomainRoute(
-                "user." + ConfigurationManager.AppSettings["Domain"],
-                "registrieren",
-                new { action = "Register", controller = "Account", id = UrlParameter.Optional }));
-            
-            context.Routes.Add(new DomainRoute(
-                "user." + ConfigurationManager.AppSettings["Domain"],
-                "logout",
-                new { action = "LogOff", controller = "Account", id = UrlParameter.Optional }));
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "registrieren",
+                    new { action = "Register", controller = "Account", id = UrlParameter.Optional }));
 
             context.Routes.Add(new DomainRoute(
-                "user." + ConfigurationManager.AppSettings["Domain"],
-                "einstellungen/{action}/{id}",
-                new { action = "Index", controller = "Account", id = UrlParameter.Optional }));
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "logout",
+                    new { action = "LogOff", controller = "Account", id = UrlParameter.Optional }));
 
             context.Routes.Add(new DomainRoute(
-                "user." + ConfigurationManager.AppSettings["Domain"],
-                "einstellungen/passwort/{action}/{id}", 
-                new { action = "Index", controller = "Manage", id = UrlParameter.Optional }));
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "einstellungen/{action}/{id}",
+                    new { action = "Index", controller = "Account", id = UrlParameter.Optional }));
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "einstellungen/passwort/{action}/{id}", 
+                    new { action = "Index", controller = "Manage", id = UrlParameter.Optional }));
+
+            context.Routes.Add("userDefault", route);
         }
     }
 }

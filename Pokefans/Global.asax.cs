@@ -29,7 +29,7 @@ namespace Pokefans
         {
             UnityConfig.GetConfiguredContainer().RegisterInstance<IBreadcrumbs>(new Breadcrumbs(), new PerRequestLifetimeManager());
             
-            if(ConfigurationManager.AppSettings["CachingBackend"].ToLower() == "native")
+            if (ConfigurationManager.AppSettings["CachingBackend"].ToLower() == "native")
             {
                 UnityConfig.GetConfiguredContainer().RegisterType<Cache, NativeCache>(new PerRequestLifetimeManager());
                 cacheInitialized = false;
@@ -39,7 +39,7 @@ namespace Pokefans
                 UnityConfig.GetConfiguredContainer().RegisterType<Cache, Memcached>(new PerRequestLifetimeManager());
             }
 
-            if(!cacheInitialized)
+            if (!cacheInitialized)
             {
                 UnityConfig.GetConfiguredContainer().Resolve<CacheFill>();
             }
