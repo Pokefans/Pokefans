@@ -51,7 +51,9 @@
                     <li class="@isActive("fanart")"><a href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
                     <li>@Html.ActionLink("Tauschbörse", "Index", "Home")</li>
                     <li>@Html.ActionLink("Forum", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: null)</li>
+                    @if(User.IsInRole("mitarbeiter")) {
+                        <li>@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: null)</li>
+                    }
                 </ul>
             </div>
         </div>

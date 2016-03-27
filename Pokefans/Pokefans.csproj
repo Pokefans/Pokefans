@@ -245,6 +245,7 @@
     <Compile Include="Areas\sfc\sfcAreaRegistration.cs" />
     <Compile Include="Areas\sfc\Controllers\SfcHomeController.cs" />
     <Compile Include="Areas\sfc\Models\NewsArchiveViewModel.cs" />
+    <Compile Include="Models\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />

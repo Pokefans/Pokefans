@@ -62,3 +62,29 @@ float: right!important;
 .rating-star {
     color: #E5C100; /* gold */
 }
+
+.fanart-element {
+  float: left;
+  width: 130px;
+  border: 1px solid #eee;
+  border-top: none;
+  border-right: none;
+}
+.fanart-container {
+  max-width: 535px;
+  border: 1px solid #eee;
+  border-left: none;
+  border-bottom: none;
+}
+
+.list-news li:before {
+    font-family: 'FontAwesome';
+    content: '\f1ea';
+    margin: 0 5px 0 -15px;   
+}
+
+.list-spielehilfen li:before {
+    font-family: 'FontAwesome';
+    content: '\f0f6';
+    margin 0 5px 0 -15px;
+}

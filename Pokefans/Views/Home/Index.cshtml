@@ -1,35 +1,77 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model Pokefans.Models.MainPageViewModel
+@using System.Configuration
+@using Pokefans.Data.Fanwork
+@using System.Collections
+@using System.Collections.Generic
+@{
+    SiteTitle = "Pokefans.net - die Pokémon-Fanseite";
 }
 
-<div class="jumbotron">
-    <h1>ASP.NET</h1>
-    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-    <p><a href="http://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>
+<h1>Pokefans.net - die Pokémon-Fanseite</h1>
+@if (Model.StartTeaser == null)
+{
+    <text>Config error: teaser article not found</text>
+}
+else {
+    <text>@Html.Raw(@Model.StartTeaser.ParsedContent)</text>
+}
+
+<h2>News</h2>
+@if(Model.News.Count > 0) {
+<h3>@Model.News[0].Title</h3>
+<p>@Html.Raw(Model.News[0].Teaser)</p>
+<a href="@Model.News[0].DefaultUrl" class="btn btn-warning">» Weiterlesen</a>
+
+<ul class="list-news">
+    @for(int i = 1; i < Model.News.Count; i++) {
+        <li><a href="@Model.News[i].DefaultUrl">@Model.News[i].Title</a> <small class="blur">&mdash; vom @Model.News[i].Published.ToString("dd.MM.yyyy")</small></li>
+    }
+</ul>
+}
+else {
+    <text>No news found :(</text>
+}
+<p>Ältere Meldungen kannst du im <strong><a href="@Url.Action("NewsArchive")">News-Archiv</a></strong> nachlesen.
+
+<h2>Pokémon-Fanart</h2>
+<p>Zahlreiche Pokémon-Fans veröffentlichen ihre <a href="http://fanart.@ConfigurationManager.AppSettings["Domain"]/zeichnungen">Pokémon-Zeichnungen</a> in unserer <a href="@Url.Action("Index", "FanartHome", new { Area = "fanart" })">Fanart-Galerie</a>. 
+Auch du kannst deine Werke hochladen, wenn du das möchtest (Anmeldung erforderlich). Ein- bis Zweimal im Monat wird auch ein <a href="http://forum.pokefans.net/topic91674.html">Fanart-Magazin</a> veröffentlicht - schau doch mal vorbei!</p>
+
+<div class="fanart-container clearfix">
+@foreach(Fanart f in Model.Fanarts) {
+    <div class="fanart-element"><a href="#"><img src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@f.Url.Split('.')[0] + "_t4.png")" /></a></div>
+}
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Getting started</h2>
-        <p>
-            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
-            enables a clean separation of concerns and gives you full control over markup
-            for enjoyable, agile development.
-        </p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
+<h2>Artikel-Empfehlungen</h2>
+@if (Model.Recommendations == null)
+{
+    <text>Config error: teaser article not found</text>
+}
+else {
+    <text>@Html.Raw(Model.Recommendations.ParsedContent)</text>
+}
 
 @section Sidebar {
-    Test!
+    <h3>Aktuelle Termine</h3>
+    <p class="small">Eine Übersicht über sämtliche Termine findest du auf der <a href="@Url.Action("Index", "Event")">Termin-Übersicht</a>.</p>
+    <h4>Pokémon-Verteilungen (Internet)</h4>
+    <p>...</p>
+    <h4>Wettbewerbe und Turniere</h4>
+    <p>...</p>
+    <h4>Schon gewusst?</h4>
+    @if(Model.Trivia == null) {
+        <text>Config error: trivia article not found</text>
+    }
+    else {
+        <text>@Html.Raw(Model.Trivia.ParsedContent)</text>
+    }
+    <h4>Aktivitäten im Forum</h4>
+    <p>...</p>
+    <h4>Unsere neuesten Spielehilfen</h4>
+    <ul class="list-spielehilfen">
+        @foreach(Content c in Model.LatestArticles) {
+            <li><a href="@c.DefaultUrl">@c.Title</a></li>
+        }
+    </ul>
 }

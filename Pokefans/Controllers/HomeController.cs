@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Pokefans.Data;
 using Pokefans.Models;
 using Pokefans.Util;
+using System.Configuration;
 
 namespace Pokefans.Controllers
 {
@@ -27,7 +28,21 @@ namespace Pokefans.Controllers
         public ActionResult Index()
         {
             breadcrumbs.Add("Startseite");
-            return View();
+
+            MainPageViewModel mpvm = new MainPageViewModel();
+            int teaserid = int.Parse(ConfigurationManager.AppSettings["StartTeaserId"]);
+            int recommendationsid = int.Parse(ConfigurationManager.AppSettings["StartRecommendationsId"]);
+            int triviaid = int.Parse(ConfigurationManager.AppSettings["StartTriviaId"]);
+
+            mpvm.StartTeaser = _entities.Contents.FirstOrDefault(g => g.Id == teaserid);
+            mpvm.Recommendations = _entities.Contents.FirstOrDefault(g => g.Id == recommendationsid);
+            mpvm.Trivia = _entities.Contents.FirstOrDefault(g => g.Id == triviaid);
+
+            mpvm.News = _entities.Contents.Where(g => g.Type == ContentType.News).OrderByDescending(g => g.Published).Take(10).ToList();
+            mpvm.LatestArticles = _entities.Contents.Where(g => g.Type == ContentType.Article).OrderByDescending(g => g.Published).Take(10).ToList();
+            mpvm.Fanarts = _entities.Fanarts.OrderByDescending(g => g.UploadTime).Take(4 * 4).ToList();
+
+            return View(mpvm);
         }
 
         public ActionResult About()
