@@ -91,6 +91,8 @@
     <Compile Include="Content\TrackingSource.cs" />
     <Compile Include="Content\ContentTrackingSource.cs" />
     <Compile Include="Fanwork\FanartBanlist.cs" />
+    <Compile Include="Fanwork\FanartChallenge.cs" />
+    <Compile Include="Fanwork\FanartChallengeVote.cs" />
     <Compile Include="Fanwork\FanartRating.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.cs" />
     <Compile Include="Migrations\201507071704102_TrackingSource.Designer.cs">
@@ -179,6 +181,10 @@
     <Compile Include="Migrations\201602251814124_FanartBanlistRatings.cs" />
     <Compile Include="Migrations\201602251814124_FanartBanlistRatings.Designer.cs">
       <DependentUpon>201602251814124_FanartBanlistRatings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201603081707273_ChallengeVoteTimestampIP.cs" />
+    <Compile Include="Migrations\201603081707273_ChallengeVoteTimestampIP.Designer.cs">
+      <DependentUpon>201603081707273_ChallengeVoteTimestampIP.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -378,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201602251814124_FanartBanlistRatings.resx">
       <DependentUpon>201602251814124_FanartBanlistRatings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201603081707273_ChallengeVoteTimestampIP.resx">
+      <DependentUpon>201603081707273_ChallengeVoteTimestampIP.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Pokefans.Util.Parser;
+using Pokefans.Areas.mitarbeit.Models;
 
 //TODO: Add Anti Forgery Token to ajax calls!
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
-    [Authorize(Roles = "fanart-manager")]
+    [Authorize(Roles = "fanart-moderator")]
     public class FanartController : Controller
     {
         Entities db;
@@ -28,6 +30,127 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         public ActionResult Index()
         {
             return View();
+        }
+
+        public ActionResult Select()
+        {
+            ViewBag.Error = false;
+            return View("~/Areas/mitarbeit/Views/Fanart/Select.cshtml");
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Select(int id)
+        {
+            if(db.Fanarts.Any(g => g.Id == id))
+                return new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary(new { Action = "Edit", Controller = "Fanart", id = id }));
+
+            ViewBag.Error = true;
+            return View("~/Areas/mitarbeit/Views/Fanart/Select.cshtml");
+        }
+
+        public ActionResult Edit(int id)
+        {
+            Fanart art = db.Fanarts.FirstOrDefault(g => g.Id == id);
+
+            if(art == null)
+            {
+                Response.StatusCode = 404;
+                Response.TrySkipIisCustomErrors = true;
+                return View("~/Areas/mitarbeit/Views/Fanart/NotFound.cshtml");
+            }
+
+            return View("~/Areas/mitarbeit/Views/Fanart/Edit.cshtml", art);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(int id, Fanart sart)
+        {
+            Fanart art = db.Fanarts.FirstOrDefault(g => g.Id == id);
+
+            if (art == null)
+            {
+                Response.StatusCode = 404;
+                Response.TrySkipIisCustomErrors = true;
+                return View("~/Areas/mitarbeit/Views/Fanart/NotFound.cshtml");
+            }
+
+            art.Title = sart.Title;
+            art.CategoryId = sart.CategoryId;
+            art.IsTileset = sart.IsTileset;
+            art.PokemonId = sart.PokemonId;
+            art.DescriptionCode = sart.DescriptionCode;
+
+            ParserConfiguration pc = ParserConfiguration.Default;
+            pc.EnableInsideCodes = false;
+            Parser p = new Parser(pc);
+            art.Description = p.Parse(sart.DescriptionCode);
+
+            db.SetModified(art);
+            db.SaveChanges();
+
+            return View("~/Areas/mitarbeit/Views/Fanart/Edit.cshtml", art);
+        }
+
+        public ActionResult Challenges()
+        {
+            var challenges = from s in db.FanartChallenges.Include("Tag")
+                             orderby s.Id descending
+                             select s;
+
+            return View("~/Areas/mitarbeit/Views/Fanart/Challenges.cshtml", challenges.ToList());
+        }
+
+        public ActionResult ChallengeDetail(int id)
+        {
+            FanartChallenge challenge = db.FanartChallenges.FirstOrDefault(g => g.Id == id);
+
+            if (challenge == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            FanartChallengeDetailViewModel fcdvm = new FanartChallengeDetailViewModel();
+
+            fcdvm.Challenge = challenge;
+
+            fcdvm.Votes = db.FanartChallengeVotes.Where(g => g.ChallengeId == id).ToList();
+
+            // I have no Idea how to do this in LINQ.
+            fcdvm.Fanarts = db.Database.SqlQuery<Fanart>(@"SELECT a.*, COUNT(*) FROM Fanarts a
+                                                         LEFT JOIN FanartsTags b ON a.Id = b.FanartId
+                                                         LEFT JOIN FanartChallengeVotes c on a.Id = c.FanartId
+                                                         WHERE b.TagId = @p0
+                                                         GROUP BY a.FanartId
+                                                         ORDER BY COUNT(*)").ToList();
+
+            return View("~/Areas/mitarbeit/Views/Fanart/ChallengeDetail.cshtml", fcdvm);
+        }
+
+        [ValidateAntiForgeryToken]
+        public ActionResult AddChallenge(string name, string tagname, DateTime expireDate)
+        {
+            FanartChallenge c = new FanartChallenge();
+            c.Name = name;
+
+            FanartTag t = db.FanartTags.FirstOrDefault(g => g.Name == tagname);
+
+            if(t == null)
+            {
+                t = new FanartTag()
+                {
+                    Name = tagname
+                };
+                db.FanartTags.Add(t);
+            }
+
+            c.Tag = t;
+            c.ExpireDate = expireDate;
+            db.FanartChallenges.Add(c);
+            db.SaveChanges();
+
+            return Json(c);
         }
 
         /// <summary>

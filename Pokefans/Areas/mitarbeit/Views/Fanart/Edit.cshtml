@@ -1,0 +1,119 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Data.Fanwork.Fanart
+@using System.Configuration
+@{
+    SiteTitle = "Fanart bearbeiten";
+    SiteHeader = "Fanart bearbeiten";
+    SiteDescription = "Moderator-Übersicht";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-4 col-md-12 pull-right"><img class="img-responsive" src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@Model.Url" /></div>
+    <div class="col-lg-8 col-md-12">
+        <div class="box">
+            <div class="box-body">
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="Title">Titel</label>
+                        @Html.EditorFor(g => g.Title, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        <label for="DescriptionCode">Beschreibung</label>
+                        <div class="btn-toolbar" role="toolbar" id="comment-toolbar" aria-label="BB-Codes Einfügen">
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default" data-template="[b]%s[/b]"><i class="fa fa-bold"></i></button>
+                                <button type="button" class="btn btn-default" data-template="[i]%s[/i]"><i class="fa fa-italic"></i></button>
+                                <button type="button" class="btn btn-default" data-template="[u]%s[/u]"><i class="fa fa-underline"></i></button>
+                            </div>
+                            <div class="btn-group" role="group" aria-label="...">
+                                <button type="button" class="btn btn-default" data-template="[url=]%s[/url]"><i class="fa fa-link"></i></button>
+                                <button type="button" class="btn btn-default" data-template="[quote]%s[/quote]"><i class="fa fa-quote"></i></button>
+                                <button type="button" class="btn btn-default" data-template="[s]%s[/s]"><i class="fa fa-strikethrough"></i></button>
+                            </div>
+                        </div>
+                        @Html.TextAreaFor(g => g.DescriptionCode, new { id = "description-code", @class = "form-control", rows = 5 })
+                    </div>
+                    <div class="form-group">
+                        <label for="CategoryId">Kategorie</label>
+                        <select class="form-control">
+                            @foreach (var cat in ViewBag.Categories)
+                            {
+                                <option value="@cat.Key" @(cat.Key == Model.CategoryId ? "selected" : "")>@cat.Value</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags</label>
+                        <div id="fanart-tags">
+                            @foreach (var tag in Model.Tags)
+                            {
+                                <span class="label label-primary" id="@("tag" + tag.Id.ToString())">@tag.Tag.Name <a href="#">x</a></span>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="PokemonId">Pokemon-Mapping</label>
+                        <select class="form-control" id="pokemonselect">
+                            @if (Model.PokemonId != null)
+                            {
+                                <option value="@Model.Pokemon.Id" selected>@Model.Pokemon.Name</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            @Html.CheckBoxFor(g => g.IsTileset) Diese Einreichung ist ein Tileset
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Speichern</button>
+                </form>
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header"><h3 class="box-title">Bewertungen</h3></div>
+            <div class="box-body no-border">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Bewertung</th>
+                            <th>Benutzer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach(var rating in Model.Ratings)
+                        {
+                            <tr>
+                                <td>@{
+                                    double roundedRating = (Math.Ceiling(2 * (double)rating.Rating)) / 2;
+                                    int i = 1;
+                                }
+                                @for (; i <= 5; i++)
+                                {
+                                    if ((i - 1) < roundedRating && i > roundedRating)
+                                    {
+                                        <i class="fa fa-star-half-o rating-star fa-lg"></i>
+                                    }
+                                    if (roundedRating > i)
+                                    {
+                                        <i class="fa fa-star rating-star fa-lg"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa fa-star-o rating-star fa-lg"></i>
+                                    }
+                                }</td>
+                                <td>@rating.RatingUser.UserName</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/backend")
+}

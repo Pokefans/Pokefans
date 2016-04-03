@@ -1,4 +1,4 @@
-﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+﻿// Copyright 2015-2016 the pokefans authors. See copying.md for legal info.
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
@@ -68,6 +68,8 @@ namespace Pokefans.Data.Fanwork
 
         public int FileSize { get; set; }
 
+        public int? ChallengeId { get; set; }
+
         private ICollection<FanartTags> tags;
 
         [InverseProperty("Fanart")]
@@ -79,6 +81,9 @@ namespace Pokefans.Data.Fanwork
 
         [ForeignKey("UploadUserId")]
         public User UploadUser { get; set; }
+
+        [ForeignKey("ChallengeId")]
+        public FanartChallenge Challenge { get; set; }
 
         public static void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -93,6 +98,24 @@ namespace Pokefans.Data.Fanwork
         {
             get { return ratings ?? (ratings = new HashSet<FanartRating>()); }
             set { ratings = value; }
+        }
+
+        [NotMapped]
+        public string SmallThumbnailUrl
+        {
+            get
+            {
+                return Url.Split('.')[0] + "_t4.png";
+            }
+        }
+
+        [NotMapped]
+        public string LargeThumbnailUrl
+        {
+            get
+            {
+                return Url.Split('.')[0] + "_t2.png";
+            }
         }
     }
 }

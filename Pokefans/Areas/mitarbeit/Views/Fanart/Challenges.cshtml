@@ -1,0 +1,59 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model List<Pokefans.Data.Fanwork.FanartChallenge>
+@{
+    SiteTitle = "Fanart bearbeiten";
+    SiteHeader = "Fanart bearbeiten";
+    SiteDescription = "Moderator-Übersicht";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+<div class="box box-primary">
+    <div class="box-body">
+        <p>Hier kannst du neue Fanart-Kategorien hinzufügen und bestehende ansehen.</p>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover vertical-center">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Enddatum (23:59:59)</th>
+                        <th>Tag</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="fanart-challenges">
+                    @foreach(var challenge in Model)
+                    {
+                        <tr>
+                            <td>@challenge.Id</td>
+                            <td>@challenge.Name</td>
+                            <td>@challenge.ExpireDate.ToString("d")</td>
+                            <td>@challenge.Tag.Name</td>
+                            <td><a href="@Url.Action("Details", new { id = challenge.Id })"><i class="fa fa-info-circle"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <form class="form-inline" id="challenge-form">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" />
+            </div>
+            <div class="form-group">
+                <label for="tagname">Tag</label>
+                <input type="text" class="form-control" id="tagname" name="tagname" placeholder="Tag" />
+            </div>
+            <div class="form-group">
+                <label for="expireDate">Enddatum</label>
+                <input type="datetime-local" class="form-control" id="expireDate" name="expireDate" />
+            </div>
+            <button class="btn btn-default" id="addChallenge">Challenge starten</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/backend")    
+}
+

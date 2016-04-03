@@ -8,6 +8,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Pokefans.Areas.fanart.Models;
 
 namespace Pokefans.Areas.fanart.Controllers
 {
@@ -71,15 +72,24 @@ namespace Pokefans.Areas.fanart.Controllers
 
         public ActionResult New()
         {
-            return Popular();
+            int id = int.Parse(ConfigurationManager.AppSettings["FanartTeaserArticle"]);
+            FanartIndexViewModel fivm = new FanartIndexViewModel();
+            fivm.Teaser = db.Contents.Where(g => g.Id == id).FirstOrDefault();
+
+            fivm.Fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Take(8 * 8).ToList();
+
+            return View("~/Areas/fanart/Views/FanartHome/Index.cshtml", fivm);
         }
 
         public ActionResult Popular()
         {
             int id = int.Parse(ConfigurationManager.AppSettings["FanartTeaserArticle"]);
-            //TODO: make a reduced version of this without javascript for google
-            Content c = db.Contents.Where(g => g.Id == id).FirstOrDefault();
-            return View("~/Areas/fanart/Views/FanartHome/Index.cshtml", c);
+            FanartIndexViewModel fivm = new FanartIndexViewModel();
+
+            fivm.Teaser = db.Contents.Where(g => g.Id == id).FirstOrDefault();
+            fivm.Fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Take(8 * 8).ToList();
+
+            return View("~/Areas/fanart/Views/FanartHome/Index.cshtml", fivm);
         }
 
         public ActionResult ListApi(string index, int start = 0)
@@ -94,7 +104,6 @@ namespace Pokefans.Areas.fanart.Controllers
                 default:
                     var fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Skip(start).Take(8 * 8); // 8 images per column, 8 rows per default, without any filter
                     return Json(fanarts);
-
             }
         }
 

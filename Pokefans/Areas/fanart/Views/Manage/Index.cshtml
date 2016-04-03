@@ -1,4 +1,5 @@
-﻿@model List<Pokefans.Data.Fanwork.Fanart>
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model List<Pokefans.Data.Fanwork.Fanart>
 @{
     SiteTitle = "Fanart-Verwaltung";
     SiteHeader = "Fanart-Verwaltung";
@@ -29,29 +30,28 @@
                 </td>
                 <td>@(string.Format("{0:0.00} KiB", (double)fanart.FileSize / 1024))</td>
                 <td>
-                @{ 
-                    double roundedRating = (Math.Ceiling(2 * (double)fanart.SmartRating)) / 2;
-                    int i = 1;
-                }
-                @for(; i <= 5; i++)
-                {
-                    if((i - 1) < roundedRating && i > roundedRating)
-                    {
-                        <i class="fa fa-star-half-o rating-star fa-lg"></i>
-                        break;
+                    @{
+                        double roundedRating = (Math.Ceiling(2 * (double)fanart.SmartRating)) / 2;
+                        int i = 1;
                     }
-                    if(roundedRating > i)
+                    @for (; i <= 5; i++)
                     {
-                        <i class="fa fa-star rating-star fa-lg"></i>
+                        if ((i - 1) < roundedRating && i > roundedRating)
+                        {
+                            <i class="fa fa-star-half-o rating-star fa-lg"></i>
+                        }
+                        if (roundedRating > i)
+                        {
+                            <i class="fa fa-star rating-star fa-lg"></i>
+                        }
+                        else
+                        {
+                            <i class="fa fa-star-o rating-star fa-lg"></i>
+                        }
                     }
-                    else
-                    {
-                        <i class="fa fa-star-o rating-star fa-lg"></i>
-                    }
-                }
                     x @fanart.RatingCount
                 </td>
-                <td><a href="@Url.Action("Category"</td>
+                <td><a href="/@fanart.Url"><i class="fa fa-external-link-square fa-lg"></i></a> <a href="@Url.Action("Edit", "Manage", new { id = fanart.Id })"><i class="fa fa-pencil fa-lg"></i></a> <a href="/@fanart.Url#kommentare"><i class="fa fa-comments fa-lg"></i></a></td>
             </tr>
         }
     </tbody>

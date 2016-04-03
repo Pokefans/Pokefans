@@ -12,6 +12,7 @@ using Pokefans.Caching;
 using Pokefans.Util;
 using Ganss.XSS;
 using System.Data.Entity.Validation;
+using Pokefans.Data.Fanwork;
 
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
@@ -160,6 +161,77 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                                     .Where(x => x.UserId == id).OrderByDescending(x => x.Created)
                                     .Skip(skip).Take(15).ToList();
             return Json(notes);
+        }
+
+        // GET: user/{id}/bans
+        public ActionResult Bans(int id)
+        {
+            User idproof = userManager.FindByIdAsync(id).Result;
+
+            if (idproof == null)
+            {
+                Response.StatusCode = 404;
+                Response.TrySkipIisCustomErrors = true;
+                return View("~/Areas/mitarbeit/Views/User/_NotFound.cshtml");
+            }
+
+            UserBanViewModel ubvm = new UserBanViewModel()
+            {
+                User = idproof,
+                FanartBan = db.FanartBanlist.FirstOrDefault(g => g.UserId == idproof.Id)
+            };
+
+            return View("~/Areas/mitarbeit/Views/User/Bans.cshmtl", ubvm);
+        }
+
+        // POST: api/user/bans/fanart
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        public ActionResult ModifyFanartBan(int id, FanartBanlist b)
+        {
+            if (!User.IsInRole("fanart-moderator"))
+            {
+                Response.StatusCode = 403;
+                return Json(false);
+            }
+
+            User idproof = userManager.FindByIdAsync(id).Result;
+
+            if (idproof == null)
+            {
+                Response.StatusCode = 400;
+                Response.TrySkipIisCustomErrors = true;
+                return Json(false);
+            }
+
+            FanartBanlist fb = db.FanartBanlist.FirstOrDefault(g => g.UserId == id);
+
+            if(fb == null)
+            {
+                fb = new FanartBanlist()
+                {
+                    UserId = id,
+                    CanDelete = b.CanDelete,
+                    CanUpload = b.CanUpload,
+                    CanEdit = b.CanEdit,
+                    CanRate = b.CanRate
+                };
+
+                db.FanartBanlist.Add(fb);
+            }
+            else
+            {
+                fb.CanDelete = b.CanDelete;
+                fb.CanEdit = fb.CanEdit;
+                fb.CanRate = fb.CanRate;
+                fb.CanUpload = fb.CanUpload;
+
+                db.SetModified(fb);
+            }
+
+            db.SaveChanges();
+            
+            return Json(true);
         }
 
         // GET: mitarbeit/user/{id}/neue-notiz

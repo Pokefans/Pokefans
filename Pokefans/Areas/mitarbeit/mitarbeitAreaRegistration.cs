@@ -116,11 +116,29 @@ namespace Pokefans.Areas.mitarbeit
                     new { action = "UserData", Controller = "User" }
                 ));
 
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "user/{id}/sperren",
+                    new { action = "Bans", Controller = "User" }
+                ));
+
             // Fanart
             context.Routes.Add(new DomainRoute(
                     "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
                     "fanart/kategorien",
                     new { action = "Categories", Controller = "Fanart" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "fanart/bearbeiten",
+                    new { action = "Select", Controller = "Fanart" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "fanart/bearbeiten/{id}",
+                    new { action = "Edit", Controller = "Fanart" }
                 ));
 
             // AJAX API below
@@ -152,6 +170,16 @@ namespace Pokefans.Areas.mitarbeit
                     "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
                     "api/fanart/categories/delete",
                     new { action = "DeleteCategory", Controller = "Fanart" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/user/bans/fanart",
+                    new { action = "ModifyFanartBan", Controller = "User" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/pokemon/names",
+                    new { action = "Names", Controller = "PokemonApi"}
                 ));
 
             // Default Route

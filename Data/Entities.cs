@@ -139,6 +139,10 @@ namespace Pokefans.Data
 
         public virtual DbSet<FanartBanlist> FanartBanlist { get; set; }
 
+        public virtual DbSet<FanartChallenge> FanartChallenges { get; set; }
+
+        public virtual DbSet<FanartChallengeVote> FanartChallengeVotes { get; set; }
+
         #endregion
 
         #region Friendcode

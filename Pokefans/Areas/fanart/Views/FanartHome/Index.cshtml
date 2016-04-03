@@ -1,5 +1,6 @@
 ﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
-@model Pokefans.Data.Content
+@model Pokefans.Areas.fanart.Models.FanartIndexViewModel
+@using System.Configuration
 @{
     SiteTitle = "Fanart-Übersicht";
     SiteHeader = "Pokémon-Fanart: Zeichnungen, Sprites und Maps";
@@ -8,15 +9,32 @@
 }
 
 <h1>@SiteHeader</h1>
-@if (Model == null)
+@if (Model.Teaser == null)
 {
     <text>Config error: teaser article not found</text>
 }
 else {
-    <text>@Html.Raw(@Model.ParsedContent)</text>
+    <text>@Html.Raw(@Model.Teaser.ParsedContent)</text>
 }
 <hr />
-<div id="fanartcontainer"></div>
+<div id="fanartcontainer">
+    @{
+        int wrap = 0;
+    }
+    @foreach (var fanart in Model.Fanarts)
+    {
+        if (wrap == 0)
+        {
+            @Html.Raw("<div class=\"stream-row\">");
+        }
+        <a data-id="@fanart.Id"><img src="//fanart.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@fanart.SmallThumbnailUrl" /></a>
+        if (wrap == 8)
+        {
+            @Html.Raw("</div>")
+            wrap = 0;
+        }
+    }
+</div>
 
 @section Submenu {
     @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", "")

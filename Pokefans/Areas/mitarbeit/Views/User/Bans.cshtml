@@ -1,0 +1,92 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model UserBanViewModel
+@{
+    SiteTitle = "Sperren";
+    SiteHeader = "Benutzerverwaltung";
+    SiteDescription = "Benutzer ganz oder teilweise sperren";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-lg-8 col-md-12">
+        <div class="box">
+            <div class="box-body">
+                Hier kannst du den Sperrstatus von @Model.User.UserName einsehen und bearbeiten.
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Seitenweite Sperrung</h3>
+            </div>
+            <div class="box-body">
+                @Model.User.UserName ist @if (Model.User.IsLockedOut)
+                {
+                    if (Model.User.LockedOutDate.HasValue)
+                    {
+                        <text>gesperrt bis zum @Model.User.LockedOutDate.Value.ToString("d.M.yyyy, HH:mm:ss").</text>
+                    }
+                    else
+                    {
+                        <text>dauerhaft gesperrt.</text>
+                    }
+                }
+                else
+                {
+                    <text>nicht gesperr.</text>
+                }
+            </div>
+        </div>
+        <div class="box">
+            <div class="box-header">
+                <h3 class="box-title">Fanart-Banstatus</h3>
+            </div>
+            <p>Lege hier den Banstatus fest. Ein nicht gesetzter Haken bedeutet, dass der Benutzer diese Aktion nicht ausführen darf.</p>
+            <div class="box-body">
+                @{
+                    string disabled = "disabled";
+                    if (User.IsInRole("fanart-moderator"))
+                    {
+                        disabled = "";
+                    }
+                    bool canEdit = Model.FanartBan == null ? true : Model.FanartBan.CanEdit;
+                    bool canDelete = Model.FanartBan == null ? true : Model.FanartBan.CanDelete;
+                    bool canUpload = Model.FanartBan == null ? true : Model.FanartBan.CanUpload;
+                    bool canRate = Model.FanartBan == null ? true : Model.FanartBan.CanRate;
+                }
+                <form role="form" class="form-inline" id="fanart-bans">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" value="@Model.User.Id" />
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="CanEdit" @disabled @(canEdit ? "checked" : "")> Eigene Einreichungen bearbeiten
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="CanDelete" @disabled @(canDelete ? "checked" : "")> Eigene Einreichungen löschen
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="CanUpload" @disabled @(canUpload ? "checked" : "")> Neue Einreichungen hochladen
+                        </label>
+                    </div>
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox" name="CanRate" @disabled @(canRate ? "checked" : "")> Einreichungen bewerten
+                        </label>
+                    </div>
+                    @if (User.IsInRole("fanart-moderator"))
+                    {
+                        <button class="btn btn-primary" id="fanart-banhammer">Aktualisieren</button>
+                    }
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/backend")    
+}
+

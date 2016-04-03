@@ -29,7 +29,7 @@ namespace Pokefans
             bundles.Add(new StyleBundle("~/Content/css").Include(
                     "~/Content/bootstrap.css",
                     "~/Content/Site.css",
-                    "~/Content/css/font-awesome.min.css",
+                    "~/Content/font-awesome.min.css",
                     "~/Content/bootstrap-tagsinput.css"));
 
             // SFC
@@ -59,7 +59,9 @@ namespace Pokefans
                     "~/Content/adminlte/bootstrap.css",
                     "~/Content/adminlte/AdminLTE.css",
                     "~/Content/adminlte/skin-blue.css",
-                    "~/Content/editable/bootstrap-editable.css"
+                    "~/Content/editable/bootstrap-editable.css",
+                    "~/Content/font-awesome.css",
+                    "~/Content/select2-bootstrap.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
@@ -87,7 +89,11 @@ namespace Pokefans
                     "~/Scripts/backend/multiaccounts.js",
                     "~/Scripts/backend/rolemanager.js",
                     "~/Scripts/editable/bootstrap-editable.js",
-                    "~/Scripts/backend/fanart/categories.js"
+                    "~/Scripts/backend/fanart/categories.js",
+                    "~/Scripts/backend/fanart/edit.js",
+                    "~/Scripts/backend/bans.js",
+                    "~/Scripts/select2.js",
+                    "~/Scripts/bbCodeEdit.js"
                 ));
 
             // waypoints
@@ -104,7 +110,8 @@ namespace Pokefans
                     "~/Scripts/bootstrap-tagsinput.js",
                     "~/Scripts/fanart/fanart.js",
                     "~/Scripts/fanart/upload.js",
-                    "~/Scripts/fanart/edit.js"
+                    "~/Scripts/fanart/edit.js",
+                    "~/Scripts/bbCodeEdit.js"
 
                 ));
 

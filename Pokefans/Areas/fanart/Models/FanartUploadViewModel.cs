@@ -6,7 +6,7 @@ using System.Web;
 
 namespace Pokefans.Areas.fanart.Models
 {
-    public class FanartUpload
+    public class FanartUploadViewModel
     {
         public int CategoryId { get; set; }
 

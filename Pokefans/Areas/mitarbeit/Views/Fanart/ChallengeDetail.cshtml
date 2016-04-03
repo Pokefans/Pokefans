@@ -1,0 +1,77 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model FanartChallengeDetailViewModel
+@using System.Configuration
+@{
+    SiteTitle = "Challenge-Details";
+    SiteHeader = "Challenge-Details " + Model.Challenge.Name;
+    SiteDescription = "Moderator-Übersicht";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+
+<div class="box box-primary">
+    <div class="box-body">
+        <ul class="list-inline">
+            <li><strong>Name:</strong> @Model.Challenge.Name</li>
+            <li><strong>Tag:</strong> @Model.Challenge.Tag.Name</li>
+            <li><strong>Enddatum:</strong> @Model.Challenge.ExpireDate.ToString("d")</li>
+        </ul>
+    </div>
+</div>
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Ergebnistabelle</h3>
+    </div>
+    <div class="box-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th colspan="2">Fanart</th>
+                    <th>Stimmen</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ int i = 0; }
+                @foreach (var fanart in Model.Fanarts)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td><img src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@fanart.SmallThumbnailUrl" /></td>
+                        <td><a href="@ConfigurationManager.AppSettings["PreferedProtocol"]://fanart.@ConfigurationManager.AppSettings["Domain"]/@ViewBag.CategoryUrl[fanart.CategoryId]/@fanart.Id">@fanart.Title</a></td>
+                        <td>@Model.Votes.Where(g => g.FanartId == fanart.Id).Count()</td>
+                    </tr>
+                    i++;
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="box box-primary">
+    <div class="box-header">
+        <h3 class="box-title">Votes</h3>
+    </div>
+    <div class="box-body">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fanart</th>
+                    <th>User</th>
+                    <th>Zeitstempel</th>
+                    <th>IP-Adresse</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var vote in Model.Votes)
+                {
+                    <tr>
+                        <td>@vote.Fanart.Title</td>
+                        <td>@vote.User.UserName</td>
+                        <td>@vote.Timestamp</td>
+                        <td>@vote.VoteIp</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

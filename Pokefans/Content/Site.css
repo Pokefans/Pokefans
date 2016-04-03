@@ -44,6 +44,25 @@ float: right!important;
     margin-top: 5px;
 }
 
+.arrow_box {
+	position: relative;
+	background: transparent;
+}
+.arrow_box:after {
+	top: 100%;
+	left: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(255, 170, 46, 0);
+	border-top-color: #FFAA2E;
+	border-width: 15px;
+	margin-left: -15px;
+}
+
 .hl {
     padding: 5px;
     text-align: center;

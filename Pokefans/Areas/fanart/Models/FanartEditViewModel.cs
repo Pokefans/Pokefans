@@ -7,7 +7,7 @@ using System.Web;
 
 namespace Pokefans.Areas.fanart.Models
 {
-    public class FanartEdit
+    public class FanartEditViewModel
     {
         [Display(Name="Titel")]
         public string Title { get; set; }

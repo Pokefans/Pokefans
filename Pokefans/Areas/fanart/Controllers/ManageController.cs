@@ -128,7 +128,7 @@ namespace Pokefans.Areas.fanart.Controllers
                 return View("~/Areas/fanart/Views/Errors/Edit403.cshtml");
             }
 
-            FanartEdit model = new FanartEdit()
+            FanartEditViewModel model = new FanartEditViewModel()
             {
                 Title = art.Title,
                 Description = art.DescriptionCode,
@@ -149,7 +149,7 @@ namespace Pokefans.Areas.fanart.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(int id, FanartEdit toUpdate)
+        public ActionResult Edit(int id, FanartEditViewModel toUpdate)
         {
             Fanart art = db.Fanarts.Include("Category").FirstOrDefault(g => g.Id == id);
 
@@ -211,7 +211,7 @@ namespace Pokefans.Areas.fanart.Controllers
             db.SetModified(art);
             db.SaveChanges();
 
-            FanartEdit model = new FanartEdit()
+            FanartEditViewModel model = new FanartEditViewModel()
             {
                 Title = art.Title,
                 Description = art.DescriptionCode,

@@ -14,8 +14,6 @@
 
     @Styles.Render("~/bundles/adminlte")
 
-    <!-- Font Awesome Icons -->
-    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
     <!-- Ionicons -->
     <link href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 
@@ -239,14 +237,13 @@
                     <li><a href="#"><i class='fa fa-cart-arrow-down'></i> <span>Angebot bearbeiten</span></a></li>
                     <li><a href="#"><i class='fa fa-bug'></i> <span>Gemeldete Tauschvorgänge</span></a></li>
                     <li><a href="#"><i class='fa fa-list'></i> <span>Sperrliste</span></a></li>*@
-                    @if(User.IsInRole("fanart-manager")) {
+                    @if(User.IsInRole("fanart-moderator")) {
                     <li class="header">Fanart</li>
                     if (User.IsInRole("superadmin"))
                     { 
                         <li><a href="@Url.Action("Categories", "Fanart")"><i class="fa fa-tags"></i> <span>Fanart-Kategorien</span></a></li> 
                     }
-                    <li><a href="#"><i class='fa fa-trash-o'></i> <span>Fanart löschen</span></a></li>
-                    <li><a href="#"><i class='fa fa-arrow-circle-right'></i> <span>Fanart verschieben</span></a></li>
+                    <li><a href="@Url.Action("Select", "Fanart")"><i class='fa fa-trash-o'></i> <span>Fanart verwalten</span></a></li>
                     }
                     @*<li class="header">Diverses</li>
                     <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
