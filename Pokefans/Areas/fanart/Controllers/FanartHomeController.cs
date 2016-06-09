@@ -12,8 +12,6 @@ using Pokefans.Areas.fanart.Models;
 
 namespace Pokefans.Areas.fanart.Controllers
 {
-    public enum FanartIndex { Popular, New };
-
     public class FanartHomeController : Controller
     {
         private Entities db;
@@ -78,33 +76,15 @@ namespace Pokefans.Areas.fanart.Controllers
 
             fivm.Fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Take(8 * 8).ToList();
 
-            return View("~/Areas/fanart/Views/FanartHome/Index.cshtml", fivm);
-        }
-
-        public ActionResult Popular()
-        {
-            int id = int.Parse(ConfigurationManager.AppSettings["FanartTeaserArticle"]);
-            FanartIndexViewModel fivm = new FanartIndexViewModel();
-
-            fivm.Teaser = db.Contents.Where(g => g.Id == id).FirstOrDefault();
-            fivm.Fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Take(8 * 8).ToList();
+            ViewBag.FanartCatUrls = cache.Get<Dictionary<int, string>>("FanartUrls");
 
             return View("~/Areas/fanart/Views/FanartHome/Index.cshtml", fivm);
         }
 
-        public ActionResult ListApi(string index, int start = 0)
+        public ActionResult ListApi(int start = 0)
         {
-            FanartIndex fi = string.IsNullOrEmpty(index) ? FanartIndex.New : (FanartIndex)Enum.Parse(typeof(FanartIndex), index, true);
-
-            switch (fi)
-            {
-                case FanartIndex.Popular:
-                    return Json(new List<Fanart>());
-                case FanartIndex.New: // fall through
-                default:
-                    var fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Skip(start).Take(8 * 8); // 8 images per column, 8 rows per default, without any filter
-                    return Json(fanarts);
-            }
+            var fanarts = db.Fanarts.Where(g => g.Status == FanartStatus.OK).OrderByDescending(g => g.Id).Skip(start).Take(8 * 8); // 8 images per column, 8 rows per default, without any filter
+            return Json(fanarts);
         }
 
         private void SetCookie(string key, string value)

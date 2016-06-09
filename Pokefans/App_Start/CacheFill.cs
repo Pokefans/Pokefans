@@ -63,6 +63,12 @@ namespace Pokefans.App_Start
             catlist.ForEach(x => fanartCategories.Add(x.Id, x.Name));
             cache.Add("FanartCategories", fanartCategories);
 
+            // Fanart-Category-Urls
+
+            Dictionary<int, string> fanartUrls = new Dictionary<int, string>();
+            catlist.ForEach(x => fanartUrls.Add(x.Id, x.Uri));
+            cache.Add("FanartUrls", fanartUrls);
+
         }
     }
 }

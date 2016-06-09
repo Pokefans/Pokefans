@@ -43,12 +43,6 @@ namespace Pokefans.Areas.fanart
                             new { action = "New", controller = "FanartHome", image = UrlParameter.Optional }
                 ));
 
-            context.Routes.Add("fanartPopular", new DomainRoute(
-                            "fanart." + ConfigurationManager.AppSettings["Domain"],
-                            "beliebt/{image}",
-                            new { action = "Popular", controller = "FanartHome", image = UrlParameter.Optional }
-                ));
-
             context.Routes.Add("fanartUpload", new DomainRoute(
                             "fanart." + ConfigurationManager.AppSettings["Domain"],
                             "verwaltung/upload",

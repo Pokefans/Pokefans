@@ -17,7 +17,7 @@ else {
     <text>@Html.Raw(@Model.Teaser.ParsedContent)</text>
 }
 <hr />
-<div id="fanartcontainer">
+<div id="fanartcontainer" data-bind="foreachInit: groupedFanarts">
     @{
         int wrap = 0;
     }
@@ -25,15 +25,36 @@ else {
     {
         if (wrap == 0)
         {
-            @Html.Raw("<div class=\"stream-row\">");
+            @Html.Raw("<div class=\"stream-row\" data-bind=\"foreach: $data\">");
         }
-        <a data-id="@fanart.Id"><img src="//fanart.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@fanart.SmallThumbnailUrl" /></a>
+        <a data-id="@fanart.Id" data-url="@ViewBag.FanartCatUrls[fanart.CategoryId]/@fanart.Id"><img src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@fanart.SmallThumbnailUrl" /></a>
+        wrap++;
         if (wrap == 8)
         {
             @Html.Raw("</div>")
             wrap = 0;
         }
     }
+    @if(wrap != 0)
+    {
+        @Html.Raw("</div>");
+    }
+</div>
+
+<div class="fanart" data-bind="if: currentImage">
+    <h2 data-bind="text: currentImage.title"></h2>
+    <div class="navigator">
+        <div class="left">
+            <a href="#"><i class="fa fa-caret-left fa-2x" aria-hidden="true"></i></a>
+        </div>
+        <div class="right">
+            <a href="#"><i class="fa fa-caret-right fa-2x" aria-hidden="true"></i></a>
+        </div>
+        <div class="right max" data-bind="if: currentImage.Scale">
+            <a href="#"><i class="fa fa-plus" aria-hidden="true"></i></a>
+        </div>
+        <img src="http://files.pokefans.net/fanart/uploads/u945/f33511.jpg" />
+    </div>
 </div>
 
 @section Submenu {
@@ -41,6 +62,7 @@ else {
 }
 
 @section scripts {
+    @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/waypoints")
     @Scripts.Render("~/bundles/fanart")
 }

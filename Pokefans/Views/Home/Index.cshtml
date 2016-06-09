@@ -40,7 +40,7 @@ Auch du kannst deine Werke hochladen, wenn du das möchtest (Anmeldung erforderl
 
 <div class="fanart-container clearfix">
 @foreach(Fanart f in Model.Fanarts) {
-    <div class="fanart-element"><a href="#"><img src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@f.Url.Split('.')[0] + "_t4.png")" /></a></div>
+    <div class="fanart-element"><a href="#"><img src="//files.@ConfigurationManager.AppSettings["Domain"]/fanart/uploads/@(f.Url.Split('.')[0] + "_t4.png")" /></a></div>
 }
 </div>
 

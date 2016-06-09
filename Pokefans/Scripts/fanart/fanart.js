@@ -5,37 +5,52 @@ if (typeof (Waypoint) != undefined) {
     });
 }
 
-$(document).ready(function () {
-    // setup some button hooks, because html5 stuff
-
-    var state = {
-        index: "popular",
-        start: 0,
-        search: false
+function FanartImage(data) {
+    var self = this;
+    self.title = data.Title;
+    self.rating = ko.observable(data.Rating); // rating can change - the rest can not, so there's no point in wrapping it.
+    self.author = data.Author;
+    self.description = data.Description;
+    self.imageUri = function () {
+        return "//files." + getDomainName(window.location.hostname) + "/fanart/uploads/" + data.Url;
     };
+    self.comments = ko.observableArray([]); // oh, comments can change too of course.
 
-    $('#new').click(function (e) {
-        e.preventDefault();
-
-        state.index = "new";
-
-        window.history.pushState(state, "Neu", "/neu");
-
-        load(state);
+    $.ajax({
+        url: '/api/v1/comments/' + data.Id
+    }).done(function (cdata) {
+        $.map(cdata, function (comment) {
+            self.comments.push(new Comment(comment));
+        });
     });
+}
 
-    $('#popular').click(function (e) {
-        e.preventDefault();
+function Comment(data) {
+    // TODO
+}
 
-        state.index = "popular";
+function FanartViewModel() {
+    this.Fanarts = ko.observableArray([]);
+    this.selectedFanart = ko.observable(null);
 
-        window.history.pushState(state, "Beliebt", "/");
-        load(state);
-    });
+    // this basically groups the fanarts in rows of eight.
+    // it actually transforms the array, so we can use a binding.
+    this.groupedFanarts = ko.computed(function () {
+        var rows = [], current = [];
+        rows.push(current);
+        for (var i = 0; i < this.Fanarts().length; i += 1) {
+            current.push(this.Fanarts()[i]);
+            if (((i + 1) % 8) === 0) {
+                current = [];
+                rows.push(current);
+            }
+        }
+        return rows;
+    }, this)
+}
 
-    load(state);
-});
+ko.applyBindings(new FanartViewModel());
 
-function load(state) {
-
+function getDomainName(hostName) {
+    return hostName.substring(hostName.lastIndexOf(".", hostName.lastIndexOf(".") - 1) + 1);
 }

@@ -6,12 +6,12 @@
     {
     @Html.AntiForgeryToken()
 
-            @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+            @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { Area = "user" }, htmlAttributes: new { title = "Manage" })
         <a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a>
     }
 }
 else
 {
-        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: null, htmlAttributes: new { id = "registerLink" })<span> | </span>
-        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: null, htmlAttributes: new { id = "loginLink" })
+        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "registerLink" })<span> | </span>
+        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "loginLink" })
 }
