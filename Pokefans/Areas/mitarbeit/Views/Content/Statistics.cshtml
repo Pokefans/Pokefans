@@ -38,7 +38,7 @@
                             {
                                 <tr>
                                     <td><strong>@sourceHost.Host</strong></td>
-                                    <td>@sourceHost.Count</td>
+                                    <td>@sourceHost.Urls.Sum(x => x.Count)</td>
                                 </tr>
                                 foreach (var sourceLink in sourceHost.Urls)
                                 {
