@@ -1,11 +1,9 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
 
 using System;
-using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Web.Mvc;
 using System.IO;
 using DiffMatchPatch;
@@ -26,9 +24,12 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         /// </summary>
         private readonly Entities _entities;
 
-        public ContentController(Entities entities)
+        private readonly ContentManager _contentManager;
+
+        public ContentController(Entities entities, ContentManager contentManager)
         {
             _entities = entities;
+            _contentManager = contentManager;
         }
 
         /// <summary>
@@ -37,6 +38,23 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         /// <returns></returns>
         public ActionResult Index()
         {
+            if (this.HttpContext.Request.Params["error"] != null)
+            {
+                switch (this.HttpContext.Request.Params["error"])
+                {
+                    case "not-found":
+                        ViewBag.Error = "Der gewählte Artikel konnte nicht gefunden werden.";
+                        break;
+                    case "permissions":
+                        ViewBag.Error = "Du hast keine ausreichenden Berechtigungen, um diesen Artikel zu bearbeiten.";
+                        break;
+                    default:
+                        ViewBag.Error = "Beim Zugriff auf den Artikel ist ein Fehler aufgetreten " +
+                                        this.HttpContext.Request.Params["error"];
+                        break;
+                }
+            }
+
             var model = new ContentListViewModel
             {
                 Contents = _entities.Contents
@@ -72,7 +90,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 else if (!model.AdditionalFilter.Contains(':'))
                 {
                     // If the new filter is just a search string we can add it without further testing
-                    model.Filter += String.Format(" {0}", model.AdditionalFilter);
+                    model.Filter += $" {model.AdditionalFilter}";
                 }
                 else
                 {
@@ -107,11 +125,11 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 // Redirect to make the filter-variable look nice!
                 var url = Url.RouteUrl("ContentIndex", new
                 {
-                    Filter = model.Filter,
-                    Page = model.Page
+                    model.Filter,
+                    model.Page
                 });
 
-                return Redirect(url.Replace("%3A", ":").Replace("%20", "+"));
+                return Redirect(url?.Replace("%3A", ":").Replace("%20", "+"));
             }
 
             model.Contents = _entities.Contents
@@ -242,12 +260,12 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
             if (content == null)
             {
-                return RedirectToRoute("ContentIndex");
+                return RedirectToRoute("ContentIndex", new { error = "not-found" });
             }
 
             if (content.EditPermission != null && !User.IsInRole(content.EditPermission.Name))
             {
-                return RedirectToRoute("ContentIndex");
+                return RedirectToRoute("ContentIndex", new { error = "permissions" });
             }
             var model = ContentEditViewModel.FromContent(content);
             model.Categories = _entities.ContentCategories.OrderBy(c => c.OrderingPosition);
@@ -263,10 +281,10 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             }
 
             model.ContentStatusList = statusOptions.Select(e => new SelectListItem
-                {
-                    Text = e.GetDisplayName(),
-                    Value = ((int)e).ToString()
-                });
+            {
+                Text = e.GetDisplayName(),
+                Value = ((int)e).ToString()
+            });
             model.ContentPermissionList = _entities.Roles
                 .Where(r => r.Metapermission.Name == "mitarbeiter")
                 .Select(r => new SelectListItem
@@ -288,54 +306,16 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         [ValidateInput(false)]
         public ActionResult Edit(ContentEditViewModel model)
         {
+            var currentUser = _entities.Users.Find(User.Identity.GetUserId<int>());
+
             Content content = null;
             if (ModelState.IsValid)
             {
-                ContentVersion latestVersion = null;
-
                 if (model.ContentId == null)
                 {
-                    // Create a new Content Object if there is none
-                    var c = new Content
-                    {
-                        Version = 1,
-                        EditPermissionId = null,
-                        Published = DateTime.MinValue,
-                        PublishedByUserId = null,
-                        Created = DateTime.Now,
-                        AuthorUserId = User.Identity.GetUserId<int>(),
-                        UnparsedContent = "",
-                        StylesheetCss = ""
-                    };
-
-                    content = _entities.Contents.Add(c);
-
-                    var v = new ContentVersion
-                    {
-                        ContentId = content.Id,
-                        UserId = content.AuthorUserId,
-                        UnparsedContent = "",
-                        StylesheetCode = "",
-                        Title = "",
-                        Description = "",
-                        Teaser = "",
-                        Notes = ""
-                    };
-
-                    latestVersion = _entities.ContentVersions.Add(v);
-                    _entities.SaveChanges();
+                    // Create the content if it does not exist.
+                    content = _contentManager.CreateContent(currentUser);
                     model.ContentId = content.Id;
-
-                    var url = new ContentUrl
-                    {
-                        Url = String.Format("inhalt/{0}", content.Id),
-                        ContentId = content.Id,
-                        Type = UrlType.System,
-                        Enabled = true
-                    };
-
-                    _entities.ContentUrls.Add(url);
-                    content.DefaultUrl = url;
                 }
                 else
                 {
@@ -344,6 +324,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                         .Include("EditPermission")
                         .Include("Boilerplates")
                         .Include("BoilerplatesUsed")
+                        .Include("Versions")
                         .Where(c => c.Id == model.ContentId);
 
                     if (result.Any())
@@ -352,12 +333,12 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
                         if (content.EditPermission != null && !User.IsInRole(content.EditPermission.Name))
                         {
-                            return RedirectToRoute("ContentIndex");
+                            return RedirectToRoute("ContentIndex", new { error = "permissions" });
                         }
                     }
                     else
                     {
-                        return RedirectToRoute("ContentIndex");
+                        return RedirectToRoute("ContentIndex", new { error = "not-found" });
                     }
                 }
 
@@ -386,7 +367,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     {
                         if (model.Type == ContentType.News)
                         {
-                            // Default url is /news/-/1234
+                            // Default url is /news/-/<id>
                             model.Url = "-";
                         }
                     }
@@ -396,7 +377,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                         model.Url = model.Url.Trim('/');
                         if (model.Type == ContentType.News && !Regex.IsMatch(model.Url, @"news/[a-zA-Z0-9_\-/]+/\d+"))
                         {
-                            model.Url = String.Format("news/{0}/{1}", model.Url, content.Id);
+                            model.Url = $"news/{model.Url}/{content.Id}";
                         }
 
                         if (content.DefaultUrl == null || content.DefaultUrl.Url != model.Url)
@@ -445,18 +426,20 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 }
 
                 // Update Database Fields
-                model.UpdateContent(content);
+                model.UpdateContentMeta(content);
                 content.Updated = DateTime.Now;
 
-                int userId;
-                if (content.Version > 0)
+                try
                 {
-                    latestVersion = latestVersion ?? _entities.ContentVersions.Where(v => v.ContentId == content.Id).OrderByDescending(v => v.Updated).First();
-                    userId = latestVersion.UserId;
+                    content.Parse();
                 }
-                else
+                catch (InvalidOperationException exception)
                 {
-                    userId = content.AuthorUserId;
+                    ViewBag.Error =
+                        "Der Inhalt deines Artikels enthält Fehler und konnte daher nicht gespeichert werden. Bitte überprüfe Inside-Codes und BB-Codes auf ihre Richtigkeit. " +
+                        exception.Message;
+                    model.Saved = false;
+                    goto Return;
                 }
 
                 try
@@ -474,86 +457,12 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     ViewBag.Error = "Fehler beim Speichern des artikelspezifischen Stylesheets (dein Code ist aber in Ordnung).";
                 }
 
-                content.Parse();
-
-                // Calculate Changes
-                int updateCharsDeleted = 0;
-                int updateCharsInserted = 0;
-                double updateMagnificance = 0;
-
-                if (latestVersion != null)
-                {
-                    var dmp = new diff_match_patch();
-                    var diffs = dmp.diff_main(latestVersion.UnparsedContent ?? "", model.UnparsedContent ?? "");
-
-                    foreach (var diffItem in diffs.Where(diffItem => diffItem.text.Trim().Length != 0))
-                    {
-                        switch (diffItem.operation)
-                        {
-                            case Operation.DELETE:
-                                {
-                                    updateCharsDeleted += diffItem.text.Length;
-                                    break;
-                                }
-                            case Operation.INSERT:
-                                {
-                                    updateCharsInserted += diffItem.text.Length;
-                                    break;
-                                }
-                        }
-                    }
-
-                    updateMagnificance =
-                        Math.Min(updateCharsInserted * 0.9 / Math.Max(1, latestVersion.UnparsedContent.Length) +
-                        updateCharsDeleted * 0.1 / Math.Max(1, latestVersion.UnparsedContent.Length), 1);
-                    updateMagnificance = Math.Min(1, Math.Tan(updateMagnificance));
-                }
-
-                // If the user was not the one who updated last we have to create a new version
-                if (userId != User.Identity.GetUserId<int>())
-                {
-                    content.Version++;
-                    latestVersion = new ContentVersion
-                    {
-                        ContentId = content.Id,
-                        Title = content.Title,
-                        Version = content.Version,
-                        UnparsedContent = content.UnparsedContent,
-                        ParsedContent = content.ParsedContent,
-                        Description = content.Description,
-                        StylesheetCss = content.StylesheetCss,
-                        StylesheetCode = content.StylesheetCode,
-                        Teaser = content.Teaser,
-                        UserId = User.Identity.GetUserId<int>(),
-                        Note = content.Notes,
-                        Updated = DateTime.Now,
-                        UpdateMagnificance = updateMagnificance,
-                        UpdateCharsChanged = updateCharsInserted,
-                        UpdateCharsDeleted = updateCharsDeleted
-                    };
-
-                    _entities.ContentVersions.Add(latestVersion);
-                }
-                else
-                {
-                    if (latestVersion != null)
-                    {
-                        model.UpdateContentVersion(latestVersion);
-                        latestVersion.Version = content.Version;
-                        latestVersion.ParsedContent = content.ParsedContent;
-                        latestVersion.StylesheetCss = content.StylesheetCss;
-                        latestVersion.Updated = DateTime.Now;
-                        latestVersion.UpdateMagnificance = updateMagnificance;
-                        latestVersion.UpdateCharsChanged = updateCharsInserted;
-                        latestVersion.UpdateCharsDeleted = updateCharsDeleted;
-                    }
-                }
-
-                // Save all Changes
-                _entities.SaveChanges();
+                _contentManager.UpdateContentVersions(content, currentUser);
             }
 
             model.Saved = ModelState.IsValid;
+
+Return:
             model.Categories =
                 model.Categories ?? _entities.ContentCategories.OrderBy(c => c.OrderingPosition);
             model.IsContentAdministrator = User.IsInRole("artikel-administrator");
@@ -577,10 +486,10 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             }
 
             model.ContentStatusList = statusOptions.Select(e => new SelectListItem
-                {
-                    Text = e.GetDisplayName(),
-                    Value = ((int)e).ToString()
-                });
+            {
+                Text = e.GetDisplayName(),
+                Value = ((int)e).ToString()
+            });
             model.ContentPermissionList = _entities.Roles
                 .Where(r => r.Metapermission.Name == "mitarbeiter")
                 .Select(r => new SelectListItem
@@ -628,7 +537,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             var sources = _entities.ContentTrackingSources
                 .Where(s => s.ContentId == content.Id)
                 .Where(s => !string.IsNullOrEmpty(s.SourceHost))
-                .GroupBy(s => new {s.SourceHost, s.SourceUrl})
+                .GroupBy(s => new { s.SourceHost, s.SourceUrl })
                 .OrderBy(s => s.Key.SourceHost);
 
             var trackerSources2 = sources
@@ -701,7 +610,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     .AsEnumerable()
                     .Select(c => new SelectListItem
                     {
-                        Text = string.Format("{0}: {1}", c.Id, c.Title),
+                        Text = $"{c.Title} ({c.Id})",
                         Value = c.Id.ToString()
                     })
             };
@@ -966,7 +875,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 content = new Content();
             }
 
-            editModel.UpdateContent(content);
+            editModel.UpdateContentMeta(content);
             content.CompileLess();
             content.Parse();
 

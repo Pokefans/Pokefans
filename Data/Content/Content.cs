@@ -290,12 +290,6 @@ namespace Pokefans.Data
         }
 
         [NotMapped]
-        public string StylesheetUrl
-        {
-            get
-            {
-                return "//static." + ConfigurationManager.AppSettings["Domain"] + "/stylesheets/content/" + this.Id + ".css";
-            }
-        }
+        public string StylesheetUrl => "//static." + ConfigurationManager.AppSettings["Domain"] + "/stylesheets/content/" + this.Id + ".css";
     }
 }

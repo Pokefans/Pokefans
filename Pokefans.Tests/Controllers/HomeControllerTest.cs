@@ -6,6 +6,7 @@ using System.Text;
 using System.Web.Mvc;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Pokefans.Controllers;
+using Pokefans.Caching;
 using Pokefans.Data;
 using Pokefans.Util;
 
@@ -18,7 +19,7 @@ namespace Pokefans.Tests.Controllers
         public void Index()
         {
             // Arrange
-            HomeController controller = new HomeController(new Breadcrumbs(), new Entities());
+            HomeController controller = new HomeController(new Breadcrumbs(), new Entities(), new NativeCache());
 
             // Act
             ViewResult result = controller.Index() as ViewResult;
@@ -31,7 +32,7 @@ namespace Pokefans.Tests.Controllers
         public void About()
         {
             // Arrange
-            HomeController controller = new HomeController(new Breadcrumbs(), new Entities());
+            HomeController controller = new HomeController(new Breadcrumbs(), new Entities(), new NativeCache());
 
             // Act
             ViewResult result = controller.About() as ViewResult;
@@ -44,7 +45,7 @@ namespace Pokefans.Tests.Controllers
         public void Contact()
         {
             // Arrange
-            HomeController controller = new HomeController(new Breadcrumbs(), new Entities());
+            HomeController controller = new HomeController(new Breadcrumbs(), new Entities(), new NativeCache());
 
             // Act
             ViewResult result = controller.Contact() as ViewResult;

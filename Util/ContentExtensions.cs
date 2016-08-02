@@ -226,7 +226,7 @@ namespace Pokefans.Util
         /// <param name="context"></param>
         public static void TrackView(this Content content, HttpRequestBase request, Entities context)
         {
-            // Local requests or requests to unpublished content doesn't need to be tracked.
+            // Local requests or requests to unpublished content won't need to be tracked.
 #if !DEBUG
             if (request.IsLocal || content.Status != ContentStatus.Published || request.)
             {
@@ -248,7 +248,7 @@ namespace Pokefans.Util
                 ContentId = content.Id,
                 IpAdress = request.UserHostAddress,
                 RequestTime = DateTime.Now,
-                TargetUrl = (request.Url == null ? null : request.Url.AbsoluteUri),
+                TargetUrl = request.Url?.AbsoluteUri,
             };
 
             if (request.UrlReferrer != null)
@@ -267,6 +267,19 @@ namespace Pokefans.Util
 
             context.ContentTrackingSources.Add(trackingEntry);
             context.SaveChanges();
+        }
+
+        /// <summary>
+        /// Query the latest version of this content.
+        /// </summary>
+        /// <param name="content">The content to fetch the versions for</param>
+        /// <param name="skip">The amount of versions to skip, i.e. fetching the <paramref name="skip"/>th version</param>
+        /// <returns></returns>
+        public static ContentVersion GetLatestVersion(this Content content, int skip=0)
+        {
+            return content.Versions.OrderByDescending(v => v.Updated)
+                .Skip(skip)
+                .FirstOrDefault();
         }
     }
 }

@@ -46,42 +46,43 @@
                         <div class="form-group col-lg-8">
                             @Html.LabelFor(c => c.Title)
                             @Html.ValidationMessageFor(m => m.Title, "", new { @class = "text-danger" })
-                            @Html.TextBoxFor(c => c.Title, new { @class = "form-control", placeholder = "Gib hier einen aussagekräftigen Titel ein!" })
+                            @Html.TextBoxFor(c => c.Title, new { @class = "form-control", placeholder = "Gib hier einen aussagekräftigen Titel ein!", autofocus = "autofocus" })
                         </div>
                         <div class="col-lg-4">
                             <div class="btn-group pull-right">
-                                <button class="btn btn-primary" type="button" onclick="previewContent();" style="margin-top:23px;">Vorschau</button>
-                                <button class="btn btn-success" type="submit" style="margin-top:23px;">Speichern</button>
+                                <button class="btn btn-primary" tabindex="-1" type="button" onclick="previewContent();" style="margin-top:23px;">Vorschau</button>
+                                <button class="btn btn-success" tabindex="-1" type="submit" style="margin-top:23px;">Speichern</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="pull-right">
                         <div class="btn-group">
-                            <button class="btn btn-default" data-code="{pokedex: Name;[text=Angezeigter Text]}" id="ic-pokedex">Pokedex</button>
-                            <button class="btn btn-default" data-code="{attacke: Name;[text=Angezeigter Text]}" id="ic-attackendex">Attackendex</button>
-                            <button class="btn btn-default" data-code="{item: Name;[Angezeigter Text]}" id="ic-itemdex">Itemdex</button>
-                            <button class="btn btn-default" data-code="{chara: Name;[Angezeigter Text]}" id="ic-charakteristikendex">Charakteristiken</button>
-                            <button class="btn btn-default" data-code="{beere: Name;[Angezeigter Text]}" id="ic-beerendex">Beerendex</button>
-                            <button class="btn btn-default" data-code="{lexikon: Name;[Angezeigter Text]}" id="ic-lexikon">Lexikon</button>
-                            <button class="btn btn-default" data-code="{sprite: National-ID;[text=Angezeigter Text;][type=Spite-Typ;]}" id="ic-sprite">Sprite</button>
-                            <button class="btn btn-default" data-code="{icon: National-ID;[Angezeigter Text]}" id="ic-icon">Pokemon-Icon</button>
-                            <button class="btn btn-default" data-code="{icon-item:Name;}" id="ic-item-icon">Item-Icon</button>
-                            <button class="btn btn-default" data-code="{icon-typ:ID;}" id="ic-typ-icon">Typ-Icon</button>
-                            <button class="btn btn-default" id="ic-img" data-code="{img: Bild-URL; [Alternativer Text]}" data-toggle="tooltip" data-placement="bottom" title="Bild einfügen"><i class="fa fa-image fa-lg"></i></button>
-                            <button class="btn btn-default" id="ic-thumb" data-code="{thumb: Bild-URL; Breite; [Alternativer Text]}" data-toggle="tooltip" data-placement="bottom" title="Thumbnail einfügen"><i class="fa fa-crop fa-lg"></i></button>
-                            <button class="btn btn-default" id="ic-youtube" data-code="{youtube: Video #ID; [Beschreibung des Videos]}" data-toggle="tooltip" data-placement="bottom" title="Youtube einfügen"><i class="fa fa-youtube-play fa-lg"></i></button>
-                            <button class="btn btn-default" id="ic-abbr" data-code="{abbr: Abkürzung; Erklärung}" data-toggle="tooltip" data-placement="bottom" title="Abkürzung einfügen"><i class="fa fa-random fa-lg"></i></button>
-                            <button class="btn btn-default" id="ic-link" data-code="{link: URL; [Angezeigter Text]}" data-toggle="tooltip" data-placement="bottom" title="Link einfügen"><i class="fa fa-external-link fa-lg"></i></button>
-                            <button class="btn btn-default" id="ic-link-board" data-code="{t: Themen-#ID; Angezeigter Text}" data-toggle="tooltip" data-placement="bottom" title="Link zu einem Foren-Thema einfügen"><i class="fa fa-comments fa-lg"></i></button>
-                            <button class="btn btn-default" id="ic-link-user" data-code="{user: Mitglieds-#ID; text=Angezeigter Text}" data-toggle="tooltip" data-placement="bottom" title="Link zu einem Benutzer einfügen"><i class="fa fa-user fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{pokedex: Name;[text=Angezeigter Text]}" id="ic-pokedex">Pokedex</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{attacke: Name;[text=Angezeigter Text]}" id="ic-attackendex">Attackendex</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{item: Name;[Angezeigter Text]}" id="ic-itemdex">Itemdex</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{chara: Name;[Angezeigter Text]}" id="ic-charakteristikendex">Charakteristiken</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{beere: Name;[Angezeigter Text]}" id="ic-beerendex">Beerendex</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{lexikon: Name;[Angezeigter Text]}" id="ic-lexikon">Lexikon</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{sprite: National-ID;[text=Angezeigter Text;][type=Spite-Typ;]}" id="ic-sprite">Sprite</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{icon: National-ID;[Angezeigter Text]}" id="ic-icon">Pokemon-Icon</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{icon-item:Name;}" id="ic-item-icon">Item-Icon</button>
+                            <button class="btn btn-default" tabindex="-1" data-code="{icon-typ:ID;}" id="ic-typ-icon">Typ-Icon</button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-img" data-code="{img: Bild-URL; [Alternativer Text]}" data-toggle="tooltip" data-placement="bottom" title="Bild einfügen"><i class="fa fa-image fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-thumb" data-code="{thumb: Bild-URL; Breite; [Alternativer Text]}" data-toggle="tooltip" data-placement="bottom" title="Thumbnail einfügen"><i class="fa fa-crop fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-youtube" data-code="{youtube: Video #ID; [Beschreibung des Videos]}" data-toggle="tooltip" data-placement="bottom" title="Youtube einfügen"><i class="fa fa-youtube-play fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-abbr" data-code="{abbr: Abkürzung; Erklärung}" data-toggle="tooltip" data-placement="bottom" title="Abkürzung einfügen"><i class="fa fa-random fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-link" data-code="{link: URL; [Angezeigter Text]}" data-toggle="tooltip" data-placement="bottom" title="Link einfügen"><i class="fa fa-external-link fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-link-board" data-code="{t: Themen-#ID; Angezeigter Text}" data-toggle="tooltip" data-placement="bottom" title="Link zu einem Foren-Thema einfügen"><i class="fa fa-comments fa-lg"></i></button>
+                            <button class="btn btn-default" tabindex="-1" id="ic-link-user" data-code="{user: Mitglieds-#ID; text=Angezeigter Text}" data-toggle="tooltip" data-placement="bottom" title="Link zu einem Benutzer einfügen"><i class="fa fa-user fa-lg"></i></button>
                         </div>
                     </div>
 
                     <div role="tabpanel" id="editors">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#html" aria-controls="html" role="tab" data-toggle="tab">HTML</a></li>
-                            <li role="presentation"><a href="#css" aria-controls="css" role="tab" data-toggle="tab">CSS</a></li>
+                            <li role="presentation" class="active"><a href="#html" aria-controls="html" role="tab" data-toggle="tab" tabindex="-1">HTML</a></li>
+                            <li role="presentation"><a href="#css" aria-controls="css" role="tab" data-toggle="tab" tabindex="-1">CSS</a></li>
+                            <li role="presentation"><a href="#preview" aria-controls="preview" role="tab" data-toggle="tab" tabindex="-1" onclick="previewContent();">Vorschau</a></li>
                         </ul>
 
                         <div class="tab-content">
@@ -98,6 +99,9 @@
                                     @Html.ValidationMessageFor(m => m.StylesheetCode, "", new { @class = "text-danger" })
                                     @Html.TextAreaFor(c => c.StylesheetCode, new { @class = "form-control description-editor", placeholder = "Gib hier dein persönliches Stylesheet ein!", data_editor = "less" })
                                 </div>
+                            </div>
+                            <div role="tabpanel" class="editorhost tab-pane" id="preview">
+                                <div id="content"></div>
                             </div>
                         </div>
                     </div>
@@ -191,27 +195,10 @@
 
 @section scripts {
     @Scripts.Render("~/bundles/ace")
+    @Scripts.Render("~/bundles/backend")
 
     <script>
-        function previewContent() {
-            // Workaround for Ace Editor, it doesn't propagate a changed value.
-            var formData = {};
-            $.each($('#content-form').serializeArray(), function (_, kv) {
-                formData[kv.name] = kv.value;
-            });
-            formData["UnparsedContent"] = editors[0].getValue();
-            formData["StylesheetCode"] = editors[1].getValue();
-
-            $.post("@Url.RouteUrl("ContentDetail", new { contentId = Model.ContentId, action = "preview" })", $.param(formData))
-                .done(function (data) {
-                    var win = window.open('about:blank');
-                    with (win.document) {
-                        open();
-                        write(data);
-                        close();
-                    }
-                });
-        }
+        var previewUrl = "@Url.RouteUrl("ContentDetail", new { contentId = Model.ContentId ?? 0, action = "preview" })";
     </script>
 }
 @section ContentSubMenu {

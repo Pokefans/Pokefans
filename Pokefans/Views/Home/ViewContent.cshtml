@@ -1,4 +1,5 @@
 ﻿@* Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using System.Configuration
 @using Pokefans.Data
 @model Pokefans.Models.ContentViewModel
 @{
@@ -24,16 +25,6 @@
         <p class="legend">Diese Meldung wurde am <span itemprop="datePublished">@Model.Content.Published</span> veröffentlicht.</p>
     }
 </div>
-
-@if (!string.IsNullOrEmpty(Model.Content.StylesheetCss))
-{
-    @section CustomHeaders {
-        <!-- Content specific stylesheet -->
-        <style>
-        @Html.Raw(Model.Content.StylesheetCss)
-        </style>
-    }
-}
 
 @if (Model.Content.Type == ContentType.News)
 {
@@ -77,5 +68,12 @@ else if (Model.Content.Category != null && Model.Content.Category.SidebarContent
         {
             <link rel="stylesheet" href="//static.@ConfigurationManager.AppSettings["Domain"]/stylesheets/content/@css" />
         }
+    }
+    @if (!string.IsNullOrEmpty(Model.Content.StylesheetCss))
+        {
+                <!-- Content specific stylesheet -->
+        <style>
+                @Html.Raw(Model.Content.StylesheetCss)
+        </style>
     }
 }

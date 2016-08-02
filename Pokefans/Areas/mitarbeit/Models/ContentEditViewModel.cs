@@ -97,10 +97,10 @@ namespace Pokefans.Areas.mitarbeit.Models
         }
 
         /// <summary>
-        /// Update the given Content Object with the  Model Data
+        /// Update the given Content Object with the Model Data
         /// </summary>
         /// <param name="content"></param>
-        public void UpdateContent(Content content)
+        public void UpdateContentMeta(Content content)
         {
             content.Title = Title ?? "";
             content.UnparsedContent = UnparsedContent ?? "";

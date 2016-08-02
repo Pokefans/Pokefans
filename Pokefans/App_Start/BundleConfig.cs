@@ -59,7 +59,8 @@ namespace Pokefans
                     "~/Content/adminlte/bootstrap.css",
                     "~/Content/adminlte/AdminLTE.css",
                     "~/Content/adminlte/skin-blue.css",
-                    "~/Content/editable/bootstrap-editable.css"
+                    "~/Content/editable/bootstrap-editable.css",
+                    "~/Content/backend/content-edit.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
@@ -78,8 +79,7 @@ namespace Pokefans
                     "~/Scripts/ace/mode-css.js",
                     "~/Scripts/ace/worker-html.js",
                     "~/Scripts/ace/worker-css.js",
-                    "~/Scripts/ace/loadace.js",
-                    "~/Scripts/ace/content-edit.js"
+                    "~/Scripts/ace/loadace.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(
@@ -87,7 +87,8 @@ namespace Pokefans
                     "~/Scripts/backend/multiaccounts.js",
                     "~/Scripts/backend/rolemanager.js",
                     "~/Scripts/editable/bootstrap-editable.js",
-                    "~/Scripts/backend/fanart/categories.js"
+                    "~/Scripts/backend/fanart/categories.js",
+                    "~/Scripts/backend/content/content-edit.js"
                 ));
 
             // waypoints

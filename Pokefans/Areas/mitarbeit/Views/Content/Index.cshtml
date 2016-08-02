@@ -1,6 +1,5 @@
 ﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
 @using Microsoft.AspNet.Identity
-@using Pokefans.Areas.mitarbeit.Models
 @using PagedList.Mvc;
 @model ContentListViewModel
 @{
@@ -14,12 +13,12 @@
 }
 @helper ShowFilter(string filter, string title, string icon)
 {
-    var includes = Model.IncludesFilter(filter);
-    
-    if (includes)
-    {
-        filter = filter.Split(':')[0] + ":";
-    }
+var includes = Model.IncludesFilter(filter);
+
+if (includes)
+{
+    filter = filter.Split(':')[0] + ":";
+}
     <li class="@(includes ? "active" : null)">
         <a href="@Url.RouteUrl("ContentIndex", new { Page = Model.Page, Filter = Model.Filter, AdditionalFilter = filter }).Replace("%3A", ":").Replace("%20", "+")">
             <i class="fa fa-@icon"></i>
@@ -74,7 +73,7 @@
                         {
                             <tr>
                                 <td>
-                                    @Html.RouteLink(content.Title, "ContentDetail", new { contentId = content.Id, action = "" })
+                                    @Html.RouteLink(content.Title, "ContentDetail", new { contentId = content.Id, action = "edit" })
                                 </td>
                                 <td>
                                     <div class="small blur">

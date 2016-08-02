@@ -72,7 +72,7 @@ else {
     <h4>Unsere neuesten Spielehilfen</h4>
     <ul class="list-spielehilfen">
         @foreach(Content c in Model.LatestArticles) {
-            <li><a href="@c.DefaultUrl">@c.Title</a></li>
+            <li><a href="@c.DefaultUrl.Url">@c.Title</a></li>
         }
     </ul>
 }

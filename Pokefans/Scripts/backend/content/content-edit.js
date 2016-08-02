@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+
+$(function () {
     $("#html-label").hide();
     $("#css-label").hide();
     $("#switch-stacked").click(function () {
@@ -12,8 +14,8 @@
         $("#editors .editorhost .form-group").addClass("panel-body");
         $("#editors .editorhost .content-editor").height(200);
         resetEditorWrapping();
-
     });
+
     $("#switch-sidebyside").click(function () {
         $("#editors ul").hide();
         $("#html-label").show();
@@ -25,8 +27,8 @@
         $("#editors .editorhost .form-group").addClass("panel-body");
         $("#editors .editorhost .content-editor").height(500);
         resetEditorWrapping();
-
     });
+
     $("#switch-tabbed").click(function () {
         $("#html-label").hide();
         $("#css-label").hide();
@@ -40,15 +42,27 @@
         resetEditorWrapping();
     });
 
-    $('[id^="ic"]').click(function (e) {
+    $("[id^=\"ic\"]").click(function (e) {
         e.preventDefault();
         editors[0].insert($(this).attr("data-code"));
     });
 
-    $("#content-form").submit = function() {
+    $(document).on("submit", "#content-form", function (e) {
         window.onbeforeunload = null;
+    });
+
+    $(window).bind("keydown", function (e) {
+        var saveCommandPressed = ((e.which == 83 || e.which == 115) && e.ctrlKey) || (e.which == 19);
+
+        if (saveCommandPressed) {
+            window.onbeforeunload = null;
+            $("#content-form").submit();
+            e.preventDefault();
+            return false;
+        }
+
         return true;
-    };
+    });
 });
 
 function resetEditorWrapping() {
@@ -58,9 +72,26 @@ function resetEditorWrapping() {
     }
 }
 
-window.onbeforeunload = function (e) {
-    console.log(e);
-    console.log("test");
+function previewContent() {
+    // Workaround for Ace Editor, it doesn't propagate a changed value.
+    var formData = {};
+    $.each($('#content-form').serializeArray(), function (_, kv) {
+        formData[kv.name] = kv.value;
+    });
+    formData["UnparsedContent"] = editors[0].getValue();
+    formData["StylesheetCode"] = editors[1].getValue();
+
+    $.post(previewUrl, $.param(formData))
+        .done(function (data) {
+            $("#preview > #content").html(data);
+        });
+
+    $('.nav-tabs a[href="#preview"]').tab('show');
+
+    return false;
+}
+
+window.onbeforeunload =  function(e) {
     var message = "Du hast deine Änderungen nicht gespeichert. Willst du die Seite wirklich verlassen?";
 
     if (editors[0].session.getUndoManager().isClean() && editors[1].session.getUndoManager().isClean()) {
@@ -72,5 +103,4 @@ window.onbeforeunload = function (e) {
     }
 
     return message;
-};
-console.log("HIU");
+}; 

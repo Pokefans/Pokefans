@@ -248,6 +248,7 @@
     <Compile Include="Models\MainPageViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\backend\content-edit.css" />
     <Content Include="Content\bootstrap-tagsinput.css" />
     <Content Include="Content\css\font-awesome.css" />
     <Content Include="Content\css\font-awesome.min.css" />
@@ -257,7 +258,7 @@
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\PagedList.css" />
     <Content Include="Scripts\ace\ace.js" />
-    <Content Include="Scripts\ace\content-edit.js" />
+    <Content Include="Scripts\backend\content\content-edit.js" />
     <Content Include="Scripts\ace\loadace.js" />
     <Content Include="Scripts\ace\mode-css.js" />
     <Content Include="Scripts\ace\mode-html.js" />
@@ -350,7 +351,6 @@
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap-tagsinput.min.js.map" />
-    <None Include="Scripts\jquery-1.10.2-vsdoc.js" />
     <Content Include="Scripts\backend\fanart\categories.js" />
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap-tagsinput.min.js" />
@@ -367,9 +367,6 @@
     <Content Include="Scripts\fanart\edit.js" />
     <Content Include="Scripts\fanart\fanart.js" />
     <Content Include="Scripts\fanart\upload.js" />
-    <Content Include="Scripts\jquery-1.10.2.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.js" />
-    <Content Include="Scripts\jquery-1.10.2.min.map" />
     <None Include="Scripts\jquery-2.1.3.intellisense.js" />
     <Content Include="Scripts\adminlte\app.js" />
     <Content Include="Scripts\adminlte\app.min.js" />
