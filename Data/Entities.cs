@@ -22,7 +22,7 @@ namespace Pokefans.Data
     using System.Diagnostics;
     using System.Linq;
     using MySql.Data.Entity;
-
+    using Comments;
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class Entities : DbContext
     {
@@ -303,6 +303,11 @@ namespace Pokefans.Data
 
         public virtual DbSet<TradeLog> TradeLogs { get; set; }
 
+        #endregion
+
+        #region Comments
+        public virtual DbSet<Comment> Comments { get; set; }
+        public virtual DbSet<CommentAncestor> CommentAncestors { get; set; }
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

@@ -1,0 +1,47 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Areas.fanart.Models.FanartSingleViewModel
+@using System.Configuration
+@{
+    SiteTitle = "Fanart: " + Model.Fanart.Title;
+    SiteHeader = SiteTitle;
+    SiteDescription = "";
+    ActiveMenuKey = "fanart";
+}
+
+<h1>@SiteHeader</h1>
+<div class="fanart-image">
+    <img src="@Url.Map("/fanart/uploads/"+Model.Fanart.Url, "files")" />
+</div>
+<div class="fanart-description">
+    @Html.Raw(Model.Fanart.Description)
+</div>
+
+@section sidebar {
+    <ul class="list-unstyled">
+        <li><i class="fa fa-upload"></i> @Model.Fanart.UploadTime.ToString()</li>
+        @*Verlinkung zur Suche nach Fanarts für bestimmten Nutzer, da Suche noch nicht implementiert = kein Link*@
+        <li><i class="fa fa-user"></i> <a href="#">@Model.Fanart.UploadUser.UserName</a></li>
+        <li class="rating-star">@RenderStars(Model.Fanart.Rating)</li>
+    </ul>
+    <hr />
+    <ul class="nav nav-pills nav-stacked">
+        <li><a href="@Url.Map("tutorials", "fanart")"><i class="fa fa-lg fa-fw fa-support"></i> Fanart lernen</a></li>
+    </ul>
+}
+
+@helper RenderStars(decimal rating) { 
+for(int i = 0; i < 5; i++)
+{
+    if(i < rating && (i+1) > rating)
+    {
+            <i class="fa fa-star-half-full fa-lg"></i>
+    } else if (i < rating)
+    {
+            <i class="fa fa-star"></i>
+    }
+    else
+    {
+            <i class="fa fa-star-o"></i>
+    }
+}
+}

@@ -81,6 +81,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RegularExpressionWithOptionsAttribute.cs" />
+    <Compile Include="Comments\Comment.cs" />
+    <Compile Include="Comments\CommentAncestor.cs" />
     <Compile Include="Content\Content.cs" />
     <Compile Include="Content\ContentBoilerplate.cs" />
     <Compile Include="Content\ContentCategory.cs" />

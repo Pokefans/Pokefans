@@ -10,6 +10,9 @@ using Microsoft.Practices.Unity;
 using Pokefans.Util;
 using Pokefans.Caching;
 using System.Configuration;
+using System.Web.Http;
+using Pokefans.Security;
+using Pokefans.Data;
 
 namespace Pokefans
 {
@@ -23,11 +26,13 @@ namespace Pokefans
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
 
         protected void Application_BeginRequest()
         {
             UnityConfig.GetConfiguredContainer().RegisterInstance<IBreadcrumbs>(new Breadcrumbs(), new PerRequestLifetimeManager());
+            UnityConfig.GetConfiguredContainer().RegisterInstance<HttpContextBase>(new HttpContextWrapper(HttpContext.Current), new PerRequestLifetimeManager());
             
             if (ConfigurationManager.AppSettings["CachingBackend"].ToLower() == "native")
             {

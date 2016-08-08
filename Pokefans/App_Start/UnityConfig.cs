@@ -11,6 +11,7 @@ using Pokefans.Security;
 using Pokefans.Caching;
 using Pokefans.Util;
 using Amib.Threading;
+using Pokefans.Util.Comments;
 
 namespace Pokefans.App_Start
 {
@@ -52,6 +53,7 @@ namespace Pokefans.App_Start
             container.RegisterType<IAuthenticationManager>(new InjectionFactory( c => HttpContext.Current.GetOwinContext().Authentication));
             container.RegisterType<IRoleStore<Role, int>, RoleStore>(new InjectionConstructor(typeof(Entities)));
             container.RegisterType<SmartThreadPool>(new InjectionFactory(c => new SmartThreadPool()));
+            container.RegisterType<CommentManager>(new PerResolveLifetimeManager());
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();

@@ -136,6 +136,15 @@ namespace Pokefans.Data.Migrations
                         Name = "fanart-moderator",
                         FriendlyName = "Fanart-Moderator"
                     });
+
+            if(!context.Roles.Any(x => x.Name == "comment-moderator"))
+                context.Roles.Add(
+                    new Role()
+                    {
+                        Name = "comment-moderator",
+                        FriendlyName = "Kommentar-Moderator"
+                    });
+
             context.SaveChanges();
             #endregion
 
