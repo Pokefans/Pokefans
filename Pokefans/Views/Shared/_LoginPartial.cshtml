@@ -1,17 +1,16 @@
 ﻿@using Microsoft.AspNet.Identity
-@using System.Configuration;
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new {id = "logoutForm", @class = "navbar-right"}))
     {
-    @Html.AntiForgeryToken()
+        @Html.AntiForgeryToken()
 
-            @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+        @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", null, new {title = "Manage"})
         <a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a>
     }
 }
 else
 {
-        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: null, htmlAttributes: new { id = "registerLink" })<span> | </span>
-        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: null, htmlAttributes: new { id = "loginLink" })
+    @Html.ActionLink("Registrieren", "Register", "Account", "user", new {area = "user"}, new {id = "registerLink"})<span> | </span>
+    @Html.ActionLink("Anmelden", "Login", "Account", "user", new { area = "user" }, new {id = "loginLink"})
 }

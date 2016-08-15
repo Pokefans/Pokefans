@@ -24,7 +24,8 @@ namespace Pokefans.Util
         /// <returns></returns>
         public static MvcHtmlString ResourceLink(this HtmlHelper helper, string path)
         {
-            return new MvcHtmlString(String.Format("//{0}/{1}", ConfigurationManager.AppSettings["Domain"], path));
+            var port = ConfigurationManager.AppSettings["Port"];
+            return new MvcHtmlString($"//{ConfigurationManager.AppSettings["Domain"]}:{port}/{path}");
         }
 
         /// <summary>
@@ -36,7 +37,8 @@ namespace Pokefans.Util
         /// <returns></returns>
         public static MvcHtmlString ResourceLink(this HtmlHelper helper, string path, string domain)
         {
-            return new MvcHtmlString(String.Format("//{2}.{0}/{1}", ConfigurationManager.AppSettings["Domain"], path, domain));
+            var port = ConfigurationManager.AppSettings["Port"];
+            return new MvcHtmlString($"//{domain}.{ConfigurationManager.AppSettings["Domain"]}:{port}/{path}");
         }
 
         public static MvcHtmlString ActionLink(this HtmlHelper htmlHelper, string linkText, string actionName, bool requireAbsoluteUrl)
