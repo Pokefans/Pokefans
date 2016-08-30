@@ -37,12 +37,6 @@ namespace Pokefans.Areas.fanart
                             new { action = "New", controller = "FanartHome" }
                 ));
 
-            context.Routes.Add("fanartNeu", new DomainRoute(
-                            "fanart." + ConfigurationManager.AppSettings["Domain"],
-                            "neu/{image}",
-                            new { action = "New", controller = "FanartHome", image = UrlParameter.Optional }
-                ));
-
             context.Routes.Add("fanartUpload", new DomainRoute(
                             "fanart." + ConfigurationManager.AppSettings["Domain"],
                             "verwaltung/upload",
@@ -93,33 +87,46 @@ namespace Pokefans.Areas.fanart
                     ));
                 context.Routes.Add("fanart" + cat.Uri + "Display", new DomainRoute(
                         "fanart." + ConfigurationManager.AppSettings["Domain"],
-                        cat.Uri + "/{image}",
-                        new { action = "Category", controller = "FanartHome", id = cat.Uri, image = UrlParameter.Optional }
+                        cat.Uri,
+                        new { action = "Category", controller = "FanartHome", category = cat.Uri }
+                    ));
+                context.Routes.Add("fanart" + cat.Uri + "Single", new DomainRoute(
+                        "fanart." + ConfigurationManager.AppSettings["Domain"],
+                        cat.Uri + "/{id}",
+                        new { action = "Single", controller = "FanartHome", id = UrlParameter.Optional }
                     ));
             }
 
-            // API
-            context.Routes.Add("fanartApiImage", new DomainRoute(
-                            "fanart." + ConfigurationManager.AppSettings["Domain"],
-                            "api/v1/{id}",
-                            new { action = "ImageApi", controller = "FanartHome" }
+            // Search :)
+            context.Routes.Add("fanartSearch", new DomainRoute(
+                    "fanart." + ConfigurationManager.AppSettings["Domain"],
+                    "suche/{term}",
+                    new { action = "Search", controller = "FanartHome" }
                 ));
 
-            context.Routes.Add("fanartApiList", new DomainRoute(
-                            "fanart" + ConfigurationManager.AppSettings["Domain"],
-                            "api/v1/list/{index}/{start}",
-                            new { action = "ListApi", controller = "FanartHome" }
-                ));
-            context.Routes.Add("fanartApiSearch", new DomainRoute(
-                            "fanart." + ConfigurationManager.AppSettings["Domain"],
-                            "api/v1/search/{term}/{start}",
-                            new { action = "SerachApi", controller = "FanartHome" }
-                ));
+            // API
             context.Routes.Add("fanartApiTags", new DomainRoute(
                             "fanart." + ConfigurationManager.AppSettings["Domain"],
                             "api/v1/tags/{q}",
                             new { action = "GetTags", Controller = "Manage", q = UrlParameter.Optional },
                             dataTokens
+                ));
+
+            context.Routes.Add("fanartApiRating", new DomainRoute(
+                        "api." + ConfigurationManager.AppSettings["Domain"],
+                        "v1/fanart/rate",
+                        new { action = "Rate", Controller = "Api" }
+                ));
+
+            context.Routes.Add("fanartApiMove", new DomainRoute(
+                        "api." + ConfigurationManager.AppSettings["Domain"],
+                        "v1/fanart/move",
+                        new { action = "Move", Controller = "Api" }
+                ));
+            context.Routes.Add("fanartApiDelete", new DomainRoute(
+                       "api." + ConfigurationManager.AppSettings["Domain"],
+                       "v1/fanart/delete",
+                        new { action = "Delte", Controller = "Api" }
                 ));
 
             context.Routes.Add("fanartdefault", route);

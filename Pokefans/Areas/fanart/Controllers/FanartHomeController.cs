@@ -9,6 +9,14 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using Pokefans.Areas.fanart.Models;
+using Pokefans.Util.Comments;
+using Pokefans.Models;
+using Pokefans.Security;
+using Lucene.Net.Search;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Analysis;
+using Lucene.Net.Documents;
+using Lucene.Net.Index;
 
 namespace Pokefans.Areas.fanart.Controllers
 {
@@ -16,11 +24,17 @@ namespace Pokefans.Areas.fanart.Controllers
     {
         private Entities db;
         private Cache cache;
+        private ApplicationUserManager userManager;
+        private Searcher searcher;
+        private Analyzer analyzer;
 
-        public FanartHomeController(Entities ents, Cache c)
+        public FanartHomeController(Entities ents, Cache c, ApplicationUserManager um, Searcher srch, Analyzer ana)
         {
             db = ents;
             cache = c;
+            userManager = um;
+            searcher = srch;
+            analyzer = ana;
         }
 
         public ActionResult UserRss(int id)
@@ -56,6 +70,11 @@ namespace Pokefans.Areas.fanart.Controllers
             return new HttpNotFoundResult();
         }
 
+        public ActionResult Category(string category)
+        {
+            throw new NotImplementedException();
+        }
+
         public ActionResult Rss()
         {
             List<Fanart> fanarts = db.Fanarts.Include("User").Include("Category").OrderByDescending(g => g.UploadTime).Take(50).ToList();
@@ -79,6 +98,116 @@ namespace Pokefans.Areas.fanart.Controllers
             ViewBag.FanartCatUrls = cache.Get<Dictionary<int, string>>("FanartUrls");
 
             return View("~/Areas/fanart/Views/FanartHome/Index.cshtml", fivm);
+        }
+
+        public ActionResult Search(string term, int page = 1)
+        {
+            FanartSearchPageViewModel fspvm = new FanartSearchPageViewModel();
+
+            fspvm.CurrentPage = page > 0 ? page : 1;
+
+            // if no explicit fields are entered, search these fields
+            MultiFieldQueryParser mfqp = new MultiFieldQueryParser(Lucene.Net.Util.Version.LUCENE_30,
+                new string[] { "title", "user", "userid", "rating", "category", "tag", "description" },
+                analyzer);
+
+            Query searchQuery = mfqp.Parse(term);
+
+            BooleanQuery finalQuery = new BooleanQuery();
+
+            finalQuery.Add(new BooleanClause(searchQuery, Occur.MUST));
+            finalQuery.Add(new BooleanClause(new TermQuery(new Term("type", "fanart")), Occur.MUST)); // this ensures we only get fanart results.
+
+            // cap at 5k search results. this is somewhat arbitrarily limited, but should be more than enough to cover all searches.
+            TopDocs docs = searcher.Search(finalQuery, 5000);
+
+            fspvm.Pages = (int)Math.Ceiling(docs.TotalHits / (8M * 8));
+            fspvm.Results = new List<FanartSearchViewModel>();
+            fspvm.TotalResults = docs.TotalHits;
+
+            // because lucene is somewhat a java api, we need to do things a bit differently.
+            // let's calculate the start and end index first.
+            int start = (fspvm.CurrentPage - 1) * (8 * 8);
+            int end = fspvm.CurrentPage * (8 * 8);
+
+            if (end > docs.TotalHits)
+                end = docs.TotalHits;
+
+            Dictionary<int, string> categoryUrls = cache.Get<Dictionary<int, string>>("FanartUrls");
+
+            for(int i = start; i < end; i++)
+            {
+                Document hit = searcher.Doc(docs.ScoreDocs[i].Doc);
+                fspvm.Results.Add(new FanartSearchViewModel()
+                {
+                    DetailUrl = "/" + categoryUrls[int.Parse(hit.Get("categoryId"))] + "/" + hit.Get("Id"),
+                    Id = int.Parse(hit.Get("Id")),
+                    ThumbnailUrl = hit.Get("smallThumbnailUrl")
+                });
+            }
+
+            fspvm.SearchTerm = term;
+
+            return View("~/Areas/fanart/Views/FanartHome/Search.cshtml", fspvm);
+        }
+
+        public ActionResult Single(int id)
+        {
+            // TODO: Optimize
+            Fanart fanart = db.Fanarts.Include("UploadUser")
+                .Include("Tags")
+                .Include("Tags.Tag")
+                .FirstOrDefault(x => x.Id == id);
+
+            if (fanart == null)
+            {
+                return new HttpNotFoundResult();
+            }
+
+            FanartSingleViewModel fsvm = new FanartSingleViewModel();
+            FanartCommentManager fcm = new FanartCommentManager(db, cache, HttpContext);
+            CommentsViewModel cvm = new CommentsViewModel();
+
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
+                cvm.CanHideComment = currentUser.IsInRole("fanart-moderator", cache, db);
+                bool test = HttpContext.User.IsInRole("fanart-moderator");
+                cvm.CurrentUser = currentUser;
+                fsvm.IsRatingActive = true;
+            }
+            else
+            {
+                cvm.CanHideComment = false;
+                cvm.CurrentUser = null;
+                fsvm.IsRatingActive = false;
+            }
+
+            cvm.Comments = fcm.GetCommentsForObjectId(id);
+            cvm.CommentedObjectId = id;
+            cvm.Context = CommentContext.Fanart;
+
+            cvm.Level = 0; //note that this is the level we start from, so we can arbitrarily limit comment indentation between 0 and 4 levels
+            cvm.Manager = fcm;
+
+            fsvm.Comments = cvm;
+            fsvm.Fanart = fanart;
+            fsvm.Categories = cache.Get<Dictionary<int, string>>("FanartUrls");
+            fsvm.CategoriesName = cache.Get<Dictionary<int, string>>("FanartCategories");
+
+            // get three related fanarts, randomly.
+            // related == shares a tag.
+            // maybe we could do better with a search backend with proper ranking,
+            // but I want some randomness in here.
+            List<int> tagIds = fanart.Tags.Select(x => x.TagId).ToList();
+            // MySQL does not have the NewGuid Function. So we can either create it (clean solution) or do the randomness
+            // in code (ghetto solution).
+            List<int> fanartIds = db.FanartsTags.Where(x => tagIds.Contains(x.TagId) && x.FanartId != fanart.Id).Select(x => x.FanartId).ToList().OrderBy(x => Guid.NewGuid()).Take(3).ToList();
+            fsvm.Related = db.Fanarts.Where(x => fanartIds.Contains(x.Id)).ToList();
+
+            // todo: next and previous URIs ?
+
+            return View("~/Areas/fanart/Views/FanartHome/Single.cshtml", fsvm);
         }
 
         public ActionResult ListApi(int start = 0)

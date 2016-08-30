@@ -143,6 +143,8 @@ namespace Pokefans.Data
 
         public virtual DbSet<FanartChallengeVote> FanartChallengeVotes { get; set; }
 
+        public virtual DbSet<FanartRating> FanartRatings { get; set; }
+
         #endregion
 
         #region Friendcode

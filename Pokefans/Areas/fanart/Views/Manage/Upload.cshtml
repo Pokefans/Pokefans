@@ -50,7 +50,7 @@
 </form>
 
 @section Submenu {
-    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", "upload")
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", new FanartSubmenuViewModel("upload", ""))
 }
 
 @section Sidebar {

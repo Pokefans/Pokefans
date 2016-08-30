@@ -62,8 +62,8 @@
                     </div>
                 </div>
             </div>
+            @RenderSection("Submenu", false)
             <div class="clearfix">
-                @RenderSection("Submenu", false)
                 <div id="content" class="content @(IsSectionDefined("Sidebar") ? "column" : "article-100")">
                     @RenderBody()
                 </div>

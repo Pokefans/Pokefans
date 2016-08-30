@@ -116,8 +116,13 @@ namespace Pokefans
                     "~/Scripts/fanart/fanart.js",
                     "~/Scripts/fanart/upload.js",
                     "~/Scripts/fanart/edit.js",
+                    "~/Scripts/fanart/single.js",
                     "~/Scripts/bbCodeEdit.js"
 
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/comments").Include(
+                    "~/Scripts/comments.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/dropzone").Include(

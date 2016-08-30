@@ -1,0 +1,74 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Models.CommentsViewModel
+<div class="box-comments">
+    <h3>Kommentar verfassen</h3>
+
+    @* Antwortformular *@
+    @if (User.Identity.IsAuthenticated) {
+    <form action="@Url.Map("/v1/comments/add", "api")" class="media" data-role="rootReplyForm" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId">
+        <div class="media-body">
+            <div class="form-group">
+                <textarea name="text" class="form-control" rows="3" placeholder="Erstelle einen Kommentar. Einfache BBCodes sind erlaubt."></textarea>
+            </div>
+
+            <input type="hidden" name="Context" value="@Convert.ChangeType(Model.Context, Model.Context.GetTypeCode())" />
+<input type="hidden" name="CommentedObjectId" value="@Model.CommentedObjectId" />
+
+<input type="hidden" name="parentId" value="0" />
+
+<input type="hidden" name="ajax" value="0" />
+
+
+<div class="alert alert-warning hide" data-role="submitError"></div>
+
+            <button class="btn btn-sm btn-primary" data-role="commentSubmit" type="submit">Kommentar abschicken</button>
+        </div>
+    </form>
+    } else { 
+    <div class="alert alert-info">Melde dich an, um ein Kommentar zu erstellen!</div>
+    }
+
+    <hr />
+
+    <div data-role="commentWrapper" data-commentnesting="1" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="0">
+        @if (Model.Comments.Count > 0) {
+            Html.RenderPartial("CommentTreePartial", Model);
+        }
+        else
+        {
+        <div class="alert alert-warning" data-role="noCommentsWarning">Es wurden noch keine Kommentare erstellt!</div>
+        }
+    </div>
+
+    @* Template für neue Kommentare *@
+    <div class="media hidden" data-role="commentTemplate">
+        <div class="media-left">
+            <img src="" data-role="miniAvatar" data-avatarurl="@Url.Map("user/avatare/", "files")" class="media-object" alt="Avatar" />
+        </div>
+
+        <div class="media-body">
+
+            <div class="media-heading small text-muted">
+                <a data-role="commentLink" href="">#</a>
+                von <span data-role="commentAuthor"></span>
+                am <time data-role="commentTime"></time>
+
+                <span class="pull-right">
+                    @if (Model.CanHideComment) { 
+                        <a href="@Url.Map("/v1/comments/hide/", "api")" data-commentid="" data-role="toggleHide" title="Kommentarinhalt verbergen"><i class="fa fa-fw fa-eye-slash"></i></a>
+                    }
+                    <a href="@Url.Map("/v1/comments/delete/", "api")" data-commentid="" data-role="deleteComment" title="Kommentar und Antworten löschen"><i class="fa fa-fw fa-remove"></i></a>
+                    <a href="#" data-commentid="" data-role="commentAnswer"><i class="fa fa-fw fa-reply"></i></a>
+                </span>
+            </div>
+
+            <div data-role="commentText" data-commentid="-1"></div>
+
+            <div data-role="replyForm" data-commentid="-1"></div>
+
+            <div data-role="commentWrapper" data-commentnesting="1" data-context="-1" data-commentedobjectid="-1" data-parentid="-1"></div>
+        </div>
+
+        <div data-role="commentWrapper" data-commentnesting="0" data-context="-1" data-commentedobjectid="-1" data-parentid="-1"></div>
+    </div>
+</div>

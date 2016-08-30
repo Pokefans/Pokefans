@@ -200,6 +200,16 @@ namespace Pokefans.Data
         public int? DefaultUrlId { get; set; }
 
         /// <summary>
+        /// Determines if Comments are enabled for this Content.
+        /// </summary>
+        public bool CommentsEnabled { get; set; }
+
+        /// <summary>
+        /// Comment Count
+        /// </summary>
+        public int CommentCount { get; set; }
+
+        /// <summary>
         /// Category the Content is published in
         /// </summary>
         [ForeignKey("CategoryId")]

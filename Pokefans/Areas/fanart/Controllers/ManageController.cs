@@ -18,6 +18,10 @@ using System.Drawing.Drawing2D;
 using Pokefans.Areas.fanart.Models;
 using Microsoft.AspNet.Identity;
 using Pokefans.Util.Parser;
+using Lucene.Net.Analysis;
+using Lucene.Net.Search;
+using Lucene.Net.Index;
+using Pokefans.Util.Search;
 
 namespace Pokefans.Areas.fanart.Controllers
 {
@@ -27,6 +31,9 @@ namespace Pokefans.Areas.fanart.Controllers
         Entities db;
         Cache cache;
         SmartThreadPool threadpool;
+        IndexWriter writer;
+        Searcher searcher;
+        Analyzer analyzer;
 
         Dictionary<ImageFormat, string> formatExtensions = new Dictionary<ImageFormat, string>{
             { ImageFormat.Gif , ".gif" },
@@ -35,16 +42,20 @@ namespace Pokefans.Areas.fanart.Controllers
             { ImageFormat.Tiff, ".tiff" }
         };
 
-        public ManageController(Entities ents, Cache c, SmartThreadPool tp)
+        public ManageController(Entities ents, Cache c, SmartThreadPool tp, IndexWriter wrt, Searcher srch, Analyzer ana)
         {
             db = ents;
             threadpool = tp;
             cache = c;
+            writer = wrt;
+            searcher = srch;
+            analyzer = ana;
         }
         // GET: fanart/Manage
         public ActionResult Index()
         {
-            List<Fanart> fanarts = db.Fanarts.Include("Tags").Include("Tags.Tag").Where(g => g.UploadUserId == User.Identity.GetUserId<int>()).OrderByDescending(g => g.UploadTime).ToList();
+            int currentUserId = User.Identity.GetUserId<int>();
+            List<Fanart> fanarts = db.Fanarts.Include("Tags").Include("Tags.Tag").Where(g => g.UploadUserId == currentUserId).OrderByDescending(g => g.UploadTime).ToList();
             ViewBag.Categories = cache.Get<Dictionary<int, string>>("FanartCategories");
 
             return View("~/Areas/fanart/Views/Manage/Index.cshtml", fanarts);
@@ -170,7 +181,7 @@ namespace Pokefans.Areas.fanart.Controllers
 
             ParserConfiguration pc = ParserConfiguration.Default;
             pc.EnableInsideCodes = false;
-            Parser p = new Parser(pc);
+            Util.Parser.Parser p = new Util.Parser.Parser(pc);
 
             art.Description = p.Parse(toUpdate.Description);
             art.DescriptionCode = toUpdate.Description;
@@ -210,6 +221,15 @@ namespace Pokefans.Areas.fanart.Controllers
             }
             db.SetModified(art);
             db.SaveChanges();
+
+            // re-add the document to the search index
+            BooleanQuery query = new BooleanQuery();
+            query.Add(new BooleanClause(new TermQuery(new Term("type", "fanart")), Occur.MUST));
+            query.Add(new BooleanClause(new TermQuery(new Term("Id", art.Id.ToString())), Occur.MUST));
+            writer.DeleteDocuments(query);
+            writer.Flush(false, false, true);
+            writer.AddDocument(DocumentGenerator.Fanart(art));
+            writer.Flush(false, true, false);
 
             FanartEditViewModel model = new FanartEditViewModel()
             {
@@ -302,6 +322,8 @@ namespace Pokefans.Areas.fanart.Controllers
                 art.Url = "u" + currentUserId.ToString() + "/f" + art.Id + formatExtensions[img.RawFormat];
                 db.SetModified(art);
                 db.SaveChanges();
+
+                writer.AddDocument(DocumentGenerator.Fanart(art));
 
                 // Image saving and Thumbnail generation is done in a seperate thread, so we can redirect the user faster.
                 // Usually, the file is saved way before the next request is done, so this only gives some delay under heavy load.

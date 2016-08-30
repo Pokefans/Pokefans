@@ -3,10 +3,19 @@
     margin-top: -19px;
     margin-bottom: 19px;
 }
+.wrap > .sticky-wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
 
 .navbar-form {
     margin-top: 14.5px;
     margin-bottom: 14.5px;
+}
+@media (min-width: 769px) {
+    .sidebar-spacer {
+        height: 65px;
+    }
 }
 
 .navbar-nocollapse .navbar-collapse.collapse {
@@ -94,6 +103,10 @@ float: right!important;
   border: 1px solid #eee;
   border-left: none;
   border-bottom: none;
+}
+
+.fanart-description {
+    padding-top: 1em;
 }
 
 .list-news li:before {

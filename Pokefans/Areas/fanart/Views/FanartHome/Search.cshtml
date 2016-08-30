@@ -1,0 +1,101 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Areas.fanart.Models.FanartSearchPageViewModel
+@{
+    SiteTitle = "Fanart-Suche: " + Model.SearchTerm;
+    SiteHeader = "Pokémon-Fanart: Zeichnungen, Sprites und Maps";
+    SiteDescription = "";
+    ActiveMenuKey = "fanart";
+}
+
+<h1>@SiteHeader</h1>
+<p>
+    @{ 
+        string fanarts = "Fanarts";
+        if (Model.TotalResults == 1)
+        {
+            fanarts = "Fanart";
+        }
+    }
+    Wir haben @Model.TotalResults.ToString() @fanarts gefunden, die deinen Kriterien entsprechen:
+</p>
+
+<div id="fanartcontainer">
+    @{
+        int wrap = 0;
+    }
+    @foreach (var fanart in Model.Results)
+    {
+        if (wrap == 0)
+        {
+            @Html.Raw("<div class=\"stream-row\">");
+        }
+
+        <a data-id="@fanart.Id" href="@Url.Map(fanart.DetailUrl, "fanart")"><img src="@Url.Map("/fanart/uploads/"+fanart.ThumbnailUrl, "files")" /></a>
+        wrap++;
+        if (wrap == 8)
+        {
+            @Html.Raw("</div>")
+            wrap = 0;
+        }
+    }
+    @if (wrap != 0)
+    {
+        @Html.Raw("</div>");
+    }
+</div>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        @if (Model.CurrentPage > 1)
+        {
+            <li>
+                <a href="@Url.Map("/suche/"+ Url.Encode(Model.SearchTerm)+"?page="+(Model.CurrentPage - 1))" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="disabled">
+                <span>
+                    <span aria-hidden="true">&laquo;</span>
+                </span>
+            </li>
+        }
+        @for (int i = 1; i <= Model.Pages; i++)
+        {
+            string liclass = "";
+            if (i == Model.CurrentPage)
+            {
+                liclass = "active";
+            }
+
+            <li class="@liclass"><a href="@Url.Map("/suche/" + Url.Encode(Model.SearchTerm) + "?page=" + i.ToString())">@i.ToString()</a></li>
+        }
+        @if (Model.Pages > Model.CurrentPage)
+        {
+            <li>
+                <a href="@Url.Map("/suche/" + Url.Encode(Model.SearchTerm) + "?page=" + (Model.CurrentPage + 1))" aria-label="Previous">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        }
+        else
+        {
+            <li class="disabled">
+                <span>
+                    <span aria-hidden="true">&raquo;</span>
+                </span>
+            </li>
+        }
+    </ul>
+</nav>
+
+@section Submenu {
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", new FanartSubmenuViewModel("", Model.SearchTerm))
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/waypoints")
+    @Scripts.Render("~/bundles/fanart")
+}

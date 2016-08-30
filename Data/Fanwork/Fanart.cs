@@ -70,6 +70,8 @@ namespace Pokefans.Data.Fanwork
 
         public int? ChallengeId { get; set; }
 
+        public int CommentCount { get; set; }
+
         private ICollection<FanartTags> tags;
 
         [InverseProperty("Fanart")]

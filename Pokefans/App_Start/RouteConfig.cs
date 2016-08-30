@@ -25,6 +25,24 @@ namespace Pokefans
                     defaults: new { controller = "Home", action = "ViewContent", name = UrlParameter.Optional }
                 ));
 
+            // api routes
+
+            routes.Add("CommentAddApi", new DomainRoute(
+                    "api."+ConfigurationManager.AppSettings["Domain"],
+                    "v1/comments/add",
+                    new { controller = "CommentApi", action = "Add" }
+                ));
+            routes.Add("CommentHideApi", new DomainRoute(
+                    "api."+ConfigurationManager.AppSettings["Domain"],
+                    "v1/comments/hide",
+                    new { controller = "CommentApi", action = "Hide" }
+                ));
+            routes.Add("CommentDeleteApi", new DomainRoute(
+                    "api."+ConfigurationManager.AppSettings["Domain"],
+                    "v1/comments/delete",
+                    new { controller = "CommentApi", action = "Delete" }
+                ));
+
             // Default route for handling content urls
             routes.Add("Content", new ContentRoute(
                     "Home", "ViewContent"

@@ -1,0 +1,62 @@
+﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Models.CommentsViewModel
+
+@foreach (var comment in Model.Comments)
+{
+    <div class="media" id="@string.Format("k{0}", comment.Id)">
+
+        <div class="media-left">
+            <img src="@Url.Map("user/avatare/" + (string.IsNullOrEmpty(comment.Author.MiniAvatarFileName) ? "default.gif" : comment.Author.MiniAvatarFileName), "files")" class="media-object" alt="Avatar" />
+        </div>
+
+        <div class="media-body">
+
+            <div class="media-heading small text-muted">
+                <a data-role="commentLink" href="@string.Format("#k{0}", comment.Id)">#</a>
+                von <span data-role="commentAuthor">@comment.Author.UserName</span>@*TODO: Link*@
+                am <time data-role="commentTime">@comment.SubmitTime.ToString("d.M.yyyy H:m")</time>
+
+                <span class="pull-right">
+                    @if (Model.CanHideComment)
+                    {
+                        <a href="@Url.Map("/comments/hide/"+comment.Id)" data-commentid="@comment.Id" data-role="toggleHide" title="Kommentarinhalt verbergen"><i class="fa fa-fw fa-eye-slash"></i></a>
+                    }
+                    @if (Model.Manager.CanDelete(Model.CurrentUser, comment))
+                    {
+                        <a href="@Url.Map("/comments/delete/"+comment.Id)" data-commentid="@comment.Id" data-role="deleteComment" title="Kommentar und Antworten löschen"><i class="fa fa-fw fa-remove"></i></a>
+                    }
+
+                    <a href="#" data-commentid="@comment.Id" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-role="commentAnswer" title="Antwort schreiben"><i class="fa fa-fw fa-reply"></i></a>
+                </span>
+            </div>
+
+            <div data-role="commentText" data-commentid="@comment.Id">
+                @if (comment.DisplayPublic)
+                {
+                    <text>@Html.Raw(comment.ParsedComment)</text>
+                }
+                else
+                {
+                    <span class="text-muted">Der Inhalt dieses Kommentars wurde von der Moderation ausgeblendet.</span>
+                }
+            </div>
+
+            <div data-role="replyForm" data-commentid="@comment.Id"></div>
+
+            <div data-role="commentWrapper" data-commentnesting="1" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.Id">
+                @*Sobald ein Kommentar auf der dritten Ebene oder höher ist, soll die Anzeige nicht weiter verschachtelt werden. *@
+                @if (Model.Level < 2)
+                {
+                    Html.RenderPartial("CommentTreePartial", Model.Descend(comment.Children));
+                }
+            </div>
+        </div>
+
+        <div data-role="commentWrapper" data-commentnesting="0" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.Id">
+            @if (Model.Level >= 2)
+            {
+                Html.RenderPartial("CommentTreePartial", Model.Descend(comment.Children));
+            }
+        </div>
+    </div>
+}

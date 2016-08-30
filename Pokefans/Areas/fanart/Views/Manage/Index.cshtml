@@ -31,16 +31,16 @@
                 <td>@(string.Format("{0:0.00} KiB", (double)fanart.FileSize / 1024))</td>
                 <td>
                     @{
-                        double roundedRating = (Math.Ceiling(2 * (double)fanart.SmartRating)) / 2;
+                        decimal roundedRating = fanart.Rating;
                         int i = 1;
                     }
                     @for (; i <= 5; i++)
                     {
-                        if ((i - 1) < roundedRating && i > roundedRating)
+                        if (i > roundedRating && (i - 1) < roundedRating)
                         {
                             <i class="fa fa-star-half-o rating-star fa-lg"></i>
                         }
-                        if (roundedRating > i)
+                        else if (roundedRating > i)
                         {
                             <i class="fa fa-star rating-star fa-lg"></i>
                         }
@@ -53,6 +53,10 @@
                 </td>
                 <td><a href="/@fanart.Url"><i class="fa fa-external-link-square fa-lg"></i></a> <a href="@Url.Action("Edit", "Manage", new { id = fanart.Id })"><i class="fa fa-pencil fa-lg"></i></a> <a href="/@fanart.Url#kommentare"><i class="fa fa-comments fa-lg"></i></a></td>
             </tr>
-        }
+                        }
     </tbody>
 </table>
+
+@section Submenu {
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", new FanartSubmenuViewModel("manage", ""))
+}

@@ -1,6 +1,5 @@
 ﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
 @model Pokefans.Areas.fanart.Models.FanartSingleViewModel
-@using System.Configuration
 @{
     SiteTitle = "Fanart: " + Model.Fanart.Title;
     SiteHeader = SiteTitle;
@@ -10,38 +9,107 @@
 
 <h1>@SiteHeader</h1>
 <div class="fanart-image">
-    <img src="@Url.Map("/fanart/uploads/"+Model.Fanart.Url, "files")" />
+    <img src="@Html.ResourceLink("/fanart/uploads/" + Model.Fanart.Url, "files")" class="img-responsive" />
 </div>
 <div class="fanart-description">
     @Html.Raw(Model.Fanart.Description)
 </div>
+<hr />
+<div class="commentsection">
+    @{ Html.RenderPartial("CommentPartial", Model.Comments); }
+</div>
+@if (Context.User.IsInRole("fanart-moderator"))
+{
+<div class="modal fade" tabindex="-1" role="dialog" id="deletconfirmmodal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Löschen bestätigen</h4>
+            </div>
+            <div class="modal-body">
+                <p>Das Löschen eines Fanarts kann nicht rückgängig gemacht werden! Bist du sicher?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Nein, besser nicht.</button>
+                <button type="button" class="btn btn-primary" id="deleteconfirmed">Und weg damit!</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+}
 
 @section sidebar {
+    <div class="sidebar-spacer"></div>
     <ul class="list-unstyled">
+        <li class="rating-star" data-active="@Model.IsRatingActive" data-id="@Model.Fanart.Id">@RenderStars(Model.Fanart.Rating)</li>
         <li><i class="fa fa-upload"></i> @Model.Fanart.UploadTime.ToString()</li>
         @*Verlinkung zur Suche nach Fanarts für bestimmten Nutzer, da Suche noch nicht implementiert = kein Link*@
         <li><i class="fa fa-user"></i> <a href="#">@Model.Fanart.UploadUser.UserName</a></li>
-        <li class="rating-star">@RenderStars(Model.Fanart.Rating)</li>
     </ul>
+    <div>
+        @foreach (var tag in Model.Fanart.Tags)
+        {
+            <span class="label label-primary">@tag.Tag.Name</span>
+        }
+    </div>
     <hr />
     <ul class="nav nav-pills nav-stacked">
         <li><a href="@Url.Map("tutorials", "fanart")"><i class="fa fa-lg fa-fw fa-support"></i> Fanart lernen</a></li>
     </ul>
+    <hr />
+    @if (Context.User.IsInRole("fanart-moderator"))
+    {
+    <h3>Schnellmoderation</h3>
+    <form action="@Url.Map("v1/fanart/delete","api")" method="post" id="delteform">
+        <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
+        <button type="submit" class="btn btn-danger">Fanart löschen</button>
+    </form>
+    <form action="@Url.Map("v1/fanart/move","api")" method="post" id="moveform">
+        <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
+        <select name="targetCategoryId" id="targetCategoryId">
+            @foreach (var cat in Model.CategoriesName)
+            {
+                <option value="@cat.Key">@cat.Value</option>
+            }
+        </select>
+
+    </form>
+    <hr />
+    }
+    <h3>Ähnliche Werke</h3>
+    <div>
+        @foreach (var fanart in Model.Related)
+        {
+            <p><a href="@Url.Map(Model.Categories[fanart.CategoryId]+"/"+fanart.Id.ToString(),"fanart")"><img src="@Html.ResourceLink("fanart/uploads/"+fanart.LargeThumbnailUrl,"files")" alt="@fanart.Title" class="img-responsive img-thumbnail" /></a></p>
+        }
+    </div>
 }
 
-@helper RenderStars(decimal rating) { 
-for(int i = 0; i < 5; i++)
+@section Submenu {
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", new FanartSubmenuViewModel("single", Model.SearchTerm))
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/fanart")
+    @Scripts.Render("~/bundles/comments")
+}
+
+@helper RenderStars(decimal rating)
 {
-    if(i < rating && (i+1) > rating)
+for (int i = 0; i < 5; i++)
+{
+    if (i < rating && (i + 1) > rating)
     {
-            <i class="fa fa-star-half-full fa-lg"></i>
-    } else if (i < rating)
+            <i class="fa fa-star-half-full fa-2x"></i>
+    }
+    else if (i < rating)
     {
-            <i class="fa fa-star"></i>
+            <i class="fa fa-star fa-2x"></i>
     }
     else
     {
-            <i class="fa fa-star-o"></i>
+            <i class="fa fa-star-o fa-2x"></i>
     }
 }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿// Copyright 2016 the pokefans authors. See copying.md for legal info.
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pokefans.Models

@@ -27,6 +27,12 @@ namespace Pokefans
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            LuceneConfig.Configure(UnityConfig.GetConfiguredContainer());
+        }
+        
+        protected void Application_End()
+        {
+            LuceneConfig.Unload(UnityConfig.GetConfiguredContainer());
         }
 
         protected void Application_BeginRequest()
