@@ -348,12 +348,14 @@
     <Content Include="Areas\fanart\Views\FanartHome\CategoryRss.cshtml" />
     <Content Include="Areas\fanart\Views\Manage\Index.cshtml" />
     <None Include="Properties\PublishProfiles\Filesystem.pubxml" />
+    <Content Include="Scripts\backend\content\content-statistics.js" />
     <Content Include="Scripts\bloodhound.js" />
     <Content Include="Scripts\bloodhound.min.js" />
     <Content Include="Scripts\bootstrap-tagsinput.min.js.map" />
     <Content Include="Scripts\backend\fanart\categories.js" />
     <Content Include="Scripts\bootstrap-tagsinput.js" />
     <Content Include="Scripts\bootstrap-tagsinput.min.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\dropzone\basic.css" />
     <Content Include="Scripts\dropzone\basic.min.css" />
     <Content Include="Scripts\dropzone\dropzone-amd-module.js" />

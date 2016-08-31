@@ -87,8 +87,10 @@ namespace Pokefans
                     "~/Scripts/backend/multiaccounts.js",
                     "~/Scripts/backend/rolemanager.js",
                     "~/Scripts/editable/bootstrap-editable.js",
+                    "~/Scripts/Chart.min.js",
                     "~/Scripts/backend/fanart/categories.js",
-                    "~/Scripts/backend/content/content-edit.js"
+                    "~/Scripts/backend/content/content-edit.js",
+                    "~/Scripts/backend/content/content-statistics.js"
                 ));
 
             // waypoints
