@@ -7,9 +7,9 @@ $(function () {
         }
     });
     var status = [];
-    $(".rating-star").children("i").each(function () {
+    $(".rating-star").children("i").each(function() {
         status.push($(this).attr("class"))
-    })
+    });
     if ($(".rating-star").data("active") != "False") { //thanks obama
         $(".rating-star i").hover(function () {
             $(this).prevAll().andSelf().removeClass("fa-star fa-star-o fa-star-half-full").addClass("fa-star");
@@ -30,21 +30,26 @@ $(function () {
                 .done(function (data) {
                     $(".rating-star").tooltip({ title: "Danke für deine Bewertung!" });
                     
-                   var $elems = $(".rating-star i");
-                    $elems.each().removeClass("fa-star fa-star-o fa-star-half-full");
+                    var $elems = $(".rating-star i");
+                    $elems.removeClass("fa-star fa-star-o fa-star-half-full");
 
                     // rebuild star display
-                    for (i = 0; i < 5; i++) {
+                    status = [];
+                    $elems.addClass(function (i) {
+                        var className;
                         if (data < i && (data + 1) > i)
-                            $elems.get(i).addClass("fa-star-half-full");
-                        else if (data < i)
-                            $elems.get(i).addClass("fa-star")
+                            className ="fa-star-half-full";
+                        else if (i < data)
+                            className = "fa-star";
                         else
-                            $elems,get(i).addClass("fa-star-o")
-                    }
+                            className = "fa-star-o";
+
+                        status.push(className + " " + $(this).attr("class"));
+                        return className;
+                    });
                 })
                 .fail(function (data) {
-                    $(".rating-star").tooltip({ title: data })
+                    $(".rating-star").tooltip({ title: data.responseJSON });
                 });
         });
     }

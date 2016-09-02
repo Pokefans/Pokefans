@@ -50,9 +50,19 @@ namespace Pokefans.Util.Parser
         /// <returns>New Token (or subclass) instance.</returns>
         public override Token CreateToken()
         {
+            var contents = Contents;
+            if (Configuration.EscapeHtml)
+            {
+                contents = System.Web.HttpUtility.HtmlEncode(contents);
+            }
+            if (Configuration.NewlineToHtml)
+            {
+                contents = contents.Replace("\n", "<br>");
+            }
+
             return new Token
             {
-                Contents = Contents
+                Contents = contents
             };
         }
     }

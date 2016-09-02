@@ -57,6 +57,7 @@ namespace Pokefans.Areas.fanart.Controllers
             int currentUserId = User.Identity.GetUserId<int>();
             List<Fanart> fanarts = db.Fanarts.Include("Tags").Include("Tags.Tag").Where(g => g.UploadUserId == currentUserId).OrderByDescending(g => g.UploadTime).ToList();
             ViewBag.Categories = cache.Get<Dictionary<int, string>>("FanartCategories");
+            ViewBag.FanartCatUrls = cache.Get<Dictionary<int, string>>("FanartUrls");
 
             return View("~/Areas/fanart/Views/Manage/Index.cshtml", fanarts);
         }
@@ -160,9 +161,10 @@ namespace Pokefans.Areas.fanart.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Edit(int id, FanartEditViewModel toUpdate)
         {
-            Fanart art = db.Fanarts.Include("Category").FirstOrDefault(g => g.Id == id);
+            Fanart art = db.Fanarts.Include("Category").Include("UploadUser").FirstOrDefault(g => g.Id == id);
 
             int cuid = User.Identity.GetUserId<int>();
 
@@ -181,7 +183,10 @@ namespace Pokefans.Areas.fanart.Controllers
 
             ParserConfiguration pc = ParserConfiguration.Default;
             pc.EnableInsideCodes = false;
-            Util.Parser.Parser p = new Util.Parser.Parser(pc);
+            pc.NewlineToHtml = true;
+            pc.EscapeHtml = true;
+
+            var p = new Util.Parser.Parser(pc);
 
             art.Description = p.Parse(toUpdate.Description);
             art.DescriptionCode = toUpdate.Description;
@@ -313,7 +318,9 @@ namespace Pokefans.Areas.fanart.Controllers
                     UploadIp = SecurityUtils.GetIPAddressAsString(HttpContext),
                     UploadUserId = currentUserId,
                     UploadTime = DateTime.Now,
-                    Protect = false
+                    Protect = false,
+                    Description = string.Empty,
+                    DescriptionCode = string.Empty
                 };
 
                 db.Fanarts.Add(art);
@@ -323,6 +330,7 @@ namespace Pokefans.Areas.fanart.Controllers
                 db.SetModified(art);
                 db.SaveChanges();
 
+                art = db.Fanarts.Include("UploadUser").Include("Tags").Include("Tags.Tag").First(x => x.Id == art.Id);
                 writer.AddDocument(DocumentGenerator.Fanart(art));
 
                 // Image saving and Thumbnail generation is done in a seperate thread, so we can redirect the user faster.

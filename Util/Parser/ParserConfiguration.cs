@@ -36,6 +36,16 @@ namespace Pokefans.Util.Parser
         public Dictionary<string, InsideCode> InsideCodes { get; set; }
 
         /// <summary>
+        /// Determines whether or not newlines should be converted to html linebreaks
+        /// </summary>
+        public bool NewlineToHtml { get; set; }
+
+        /// <summary>
+        /// Determines whether or not html tags should be escaped
+        /// </summary>
+        public bool EscapeHtml { get; set; }
+
+        /// <summary>
         /// Default configuration used by the parser
         /// </summary>
         public static ParserConfiguration Default
@@ -46,6 +56,8 @@ namespace Pokefans.Util.Parser
                 {
                     EnableBbCodes = true,
                     EnableInsideCodes = true,
+                    NewlineToHtml = false,
+                    EscapeHtml = false,
                     TokenOpeningCharacters = new Dictionary<char, Type>
                     {
                         { '[', typeof(BbCodeTokenParser)},

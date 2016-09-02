@@ -39,6 +39,8 @@ namespace Pokefans.Controllers
 
             ParserConfiguration config = ParserConfiguration.Default;
             config.EnableInsideCodes = false;
+            config.EscapeHtml = true;
+            config.NewlineToHtml = true;
             Parser parser = new Parser(config);
 
             // you *cannot* have comment with id 0 as parent.

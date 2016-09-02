@@ -142,7 +142,7 @@ namespace Pokefans.Areas.fanart.Controllers
                 }
             }
 
-            Fanart f = db.Fanarts.Include("Tags").Include("Tags.Tag").Include("UploadUser").First(x => x.Id == fanartId);
+            Fanart f = db.Fanarts.Include("Tags").Include("Tags.Tag").Include("UploadUser").Include("Category").First(x => x.Id == fanartId);
             f.Rating = finalRating + bonus;
             f.RatingCount = count;
 

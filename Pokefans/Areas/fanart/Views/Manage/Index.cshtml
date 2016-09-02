@@ -51,7 +51,7 @@
                     }
                     x @fanart.RatingCount
                 </td>
-                <td><a href="/@fanart.Url"><i class="fa fa-external-link-square fa-lg"></i></a> <a href="@Url.Action("Edit", "Manage", new { id = fanart.Id })"><i class="fa fa-pencil fa-lg"></i></a> <a href="/@fanart.Url#kommentare"><i class="fa fa-comments fa-lg"></i></a></td>
+                <td><a href="@Url.Map((string)(ViewBag.FanartCatUrls[fanart.CategoryId]) + "/" + fanart.Id, "fanart")"><i class="fa fa-external-link-square fa-lg"></i></a> <a href="@Url.Action("Edit", "Manage", new { id = fanart.Id })"><i class="fa fa-pencil fa-lg"></i></a> <a href="/@fanart.Url#kommentare"><i class="fa fa-comments fa-lg"></i></a></td>
             </tr>
                         }
     </tbody>
