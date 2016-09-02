@@ -212,11 +212,11 @@ namespace Pokefans.Areas.fanart.Controllers
             // delete the fanart, but keep comments and ratings.
             Fanart art = db.Fanarts.First(x => x.Id == fanartId);
             // delete images first
-            System.IO.File.Delete(Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], "u" + art.UploadUserId, "f" + art.Id + art.Url.Split('.')[1]));
+            System.IO.File.Delete(art.ImageDiskPath);
             if (art.Size.X > 130 || art.Size.Y > 130)
             {
-                System.IO.File.Delete(Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], "u" + art.UploadUserId, "f" + art.Id + "_t4.png"));
-                System.IO.File.Delete(Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], "u" + art.UploadUserId, "f" + art.Id + "_t2.png"));
+                System.IO.File.Delete(art.SmallThumbnailDiskPath);
+                System.IO.File.Delete(art.LargeThumbnailDiskPath);
             }
             db.Fanarts.Remove(art);
             db.SaveChanges();

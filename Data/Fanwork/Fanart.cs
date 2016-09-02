@@ -5,6 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using Pokefans.Data.Pokedex;
 using System.Data.Entity;
 using System.Collections.Generic;
+using System.IO;
+using System.Configuration;
 
 namespace Pokefans.Data.Fanwork
 {
@@ -117,6 +119,39 @@ namespace Pokefans.Data.Fanwork
             get
             {
                 return Url.Split('.')[0] + "_t2.png";
+            }
+        }
+
+        [NotMapped]
+        public string ImageDiskPath
+        {
+            get
+            {
+                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], 
+                                    "u" + this.UploadUserId, 
+                                    "f" + this.Id + this.Url.Split('.')[1]);
+            }
+        }
+
+        [NotMapped]
+        public string SmallThumbnailDiskPath
+        {
+            get 
+            {
+                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], 
+                                    "u" + this.UploadUserId, 
+                                    "f" + this.Id + "_t4.png");
+            }
+        }
+
+        [NotMapped]
+        public string LargeThumbnailDiskPath
+        {
+            get
+            {
+                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"],
+                                    "u" + this.UploadUserId,
+                                    "f" + this.Id + "_t2.png");
             }
         }
     }

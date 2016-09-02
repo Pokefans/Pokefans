@@ -10,13 +10,13 @@
 <h1>@SiteHeader</h1>
 <p>
     @{ 
-        string fanarts = "Fanarts";
+        string fanarts = "Fanarts gefunden, die deinen Kriterien entsprechen";
         if (Model.TotalResults == 1)
         {
-            fanarts = "Fanart";
+            fanarts = "Fanart gefunden, das deinen Kriterien entspricht";
         }
     }
-    Wir haben @Model.TotalResults.ToString() @fanarts gefunden, die deinen Kriterien entsprechen:
+    Wir haben @Model.TotalResults.ToString() @fanarts:
 </p>
 
 <div id="fanartcontainer">

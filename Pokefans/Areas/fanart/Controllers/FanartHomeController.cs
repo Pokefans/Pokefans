@@ -172,7 +172,6 @@ namespace Pokefans.Areas.fanart.Controllers
             {
                 User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
                 cvm.CanHideComment = currentUser.IsInRole("fanart-moderator", cache, db);
-                bool test = HttpContext.User.IsInRole("fanart-moderator");
                 cvm.CurrentUser = currentUser;
                 fsvm.IsRatingActive = true;
             }

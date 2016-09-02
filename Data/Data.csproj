@@ -194,6 +194,10 @@
     <Compile Include="Migrations\201608291036265_Comments.Designer.cs">
       <DependentUpon>201608291036265_Comments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609020900049_CommentAncestorsForeignKeys.cs" />
+    <Compile Include="Migrations\201609020900049_CommentAncestorsForeignKeys.Designer.cs">
+      <DependentUpon>201609020900049_CommentAncestorsForeignKeys.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -398,6 +402,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201608291036265_Comments.resx">
       <DependentUpon>201608291036265_Comments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609020900049_CommentAncestorsForeignKeys.resx">
+      <DependentUpon>201609020900049_CommentAncestorsForeignKeys.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

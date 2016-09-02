@@ -126,7 +126,7 @@ namespace Pokefans.Areas.fanart
             context.Routes.Add("fanartApiDelete", new DomainRoute(
                        "api." + ConfigurationManager.AppSettings["Domain"],
                        "v1/fanart/delete",
-                        new { action = "Delte", Controller = "Api" }
+                        new { action = "Delete", Controller = "Api" }
                 ));
 
             context.Routes.Add("fanartdefault", route);

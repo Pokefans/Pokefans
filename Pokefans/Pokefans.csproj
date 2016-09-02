@@ -630,6 +630,7 @@
     <Folder Include="Areas\tools\Views\Shared\" />
     <Folder Include="Areas\user\Models\" />
     <Folder Include="Areas\user\Views\Shared\" />
+    <Folder Include="Views\Trading\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

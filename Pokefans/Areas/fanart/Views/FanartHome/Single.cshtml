@@ -20,23 +20,23 @@
 </div>
 @if (Context.User.IsInRole("fanart-moderator"))
 {
-<div class="modal fade" tabindex="-1" role="dialog" id="deletconfirmmodal">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Löschen bestätigen</h4>
-            </div>
-            <div class="modal-body">
-                <p>Das Löschen eines Fanarts kann nicht rückgängig gemacht werden! Bist du sicher?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Nein, besser nicht.</button>
-                <button type="button" class="btn btn-primary" id="deleteconfirmed">Und weg damit!</button>
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="deletconfirmmodal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Löschen bestätigen</h4>
+                </div>
+                <div class="modal-body">
+                    <p>Das Löschen eines Fanarts kann nicht rückgängig gemacht werden! Bist du sicher?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Nein, besser nicht.</button>
+                    <button type="button" class="btn btn-primary" id="deleteconfirmed">Und weg damit!</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 }
 
 @section sidebar {
@@ -60,22 +60,30 @@
     <hr />
     @if (Context.User.IsInRole("fanart-moderator"))
     {
-    <h3>Schnellmoderation</h3>
-    <form action="@Url.Map("v1/fanart/delete","api")" method="post" id="delteform">
-        <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
-        <button type="submit" class="btn btn-danger">Fanart löschen</button>
-    </form>
-    <form action="@Url.Map("v1/fanart/move","api")" method="post" id="moveform">
-        <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
-        <select name="targetCategoryId" id="targetCategoryId">
-            @foreach (var cat in Model.CategoriesName)
-            {
-                <option value="@cat.Key">@cat.Value</option>
-            }
-        </select>
-
-    </form>
-    <hr />
+        <h3>Schnellmoderation</h3>
+        <form action="@Url.Map("v1/fanart/delete","api")" method="post" id="delteform">
+            <p>
+                <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
+                <button type="submit" class="btn btn-danger">Fanart löschen</button>
+            </p>
+        </form>
+            <form action="@Url.Map("v1/fanart/move","api")" method="post" id="moveform">
+                <p>
+                    <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
+                    <div class="input-group">
+                        <select name="targetCategoryId" id="targetCategoryId" class="form-control">
+                            @foreach (var cat in Model.CategoriesName)
+                            {
+                                <option value="@cat.Key">@cat.Value</option>
+                            }
+                        </select>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">Verschiben</button>
+                        </span>
+                    </div>
+                </p>
+            </form>
+            <hr />
     }
     <h3>Ähnliche Werke</h3>
     <div>
@@ -87,7 +95,7 @@
 }
 
 @section Submenu {
-    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", new FanartSubmenuViewModel("single", Model.SearchTerm))
+    @Html.Partial("~/Areas/fanart/Views/Shared/_submenuPartial.cshtml", new FanartSubmenuViewModel("single", ""))
 }
 
 @section scripts {
