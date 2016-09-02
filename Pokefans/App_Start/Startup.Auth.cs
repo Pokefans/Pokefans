@@ -1,18 +1,16 @@
 ﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+
 using System;
+using System.Configuration;
+using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Owin;
-using Pokefans.Models;
 using Pokefans.Data;
-using System.Threading.Tasks;
-using System.Security.Claims;
 using Pokefans.Security;
-using System.Web.Mvc;
-using System.Configuration;
 
 namespace Pokefans
 {
@@ -21,7 +19,7 @@ namespace Pokefans
         // Weitere Informationen zum Konfigurieren der Authentifizierung finden Sie unter "http://go.microsoft.com/fwlink/?LinkId=301864".
         public void ConfigureAuth(IAppBuilder app)
         {
-            app.CreatePerOwinContext<ApplicationUserManager>(() => DependencyResolver.Current.GetService<ApplicationUserManager>());
+            app.CreatePerOwinContext(() => DependencyResolver.Current.GetService<ApplicationUserManager>());
 
             // Anwendung für die Verwendung eines Cookies zum Speichern von Informationen für den angemeldeten Benutzer aktivieren
             // und ein Cookie zum vorübergehenden Speichern von Informationen zu einem Benutzer zu verwenden, der sich mit dem Anmeldeanbieter eines Drittanbieters anmeldet.
@@ -29,10 +27,10 @@ namespace Pokefans
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/anmeldung"),
                 Provider = new CookieAuthenticationProvider
                 {
-                    OnApplyRedirect = ApplyRedirect, 
+                    OnApplyRedirect = ApplyRedirect,
                     // Aktiviert die Anwendung für die Überprüfung des Sicherheitsstempels, wenn sich der Benutzer anmeldet.
                     // Dies ist eine Sicherheitsfunktion, die verwendet wird, wenn Sie ein Kennwort ändern oder Ihrem Konto eine externe Anmeldung hinzufügen.  
                     OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, User, int>(
@@ -42,7 +40,7 @@ namespace Pokefans
                 },
                 CookieDomain = ConfigurationManager.AppSettings["CookieDomain"],
                 CookieName = ConfigurationManager.AppSettings["CookieName"]
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Aktiviert die Anwendung für das vorübergehende Speichern von Benutzerinformationen beim Überprüfen der zweiten Stufe im zweistufigen Authentifizierungsvorgang.
@@ -77,7 +75,7 @@ namespace Pokefans
 
             if (bool.Parse(ConfigurationManager.AppSettings["UseGoogleAuthentication"]))
             {
-                app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
+                app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions
                 {
                     ClientId = ConfigurationManager.AppSettings["GoogleAuthenticationClientId"],
                     ClientSecret = ConfigurationManager.AppSettings["GoogleAuthenticationClientSecret"]
@@ -97,10 +95,11 @@ namespace Pokefans
                         context.RedirectUri = "https://";
                     else
                         context.RedirectUri = "http://";
-                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + "/Account/Login";
+                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + ":" +
+                                           ConfigurationManager.AppSettings["port"] + "/anmeldung";
                     context.RedirectUri += new QueryString(
-                            context.Options.ReturnUrlParameter,
-                            context.Request.Uri.AbsoluteUri).ToString();
+                        context.Options.ReturnUrlParameter,
+                        context.Request.Uri.AbsoluteUri).ToString();
                 }
             }
 
