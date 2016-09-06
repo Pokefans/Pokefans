@@ -28,7 +28,8 @@ $(function () {
 
             $.post("//api." + hostname() + "/v1/fanart/rate", { fanartId: id, rating: rating })
                 .done(function (data) {
-                    $(".rating-star").tooltip({ title: "Danke für deine Bewertung!" });
+                    $(".rating-star").popover({ content: "Danke für deine Bewertung!", placement: "top" }).popover('show');
+                    hidePopover();
                     
                     var $elems = $(".rating-star i");
                     $elems.removeClass("fa-star fa-star-o fa-star-half-full");
@@ -49,7 +50,8 @@ $(function () {
                     });
                 })
                 .fail(function (data) {
-                    $(".rating-star").tooltip({ title: data.responseJSON });
+                    $(".rating-star").popover({ content: data.responseJSON, placement: "top" }).popover("show");
+                    hidePopover();
                 });
         });
     }
@@ -93,4 +95,7 @@ $(function () {
 
 function hostname() {
     return location.hostname.split('.').slice(-2).join('.');
+}
+function hidePopover() {
+    window.setTimeout(function () { $(".rating-star").popover('hide'); }, 5000);
 }

@@ -46,7 +46,7 @@
 
             <div data-role="replyForm" data-commentid="@comment.CommentId"></div>
 
-            <div data-role="commentWrapper" data-commentnesting="1" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.CommentId">
+            <div data-role="commentWrapper" data-commentnesting="1" data-context="@Convert.ChangeType(Model.Context, Model.Context.GetTypeCode())" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.CommentId">
                 @*Sobald ein Kommentar auf der dritten Ebene oder höher ist, soll die Anzeige nicht weiter verschachtelt werden. *@
                 @if (Model.Level < 2)
                 {
@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div data-role="commentWrapper" data-commentnesting="0" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.CommentId">
+    <div data-role="commentWrapper" data-commentnesting="0" data-context="@Convert.ChangeType(Model.Context, Model.Context.GetTypeCode())" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.CommentId">
         @if (Model.Level >= 2)
         {
             Html.RenderPartial("CommentTreePartial", Model.Descend(comment.Children));

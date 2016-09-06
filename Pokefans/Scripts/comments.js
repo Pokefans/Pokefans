@@ -28,7 +28,7 @@ function insertComment(comment) {
     }
 
     // Kommentar-Erstellzeit
-    $commentTemplate.find('[data-role="commentTime"]').text(comment.SubmitTime);
+    $commentTemplate.find('[data-role="commentTime"]').text(comment.SubmitTimeString);
 
     // Sämtliche Felder mit der Kommentar#ID füllen
     $commentTemplate.find('[data-commentid]').attr('data-commentid', comment.CommentId);
@@ -47,7 +47,7 @@ function insertComment(comment) {
     }
 
     // Wenn das Level des Kommentars zu groß wird, soll nicht mehr verschachtelt werden
-    var commentNesting = (comment.level <= 2) ? '1' : '0';
+    var commentNesting = (comment.Level <= 2) ? '1' : '0';
 
     // Den Link zum Beantworten der Kommentare mit den nötigen Daten befüllen
     $commentTemplate.find('[data-role="commentAnswer"]')
@@ -58,7 +58,8 @@ function insertComment(comment) {
     $commentTemplate.find('[data-role="toggleHide"]').attr('href', $commentTemplate.find('[data-role="toggleHide"]').attr('href') + '&commentId=' + comment.CommentId);
     $commentTemplate.find('[data-role="deleteComment"]').attr('href', $commentTemplate.find('[data-role="deleteComment"]').attr('href') + '&commentId=' + comment.CommentId);
 
-    $commentWrapper = $('body').find('[data-role="commentWrapper"][data-commentnesting="' + commentNesting + '"][data-context="' + comment.Context + '"][data-commentedobjectid="' + comment.CommentedObjectId + '"][data-parentid="' + comment.ParentId + '"]');
+    var parent = comment.ParentCommentId == null ? 0 : comment.ParentCommentId;
+    $commentWrapper = $('body').find('[data-role="commentWrapper"][data-commentnesting="' + commentNesting + '"][data-context="' + comment.Context + '"][data-commentedobjectid="' + comment.CommentedObjectId + '"][data-parentid="' + parent + '"]');
 
     // Ggf. den Hinweis "Noch keine Kommentare" löschen
     $commentWrapper.find('[data-role="noCommentsWarning"]').remove();

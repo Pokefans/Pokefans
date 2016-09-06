@@ -56,7 +56,7 @@ namespace Pokefans.Data.ViewModels
         {
             get
             {
-                return SubmitTime.ToString("d.m.Y H:i");
+                return SubmitTime.ToString("d.M.yyyy H:m");
             }
         }
         public bool IsDeletable { get; set; }

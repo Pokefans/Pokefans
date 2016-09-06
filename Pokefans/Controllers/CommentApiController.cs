@@ -64,7 +64,10 @@ namespace Pokefans.Controllers
 
             manager.AddComment(c);
 
-            return Json(new CommentAjaxViewModel() { Comment = new CommentViewModel(c), Success = true });
+            CommentViewModel cvm = new CommentViewModel(c);
+            cvm.IsDeletable = manager.CanDelete(currentUser, c);
+
+            return Json(new CommentAjaxViewModel() { Comment = cvm, Success = true });
         }
 
         [Authorize]
