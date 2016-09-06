@@ -44,7 +44,7 @@ namespace Pokefans
             IndexWriter writer = unityContainer.Resolve<IndexWriter>();
             writer.Dispose();
 
-            IndexSearcher searcher = unityContainer.Resolve<IndexSearcher>();
+            Searcher searcher = unityContainer.Resolve<Searcher>();
             searcher.Dispose();
 
             Directory dir = unityContainer.Resolve<Directory>();
