@@ -88,6 +88,18 @@ function insertCommentTree(comments) {
 $(document).ready(function (e) {
     var deleteDialog = $('<div class="modal fade" id="deleteDialog" tabindex="-1" role="dialog"><div class="modal-dialog modal-sm"><div class="modal-content"><div class="modal-body"><p>Willst du wirklich diesen Kommentar löschen?</p><a href="" class="btn btn-danger" data-role="confirmDelete" data-commentid="">Kommentar löschen</a> <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button></div></div></div></div>');
     $('#content').append(deleteDialog);
+    
+    // highlight the comment that we link to
+    var oldhash = "";
+    if (window.location.hash) {
+        $(window.location.hash).addClass("bg-warning");
+        oldhash = window.location.hash;
+    }
+    $(window).on('hashchange', function () {
+        $(oldhash).removeClass("bg-warning");
+        $(window.location.hash).addClass("bg-warning");
+        oldhash = window.location.hash;
+    });
 
     //
     // Wird aufgerufen, wenn auf den Antworten-Link geklickt wird
