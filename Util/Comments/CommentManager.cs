@@ -39,7 +39,7 @@ namespace Pokefans.Util.Comments
 
         public virtual bool CanDelete(User currentUser, IComment c)
         {
-            if (currentUser.Id == c.AuthorId && c.HasChildren && DateTime.Now - c.SubmitTime <= TimeSpan.FromDays(5))
+            if (currentUser.Id == c.AuthorId && !c.HasChildren && DateTime.Now - c.SubmitTime <= TimeSpan.FromDays(5))
                 return true;
             if (currentUser.IsInRole("comment-moderator", cache, db))
                 return true;
@@ -89,7 +89,7 @@ namespace Pokefans.Util.Comments
             Dictionary<int, CommentViewModel> comments = db.Database.SqlQuery<CommentViewModel>(
                 @"SELECT Comments.Id AS CommentId, Comments.SubmitTime, Comments.ParsedComment AS rawText, 
                          Comments.DisplayPublic, Comments.ParentCommentId, Comments.Level, Comments.Context,
-                         Comments.CommentedObjectId, system_users.name AS Author, system_users.color, 
+                         Comments.CommentedObjectId, Comments.AuthorId, system_users.name AS Author, system_users.color, 
                          system_users.mini_avatar_filename AS AvatarFileName 
                 FROM CommentAncestors
                 INNER JOIN Comments ON(Comments.Id = CommentId)
@@ -219,8 +219,12 @@ namespace Pokefans.Util.Comments
             foreach (KeyValuePair<int, Comment> c in results)
             {
                 if (c.Value.Level != 0)
-                { 
-                    results[c.Key].Children.Add(c.Value);
+                {
+                    // just for safety reasons. Maybe we should log this?
+                    if (c.Value.ParentCommentId.HasValue)
+                    {
+                        results[c.Value.ParentCommentId.Value].Children.Add(c.Value);
+                    }
                 }
                 if(c.Key == targetId)
                 {
