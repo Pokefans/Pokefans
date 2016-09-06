@@ -218,6 +218,11 @@ namespace Pokefans.Util.Comments
 
             foreach (KeyValuePair<int, Comment> c in results)
             {
+                if (c.Key == targetId)
+                {
+                    rootComment = c.Value;
+                    continue; // we're not interested in parents of this comment.
+                }
                 if (c.Value.Level != 0)
                 {
                     // just for safety reasons. Maybe we should log this?
@@ -226,10 +231,7 @@ namespace Pokefans.Util.Comments
                         results[c.Value.ParentCommentId.Value].Children.Add(c.Value);
                     }
                 }
-                if(c.Key == targetId)
-                {
-                    rootComment = c.Value;
-                }
+
             }
             if(rootComment == null)
             {
