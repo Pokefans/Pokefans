@@ -620,7 +620,6 @@
     <Content Include="Areas\sfc\Views\Home\Archive.cshtml" />
     <Content Include="Scripts\cookieconsent.js" />
     <Content Include="Views\Shared\CommentPartial.cshtml" />
-    <Content Include="Views\Shared\CommentTreePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

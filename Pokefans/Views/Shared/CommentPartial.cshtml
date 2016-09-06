@@ -1,5 +1,6 @@
 ﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
 @model Pokefans.Models.CommentsViewModel
+@using Pokefans.Models
 <div class="box-comments">
     <h3>Kommentar verfassen</h3>
 
@@ -32,7 +33,7 @@
 
     <div data-role="commentWrapper" data-commentnesting="1" data-context="@Convert.ChangeType(Model.Context, Model.Context.GetTypeCode())" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="0">
         @if (Model.Comments.Count > 0) {
-            Html.RenderPartial("CommentTreePartial", Model);
+            @CommentTree(Model);
         }
         else
         {
@@ -72,3 +73,68 @@
         <div data-role="commentWrapper" data-commentnesting="0" data-context="-1" data-commentedobjectid="-1" data-parentid="-1"></div>
     </div>
 </div>
+
+@helper CommentTree(CommentsViewModel cvm) {
+    foreach (var comment in cvm.Comments)
+    {
+
+        var avaurl = Url.Map("user/avatare/" + (string.IsNullOrEmpty(comment.AvatarFileName) ? "default.gif" : comment.AvatarFileName), "files");
+
+        <div class="media" id="@string.Format("k{0}", comment.CommentId)">
+            <div class="media-left">
+                <img src="@avaurl" class="media-object" alt="Avatar" />
+            </div>
+
+
+            <div class="media-body">
+
+                <div class="media-heading small text-muted">
+                    <a data-role="commentLink" href="@string.Format("#k{0}", comment.CommentId)">#</a>
+                    von <span data-role="commentAuthor">@comment.Author</span>@*TODO: Link*@
+                    am <time data-role="commentTime">@comment.SubmitTime.ToString("d.M.yyyy H:m")</time>
+
+                    <span class="pull-right">
+                        @if (Model.CanHideComment)
+                        {
+                            <a href="@Url.Map("v1/comments/hide/"+comment.CommentId, "api")" data-commentid="@comment.CommentId" data-role="toggleHide" title="Kommentarinhalt verbergen"><i class="fa fa-fw fa-eye-slash"></i></a>
+                        }
+                        @if (Model.CurrentUser != null && Model.Manager.CanDelete(Model.CurrentUser, comment))
+                        {
+                            <a href="@Url.Map("v1/comments/delete/"+comment.CommentId, "api")" data-commentid="@comment.CommentId" data-role="deleteComment" title="Kommentar und Antworten löschen"><i class="fa fa-fw fa-remove"></i></a>
+                        }
+
+                        <a href="#" data-commentid="@comment.CommentId" data-context="@Model.Context" data-commentedobjectid="@Model.CommentedObjectId" data-role="commentAnswer" title="Antwort schreiben"><i class="fa fa-fw fa-reply"></i></a>
+                    </span>
+                </div>
+
+                <div data-role="commentText" data-commentid="@comment.CommentId">
+                    @if (comment.DisplayPublic)
+                    {
+                        <text>@Html.Raw(comment.Text)</text>
+                    }
+                    else
+                    {
+                        <span class="text-muted">Der Inhalt dieses Kommentars wurde von der Moderation ausgeblendet.</span>
+                    }
+                </div>
+
+                <div data-role="replyForm" data-commentid="@comment.CommentId"></div>
+
+                <div data-role="commentWrapper" data-commentnesting="1" data-context="@Convert.ChangeType(Model.Context, Model.Context.GetTypeCode())" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.CommentId">
+                    @*Sobald ein Kommentar auf der dritten Ebene oder höher ist, soll die Anzeige nicht weiter verschachtelt werden. *@
+                    @if (Model.Level < 2)
+                    {
+                        @CommentTree(cvm.Descend(comment.Children));
+                    }
+                </div>
+            </div>
+        </div>
+
+        <div data-role="commentWrapper" data-commentnesting="0" data-context="@Convert.ChangeType(Model.Context, Model.Context.GetTypeCode())" data-commentedobjectid="@Model.CommentedObjectId" data-parentid="@comment.CommentId">
+            @if (Model.Level >= 2)
+        {
+            CommentTree(cvm.Descend(comment.Children));
+        }
+        </div>
+    }
+}
