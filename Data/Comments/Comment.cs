@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Pokefans.Data.Comments
 {
-    public class Comment
+    public class Comment : IComment
     {
         public Comment()
         {
@@ -42,6 +42,12 @@ namespace Pokefans.Data.Comments
         public short Level { get; set; }
 
         public int Context { get; set; }
+
+        [NotMapped]
+        public bool HasChildren
+        {
+            get { return Children.Count > 0; }
+        }
 
         [NotMapped]
         public List<Comment> Children { get; set; }

@@ -19,7 +19,7 @@ namespace Pokefans.Data.Comments
         public int CommentId { get; set; }
 
         [Index]
-        public int AncestorId { get; set; }
+        public int? AncestorId { get; set; }
 
         [ForeignKey("CommentId")]
         public Comment Comment { get; set; }

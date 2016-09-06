@@ -2,6 +2,7 @@
 using Pokefans.Caching;
 using Pokefans.Data;
 using Pokefans.Data.Comments;
+using Pokefans.Data.ViewModels;
 using Pokefans.Models;
 using Pokefans.Security;
 using Pokefans.Util;
@@ -63,15 +64,15 @@ namespace Pokefans.Controllers
 
             manager.AddComment(c);
 
-            return Json(new CommentViewModel(c));
+            return Json(new CommentAjaxViewModel() { Comment = new CommentViewModel(c), Success = true });
         }
 
         [Authorize]
         [Throttle(Name = "CommentDeleteThrottle", Seconds = 5)]
         [AllowCors]
-        public ActionResult Delete(int commentId)
+        public ActionResult Delete(int id)
         {
-            Comment comment = CommentManager.LoadCommentWithChildrenById(commentId, db);
+            Comment comment = CommentManager.LoadCommentWithChildrenById(id, db);
 
             CommentManager manager = getManager((CommentContext)comment.Context);
             User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
@@ -88,9 +89,9 @@ namespace Pokefans.Controllers
 
         [Authorize(Roles = "comment-moderator")]
         [AllowCors]
-        public ActionResult Hide(int commentId)
+        public ActionResult Hide(int id)
         {
-            Comment comment = db.Comments.Find(commentId);
+            Comment comment = db.Comments.Find(id);
             User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
 
             comment.DisplayPublic = !comment.DisplayPublic;
@@ -99,7 +100,7 @@ namespace Pokefans.Controllers
 
             CommentViewModel cvm = new CommentViewModel(comment);
 
-            return Json(new { commentText = cvm.Text, commentDisplay = comment.DisplayPublic }, JsonRequestBehavior.AllowGet);
+            return Json(new { success = true, commentText = cvm.Text, commentDisplay = comment.DisplayPublic }, JsonRequestBehavior.AllowGet);
         }
 
         [AllowCors]
@@ -107,26 +108,23 @@ namespace Pokefans.Controllers
         {
             CommentManager manager = getManager((CommentContext)ctx);
 
-            List<Comment> comments = manager.LoadAll(commentedObjectId);
+            List<CommentViewModel> comments = manager.GetCommentsForObjectId(commentedObjectId);
+            setDeleteable(comments, manager);
 
-            return Json(commentsToViewModel(comments, manager), JsonRequestBehavior.AllowGet);
+            return Json(comments, JsonRequestBehavior.AllowGet);
         }
 
-        private IEnumerable<CommentViewModel> commentsToViewModel(List<Comment> comments, CommentManager manager)
+        private void setDeleteable(List<CommentViewModel> comments, CommentManager manager)
         {
-            List<CommentViewModel> cvm = new List<CommentViewModel>();
 
             User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
 
             foreach (var comment in comments)
             {
-                CommentViewModel c = new CommentViewModel(comment);
                 if (currentUser != null && manager.CanDelete(currentUser, comment))
-                    c.IsDeletable = true;
-                c.Children = commentsToViewModel(comment.Children, manager);
+                    comment.IsDeletable = true;
+                setDeleteable(comment.Children, manager);
             }
-
-            return cvm;
         }
 
         private CommentManager getManager(CommentContext context)

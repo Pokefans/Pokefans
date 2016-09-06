@@ -34,12 +34,12 @@ namespace Pokefans
                 ));
             routes.Add("CommentHideApi", new DomainRoute(
                     "api."+ConfigurationManager.AppSettings["Domain"],
-                    "v1/comments/hide",
+                    "v1/comments/hide/{id}",
                     new { controller = "CommentApi", action = "Hide" }
                 ));
             routes.Add("CommentDeleteApi", new DomainRoute(
                     "api."+ConfigurationManager.AppSettings["Domain"],
-                    "v1/comments/delete",
+                    "v1/comments/delete/{id}",
                     new { controller = "CommentApi", action = "Delete" }
                 ));
 

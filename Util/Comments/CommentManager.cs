@@ -11,6 +11,7 @@ using System.Web;
 using Pokefans.Caching;
 using System.Data.SqlClient;
 using MySql.Data.MySqlClient;
+using Pokefans.Data.ViewModels;
 
 namespace Pokefans.Util.Comments
 {
@@ -36,34 +37,9 @@ namespace Pokefans.Util.Comments
             httpContext = b;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public Comment LoadCommentWithoutChildren(int id)
+        public virtual bool CanDelete(User currentUser, IComment c)
         {
-            Dictionary<int, Comment> comments = db.Comments.SqlQuery(
-                "SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM CommentAncestors" +
-                "INNER JOIN Comments ON(Comments.Id = CommentAncestors.AncestorId)" +
-                "JOIN system_users ON(system_users.Id = Comments.AuthorId)" +
-                "WHERE" +
-                "    CommentAncestors.CommentId = @p0" +
-                "UNION" +
-                "    SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM Comments" +
-                "    JOIN system_users ON(system_users.Id = AuthorId)" +
-                "    WHERE id = @p0" +
-                "ORDER BY" +
-                "    Level ASC,"+
-                "    SubmitTime DESC",
-            id).ToDictionary(x => x.Id);
-
-            return buildCommentTree(comments, id);
-        }
-
-        public virtual bool CanDelete(User currentUser, Comment c)
-        {
-            if (currentUser.Id == c.AuthorId && c.Children.Count == 0 && DateTime.Now - c.SubmitTime <= TimeSpan.FromDays(5))
+            if (currentUser.Id == c.AuthorId && c.HasChildren && DateTime.Now - c.SubmitTime <= TimeSpan.FromDays(5))
                 return true;
             if (currentUser.IsInRole("comment-moderator", cache, db))
                 return true;
@@ -77,25 +53,28 @@ namespace Pokefans.Util.Comments
         /// <returns></returns>
         public static Comment LoadCommentWithChildrenById(int id, Entities sdb)
         {
-            Dictionary<int, Comment> comments = sdb.Comments.SqlQuery("SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM CommentAncestors" +
-            "INNER JOIN Comments ON(Comments.Id = CommentAncestors.CommentId)" +
-            "JOIN system_users ON(system_users.Id = Comments.AuthorId)" +
-            "WHERE" +
-            "    CommentAncestors.AncestorId = @p0" +
-            "UNION" +
-            "    SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM CommentAncestors" +
-            "    INNER JOIN Comments ON(Comments.Id = CommentAncestors.AncestorId)" +
-            "    JOIN system_users ON(system_users.Id = AuthorId)" +
-            "    WHERE" +
-            "        Id = @p0" +
-            "UNION" +
-            "    SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM Comments" +
-            "    JOIN system_users ON(system_users.Id = Comments.AuthorId)" +
-            "    WHERE Id = @p0" +
-            "ORDER BY" +
-            "    Level ASC," +
-            "    SubmitTime DESC",
-            id).ToDictionary(x => x.Id);
+            List<int> ids = sdb.Database.SqlQuery<int>(
+            @"SELECT Comments.Id FROM CommentAncestors
+             INNER JOIN Comments ON(Comments.Id = CommentAncestors.CommentId)
+             JOIN system_users ON(system_users.Id = Comments.AuthorId)
+             WHERE
+                 CommentAncestors.AncestorId = @p0
+             UNION
+                 SELECT Comments.Id FROM CommentAncestors
+                 INNER JOIN Comments ON(Comments.Id = CommentAncestors.AncestorId)
+                 JOIN system_users ON(system_users.Id = AuthorId)
+                 WHERE
+                    Comments.Id = @p0
+             UNION
+                 SELECT Comments.Id FROM Comments
+                 JOIN system_users ON(system_users.Id = Comments.AuthorId)
+                 WHERE Comments.Id = @p0",
+            new MySqlParameter("p0",id)).ToList();
+
+            Dictionary<int,Comment> comments = sdb.Comments.Where(x => ids.Contains(x.Id))
+                                                           .OrderBy(x => x.Level)
+                                                           .OrderByDescending(x => x.SubmitTime)
+                                                           .ToDictionary(x => x.Id);
 
             return buildCommentTree(comments, id);
         }
@@ -105,38 +84,18 @@ namespace Pokefans.Util.Comments
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public List<Comment> LoadAll(int id)
+        public List<CommentViewModel> GetCommentsForObjectId(int id)
         {
-            Dictionary<int, Comment> comments = db.Comments.SqlQuery(
-                @"SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM CommentAncestors
-                INNER JOIN Comments ON(Comments.Id = CommentAncestors.CommentId)
-                JOIN system_users ON(system_users.Id = Comments.AuthorId)
-                WHERE
-                    ancestor = 0
-                AND
-                    context = @p1
-                AND
-                    commented_object_id = @p0
-                ORDER BY
-                    Level ASC,
-                    SubmitTime DESC", id, (int)context).ToDictionary(x => x.Id);
-
-            return buildCommentTree(comments);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public List<Comment> GetCommentsForObjectId(int id)
-        {
-            Dictionary<int, Comment> comments = db.Comments.SqlQuery(
-                @"SELECT Comments.*, system_users.name, system_users.color, system_users.mini_avatar_filename FROM CommentAncestors
+            Dictionary<int, CommentViewModel> comments = db.Database.SqlQuery<CommentViewModel>(
+                @"SELECT Comments.Id AS CommentId, Comments.SubmitTime, Comments.ParsedComment AS rawText, 
+                         Comments.DisplayPublic, Comments.ParentCommentId, Comments.Level, Comments.Context,
+                         Comments.CommentedObjectId, system_users.name AS Author, system_users.color, 
+                         system_users.mini_avatar_filename AS AvatarFileName 
+                FROM CommentAncestors
                 INNER JOIN Comments ON(Comments.Id = CommentId)
                 JOIN system_users ON(system_users.Id = AuthorId)
                 WHERE
-                    AncestorId = 0
+                    AncestorId IS NULL
                 AND
                     Context = @p2
                 AND
@@ -144,7 +103,7 @@ namespace Pokefans.Util.Comments
                 ORDER BY
                     Level ASC,
                     SubmitTime DESC", new MySqlParameter("p1", id), new MySqlParameter("p2", Convert.ChangeType(context, context.GetTypeCode()))
-                ).ToDictionary(x => x.Id);
+                ).ToDictionary(x => x.CommentId);
 
             return buildCommentTree(comments);
         }
@@ -188,7 +147,7 @@ namespace Pokefans.Util.Comments
 
             if (comment.ParentCommentId.HasValue)
             {
-                List<int> parents = db.CommentAncestors.Where(x => x.CommentId == comment.ParentCommentId.Value).Select(x => x.AncestorId).ToList();
+                List<int?> parents = db.CommentAncestors.Where(x => x.CommentId == comment.ParentCommentId.Value).Select(x => x.AncestorId).ToList();
                 parents.Add(comment.ParentCommentId.Value);
                 foreach (var parent in parents)
                 {
@@ -198,7 +157,7 @@ namespace Pokefans.Util.Comments
             }
             else
             {
-                db.CommentAncestors.Add(new CommentAncestor() { AncestorId = 0, CommentId = comment.Id });
+                db.CommentAncestors.Add(new CommentAncestor() { AncestorId = null, CommentId = comment.Id });
             }
 
             db.SaveChanges();
@@ -213,7 +172,7 @@ namespace Pokefans.Util.Comments
             db.Comments.Remove(comment);
             db.CommentAncestors.Remove(db.CommentAncestors.First(x => x.CommentId == comment.Id)); //TODO: Optimize?
 
-            foreach (var cmt in comment.Children)
+            foreach (Comment cmt in comment.Children)
             {
                 DeleteComment(cmt);
             }
@@ -224,11 +183,11 @@ namespace Pokefans.Util.Comments
         /// </summary>
         /// <param name="results">Database results in form [int : commentId => Comment : comment]</param>
         /// <returns>List of root nodes with children populated</returns>
-        protected List<Comment> buildCommentTree(Dictionary<int, Comment> results)
+        protected List<CommentViewModel> buildCommentTree(Dictionary<int, CommentViewModel> results)
         {
-            List<Comment> rootComments = new List<Comment>();
-
-            foreach(KeyValuePair<int, Comment> c in results)
+            List<CommentViewModel> rootComments = new List<CommentViewModel>();
+            
+            foreach(KeyValuePair<int, CommentViewModel> c in results)
             {
                 if(c.Value.Level == 0)
                 {

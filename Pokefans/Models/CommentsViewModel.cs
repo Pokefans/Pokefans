@@ -1,6 +1,7 @@
 ﻿// Copyright 2016 the pokefans authors. See copying.md for legal info.
 using Pokefans.Data;
 using Pokefans.Data.Comments;
+using Pokefans.Data.ViewModels;
 using Pokefans.Util.Comments;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace Pokefans.Models
 
         public CommentContext Context { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public List<CommentViewModel> Comments { get; set; }
 
         public bool CanHideComment { get; set; }
 
@@ -25,7 +26,7 @@ namespace Pokefans.Models
 
         public int Level { get; set; }
 
-        public CommentsViewModel Descend(List<Comment> comments)
+        public CommentsViewModel Descend(List<CommentViewModel> comments)
         {
             return new CommentsViewModel()
             {

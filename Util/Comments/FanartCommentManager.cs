@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Pokefans.Data.Comments;
 using Pokefans.Data.Fanwork;
+using Pokefans.Data.ViewModels;
 
 namespace Pokefans.Util.Comments
 {
@@ -68,7 +69,7 @@ namespace Pokefans.Util.Comments
         /// <param name="currentUser"></param>
         /// <param name="c"></param>
         /// <returns></returns>
-        public override bool CanDelete(User currentUser, Comment c)
+        public override bool CanDelete(User currentUser, IComment c)
         {
             if (currentUser == null)
                 return false;

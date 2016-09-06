@@ -85,6 +85,7 @@
     <Compile Include="Attributes\RegularExpressionWithOptionsAttribute.cs" />
     <Compile Include="Comments\Comment.cs" />
     <Compile Include="Comments\CommentAncestor.cs" />
+    <Compile Include="Comments\IComment.cs" />
     <Compile Include="Content\Content.cs" />
     <Compile Include="Content\ContentBoilerplate.cs" />
     <Compile Include="Content\ContentCategory.cs" />
@@ -198,6 +199,10 @@
     <Compile Include="Migrations\201609020900049_CommentAncestorsForeignKeys.Designer.cs">
       <DependentUpon>201609020900049_CommentAncestorsForeignKeys.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609021417520_CommentAncestorNullable.cs" />
+    <Compile Include="Migrations\201609021417520_CommentAncestorNullable.Designer.cs">
+      <DependentUpon>201609021417520_CommentAncestorNullable.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -277,6 +282,7 @@
     <Compile Include="Strategy\Counter.cs" />
     <Compile Include="Strategy\Moveset.cs" />
     <Compile Include="Service\FriendSafari.cs" />
+    <Compile Include="ViewModels\CommentViewModel.cs" />
     <Compile Include="Wifi\Offer.cs" />
     <Compile Include="Pokedex\Pokeball.cs" />
     <Compile Include="Pokedex\Nature.cs" />
@@ -405,6 +411,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609020900049_CommentAncestorsForeignKeys.resx">
       <DependentUpon>201609020900049_CommentAncestorsForeignKeys.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609021417520_CommentAncestorNullable.resx">
+      <DependentUpon>201609021417520_CommentAncestorNullable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

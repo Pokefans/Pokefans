@@ -262,7 +262,7 @@
     <Compile Include="Areas\fanart\Models\FanartSearchPageViewModel.cs" />
     <Compile Include="Areas\fanart\Models\FanartSearchViewModel.cs" />
     <Compile Include="Areas\fanart\Models\FanartSubmenuViewModel.cs" />
-    <Compile Include="Models\CommentViewModel.cs" />
+    <Compile Include="Models\CommentAjaxViewModel.cs" />
     <Compile Include="Models\NewCommentViewModel.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\CacheFill.cs" />

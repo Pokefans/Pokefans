@@ -13,36 +13,36 @@ function nl2br(str) {
  */
 function insertComment(comment) {
     // #ID für Kommentar-Anker setzen
-    $commentTemplate = $('[data-role="commentTemplate"]').clone().attr('id', 'k' + comment.commentId).removeClass('hidden').removeAttr('data-role');
+    $commentTemplate = $('[data-role="commentTemplate"]').clone().attr('id', 'k' + comment.CommentId).removeClass('hidden').removeAttr('data-role');
 
     // Den Anker zum Kommentar setzen
-    $commentTemplate.find('a[data-role="commentLink"]').attr('href', '#k' + comment.commentId);
+    $commentTemplate.find('a[data-role="commentLink"]').attr('href', '#k' + comment.CommentId);
 
     // Den Autor des Kommentars setzen
-    $commentTemplate.find('[data-role="commentAuthor"]').html(comment.author);
+    $commentTemplate.find('[data-role="commentAuthor"]').html(comment.Author);
 
     // Wenn der Autor einen Mini-Avatar hat, soll der ebenfalls angezeigt werden
     if (comment.avatarFilename) {
         var $miniAvatar = $commentTemplate.find('[data-role="miniAvatar"]');
-        $miniAvatar.attr('src', $miniAvatar.data('avatarurl') + comment.avatarFilename);
+        $miniAvatar.attr('src', $miniAvatar.data('avatarurl') + comment.AvatarFileName);
     }
 
     // Kommentar-Erstellzeit
-    $commentTemplate.find('[data-role="commentTime"]').text(comment.submitTime);
+    $commentTemplate.find('[data-role="commentTime"]').text(comment.SubmitTime);
 
     // Sämtliche Felder mit der Kommentar#ID füllen
-    $commentTemplate.find('[data-commentid]').attr('data-commentid', comment.commentId);
+    $commentTemplate.find('[data-commentid]').attr('data-commentid', comment.CommentId);
 
     // Kommentar-Inhalt
-    $commentTemplate.find('[data-role="commentText"]').html(nl2br(comment.text));
+    $commentTemplate.find('[data-role="commentText"]').html(nl2br(comment.Text));
 
     // Den Wrapper für zukünftige Kommentare vorbereiten
     $commentTemplate.find('[data-role="commentWrapper"]')
-        .attr('data-parentid', comment.commentId)
-        .attr('data-context', comment.context)
-        .attr('data-commentedobjectid', comment.commentedObjectId);
+        .attr('data-parentid', comment.CommentId)
+        .attr('data-context', comment.Context)
+        .attr('data-commentedobjectid', comment.CommentedObjectId);
 
-    if (!comment.isDeletable) {
+    if (!comment.IsDeletable) {
         $commentTemplate.find('[data-role="deleteComment"]').remove();
     }
 
@@ -51,14 +51,14 @@ function insertComment(comment) {
 
     // Den Link zum Beantworten der Kommentare mit den nötigen Daten befüllen
     $commentTemplate.find('[data-role="commentAnswer"]')
-        .attr('data-commentedobjectid', comment.commentedObjectId)
-        .attr('data-context', comment.context);
+        .attr('data-commentedobjectid', comment.CommentedObjectId)
+        .attr('data-context', comment.Context);
 
     // Die #ID in die URLs zum Verstecken und Löschen der Kommentare einfügen
-    $commentTemplate.find('[data-role="toggleHide"]').attr('href', $commentTemplate.find('[data-role="toggleHide"]').attr('href') + '&commentId=' + comment.commentId);
-    $commentTemplate.find('[data-role="deleteComment"]').attr('href', $commentTemplate.find('[data-role="deleteComment"]').attr('href') + '&commentId=' + comment.commentId);
+    $commentTemplate.find('[data-role="toggleHide"]').attr('href', $commentTemplate.find('[data-role="toggleHide"]').attr('href') + '&commentId=' + comment.CommentId);
+    $commentTemplate.find('[data-role="deleteComment"]').attr('href', $commentTemplate.find('[data-role="deleteComment"]').attr('href') + '&commentId=' + comment.CommentId);
 
-    $commentWrapper = $('body').find('[data-role="commentWrapper"][data-commentnesting="' + commentNesting + '"][data-context="' + comment.context + '"][data-commentedobjectid="' + comment.commentedObjectId + '"][data-parentid="' + comment.parentId + '"]');
+    $commentWrapper = $('body').find('[data-role="commentWrapper"][data-commentnesting="' + commentNesting + '"][data-context="' + comment.Context + '"][data-commentedobjectid="' + comment.CommentedObjectId + '"][data-parentid="' + comment.ParentId + '"]');
 
     // Ggf. den Hinweis "Noch keine Kommentare" löschen
     $commentWrapper.find('[data-role="noCommentsWarning"]').remove();
@@ -150,8 +150,8 @@ $(document).ready(function (e) {
                 $button.html(buttonText);
                 $button.removeAttr('disabled');
 
-                if (data.success) {
-                    insertComment(data.comments[0]);
+                if (data.Success) {
+                    insertComment(data.Comment);
 
                     // Das Textfeld leeren
                     $form.find('[name="text"]').val('');
@@ -240,7 +240,7 @@ $(document).ready(function (e) {
             data: { ajax: '1' },
 
             success: function (data) {
-                if (data.success) {
+                if (data === true) {
                     $('#k' + commentId).remove();
                     $('#deleteDialog').modal('hide');
                 }
