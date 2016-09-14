@@ -18,7 +18,7 @@ namespace Pokefans.Areas.tools
         public override void RegisterArea(AreaRegistrationContext context) 
         {
             context.Routes.Add(new DomainRoute(
-                "user." + ConfigurationManager.AppSettings["Domain"],
+                "tools." + ConfigurationManager.AppSettings["Domain"],
                 "{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
                 )
