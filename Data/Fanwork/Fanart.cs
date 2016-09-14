@@ -127,19 +127,19 @@ namespace Pokefans.Data.Fanwork
         {
             get
             {
-                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], 
-                                    "u" + this.UploadUserId, 
-                                    "f" + this.Id + this.Url.Split('.')[1]);
+                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"],
+                                    "u" + this.UploadUserId,
+                                    "f" + this.Id + "." + this.Url.Split('.')[1]);
             }
         }
 
         [NotMapped]
         public string SmallThumbnailDiskPath
         {
-            get 
+            get
             {
-                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"], 
-                                    "u" + this.UploadUserId, 
+                return Path.Combine(ConfigurationManager.AppSettings["FanartFilePath"],
+                                    "u" + this.UploadUserId,
                                     "f" + this.Id + "_t4.png");
             }
         }

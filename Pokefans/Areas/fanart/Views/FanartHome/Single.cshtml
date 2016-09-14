@@ -62,29 +62,29 @@
     {
         <h3>Schnellmoderation</h3>
         <form action="@Url.Map("v1/fanart/delete","api")" method="post" id="delteform">
+            @Html.AntiForgeryToken()
             <p>
-                @Html.AntiForgeryToken()
                 <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
                 <button type="submit" class="btn btn-danger">Fanart löschen</button>
             </p>
         </form>
-            <form action="@Url.Map("v1/fanart/move","api")" method="post" id="moveform">
-                <p>
-                    <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
-                    @Html.AntiForgeryToken()
-                    <div class="input-group">
-                        <select name="targetCategoryId" id="targetCategoryId" class="form-control">
-                            @foreach (var cat in Model.CategoriesName)
-                            {
-                                <option value="@cat.Key">@cat.Value</option>
-                            }
-                        </select>
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="submit">Verschieben</button>
-                        </span>
-                    </div>
-                </p>
-            </form>
+        <form action="@Url.Map("v1/fanart/move","api")" method="post" id="moveform">
+            @Html.AntiForgeryToken()
+            <p>
+                <input type="hidden" name="fanartId" value="@Model.Fanart.Id" />
+                <div class="input-group">
+                    <select name="targetCategoryId" id="targetCategoryId" class="form-control">
+                        @foreach (var cat in Model.CategoriesName)
+                        {
+                            <option value="@cat.Key">@cat.Value</option>
+                        }
+                    </select>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">Verschieben</button>
+                    </span>
+                </div>
+            </p>
+        </form>
             <hr />
     }
     <h3>Ähnliche Werke</h3>

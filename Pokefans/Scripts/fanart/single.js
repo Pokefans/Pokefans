@@ -7,7 +7,7 @@ $(function () {
         }
     });
     var status = [];
-    $(".rating-star").children("i").each(function() {
+    $(".rating-star").children("i").each(function () {
         status.push($(this).attr("class"))
     });
     if ($(".rating-star").data("active") != "False") { //thanks obama
@@ -30,7 +30,7 @@ $(function () {
                 .done(function (data) {
                     $(".rating-star").popover({ content: "Danke für deine Bewertung!", placement: "top" }).popover('show');
                     hidePopover();
-                    
+
                     var $elems = $(".rating-star i");
                     $elems.removeClass("fa-star fa-star-o fa-star-half-full");
 
@@ -39,7 +39,7 @@ $(function () {
                     $elems.addClass(function (i) {
                         var className;
                         if (data < i && (data + 1) > i)
-                            className ="fa-star-half-full";
+                            className = "fa-star-half-full";
                         else if (i < data)
                             className = "fa-star";
                         else
@@ -64,38 +64,29 @@ $(function () {
     })
     $("#deleteconfirmed").click(function () {
         $form = $("#deleteform");
-        $.post({
-            url: $form.attr('action'),
-            dataType: 'json',
-            data: $form.serialize(),
-            success: function (data) {
-                window.location.href("/");
-            },
-            error: function (xhr, err) {
-                alert('Es ist ein Fehler aufgetreten :(');
-            }
+        $.post($form.attr('action'), $form.serialize()).success(function (data) {
+            window.location.href = "/";
+        }).fail(function (xhr, err) {
+            alert('Es ist ein Fehler aufgetreten :(');
         });
-    })
-
+    });
     $("#moveform").submit(function (ev) {
-        $form = $("#deleteform");
-        $.post({
-            url: $form.attr('action'),
-            dataType: 'json',
-            data: $form.serialize(),
-            success: function (data) {
-                window.location.href("/");
-            },
-            error: function (xhr, err) {
-                alert('Es ist ein Fehler aufgetreten :(');
-            }
+        ev.preventDefault();
+        $form = $("#moveform");
+        var url = $form.attr('action');
+        $.post(url, $form.serialize()).success(function (data) {
+            window.location.href = "/";
+        }).fail(function (xhr, err) {
+            alert('Es ist ein Fehler aufgetreten :(');
         });
     });
 });
 
+
+
 function hostname() {
     var arr = location.hostname.split('.');
-    return arr.slice(0-(arr.length-1)).join('.');
+    return arr.slice(0 - (arr.length - 1)).join('.');
 }
 function hidePopover() {
     window.setTimeout(function () { $(".rating-star").popover('hide'); }, 5000);

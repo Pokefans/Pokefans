@@ -179,10 +179,11 @@ namespace Pokefans.Areas.fanart.Controllers
                 return Json("Zielfanart nicht gefunden");
             }
 
-            Fanart f = db.Fanarts.Include("Tags").Include("Tags.Tag").Include("UploadUser").First(x => x.Id == fanartId);
+            Fanart f = db.Fanarts.Include("Tags").Include("Tags.Tag").Include("UploadUser").Include("Category").First(x => x.Id == fanartId);
             f.CategoryId = targetCategoryId;
             db.SetModified(f);
             db.SaveChanges();
+            f = db.Fanarts.Include("Tags").Include("Tags.Tag").Include("UploadUser").Include("Category").First(x => x.Id == fanartId);
 
             // re-add the document to the search index
             BooleanQuery query = new BooleanQuery();
