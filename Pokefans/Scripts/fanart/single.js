@@ -94,7 +94,8 @@ $(function () {
 });
 
 function hostname() {
-    return location.hostname.split('.').slice(-2).join('.');
+    var arr = location.hostname.split('.');
+    return arr.slice(0-(arr.length-1)).join('.');
 }
 function hidePopover() {
     window.setTimeout(function () { $(".rating-star").popover('hide'); }, 5000);
