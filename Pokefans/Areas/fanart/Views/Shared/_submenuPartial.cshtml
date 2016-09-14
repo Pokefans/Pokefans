@@ -1,5 +1,6 @@
 ﻿@*Copyright 2016 the pokefans authors. See copying.md for legal info.*@
 @model Pokefans.Areas.fanart.Models.FanartSubmenuViewModel
+@using Pokefans.Caching;
 <div class="navbar navbar-default navbar-nocollapse" id="fanartbar">
     <div class="clearfix">
         <ul class="nav navbar-nav">
@@ -20,15 +21,15 @@
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Kategorie wählen"><i class="fa fa-folder-open fa-lg"></i> <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><a href="#">Sprites</a></li>
-                    <li><a href="#">Maps</a></li>
-                    <li><a href="#">Zeichnungen</a></li>
-                    <li><a href="#">Pixelart</a></li>
-                    <li><a href="#">Tilesets</a></li>
-                    <li><a href="#">Sprites</a></li>
-                    <li><a href="#">Avatare</a></li>
-                    <li><a href="#">Fotos</a></li>
-                    <li><a href="#">Sonstiges</a></li>
+                    @{
+                        // todo: find a better place for this
+                        Cache c = DependencyResolver.Current.GetService<Cache>();
+                        Dictionary<int, string> cats = c.Get<Dictionary<int, string>>("FanartCategories");
+                        foreach (var cat in cats)
+                        {
+                            <li><a href="@Url.Map("suche?term=category:"+cat.Value.ToLower(),"fanart")">@cat.Value</a></li>
+                        }
+                    }
                 </ul>
             </li>
         </ul>
