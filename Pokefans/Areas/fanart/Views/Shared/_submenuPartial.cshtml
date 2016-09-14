@@ -16,7 +16,7 @@
         <ul class="nav navbar-nav navbar-right">
             <li class="@(Model.ActiveMenuKey == "manage" ? "active" : "")"><a href="@Url.Action("Index", "Manage")" title="Bilder verwalten"><i class="fa fa-gears fa-lg"></i></a></li>
             <li class="@(Model.ActiveMenuKey == "upload" ? "active" : "")"><a href="@Url.Action("Upload", "Manage")" title="Ein Bild hochladen"><i class="fa fa-cloud-upload fa-lg"></i></a></li>
-            <li><a href="#" title="Zufälliges Fanart"><i class="fa fa-random  fa-lg"></i></a></li>
+            <li><a href="@Url.Action("Random", "FanartHome")" title="Zufälliges Fanart"><i class="fa fa-random  fa-lg"></i></a></li>
             <li>
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Kategorie wählen"><i class="fa fa-folder-open fa-lg"></i> <span class="caret"></span></a>
                 <ul class="dropdown-menu">

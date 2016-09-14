@@ -198,7 +198,7 @@ namespace Pokefans.Areas.fanart.Controllers
                 string[] tags = toUpdate.Taglist.Split(',');
 
 
-                List<FanartTags> fanartTags = new List<FanartTags>();
+                List<FanartTags> fanartTags = db.FanartsTags.Where(x => x.FanartId == art.Id).ToList();
 
                 foreach (string tag in tags)
                 {
@@ -217,8 +217,10 @@ namespace Pokefans.Areas.fanart.Controllers
                     {
                         ftag = db.FanartTags.First(g => g.Name == tag);
                     }
-
-                    fanartTags.Add(new FanartTags() { FanartId = art.Id, TagId = ftag.Id });
+                    if (!fanartTags.Any(x => x.TagId == ftag.Id))
+                    {
+                        fanartTags.Add(new FanartTags() { FanartId = art.Id, TagId = ftag.Id });
+                    }
                 }
 
 

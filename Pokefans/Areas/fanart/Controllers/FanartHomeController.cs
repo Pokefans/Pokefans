@@ -17,6 +17,7 @@ using Lucene.Net.QueryParsers;
 using Lucene.Net.Analysis;
 using Lucene.Net.Documents;
 using Lucene.Net.Index;
+using Pokefans.Util;
 
 namespace Pokefans.Areas.fanart.Controllers
 {
@@ -207,6 +208,20 @@ namespace Pokefans.Areas.fanart.Controllers
             // todo: next and previous URIs ?
 
             return View("~/Areas/fanart/Views/FanartHome/Single.cshtml", fsvm);
+        }
+
+        public ActionResult Random()
+        {
+            int fanartid = db.Database.SqlQuery<int>(@"SELECT t.Id FROM Fanarts t 
+                                                      JOIN (
+                                                         SELECT(FLOOR(max(Id) * rand())) as maxid FROM Fanarts
+                                                      ) as tt on t.id >= tt.maxid 
+                                                     LIMIT 1").First();
+
+            Fanart f = db.Fanarts.Find(fanartid);
+            Dictionary<int, string> fcats = cache.Get<Dictionary<int,string>>("FanartUrls");
+
+            return Redirect(Url.Map(fcats[f.CategoryId]+"/"+f.Id, "fanart"));
         }
 
         public ActionResult ListApi(int start = 0)
