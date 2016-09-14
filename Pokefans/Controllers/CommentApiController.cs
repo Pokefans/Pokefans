@@ -36,6 +36,10 @@ namespace Pokefans.Controllers
         [AllowCors]
         public ActionResult Add(NewCommentViewModel newComment)
         {
+            if(string.IsNullOrWhiteSpace(newComment.Text))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
 
             ParserConfiguration config = ParserConfiguration.Default;

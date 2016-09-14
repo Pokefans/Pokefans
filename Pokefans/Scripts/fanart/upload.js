@@ -31,11 +31,19 @@ if (typeof (Dropzone) != undefined) {
         myDropzone.on("success", function (file, response) {
             window.location.href = '/verwaltung/einreichung/' + response; // successfully uploaded, redirect
         });
-
         $('#send').click(function (e) {
             e.preventDefault();
 
             myDropzone.processQueue();
+        });
+
+        $("#clearbtn").click(function (e) {
+            e.preventDefault();
+
+            var i = 0;
+            for (i = 0; i < myDropzone.files.length; i++) {
+                myDropzone.removeFile(myDropzone.files[0]);
+            }
         });
     });
 }

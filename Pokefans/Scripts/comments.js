@@ -179,6 +179,14 @@ $(document).ready(function (e) {
                     $submitErrorBox.removeClass('hide').html(data.error);
                 }
             },
+            error: function (jqXHR, textStatus, errorThrown) {
+                if (ErrorThrown == "Bad Request") {
+                    $submitErrorBox.removeClass('hide').html('Dein Kommentar darf nicht leer sein.');
+                }
+                else {
+                    $submitErrorBox.removeClass('hide').html('Es gab ein Problem beim Speichern deines Kommentars. Bitte melde ihn im Forum und gib dabei folgende Information an:' + window.btoa(errorThrown));
+                }
+            },
 
             xhrFields: {
                 withCredentials: true

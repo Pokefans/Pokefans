@@ -191,14 +191,14 @@ namespace Pokefans.Controllers
                 if (result.Succeeded)
                 {
                     SignInManager.SignIn(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Konto bestätigen", "Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
 
-                    return RedirectToAction("Index", "Home");
+                    return Redirect(Url.Map("/", null));
                 }
                 AddErrors(result);
             }
