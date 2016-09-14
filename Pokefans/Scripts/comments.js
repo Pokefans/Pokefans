@@ -180,7 +180,7 @@ $(document).ready(function (e) {
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                if (ErrorThrown == "Bad Request") {
+                if (errorThrown == "Bad Request") {
                     $submitErrorBox.removeClass('hide').html('Dein Kommentar darf nicht leer sein.');
                 }
                 else {
