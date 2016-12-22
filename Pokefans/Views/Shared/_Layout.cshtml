@@ -20,20 +20,23 @@
                 <div class="clearfix">
                     <a href="@Url.Map("", null)" class="pull-left"><img src="//static.pokefans.net/images/logo.svg" style="height:50px;"></a>
 
-                    <form action="http://pokefans.net/search" method="post" class="pull-right">
+                    <form action="http://pokefans.net/search" method="post" class="search-form">
                         @* Sobald die Suche portiert wird, hier den HTML-Helper einsetzen.*@
-                        <span>Suche<span class="hidden-sm hidden-xs"> auf Pokefans</span>:</span>
-                        <span id="searchbox">
-                            <input type="text" name="search"><select name="search-index">
-                                <option value="pokefans">Website</option>
-                                <option value="pokedex">Pokedex</option>
-                                <option value="forum">Forum</option>
-                                <option value="mainpage">ohne Forum</option>
-                                <option value="user">User</option>
-                                <option value="internet">Internet</option>
-                            </select>
-                        </span>
-                        <input type="submit" value="Jetzt suchen" class="button">
+                        <div class="input-group pull-right" id="searchbox" style="max-width: 450px">
+                            <input type="text" name="search" class="form-control" placeholder="Suche auf Pokefans">
+                            <select name="search-index" class="form-control">
+                              <option value="pokefans">Website</option>
+                              <option value="pokedex">Pokedex</option>
+                              <option value="forum">Forum</option>
+                              <option value="mainpage">ohne Forum</option>
+                              <option value="user">User</option>
+                              <option value="internet">Internet</option>
+                          </select>
+                          <span class="input-group-btn">
+                             @*<input type="submit" value="Jetzt suchen" class="button">*@
+                             <button type="submit" class="btn btn-warning"><i class="fa fa-search fa-lg"></i></button>
+                          </span>
+                      </div>
                     </form>
                 </div>
             </div>

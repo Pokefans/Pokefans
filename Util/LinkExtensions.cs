@@ -143,19 +143,27 @@ namespace Pokefans.Util
         /// <param name="domain">Domain.</param>
         public static string Map(this UrlHelper helper, string url, string domain)
         {
+            string port = "";
+            if(HttpContext.Current.Request.Url.Port != 80 && !HttpContext.Current.Request.IsSecureConnection)
+                port = ":"+HttpContext.Current.Request.Url.Port.ToString();
+            else if (HttpContext.Current.Request.Url.Port != 443 && HttpContext.Current.Request.IsSecureConnection)
+                port = ":"+HttpContext.Current.Request.Url.Port.ToString();
+
             if (domain == null)
             {
-                return String.Format("{0}://{1}/{2}",
+                return String.Format("{0}://{1}{3}/{2}",
                     HttpContext.Current.Request.IsSecureConnection ? "https" : "http",
                     ConfigurationManager.AppSettings["Domain"],
-                    url
+                    url,
+                    port
                 );
             }
-            return String.Format("{0}://{1}.{2}/{3}",
+            return String.Format("{0}://{1}.{2}{4}/{3}",
                 HttpContext.Current.Request.IsSecureConnection ? "https" : "http",
                 domain,
                 ConfigurationManager.AppSettings["Domain"],
-                url
+                url,
+                port
             );
         }
 

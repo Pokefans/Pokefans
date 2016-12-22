@@ -160,3 +160,10 @@ $RECYCLE.BIN/
 
 # MonoDevelop stuff
 *.userprefs
+
+
+# not intended for the repo
+Pokefans/contrib/
+
+# vim stuff
+*.swp
