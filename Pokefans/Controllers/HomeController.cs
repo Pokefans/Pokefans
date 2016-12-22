@@ -70,6 +70,18 @@ namespace Pokefans.Controllers
                 mpvm.Trivia = cache.Get<Content>("StartTrivia");
             }
 
+            if (!cache.Contains("StartCarousel"))
+            {
+                int carouselid = int.Parse(ConfigurationManager.AppSettings["StartCarouselId"]);
+                mpvm.Carousel = _entities.Contents.FirstOrDefault(g => g.Id == carouselid);
+                if (mpvm.Carousel != null)
+                    cache.Add("StartCarousel", mpvm.Carousel, TimeSpan.FromHours(2));
+            }
+            else
+            {
+                mpvm.Carousel = cache.Get<Content>("StartCarousel");
+            }
+
             mpvm.News = _entities.Contents.Where(g => g.Type == ContentType.News).OrderByDescending(g => g.Published).Take(10).ToList();
             mpvm.LatestArticles = _entities.Contents.Where(g => g.Type == ContentType.Article).OrderByDescending(g => g.Published).Take(10).ToList();
             mpvm.Fanarts = _entities.Fanarts.OrderByDescending(g => g.UploadTime).Take(4 * 4).ToList();

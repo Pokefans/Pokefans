@@ -1,0 +1,85 @@
+﻿@model Pokefans.Models.TradingIndexViewModel
+@using Pokefans.Data.Pokedex
+@using Pokefans.Models
+@{
+    SiteTitle = "Tauschbörse";
+    SiteHeader = "Tauschbörse: Pokemon online tauschen";
+    SiteDescription = "";
+    ActiveMenuKey = "trading";
+
+    Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
+    {
+        { PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
+        { PokemonGeneration.Generation7, "//files.pokefans.net/images/sonne-mond/sonne-mond-logo-klein.png" }
+    };
+}
+
+<h1>@SiteHeader</h1>
+@if (Model.TeaserContent == null)
+{
+    <text>Config error: teaser article not found</text>
+}
+else {
+    <text>@Html.Raw(@Model.TeaserContent.ParsedContent)</text>
+}
+
+<h2>Angebote</h2>
+    <ul class="list-unstyled tradinglist">
+        @foreach (var offer in Model.Offers)
+        {
+            <li class="clearfix">
+                <div class="col-sm-10">
+                    <div class="lpic">
+                        @*Use the global link sprites, because they're the nicest.*@
+                        <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
+                    </div>
+                    <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
+                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="#">@offer.User.UserName</a><br />
+                    @{
+                        List<string> l = new List<string>();
+                        l.Add(string.Format("Level {0}", offer.Level));
+                        if (offer.IsShiny)
+                        {
+                            l.Add(string.Format("<i class=\"fa fa-star\"></i> Shiny"));
+                        }
+                        if (offer.Item != null)
+                        {
+                            l.Add(string.Format("Hält <a href=\"" + Url.Action("View", "Itemdex", new { item = offer.Item.Url }) + "\">" + offer.Item.Name + "</a>"));
+                        }
+                        if (offer.CheatUsed)
+                        {
+                            l.Add(string.Format("Cheat verwendet"));
+                        }
+                        if(offer.IsOriginalTrainer)
+                        {
+                            l.Add(string.Format("Vom Originaltrainer"));
+                        }
+                        if (offer.EffortValues.Any())
+                        {
+                            l.Add("EV-trainiert");
+                        }
+                        if (offer.DeterValues.Any())
+                        {
+                            l.Add("DV-Werte bekannt");
+                        }
+                        // maybe this should produce an inline list, but eh...
+                    }
+                    @Html.Raw(string.Join(" &bull; ", l.ToArray()))
+                    <p class="visible-xs">
+                        Generation @offer.Generation
+                    </p>
+                </div>
+                <div class="col-sm-2 hidden-xs rpic">
+                    <img src="@images[offer.Generation]" alt="Generation @offer.Generation" />
+                </div>
+            </li>
+                        }
+    </ul>
+
+@section sidebar {
+    Hier könnte Ihr Chat stehen
+}
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

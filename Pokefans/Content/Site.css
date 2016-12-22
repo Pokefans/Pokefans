@@ -120,3 +120,80 @@ float: right!important;
     content: '\f0f6';
     margin 0 5px 0 -15px;
 }
+
+@media(min-width: 1366px) {
+    .container {
+        width: 1366px;
+    }
+    #content {
+        width: 1000px;
+    }
+}
+
+.select2-container--default .select2-selection--single {
+    border-color: #ccc !important;
+    border-radius: 0 !important;
+}
+.select2-container--default .select2-selection--single {
+    height: 34px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    color: #555 !important;
+    line-height:34px !important;
+}
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    line-height:32px!important;
+}
+.lpic {
+  float: left;
+  max-width: 200px;
+  margin-right: 10px;
+}
+.rpic {
+  padding-top: 20px;
+}
+.rpic img {
+      max-width:75px;
+}
+
+.tradinglist li {
+    border-bottom: 1px solid #ccc;
+    padding: 15px 0 15px 0;
+}
+
+#pfcarousel .item-inner {
+   height: 400px;
+   background-size:     cover;               
+   background-repeat:   no-repeat;
+   background-position: center center;
+}
+
+.start-carousel {
+    padding: 0 !important;
+    margin-top: -19px;
+}
+
+#pfcarousel h2, #pfcarousel p {
+    text-shadow: 1px 1px 1px #000;
+    font-weight: 500;
+}
+#pfcarousel p {
+    font-size: 18px;
+    color: #fff;
+    text-shadow: 0 0 5px black;
+}
+.carousel-control {
+    height: 400px;
+    padding-top: 200px;
+}
+#search {
+    padding: 0 15px;
+}
+
+#search .clearfix {
+    padding: 7px 0;
+}
+
+#search form {
+    padding: 9px;
+}

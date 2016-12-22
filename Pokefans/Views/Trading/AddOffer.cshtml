@@ -1,0 +1,180 @@
+﻿@model Pokefans.Data.Wifi.NormalOffer
+@using Pokefans.Models
+@using Pokefans.Data
+@{
+    SiteTitle = "Tauschbörse: Neues Angebot erstellen";
+    SiteHeader = "Neues Angebot erstellen";
+    SiteDescription = "";
+    ActiveMenuKey = "trading";
+}
+
+<h1>@SiteHeader</h1>
+
+<div class="col-md-8">
+    <form class="form" method="post">
+        <h2 class="size-h4">Basisdaten</h2>
+        <div class="form-group">
+            <label for="Title">Titel</label>
+            @Html.TextBoxFor(g => g.Title, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="PokemonId">Pokemon</label>
+            @Html.DropDownListFor(g => g.PokemonId, (IEnumerable<SelectListItem>)ViewBag.Pokemon, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="ItemId">Gehaltenes Item</label>
+            @Html.DropDownListFor(g => g.ItemId, (IEnumerable<SelectListItem>)ViewBag.Items, new { @class = "form-control" })
+        </div>
+        <div class="form-group">
+            <label for="Nickname">Spitzname</label>
+            @Html.TextBoxFor(g => g.Nickname, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="Level">Level</label>
+            @Html.TextBoxFor(g => g.Level, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="Generation">Ich tausche dieses Pokemon in...</label>
+            <select name="Generation" id="Generation" class="form-control">
+                <option value="6">Generation 6 (XY, OR/AS)</option>
+                <option value="7" selected="selected">Generation 7 (Sonne/Mond)</option>
+            </select>
+        </div>
+        <p><button type="submit" class="btn btn-primary">Absenden</button></p>
+        <h2 class="size-h4">Eigenschaften</h2>
+        <div class="form-group col-sm-6">
+            <label for="AbilityId">Fähigkeit</label>
+            @Html.DropDownListFor(g => g.AbilityId, (IEnumerable<SelectListItem>)ViewBag.Abilities, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm-6">
+            <label for="AbilityId">Wesen</label>
+            @Html.DropDownListFor(g => g.NatureId, (IEnumerable<SelectListItem>)ViewBag.Natures, new { @class = "form-control" })
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.IsEvent)
+                Ist ein Eventpokemon
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.IsShiny)
+                Ist Shiny
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.IsOriginalTrainer)
+                Ich bin der Originaltrainer dieses Pokemon
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.IsClone)
+                Ist Geklont
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.CheatUsed)
+                Es wurden Cheats verwendet
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.HasPokerus)
+                Dieses Pokemon hat den Pokerus
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.RngUsed)
+                Für dieses Pokemon wurde der PRNG berechnet
+            </label>
+        </div>
+        <div class="checkbox">
+            <label>
+                @Html.CheckBoxFor(g => g.BottleCapsUsed)
+                Kronkorken verwendet
+            </label>
+        </div>
+        <h2 class="size-h4">Attacken</h2>
+        <div class="form-group col-sm-6">
+            @Html.DropDownListFor(g => g.Attack1Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm-6">
+            @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm-6">
+            @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+        </div>
+        <div class="form-group col-sm-6">
+            @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+        </div>
+        <h2 class="size-h4">Statuswerte</h2>
+        <div class="form-group">
+            <label for="AbsoluteValues.HP">Statuswerte (KP/Atk/Def/SpAtk/SpDef/Init)</label>
+            <p class="clearfix">
+                @Html.TextBoxFor(g => g.AbsoluteValues.HP, new { @class = "form-control pull-left", style = "width:60px", placeholder = "KP" })
+                @Html.TextBoxFor(g => g.AbsoluteValues.Attack, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Atk" })
+                @Html.TextBoxFor(g => g.AbsoluteValues.Defense, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Def" })
+                @Html.TextBoxFor(g => g.AbsoluteValues.SpecialAttack, new { @class = "form-control pull-left", style = "width:60px", placeholder = "SpAtk" })
+                @Html.TextBoxFor(g => g.AbsoluteValues.SpecialDefense, new { @class = "form-control pull-left", style = "width:60px", placeholder = "SpDef" })
+                @Html.TextBoxFor(g => g.AbsoluteValues.Speed, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Init" })
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="EffortValues.HP">EVs (KP/Atk/Def/SpAtk/SpDef/Init)</label>
+            <p class="clearfix">
+                @Html.TextBoxFor(g => g.EffortValues.HP, new { @class = "form-control pull-left", style = "width:60px", placeholder = "KP" })
+                @Html.TextBoxFor(g => g.EffortValues.Attack, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Atk" })
+                @Html.TextBoxFor(g => g.EffortValues.Defense, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Def" })
+                @Html.TextBoxFor(g => g.EffortValues.SpecialAttack, new { @class = "form-control pull-left", style = "width:60px", placeholder = "SpAtk" })
+                @Html.TextBoxFor(g => g.EffortValues.SpecialDefense, new { @class = "form-control pull-left", style = "width:60px", placeholder = "SpDef" })
+                @Html.TextBoxFor(g => g.EffortValues.Speed, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Init" })
+            </p>
+        </div>
+        <div class="form-group">
+            <label for="DeterValues.HP">DVs (KP/Atk/Def/SpAtk/SpDef/Init)</label>
+            <p class="clearfix">
+                @Html.TextBoxFor(g => g.DeterValues.HP, new { @class = "form-control pull-left", style = "width:60px", placeholder = "KP" })
+                @Html.TextBoxFor(g => g.DeterValues.Attack, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Atk" })
+                @Html.TextBoxFor(g => g.DeterValues.Defense, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Def" })
+                @Html.TextBoxFor(g => g.DeterValues.SpecialAttack, new { @class = "form-control pull-left", style = "width:60px", placeholder = "SpAtk" })
+                @Html.TextBoxFor(g => g.DeterValues.SpecialDefense, new { @class = "form-control pull-left", style = "width:60px", placeholder = "SpDef" })
+                @Html.TextBoxFor(g => g.DeterValues.Speed, new { @class = "form-control pull-left", style = "width:60px", placeholder = "Init" })
+            </p>
+        </div>
+        <h2 class="size-h4">Sonstiges</h2>
+        <div class="form-group">
+            <label for="DescriptionCode">Beschreibung</label>
+            <p class="help-block">BB-Codes und HTML (in Maßen) erlaubt.</p>
+            @Html.TextAreaFor(g => g.DescriptionCode, new { @class = "form-control", rows="25" })
+        </div>
+        <p><button type="submit" class="btn btn-primary">Absenden</button></p>
+    </form>
+</div>
+<div class="col-md-4">
+    @if (ViewBag.Infosection == null)
+    {
+        <text>Config error: section article not found</text>
+    }
+    else {
+        <text>@Html.Raw(((Content)ViewBag.Infosection).ParsedContent)</text>
+    }
+</div>
+
+@section submenu{
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "add", SearchTerm = "" })
+}
+
+@section scripts {
+    @Scripts.Render("~/Scripts/select2.js")
+    @Scripts.Render("~/bundles/trumbowyg")
+    @Scripts.Render("~/Scripts/trading/add.js")
+}
+
+@section CustomHeaders {
+    @Styles.Render("~/bundles/select2/css")
+    @Styles.Render("~/bundles/trumbowyg/css")
+}

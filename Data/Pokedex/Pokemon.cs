@@ -17,7 +17,8 @@ namespace Pokefans.Data.Pokedex
         Generation3 = 3,
         Generation4 = 4,
         Generation5 = 5,
-        Generation6 = 6}
+        Generation6 = 6,
+        Generation7 = 7}
 
     ;
 
@@ -186,21 +187,21 @@ namespace Pokefans.Data.Pokedex
             builder.Entity<Pokemon>().Property(a => a.Values.Defense).HasColumnName("value_defense");
             builder.Entity<Pokemon>().Property(a => a.Values.Speed).HasColumnName("value_speed");
             builder.Entity<Pokemon>().Property(a => a.Values.SpecialAttack).HasColumnName("value_special_attack");
-            builder.Entity<Pokemon>().Property(a => a.Values.SpeicalDefense).HasColumnName("value_special_defense");
+            builder.Entity<Pokemon>().Property(a => a.Values.SpecialDefense).HasColumnName("value_special_defense");
             builder.Entity<Pokemon>().Property(a => a.Values.HP).HasColumnName("value_hp");
 
             builder.Entity<Pokemon>().Property(a => a.EffortValues.Attack).HasColumnName("ev_attack");
             builder.Entity<Pokemon>().Property(a => a.EffortValues.Defense).HasColumnName("ev_defense");
             builder.Entity<Pokemon>().Property(a => a.EffortValues.Speed).HasColumnName("ev_speed");
             builder.Entity<Pokemon>().Property(a => a.EffortValues.SpecialAttack).HasColumnName("ev_special_attack");
-            builder.Entity<Pokemon>().Property(a => a.EffortValues.SpeicalDefense).HasColumnName("ev_special_defense");
+            builder.Entity<Pokemon>().Property(a => a.EffortValues.SpecialDefense).HasColumnName("ev_special_defense");
             builder.Entity<Pokemon>().Property(a => a.EffortValues.HP).HasColumnName("ev_hp");
 
             builder.Entity<Pokemon>().Property(a => a.Base.Attack).HasColumnName("base_attack");
             builder.Entity<Pokemon>().Property(a => a.Base.Defense).HasColumnName("base_defense");
             builder.Entity<Pokemon>().Property(a => a.Base.Speed).HasColumnName("base_speed");
             builder.Entity<Pokemon>().Property(a => a.Base.SpecialAttack).HasColumnName("base_special_attack");
-            builder.Entity<Pokemon>().Property(a => a.Base.SpeicalDefense).HasColumnName("base_special_defense");
+            builder.Entity<Pokemon>().Property(a => a.Base.SpecialDefense).HasColumnName("base_special_defense");
             builder.Entity<Pokemon>().Property(a => a.Base.HP).HasColumnName("base_hp");
 
             builder.Entity<Pokemon>().Property(a => a.Pokeathlon.Force).HasColumnName("pokeathlon_force");

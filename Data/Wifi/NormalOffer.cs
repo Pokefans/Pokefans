@@ -3,10 +3,8 @@ using System;
 
 namespace Pokefans.Data.Wifi
 {
-    public class NormalOffer
+    public class NormalOffer : Offer
     {
-        public int Price { get; set; }
-
         public int InterestCount { get; set; }
 
         public int PokemonCount { get; set; }

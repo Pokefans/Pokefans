@@ -20,6 +20,20 @@ namespace Pokefans
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                     "~/Scripts/jquery.validate*"));
 
+            bundles.Add(new ScriptBundle("~/bundles/trumbowyg").Include(
+                    "~/Scripts/trumbowyg/trumbowyg*",
+                    "~/Scripts/trumbowyg/de.min.js"
+                ));
+
+            bundles.Add(new StyleBundle("~/bundles/trumbowyg/css").Include(
+                    "~/Content/trumbowyg*"
+                ));
+
+            bundles.Add(new StyleBundle("~/bundles/select2/css").Include(
+                    "~/Content/select2.css",
+                    "~/Content/select2-bootstrap.css"
+                ));
+
             // Verwenden Sie die Entwicklungsversion von Modernizr zum Entwickeln und Erweitern Ihrer Kenntnisse. Wenn Sie dann
             // für die Produktion bereit sind, verwenden Sie das Buildtool unter "http://modernizr.com", um nur die benötigten Tests auszuwählen.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
@@ -35,7 +49,7 @@ namespace Pokefans
                     "~/Content/bootstrap.css",
                     "~/Content/Site.css",
                     "~/Content/font-awesome.min.css",
-                    "~/Content/bootstrap-tagsinput.css"));
+                    "~/Content/bootstrap-tagsinput.css"));            
 
             // SFC
             bundles.Add(new StyleBundle("~/Content/sfc/css").Include(

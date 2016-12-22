@@ -18,7 +18,9 @@
         <div class="wrap">
             <div id="search" class="hidden-xs">
                 <div class="clearfix">
-                    <form action="http://pokefans.net/search" method="post">
+                    <a href="@Url.Map("", null)" class="pull-left"><img src="//static.pokefans.net/images/logo.svg" style="height:50px;"></a>
+
+                    <form action="http://pokefans.net/search" method="post" class="pull-right">
                         @* Sobald die Suche portiert wird, hier den HTML-Helper einsetzen.*@
                         <span>Suche<span class="hidden-sm hidden-xs"> auf Pokefans</span>:</span>
                         <span id="searchbox">
@@ -52,7 +54,7 @@
                             <li>@Html.ActionLink("Pokedex", "Index", "Home")</li>
                             <li>@Html.ActionLink("Kampf & Strategie", "Index", "Home")</li>
                             <li class="@isActive("fanart")"><a href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
-                            <li>@Html.ActionLink("Tauschbörse", "Index", "Home")</li>
+                            <li class="@isActive("trading")"><a href="@Url.Map("tausch", null)">Tauschbörse</a></li>
                             <li>@Html.ActionLink("Forum", "Index", "Home")</li>
                             @if (User.IsInRole("mitarbeiter"))
                             {
@@ -63,6 +65,7 @@
                 </div>
             </div>
             @RenderSection("Submenu", false)
+            @RenderSection("FullWidth", false)
             <div class="clearfix">
                 <div id="content" class="content @(IsSectionDefined("Sidebar") ? "column" : "article-100")">
                     @RenderBody()
@@ -88,7 +91,7 @@
                 <div id="copyright">
                     <div class="clearfix">
                         <div class="copyright-note"><p>&copy; 2006 - @DateTime.Now.Year. Pokefans ist eine private Pokémon-Fanseite.</p></div>
-                        <div class="copyright-links"><p><a href="http://pokefans.net/pokefans/impressum">Kontakt</a> | <a href="http://pokefans.net/pokefans/impressum#datenschutz">Datenschutz</a> | <a href="http://pokefans.net/sitemap">Sitemap</a>  | <img src="http://pokefans.net/images/facebook.png" alt="Facebook" title="Facebook" class="icon"><a href="http://www.facebook.com/pokefans.net">Facebook</a> | <img src="http://pokefans.net/images/symbole/favicons/pinterest.png" alt="Pinterest" title="Pinterest" class="icon"><a href="http://pinterest.com/pokefans/pins/">Pinterest</a> | <img src="http://pokefans.net/images/symbole/favicons/youtube.png" alt="YouTube" title="YouTube" class="icon"><a href="http://www.youtube.com/user/pokefansnet">YouTube</a> | <img src="http://pokefans.net/images/twitter.png" alt="Twitter" title="Twitter" class="icon"><a href="http://twitter.com/PokefansNET">Twitter</a></p></div>
+                        <div class="copyright-links"><p><a href="http://pokefans.net/pokefans/impressum">Kontakt</a> <a href="http://pokefans.net/pokefans/impressum#datenschutz">Datenschutz</a> <a href="http://pokefans.net/sitemap">Sitemap</a> <a href="http://www.facebook.com/pokefans.net"><i class="fa fa-facebook-official fa-2x"></i></a> <a href="http://pinterest.com/pokefans/pins/"><i class="fa fa-pinterest-square fa-2x"></i></a> <a href="http://www.youtube.com/user/pokefansnet"><i class="fa fa-youtube-square fa-2x"></i></a> <a href="http://twitter.com/PokefansNET"><i class="fa fa-twitter-square fa-2x"></i></a> <a href="https://github.com/Pokefans/Pokefans"><i class="fa fa-github-square fa-2x"></i></a></p></div>
                     </div>
                 </div>
             </footer>

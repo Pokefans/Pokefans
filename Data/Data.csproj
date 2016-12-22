@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -202,6 +203,30 @@
     <Compile Include="Migrations\201609021417520_CommentAncestorNullable.cs" />
     <Compile Include="Migrations\201609021417520_CommentAncestorNullable.Designer.cs">
       <DependentUpon>201609021417520_CommentAncestorNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612171932300_Tausch1.cs" />
+    <Compile Include="Migrations\201612171932300_Tausch1.Designer.cs">
+      <DependentUpon>201612171932300_Tausch1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612172052444_Tausch2.cs" />
+    <Compile Include="Migrations\201612172052444_Tausch2.Designer.cs">
+      <DependentUpon>201612172052444_Tausch2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612172123069_Tausch3.cs" />
+    <Compile Include="Migrations\201612172123069_Tausch3.Designer.cs">
+      <DependentUpon>201612172123069_Tausch3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612172126048_Tausch4.cs" />
+    <Compile Include="Migrations\201612172126048_Tausch4.Designer.cs">
+      <DependentUpon>201612172126048_Tausch4.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612172127583_Tausch6.cs" />
+    <Compile Include="Migrations\201612172127583_Tausch6.Designer.cs">
+      <DependentUpon>201612172127583_Tausch6.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201612172143396_Tausch7.cs" />
+    <Compile Include="Migrations\201612172143396_Tausch7.Designer.cs">
+      <DependentUpon>201612172143396_Tausch7.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
@@ -414,6 +439,24 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201609021417520_CommentAncestorNullable.resx">
       <DependentUpon>201609021417520_CommentAncestorNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612171932300_Tausch1.resx">
+      <DependentUpon>201612171932300_Tausch1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612172052444_Tausch2.resx">
+      <DependentUpon>201612172052444_Tausch2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612172123069_Tausch3.resx">
+      <DependentUpon>201612172123069_Tausch3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612172126048_Tausch4.resx">
+      <DependentUpon>201612172126048_Tausch4.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612172127583_Tausch6.resx">
+      <DependentUpon>201612172127583_Tausch6.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612172143396_Tausch7.resx">
+      <DependentUpon>201612172143396_Tausch7.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

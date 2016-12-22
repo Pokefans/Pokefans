@@ -25,6 +25,23 @@ namespace Pokefans
                     defaults: new { controller = "Home", action = "ViewContent", name = UrlParameter.Optional }
                 ));
 
+            routes.Add("TauschIndex", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/",
+                    defaults: new { controller = "Trading", action = "Index" }
+                ));
+            routes.Add("TauschNeu", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/neu",
+                    defaults: new { controller = "Trading", action = "AddOffer" }
+                ));
+
+            routes.Add("TauschDetails", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/{id}",
+                    defaults: new { controller = "Trading", action = "Details" }
+                ));
+
             // api routes
 
             routes.Add("CommentAddApi", new DomainRoute(

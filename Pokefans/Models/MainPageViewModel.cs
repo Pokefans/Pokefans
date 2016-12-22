@@ -13,6 +13,8 @@ namespace Pokefans.Models
 
         public Content Recommendations { get; set; }
 
+        public Content Carousel { get; set; }
+
         public List<Content> News { get; set; }
 
         public List<Fanart> Fanarts { get; set; }

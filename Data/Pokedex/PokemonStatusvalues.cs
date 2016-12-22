@@ -17,8 +17,13 @@ namespace Pokefans.Data.Pokedex
 
         public int SpecialAttack { get; set; }
 
-        public int SpeicalDefense { get; set; }
+        public int SpecialDefense { get; set; }
 
         public int Speed { get; set; }
+
+        public bool Any()
+        {
+            return HP != 0 || Attack != 0 || Defense != 0 || SpecialAttack != 0 || SpecialDefense != 0 || Speed != 0;
+        }
     }
 }

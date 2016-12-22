@@ -29,7 +29,7 @@ namespace Pokefans
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
-                LoginPath = new PathString("/Account/Login"),
+                LoginPath = new PathString("/anmeldung"),
                 Provider = new CookieAuthenticationProvider
                 {
                     OnApplyRedirect = ApplyRedirect, 
@@ -97,7 +97,7 @@ namespace Pokefans
                         context.RedirectUri = "https://";
                     else
                         context.RedirectUri = "http://";
-                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + "/Account/Login";
+                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + "/anmeldung";
                     context.RedirectUri += new QueryString(
                             context.Options.ReturnUrlParameter,
                             context.Request.Uri.AbsoluteUri).ToString();
