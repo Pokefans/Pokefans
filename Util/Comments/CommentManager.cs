@@ -19,7 +19,8 @@ namespace Pokefans.Util.Comments
     {
         Fanart = 1,
         Movesets = 2,
-        Content = 3
+        Content = 3,
+        Trading = 4
     }
 
     public abstract class CommentManager

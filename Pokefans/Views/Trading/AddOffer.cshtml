@@ -42,13 +42,15 @@
         </div>
         <p><button type="submit" class="btn btn-primary">Absenden</button></p>
         <h2 class="size-h4">Eigenschaften</h2>
-        <div class="form-group col-sm-6">
-            <label for="AbilityId">Fähigkeit</label>
-            @Html.DropDownListFor(g => g.AbilityId, (IEnumerable<SelectListItem>)ViewBag.Abilities, new { @class = "form-control" })
-        </div>
-        <div class="form-group col-sm-6">
-            <label for="AbilityId">Wesen</label>
-            @Html.DropDownListFor(g => g.NatureId, (IEnumerable<SelectListItem>)ViewBag.Natures, new { @class = "form-control" })
+        <div class="clearfix">
+            <div class="form-group col-sm-6">
+                <label for="AbilityId">Fähigkeit</label>
+                @Html.DropDownListFor(g => g.AbilityId, (IEnumerable<SelectListItem>)ViewBag.Abilities, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-sm-6">
+                <label for="AbilityId">Wesen</label>
+                @Html.DropDownListFor(g => g.NatureId, (IEnumerable<SelectListItem>)ViewBag.Natures, new { @class = "form-control" })
+            </div>
         </div>
         <div class="checkbox">
             <label>
@@ -171,6 +173,7 @@
 @section scripts {
     @Scripts.Render("~/Scripts/select2.js")
     @Scripts.Render("~/bundles/trumbowyg")
+    @Scripts.Render("~/bundles/waypoints")
     @Scripts.Render("~/Scripts/trading/add.js")
 }
 

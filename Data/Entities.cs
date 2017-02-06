@@ -305,6 +305,8 @@ namespace Pokefans.Data
 
         public virtual DbSet<TradeLog> TradeLogs { get; set; }
 
+        public virtual DbSet<WifiBanlist> WifiBanlist { get; set; }
+
         #endregion
 
         #region Comments

@@ -3,6 +3,7 @@ using Pokefans.Caching;
 using Pokefans.Data;
 using Pokefans.Data.Wifi;
 using Pokefans.Models;
+using Pokefans.Util.Search;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -11,6 +12,9 @@ using System.Security.Claims;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using Lucene.Net.Analysis;
+using Lucene.Net.Search;
+using Lucene.Net.Index;
 
 namespace Pokefans.Controllers
 {
@@ -18,11 +22,17 @@ namespace Pokefans.Controllers
     {
         Entities db;
         Cache cache;
+        private Analyzer analyzer;
+        private Searcher searcher;
+        private IndexWriter writer;
 
-        public TradingController(Entities ents, Cache c)
+        public TradingController(Entities ents, Cache c, IndexWriter wrtr, Searcher srchr, Analyzer ana)
         {
             db = ents;
             cache = c;
+            analyzer = ana;
+            searcher = srchr;
+            writer = wrtr;
         }
 
         // GET: Trading
@@ -49,6 +59,21 @@ namespace Pokefans.Controllers
             tivm.Offers = query.OrderByDescending(g => g.UpdateTime).Take(50).ToList();
 
             return View(tivm);
+        }
+
+        [Authorize]
+        public ActionResult Protocol(int start = 0) {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            var query = db.TradeLogs.Include("Offer").Include("Offer.Pokemon").Include("Offer.Item").Include("UserTo").Where(x => x.UserFromId == uid);
+
+            if(start > 0)
+                query = query.Where(x => x.Id < start);
+
+            var log = query.Take(50).ToList();
+
+            return View(log);
+
         }
 
         [Authorize]
@@ -150,6 +175,18 @@ namespace Pokefans.Controllers
 
             db.WifiOffers.Add(no);
             db.SaveChanges();
+
+            // now we have the database id, let's add this to the search index
+            NormalOffer o = db.WifiOffers.Include("Pokemon")
+                                         .Include("Attack1")
+                                         .Include("Attack2")
+                                         .Include("Attack3")
+                                         .Include("Ability")
+                                         .Include("User")
+                                         .Include("Pokeball")
+                                         .Include("Nature").OfType<NormalOffer>().First(g => g.Id == no.Id);
+
+            writer.AddDocument(DocumentGenerator.WifiOffer(o));
 
             return RedirectToAction("Index");
         }

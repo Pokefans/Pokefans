@@ -1,0 +1,31 @@
+@model List<TradeLog>
+@using Pokefans.Data.Wifi
+@using Pokefans.Data.Pokedex
+
+@{
+    SiteTitle = "Tauschbörse";
+    SiteHeader = "Mein Tauschprotokoll";
+    SiteDescription = "";
+    ActiveMenuKey = "trading";
+
+    Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
+    {
+        { PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
+        { PokemonGeneration.Generation7, "//files.pokefans.net/images/sonne-mond/sonne-mond-logo-klein.png" }
+    };
+    Dictionary<PokemonGeneration, string> names = new Dictionary<PokemonGeneration, string>
+    {
+        { PokemonGeneration.Generation6, "Generation 6 (XY, OR/AS)" },
+        { PokemonGeneration.Generation7, "Generation 7 (Sonne/Mond)" }
+    };
+}
+
+<h2>@SiteHeader</h2>
+
+<table class="table table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Pokémon/Item</th>
+        </tr>
+    </thead>
+</table>

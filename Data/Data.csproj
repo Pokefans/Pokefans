@@ -228,6 +228,15 @@
     <Compile Include="Migrations\201612172143396_Tausch7.Designer.cs">
       <DependentUpon>201612172143396_Tausch7.cs</DependentUpon>
     </Compile>
+    <!--201612251502570_TradeLog1-->
+    <Compile Include="Migrations\201612251502570_TradeLog1.cs" />
+    <Compile Include="Migrations\201612251502570_TradeLog1.Designer.cs">
+      <DependentUpon>201612251502570_TradeLog1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201702062250241_TradeLog2.cs" />
+    <Compile Include="Migrations\201702062250241_TradeLog2.Designer.cs">
+      <DependentUpon>201702062250241_TradeLog2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -351,6 +360,7 @@
     <Compile Include="Pokedex\PokemonAbility.cs" />
     <Compile Include="Pokedex\PokemonPokedexDescription.cs" />
     <Compile Include="Service\QrCode.cs" />
+    <Compile Include="Wifi\WifiBanlist.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -457,6 +467,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201612172143396_Tausch7.resx">
       <DependentUpon>201612172143396_Tausch7.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201612251502570_TradeLog1.resx">
+      <DependentUpon>201612251502570_TradeLog1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201702062250241_TradeLog2.resx">
+      <DependentUpon>201702062250241_TradeLog2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

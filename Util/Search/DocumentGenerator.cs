@@ -7,11 +7,91 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Pokefans.Data.Wifi;
 
 namespace Pokefans.Util.Search
 {
     public class DocumentGenerator
     {
+        public static Document WifiOffer(NormalOffer o) 
+        {
+            Document doc = new Document();
+
+            doc.Add(new Field("type", "fanert", Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("Id", o.Id.ToString(), Field.Store.YES, Field.Index.NO));
+
+            // let's store just enough so we can display results without a database roundtrip
+            doc.Add(new Field("title", o.Title, Field.Store.YES, Field.Index.ANALYZED));
+
+            if(o.Pokemon != null)
+            {
+                doc.Add(new Field("pokemon", o.Pokemon.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("pokemon", o.Pokemon.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+                doc.Add(new Field("pokemonid", o.PokemonId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            }
+
+            if(o.Item != null)
+            {
+                doc.Add(new Field("item", o.Item.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("item", o.Item.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            doc.Add(new Field("user", o.User.UserName, Field.Store.YES, Field.Index.ANALYZED_NO_NORMS));
+            doc.Add(new Field("userid", o.UserId.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
+            doc.Add(new Field("originaltrainer", o.IsOriginalTrainer.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+
+            if(o.Pokeball != null)
+            {
+                doc.Add(new Field("pokeball", o.Pokeball.Name, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            doc.Add(new Field("shiny", o.IsShiny.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("event", o.IsEvent.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("pokerus", o.HasPokerus.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("cheat", o.CheatUsed.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("clone", o.IsClone.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("bottlecaps", o.BottleCapsUsed.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+
+            if(o.Ability != null) 
+            {
+                doc.Add(new Field("fahigkeit", o.Ability.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("fahigkeit", o.Ability.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            if(o.Attack1 != null) 
+            {
+                doc.Add(new Field("attacke", o.Attack1.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("attacke", o.Attack1.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            if(o.Attack2 != null)
+            {
+                doc.Add(new Field("attacke", o.Attack2.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("attacke", o.Attack2.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            if(o.Attack3 != null)
+            {
+                doc.Add(new Field("attacke", o.Attack3.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("attacke", o.Attack3.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            if(o.Attack4 != null)
+            {
+                doc.Add(new Field("attacke", o.Attack4.Name.German, Field.Store.YES, Field.Index.ANALYZED));
+                doc.Add(new Field("attacke", o.Attack4.Name.English, Field.Store.NO, Field.Index.ANALYZED));
+            }
+
+            doc.Add(new Field("evs", o.EffortValues.Any().ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("dvs", o.DeterValues.Any().ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+
+            doc.Add(new Field("generation", ((int)o.Generation).ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("time", o.UpdateTime.ToString("o"), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
+
+            return doc;
+        }
+
+
         public static Document Fanart(Fanart fanart)
         {
             Document doc = new Document();

@@ -15,15 +15,20 @@ namespace Pokefans.Data.Wifi
 
         public int Price { get; set; }
 
-        public int PokemonId { get; set; }
-
-        [ForeignKey("PokemonId")]
-        public Pokemon Pokemon { get; set; }
-
         public int OfferId { get; set; }
 
         [ForeignKey("OfferId")]
         public Offer Offer { get; set; }
+
+        public int UserToId { get; set; }
+
+        [ForeignKey("UserToId")]
+        public User UserTo { get; set; }
+
+        public int UserFromId { get; set; }
+
+        [ForeignKey("UserFromId")]
+        public User UserFrom { get; set; }
 
         public DateTime CompletedTime { get; set; }
 
