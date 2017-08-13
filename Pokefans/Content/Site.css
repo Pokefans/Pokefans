@@ -192,6 +192,12 @@ float: right!important;
 	padding: 0;
     margin-top: -19px;
 }
+
+#pfcarousel .carousel-caption {
+    position: initial;
+    bottom: auto;
+}
+
 .carousel-control {
     height: 400px;
     padding-top: 200px;
@@ -238,7 +244,7 @@ float: right!important;
         padding-right: 0;
     }
 }
-@media (min-width: 768px) {
+@media (max-width: 767px) {
     .container {
         width: auto;
     }

@@ -2,11 +2,20 @@
 @model Pokefans.Data.UserData.UserProfile
 @using Pokefans.Areas.user.Models
 @{
-    SiteTitle = "Benutzer-Profil: " + Model.User.UserName;
+    if(Model != null)
+    {
+        SiteTitle = "Benutzer-Profil: " + Model.User.UserName;
+    }
+    else 
+    {
+        SiteTitle = "Profil nicht gefunden";
+    }
     SiteHeader = "Benutzer-Profil";
     SiteDescription = "";
     ActiveMenuKey = "";
 }
+@if(Model != null)
+{
 <h2>Profil von @Model.User.UserName</h2>
 
 <div class="row">
@@ -80,7 +89,11 @@
 	<dd><i class="fa fa-skype fa-lg"></i> @Model.SkypeUrl</dd>
     }
 </dl>
-
+}
+else {
+    <h2>Profil nicht gefunden</h2>
+    <div class="alert alert-info">Oh nein! Das Profil, das du ansehen möchtest, existiert nicht.</div>
+}
 @section submenu {
     @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("manage", ""))
 }
