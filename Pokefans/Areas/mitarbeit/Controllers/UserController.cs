@@ -397,7 +397,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 return AddAdvertisingError(idproof, advertising);
             }
 
-            if(advertising.UserName != null && !isTargeted) 
+            if(advertising.UserName != null) 
             {
                 advertising.UserUrl = db.Users.Where(x => x.UserName == advertising.UserName).Select(x => x.Url).FirstOrDefault();
                 advertising.UserNameExistsInDb = advertising.UserUrl != null;
