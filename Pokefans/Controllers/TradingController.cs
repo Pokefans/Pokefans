@@ -1,4 +1,5 @@
-﻿using Ganss.XSS;
+﻿// Copyright 2017 the pokefans authors. See copyright.md for legal info.
+using Ganss.XSS;
 using Pokefans.Caching;
 using Pokefans.Data;
 using Pokefans.Data.Wifi;
@@ -75,6 +76,23 @@ namespace Pokefans.Controllers
             return View(log);
 
         }
+
+		[Authorize]
+		public ActionResult My(int start = 0)
+		{
+			int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            //var query = db.TradeLogs.Include("Offer").Include("Offer.Pokemon").Include("Offer.Item").Include("UserTo").Where(x => x.UserFromId == uid);
+            var query = db.WifiOffers.Include("Pokemon").Include("Item").Where(x => x.UserId == uid);
+
+			if (start > 0)
+				query = query.Where(x => x.Id < start);
+
+			var log = query.Take(50).ToList();
+
+			return View(log);
+
+		}
 
         [Authorize]
         public ActionResult AddOffer()

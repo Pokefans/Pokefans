@@ -91,7 +91,8 @@ namespace Pokefans.Util.Comments
                 @"SELECT Comments.Id AS CommentId, Comments.SubmitTime, Comments.ParsedComment AS rawText, 
                          Comments.DisplayPublic, Comments.ParentCommentId, Comments.Level, Comments.Context,
                          Comments.CommentedObjectId, Comments.AuthorId, system_users.name AS Author, system_users.color, 
-                         system_users.mini_avatar_filename AS AvatarFileName 
+                         system_users.mini_avatar_filename AS AvatarFileName,
+                         system_users.GravatarEnabled AS GravatarEnabled, system_users.email AS Email
                 FROM CommentAncestors
                 INNER JOIN Comments ON(Comments.Id = CommentId)
                 JOIN system_users ON(system_users.Id = AuthorId)

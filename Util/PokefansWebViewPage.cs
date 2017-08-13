@@ -65,13 +65,56 @@ namespace Pokefans.Util
             }
         }
 
+        private User _user;
         public User CurrentUser
         {
             get
             {
-                ApplicationUserManager mgr = DependencyResolver.Current.GetService<ApplicationUserManager>();
+                // Let's lookup the user once per request.
+                if (_user == null)
+                {
+                    ApplicationUserManager mgr = DependencyResolver.Current.GetService<ApplicationUserManager>();
 
-                return mgr.FindByNameAsync(User.Identity.Name).Result;
+                    _user = mgr.FindByNameAsync(User.Identity.Name).Result;
+                }
+                return _user;
+            }
+        }
+
+        // This is probably the wrong place in the pipeline for this, but unfortunately
+        // I don't know of a better place that comes in this handy. Suggestions welcome.
+
+        private int? _notifications;
+        public int UnreadNotifications 
+        {
+            get {
+                if(CurrentUser == null) 
+                {
+                    return 0;
+                }
+                if (_notifications == null)
+                {
+                    var db = DependencyResolver.Current.GetService<Entities>();
+                    _notifications = db.UserNotifications.Where(x => x.UserId == CurrentUser.Id).Count();
+                }
+                return _notifications.Value;
+            }
+        }
+
+        private int? _messages;
+        public int UnreadMessages 
+        {
+            get {
+                if(CurrentUser == null)
+                {
+                    return 0;
+                }
+                if(_messages == null) 
+                {
+                    var db = DependencyResolver.Current.GetService<Entities>();
+                    _messages = db.PrivateMessagesInbox.Where(x => x.UserToId == CurrentUser.Id && x.Read == false).Count();
+                }
+                return _messages.Value;
             }
         }
 

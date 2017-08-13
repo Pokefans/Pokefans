@@ -78,7 +78,7 @@
     foreach (var comment in cvm.Comments)
     {
 
-        var avaurl = Url.Map("user/avatare/" + (string.IsNullOrEmpty(comment.AvatarFileName) ? "default.gif" : comment.AvatarFileName), "files");
+        var avaurl = comment.AvatarUrl;
 
         <div class="media" id="@string.Format("k{0}", comment.CommentId)">
             <div class="media-left">

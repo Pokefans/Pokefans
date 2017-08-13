@@ -295,6 +295,18 @@ namespace Pokefans.Data
 
         public virtual DbSet<UserUpload> UserUploads { get; set; }
 
+        public virtual DbSet<PrivateMessage> PrivateMessages { get; set; }
+
+        public virtual DbSet<PrivateMessageInbox> PrivateMessagesInbox { get; set; }
+
+        public virtual DbSet<PrivateMessageInboxLabel> PrivateMessagesInboxLabels { get; set; }
+
+        public virtual DbSet<PrivateMessageLabel> PrivateMessageLabels { get; set; }
+
+        public virtual DbSet<PrivateMessageSent> PrivateMessagesSent { get; set; }
+
+        public virtual DbSet<PrivateMessageSentLabel> PrivateMessagesSentLabels { get; set; }
+
         #endregion
 
         #region Wifi

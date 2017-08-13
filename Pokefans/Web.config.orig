@@ -4,76 +4,6 @@
   "http://go.microsoft.com/fwlink/?LinkId=301880".
   -->
 <configuration>
-<<<<<<< Updated upstream
-    <configSections>
-        <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
-        <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
-        <section name="glimpse" type="Glimpse.Core.Configuration.Section, Glimpse.Core" />
-    </configSections>
-    <appSettings>
-        <add key="webpages:Version" value="3.0.0.0" />
-        <add key="webpages:Enabled" value="false" />
-        <add key="ClientValidationEnabled" value="true" />
-        <add key="UnobtrusiveJavaScriptEnabled" value="true" />
-        <add key="InvalidUsernames" value="ForbiddenUsername" />
-        <add key="SMTPHost" value="localhost" />
-        <add key="SMTPPort" value="25" />
-        <add key="SMTPUser" value="lol" />
-        <add key="SMTPPassowrd" value="rofl" />
-        <add key="FromEmail" value="no-reply@pokefans.net" />
-        <add key="FromEmailName" value="Pokefans.NET" />
-        <add key="VariableLessPath" value="G:\Projekte\Pokefans\pokeboot\less\variables.less" />
-        <add key="ContentStylesheetPath" value="/var/www/pokefans/static/stylesheets/content/" />
-        <add key="Domain" value="pokefans.localhost" />
-        <add key="PreferedProtocol" value="http" />
-        <!-- pun intended -->
-        <!-- Main Page Options -->
-        <add key="StartTeaserId" value="1" />
-        <add key="StartRecommendationsId" value="3" />
-        <add key="StartTriviaId" value="4" />
-        <!-- Fanart Options -->
-        <add key="FanartTeaserArticle" value="2" />
-        <add key="FanartFilePath" value="C:\inetpub\pokefans-files\fanart\uploads\" />
-        <!-- Maximum size of all Updates (in bytes) -->
-        <add key="FanartDiskspace" value="104857600" />
-        <!-- Authentication Options -->
-        <!-- Note that these are all optional, as in they get added to the site. They are by no means exclusive -->
-        <!-- If you set this to true, you need a ClientId and Secret -->
-        <add key="UseMicrosoftAuthentication" value="false" />
-        <add key="MicrosoftAuthenticationClientId" value="" />
-        <add key="MicrosoftAuthenticationClientSecret" value="" />
-        <add key="UseTwitterAuthentication" value="false" />
-        <add key="TwitterAuthenticationConsumerKey" value="" />
-        <add key="TwitterAuthenticationConsumerSecret" value="" />
-        <add key="UseFacebookAuthentication" value="false" />
-        <add key="FacebookAuthenticationAppId" value="" />
-        <add key="FacebookAuthenticationAppSecret" value="" />
-        <add key="UseGoogleAuthentication" value="false" />
-        <add key="GoogleAuthenticationClientId" value="" />
-        <add key="GoogleAuthenticationClientSecret" value="" />
-        <!-- The following Options are for cookie handling -->
-        <add key="CookieName" value="pf-auth-token" />
-        <add key="CookieDomain" value=".pokefans.localhost" />
-        <!-- Should we have a TLS secured login page? -->
-        <add key="HttpsLoginPage" value="false" />
-        <!-- Caching configuration -->
-        <add key="CachingBackend" value="native" />
-        <add key="MemcachedHost" value="" />
-        <add key="MemcachedPort" value="" />
-        <!-- Glimpse web profiler -->
-        <add key="GlimpseEnabled" value="true" />
-        <add key="Debug" value="true" />
-    </appSettings>
-    <system.web>
-        <authentication mode="None" />
-        <compilation debug="true" targetFramework="4.5.1">
-            <assemblies>
-                <add assembly="System.Net.Http.WebRequest, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-            </assemblies>
-        </compilation>
-        <httpRuntime targetFramework="4.5.1" />
-        <!-- Glimpse: This can be commented in to add additional data to the Trace tab when using WebForms
-=======
   <configSections>
     <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false" />
     <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
@@ -91,24 +21,30 @@
     <add key="SMTPPassowrd" value="rofl" />
     <add key="FromEmail" value="no-reply@pokefans.net" />
     <add key="FromEmailName" value="Pokefans.NET" />
-    <add key="VariableLessPath" value="G:\Projekte\Pokefans\pokeboot\less\variables.less" />
-    <add key="ContentStylesheetPath" value="C:\inetpub\pokefans-static\stylesheets\content\" />
+    <add key="VariableLessPath" value="/home/katharina/Pokefans/pokeboot/less/variables.less" />
+    <add key="ContentStylesheetPath" value="/home/katharina/Pokefans/static/stylesheets/content/" />
     <add key="Domain" value="pokefans.rocks" />
     <add key="PreferedProtocol" value="http" />
     <!-- pun intended -->
     <!-- Main Page Options -->
     <add key="StartTeaserId" value="1" />
     <add key="StartRecommendationsId" value="3" />
-    <add key="StartTriviaId" value="4" />
+    <add key="StartTriviaId" value="5" />
+    <add key="StartCarouselId" value="8"/>
     <!-- Fanart Options -->
     <add key="FanartTeaserArticle" value="2" />
-    <add key="FanartFilePath" value="/home/katharina/Pokefans/files/fanart/upload" />
+    <add key="FanartFilePath" value="C:\inetpub\www-files\fanart\uploads\" />
     <!-- Maximum size of all Updates (in bytes) -->
     <add key="FanartDiskspace" value="104857600" />
     <!-- Change this to the userid of the site owner -->
     <add key="OwnerUserId" value="1" />
     <!-- Search related options -->
     <add key="SearchIndexPath" value="/home/katharina/Pokefans/searchindex" />
+    
+    <!-- Trading system options -->
+    <add key="TradingTeaserId" value="6" />
+    <add key="TradingAddInfoSection" value="7" />
+    
     <!-- Authentication Options -->
     <!-- Note that these are all optional, as in they get added to the site. They are by no means exclusive -->
     <!-- If you set this to true, you need a ClientId and Secret -->
@@ -144,103 +80,15 @@
         <add assembly="System.Net.Http.WebRequest, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
       </assemblies>
     </compilation>
-    <httpRuntime targetFramework="4.5.1" />
+    <httpRuntime targetFramework="4.5.1" requestValidationMode="2.0"/>
     <httpCookies domain=".pokefans.rocks" httpOnlyCookies="true" requireSSL="false" />
     <!-- Glimpse: This can be commented in to add additional data to the Trace tab when using WebForms
->>>>>>> Stashed changes
         <trace writeToDiagnosticsTrace="true" enabled="true" pageOutput="false"/> -->
-        <httpModules>
+    <!--<httpModules>
             <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" />
         </httpModules>
         <httpHandlers>
             <add path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" />
-<<<<<<< Updated upstream
-        </httpHandlers>
-    </system.web>
-    <system.webServer>
-        <modules>
-            <remove name="FormsAuthentication" />
-            <add name="Glimpse" type="Glimpse.AspNet.HttpModule, Glimpse.AspNet" preCondition="integratedMode" />
-        </modules>
-        <validation validateIntegratedModeConfiguration="false" />
-        <handlers>
-            <add name="Glimpse" path="glimpse.axd" verb="GET" type="Glimpse.AspNet.HttpHandler, Glimpse.AspNet" preCondition="integratedMode" />
-            <add name="RSS Passthrough" path="*.rss" verb="GET" type="System.Web.Handlers.TransferRequestHandler" preCondition="integratedMode" responseBufferLimit="0" />
-        </handlers>
-        <httpErrors existingResponse="PassThrough">
-        </httpErrors>
-    </system.webServer>
-    <runtime>
-        <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
-            <dependentAssembly>
-                <assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="Microsoft.Owin.Security.OAuth" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="Microsoft.Owin.Security.Cookies" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-3.0.1.0" newVersion="3.0.1.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="Newtonsoft.Json" culture="neutral" publicKeyToken="30ad4fe6b2a6aeed" />
-                <bindingRedirect oldVersion="0.0.0.0-6.0.0.0" newVersion="6.0.0.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="System.Web.Optimization" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="1.0.0.0-1.1.0.0" newVersion="1.1.0.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="WebGrease" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-1.6.5135.21930" newVersion="1.6.5135.21930" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="Antlr3.Runtime" publicKeyToken="eb42632606e9261f" culture="neutral" />
-                <bindingRedirect oldVersion="0.0.0.0-3.5.0.2" newVersion="3.5.0.2" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
-            </dependentAssembly>
-            <dependentAssembly>
-                <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" />
-                <bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
-            </dependentAssembly>
-        </assemblyBinding>
-    </runtime>
-    <system.data>
-        <DbProviderFactories>
-            <remove invariant="MySql.Data.MySqlClient" />
-            <add name="MySQL Data Provider" invariant="MySql.Data.MySqlClient" description=".Net Framework Data Provider for MySQL" type="MySql.Data.MySqlClient.MySqlClientFactory, MySql.Data, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
-        </DbProviderFactories>
-    </system.data>
-    <entityFramework>
-        <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
-        <providers>
-            <provider invariantName="MySql.Data.MySqlClient" type="MySql.Data.MySqlClient.MySqlProviderServices, MySql.Data.Entity.EF6, Version=6.9.6.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d" />
-        </providers>
-    </entityFramework>
-    <connectionStrings>
-        <add name="Entities" connectionString="Server=127.0.0.1;Uid=root;Database=pf-neu;Allow User Variables=True" providerName="MySql.Data.MySqlClient" />
-    </connectionStrings>
-    <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
-        <runtimePolicies>
-            <ignoredTypes>
-                <add type="Glimpse.AspNet.Policy.LocalPolicy, Glimpse.AspNet" />
-            </ignoredTypes>
-        </runtimePolicies>
-        <!-- 
-=======
         </httpHandlers>-->
   </system.web>
   <system.webServer>
@@ -320,11 +168,16 @@
   <entityFramework>
     <defaultConnectionFactory type="System.Data.Entity.Infrastructure.SqlConnectionFactory, EntityFramework" />
     <providers>
-      <provider invariantName="MySql.Data.MySqlClient" type="MySql.Data.MySqlClient.MySqlProviderServices, MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d"></provider>
+      <provider invariantName="MySql.Data.MySqlClient" type="MySql.Data.MySqlClient.MySqlProviderServices, MySql.Data.Entity.EF6, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d">
+      </provider>
     </providers>
   </entityFramework>
   <connectionStrings>
-    <add name="Entities" connectionString="Server=localhost;Uid=root;Database=pf-neu;Allow User Variables=True" providerName="MySql.Data.MySqlClient" />
+<<<<<<< Updated upstream
+    <add name="Entities" connectionString="Server=127.0.0.1;Uid=root;Database=pf-neu;Allow User Variables=True" providerName="MySql.Data.MySqlClient" />
+=======
+    <add name="Entities" connectionString="Server=localhost;Uid=root;Database=pftest;Allow User Variables=True" providerName="MySql.Data.MySqlClient" />
+>>>>>>> Stashed changes
   </connectionStrings>
   <glimpse defaultRuntimePolicy="On" endpointBaseUri="~/Glimpse.axd">
     <runtimePolicies>
@@ -333,9 +186,8 @@
       </ignoredTypes>
     </runtimePolicies>
     <!-- 
->>>>>>> Stashed changes
           For more information on how to configure Glimpse, please visit http://getglimpse.com/Help/Configuration
           or access {your site}/Glimpse.axd for even more details and a Configuration Tool to support you. 
       -->
-    </glimpse>
+  </glimpse>
 </configuration>

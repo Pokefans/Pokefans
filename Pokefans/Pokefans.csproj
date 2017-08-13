@@ -333,6 +333,9 @@
     <Compile Include="Areas\sfc\Controllers\SfcHomeController.cs" />
     <Compile Include="Areas\sfc\Models\NewsArchiveViewModel.cs" />
     <Compile Include="Models\MainPageViewModel.cs" />
+    <Compile Include="Controllers\StaticFileController.cs" />
+    <Compile Include="Areas\user\Controllers\ProfileController.cs" />
+    <Compile Include="Areas\user\Models\UserSubmenuViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -647,6 +650,10 @@
     <Content Include="Views\Trading\_submenuPartial.cshtml" />
     <Content Include="Views\Trading\AddOffer.cshtml" />
     <Content Include="Views\Trading\Details.cshtml" />
+    <Content Include="Views\Trading\Protocol.cshtml" />
+    <Content Include="Views\Trading\My.cshtml" />
+    <Content Include="Areas\user\Views\Profile\ViewProfile.cshtml" />
+    <Content Include="Areas\user\Views\Shared\_submenuPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -656,6 +663,7 @@
     <Folder Include="Areas\tools\Views\Shared\" />
     <Folder Include="Areas\user\Models\" />
     <Folder Include="Areas\user\Views\Shared\" />
+    <Folder Include="Areas\user\Views\Profile\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

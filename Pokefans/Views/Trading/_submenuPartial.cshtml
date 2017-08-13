@@ -17,7 +17,7 @@
         </form>
         <ul class="nav navbar-nav navbar-right">
             <li class="@(Model.ActiveMenuKey == "add" ? "active" : "")"><a href="@Url.Action("AddOffer", "Trading")" title="Angebot hinzufügen"><i class="fa fa-plus fa-lg"></i>Angebot hinzufügen</a></li>
-            <li class="@(Model.ActiveMenuKey == "own" ? "active" : "")"><a href="@Url.Action("MyOffers", "Trading")" title="Meine Angebote"><i class="fa fa-th-list fa-lg"></i> Meine Angebote</a></li>
+            <li class="@(Model.ActiveMenuKey == "own" ? "active" : "")"><a href="@Url.Action("My", "Trading")" title="Meine Angebote"><i class="fa fa-th-list fa-lg"></i> Meine Angebote</a></li>
             <li class="@(Model.ActiveMenuKey == "protocol" ? "active" : "")"><a href="@Url.Action("Protocol","Trading")" title="Mein Tauschprotokoll"><i class="fa fa-list-alt fa-lg"></i> Mein Tauschprotokoll</a></li>
         </ul>
     </div>

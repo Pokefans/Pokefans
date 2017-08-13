@@ -24,7 +24,7 @@ function insertComment(comment) {
     // Wenn der Autor einen Mini-Avatar hat, soll der ebenfalls angezeigt werden
     if (comment.avatarFilename) {
         var $miniAvatar = $commentTemplate.find('[data-role="miniAvatar"]');
-        $miniAvatar.attr('src', $miniAvatar.data('avatarurl') + comment.AvatarFileName);
+        $miniAvatar.attr('src', comment.AvatarUrl);
     }
 
     // Kommentar-Erstellzeit

@@ -7,7 +7,18 @@
     @Html.AntiForgeryToken()
 
             @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { Area = "user" }, htmlAttributes: new { title = "Manage" })
-        <a href="javascript:document.getElementById('logoutForm').submit()">Abmelden</a>
+        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i> Abmelden</a>
+        @* This needs to get a popover done; also loading more with AJAX. *@
+        <a href="#">&nbsp;<i class="fa fa-envelope fa-lg"></i>
+        @if(UnreadMessages > 0) {
+            <span class="label label-default mini-counter">@UnreadMessages.ToString()</span>
+	    }
+        </a>
+        <a href="#">&nbsp;<i class="fa fa-bell fa-lg"></i>
+        @if(UnreadNotifications > 0) {
+            <span class="label label-default mini-counter">@UnreadNotifications.ToString()</span>
+        }
+        </a>
     }
 }
 else

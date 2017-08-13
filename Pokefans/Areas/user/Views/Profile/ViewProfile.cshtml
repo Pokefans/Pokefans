@@ -1,0 +1,86 @@
+﻿@*Copyright 2017 the pokefans authors. See copying.md for legal info.*@
+@model Pokefans.Data.UserData.UserProfile
+@using Pokefans.Areas.user.Models
+@{
+    SiteTitle = "Benutzer-Profil: " + Model.User.UserName;
+    SiteHeader = "Benutzer-Profil";
+    SiteDescription = "";
+    ActiveMenuKey = "";
+}
+<h2>Profil von @Model.User.UserName</h2>
+
+<div class="row">
+<div class="col-sm-8">
+<h3>Profildaten</h3>
+		<div class="col-sm-3"><img class="img-responsive" src="@Model.User.AvatarUrl&s=200"></div>
+		<div class="col-sm-9">
+<dl class="dl-horizontal">
+	@if(!String.IsNullOrWhiteSpace(Model.OldUsername)) {
+    <dt>Alter Benutzername</dt>
+	<dd>@Model.OldUsername</dd>
+	}
+	<dt>Benutzer-Id</dt>
+	<dd>#@Model.UserId.ToString()</dd>
+	<dt>Anmeldungsdatum</dt>
+	<dd>@Model.User.Registered.ToString("dd.MM.yyyy")</dd>
+	<dt>Forenbeiträge und <br /> Kommentare</dt>
+	<dd><span class="blur">Todo...</span></dd>
+	<dt>Artworks</dt>
+	<dd>@Model.User.FanartCount</dd>
+</dl>
+			</div>
+</div>
+<div class="col-sm-4">
+@if(!String.IsNullOrWhiteSpace(Model.Gender) || 
+    Model.Age > 0 || !String.IsNullOrWhiteSpace(Model.FirstName) || 
+    !String.IsNullOrWhiteSpace(Model.Hometown) ||
+    !String.IsNullOrWhiteSpace(Model.Occupation) ||
+    !String.IsNullOrWhiteSpace(Model.FavoritePokemon)) {
+
+<h3>Persönliche Details</h3>
+
+<dl class="dl-horizontal">
+	@if(Model.Age > 0) {
+    <dt>Alter</dt>
+	<dd>@Model.Age</dd>
+    }
+	@if(!String.IsNullOrWhiteSpace(Model.Gender)) {
+	<dt>Geschlecht</dt>
+	<dd>@Model.Gender</dd>
+	}
+	@if(!String.IsNullOrWhiteSpace(Model.FirstName)) {
+    <dt>Vorname</dt>
+    <dd>@Model.FirstName</dd>
+    }
+	@if(!String.IsNullOrWhiteSpace(Model.Hometown)) {
+	<dt>Wohnort</dt>
+	<dd>@Model.Hometown</dd>
+    }
+	@if(!String.IsNullOrWhiteSpace(Model.Occupation)) {
+	<dt>Beschäftigung</dt>
+	<dd>@Model.Occupation</dd>
+	}
+    @if(!String.IsNullOrWhiteSpace(Model.FavoritePokemon)) {
+	<dt>Lieblings-Pokémon</dt>
+	<dd>@Model.FavoritePokemon</dd>
+    }
+</dl>
+}
+</div>
+</div>
+
+<h3>Kontaktadressen</h3>
+<dl class="dl-horizontal">
+	@if(!String.IsNullOrWhiteSpace(Model.JabberId)) {
+    <dt>Jabber</dt>
+	<dd><i class="fa fa-lightbulb-o fa-lg"></i> @Model.JabberId</dd>
+	}
+    @if(!String.IsNullOrWhiteSpace(Model.SkypeUrl)) {
+	<dt>Skype</dt>
+	<dd><i class="fa fa-skype fa-lg"></i> @Model.SkypeUrl</dd>
+    }
+</dl>
+
+@section submenu {
+    @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("manage", ""))
+}

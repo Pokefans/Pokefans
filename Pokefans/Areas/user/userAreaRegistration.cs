@@ -30,6 +30,12 @@ namespace Pokefans.Areas.user
 
 
             context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "",
+                new { action = "Index", controller = "Profile" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
                     "user." + ConfigurationManager.AppSettings["Domain"],
                     "anmeldung",
                     new { action = "Login", controller = "Account", id = UrlParameter.Optional }));
@@ -57,7 +63,7 @@ namespace Pokefans.Areas.user
             context.Routes.Add(new DomainRoute(
                     "user." + ConfigurationManager.AppSettings["Domain"],
                     "profil/{id}",
-                    new { action = "View", controller = "Profile"}
+                    new { action = "ViewProfile", controller = "Profile"}
                 ));
 
             context.Routes.Add("userDefault", route);

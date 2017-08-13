@@ -1,10 +1,10 @@
-@model List<TradeLog>
+﻿@model List<Offer>
 @using Pokefans.Data.Wifi
 @using Pokefans.Data.Pokedex
 @using Pokefans.Models
 @{
     SiteTitle = "Tauschbörse";
-    SiteHeader = "Mein Tauschprotokoll";
+    SiteHeader = "Meine Angebote";
     SiteDescription = "";
     ActiveMenuKey = "trading";
 
@@ -22,12 +22,10 @@
 
 <h2>@SiteHeader</h2>
 
-
 @if(Model.Count > 0) {
 <ul class="list-unstyled tradinglist">
-        @foreach (var log in Model)
+        @foreach (var offer in Model)
         {
-	        var offer = log.Offer;
             <li class="clearfix">
                 <div class="col-sm-10">
                     <div class="lpic">
@@ -35,7 +33,7 @@
                         <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
                     </div>
                     <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
-                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="#">@offer.User.UserName</a> an <a href="#">@log.UserTo.UserName</a> (@log.CompletedTime.ToString("DD.MM.YYYY"))<br />
+                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="#">@offer.User.UserName</a><br />
                     @{
                         List<string> l = new List<string>();
                         l.Add(string.Format("Level {0}", offer.Level));
@@ -76,11 +74,11 @@
             </li>
                         }
     </ul>
-}
+    }
 else {
-    <div class="alert alert-info">Du scheinst noch nichts getauscht zu haben. <a href="@Url.Action("AddOffer")">Erstelle jetzt ein Angebot!</a></div>
+    <div class="alert alert-info">Die Liste deiner Angebote ist so leer wie deine Boxen - <a href="@Url.Action("AddOffer")">erstelle jetzt ein Angebot!</a></div>
 }
 
 @section submenu {
-    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "protocol", SearchTerm = "" })
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "own", SearchTerm = "" })
 }

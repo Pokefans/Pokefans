@@ -167,3 +167,6 @@ Pokefans/contrib/
 
 # vim stuff
 *.swp
+
+# ignore subdomains-folder, which would be mapped to eg. files. or static. while in development.
+subdomains/

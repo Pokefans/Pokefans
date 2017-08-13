@@ -3,10 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Data.Entity.ModelConfiguration;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -110,6 +112,10 @@ namespace Pokefans.Data
         [Column("mini_avatar_filename")]
         protected string _miniAvatarFileName { get; set; }
 
+        public bool GravatarEnabled { get; set; }
+
+        public virtual int FanartCount { get; set; }
+
         [NotMapped]
         public virtual string MiniAvatarFileName
         {
@@ -120,6 +126,22 @@ namespace Pokefans.Data
             set
             {
                 _miniAvatarFileName = value;
+            }
+        }
+
+        [NotMapped]
+        public string AvatarUrl {
+            get {
+                if(GravatarEnabled)
+                {
+                    byte[] bytemail = new UTF8Encoding().GetBytes(Email);
+                    byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(bytemail);
+                    return "https://www.gravatar.com/avatar/"+BitConverter.ToString(hash).Replace("-","").ToLower()+"?d=identicon";
+                }
+                else
+                {
+                    return "//files." + ConfigurationManager.AppSettings["Domain"] + "/user/avatare/" + MiniAvatarFileName;
+                }
             }
         }
 

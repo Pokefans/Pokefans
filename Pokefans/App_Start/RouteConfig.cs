@@ -11,7 +11,19 @@ namespace Pokefans
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-            routes.IgnoreRoute("glimpse.axd");
+
+#if DEBUG
+            routes.Add("FileServer", new CatchAllDomainRoute(
+                    "files." + ConfigurationManager.AppSettings["Domain"],
+                    url: "{*url}",
+                    defaults: new { controller = "StaticFile", action = "Files" }
+                ));
+            routes.Add("StaticServer", new CatchAllDomainRoute(
+                    "files." + ConfigurationManager.AppSettings["Domain"],
+                    url: "{*url}",
+                    defaults: new { controller = "StaticFile", action = "Static" }
+                ));
+#endif
 
             routes.Add("Home", new DomainRoute(
                     ConfigurationManager.AppSettings["Domain"],
@@ -36,11 +48,23 @@ namespace Pokefans
                     defaults: new { controller = "Trading", action = "AddOffer" }
                 ));
 
+			routes.Add("TauschMy", new DomainRoute(
+					ConfigurationManager.AppSettings["Domain"],
+					url: "tausch/meine-angebote",
+					defaults: new { controller = "Trading", action = "My" }
+				));
+			routes.Add("TauschProtocol", new DomainRoute(
+					ConfigurationManager.AppSettings["Domain"],
+					url: "tausch/protokoll",
+					defaults: new { controller = "Trading", action = "Protocol" }
+				));
+
             routes.Add("TauschDetails", new DomainRoute(
                     ConfigurationManager.AppSettings["Domain"],
                     url: "tausch/{id}",
                     defaults: new { controller = "Trading", action = "Details" }
                 ));
+
 
             // api routes
 

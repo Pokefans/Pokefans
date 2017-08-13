@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Security.Cryptography;
+using Newtonsoft.Json;
 
 namespace Pokefans.Data.ViewModels
 {
@@ -43,6 +46,25 @@ namespace Pokefans.Data.ViewModels
         public string Author { get; set; }
         public int AuthorId { get; set; }
         public string AvatarFileName { get; set; }
+        public bool GravatarEnabled { get; set; }
+        [JsonIgnore]
+        protected string Email { get; set; }
+        public string AvatarUrl 
+        {
+			get
+			{
+				if (GravatarEnabled)
+				{
+					byte[] bytemail = new UTF8Encoding().GetBytes(Email);
+					byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(bytemail);
+					return "https://www.gravatar.com/avatar/" + BitConverter.ToString(hash).Replace("-", "").ToLower() + "?d=identicon&s=40";
+				}
+				else
+				{
+					return "//files." + ConfigurationManager.AppSettings["Domain"] + "/user/avatare/" + AvatarFileName;
+				}
+			}
+        }
         public bool DisplayPublic { get; set; }
 
         private string rawText { get; set; }

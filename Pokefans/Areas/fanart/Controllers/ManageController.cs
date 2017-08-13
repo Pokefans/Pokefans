@@ -122,6 +122,9 @@ namespace Pokefans.Areas.fanart.Controllers
 
             // ToDo: delete Comments
             db.Fanarts.Remove(art);
+            User u = db.Users.First(x => x.Id == cuid);
+            u.FanartCount--;
+            db.SetModified(u);
             db.SaveChanges();
 
             return new RedirectToRouteResult(new RouteValueDictionary(new { action = "Index", controller = "FanartHome" }));
@@ -329,6 +332,9 @@ namespace Pokefans.Areas.fanart.Controllers
                 db.SaveChanges();
                 // TODO: figure out a better way to do this whithout a Database roundtrip. Not using Auto Increment is a bad idea tough (race conditions)
                 art.Url = "u" + currentUserId.ToString() + "/f" + art.Id + formatExtensions[img.RawFormat];
+                User u = db.Users.First(x => x.Id == currentUserId);
+                u.FanartCount++;
+                db.SetModified(u);
                 db.SetModified(art);
                 db.SaveChanges();
 

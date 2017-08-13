@@ -81,6 +81,9 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Configuration" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RegularExpressionWithOptionsAttribute.cs" />
@@ -237,6 +240,18 @@
     <Compile Include="Migrations\201702062250241_TradeLog2.Designer.cs">
       <DependentUpon>201702062250241_TradeLog2.cs</DependentUpon>
     </Compile>
+	<Compile Include="Migrations\201708110006552_ProfilePagePartOne.cs" />
+    <Compile Include="Migrations\201708110006552_ProfilePagePartOne.Designer.cs">
+	  <DependentUpon>201708110006552_ProfilePagePartOne.cs</DependentUpon>
+	</Compile>
+	<Compile Include="Migrations\201708122354030_PrivateMessages.cs" />
+    <Compile Include="Migrations\201708122354030_PrivateMessages.Designer.cs">
+		<DependentUpon>201708122354030_PrivateMessages.cs</DependentUpon>
+	</Compile>
+	<Compile Include="Migrations\201708130048047_Gravatar.cs" />
+    <Compile Include="Migrations\201708130048047_Gravatar.Designer.cs">
+		<DependentUpon>201708130048047_Gravatar.cs</DependentUpon>
+	</Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -361,12 +376,19 @@
     <Compile Include="Pokedex\PokemonPokedexDescription.cs" />
     <Compile Include="Service\QrCode.cs" />
     <Compile Include="Wifi\WifiBanlist.cs" />
+    <Compile Include="User\PrivateMessage.cs" />
+    <Compile Include="User\PrivateMessageInbox.cs" />
+    <Compile Include="User\PrivateMessageSent.cs" />
+    <Compile Include="User\PrivateMessageLabel.cs" />
+    <Compile Include="User\PrivateMessageInboxLabel.cs" />
+    <Compile Include="User\PrivateMessageSentLabel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
+    <None Include="Migrations\201708130048047_Gravatar.resx" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
@@ -474,6 +496,15 @@
     <EmbeddedResource Include="Migrations\201702062250241_TradeLog2.resx">
       <DependentUpon>201702062250241_TradeLog2.cs</DependentUpon>
     </EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201708110006552_ProfilePagePartOne.resx">
+      <DependentUpon>201708110006552_ProfilePagePartOne.cs</DependentUpon>
+	</EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708122354030_PrivateMessages.resx">
+		<DependentUpon>201708122354030_PrivateMessages.cs</DependentUpon>
+	</EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201708130048047_Gravatar.resx">
+		<DependentUpon>201708130048047_Gravatar.cs</DependentUpon>
+	</EmbeddedResource>	
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

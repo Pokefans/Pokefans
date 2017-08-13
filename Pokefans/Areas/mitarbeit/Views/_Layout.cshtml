@@ -105,14 +105,14 @@
                             <!-- Menu Toggle Button -->
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                 <!-- The user image in the navbar-->
-                                <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="user-image" alt="User Image" />
+                                <img src="@CurrentUser.AvatarUrl" class="user-image" alt="User Image" />
                                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                                 <span class="hidden-xs">@CurrentUser.UserName</span>
                             </a>
                             <ul class="dropdown-menu">
                                 <!-- The user image in the menu -->
                                 <li class="user-header">
-                                    <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="img-circle" alt="User Image" />
+                                    <img src="@CurrentUser.AvatarUrl" class="img-circle" alt="User Image" />
                                     <p>
                                         @CurrentUser.UserName
                                         <small>Mitglied seit @CurrentUser.Registered.Year</small>
@@ -158,7 +158,7 @@
                 <!-- Sidebar user panel (optional) -->
                 <div class="user-panel">
                     <div class="pull-left image">
-                        <img src="@Html.ResourceLink("user/avatare/" + CurrentUser.MiniAvatarFileName, "files")" class="img-circle" alt="Miniavatar" />
+                        <img src="@CurrentUser.AvatarUrl" class="img-circle" alt="Miniavatar" />
                     </div>
                     <div class="pull-left info">
                         <p>@CurrentUser.UserName</p>

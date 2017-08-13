@@ -35,6 +35,9 @@ namespace Pokefans.Data.UserData
         [MaxLength(100)]
         public string Gender { get; set; }
 
+        [MaxLength(20)]
+        public string Pronoun { get; set; }
+
         [MaxLength(255)]
         public string Interests { get; set; }
 
@@ -114,12 +117,15 @@ namespace Pokefans.Data.UserData
         public string PinterestUrl { get; set; }
 
         [MaxLength(100)]
-        public string FriendfeedName  { get; set; }
+        public string FriendfeedName { get; set; }
 
         [MaxLength(100)]
         public string DropIoName { get; set; }
 
         [MaxLength(100)]
         public string WerKenntWenUrl { get; set; }
+
+        [MaxLength(100)]
+        public string DiscordName { get; set; }
     }
 }

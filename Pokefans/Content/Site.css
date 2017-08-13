@@ -232,3 +232,14 @@ float: right!important;
 #breadcrumbs {
     padding: 2em 0 3em 0;
 }
+@media (max-width: 1199px) {
+    .container {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+@media (min-width: 768px) {
+    .container {
+        width: auto;
+    }
+}

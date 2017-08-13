@@ -19,6 +19,7 @@ using Pokefans.Data;
 using Pokefans.Models;
 using Pokefans.Security;
 using Pokefans.Util;
+using Pokefans.Data.UserData;
 
 namespace Pokefans.Controllers
 {
@@ -191,7 +192,10 @@ namespace Pokefans.Controllers
                 if (result.Succeeded)
                 {
                     SignInManager.SignIn(user, isPersistent:false, rememberBrowser:false);
-
+                    UserProfile p = new UserProfile();
+                    p.UserId = user.Id;
+                    _entities.UserProfile.Add(p);
+                    _entities.SaveChanges();
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
