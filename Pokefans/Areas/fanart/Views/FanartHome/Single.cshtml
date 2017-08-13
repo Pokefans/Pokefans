@@ -45,7 +45,7 @@
         <li class="rating-star" data-active="@Model.IsRatingActive" data-id="@Model.Fanart.Id">@RenderStars(Model.Fanart.Rating)</li>
         <li><i class="fa fa-upload"></i> @Model.Fanart.UploadTime.ToString("d.M.yyyy H:m")</li>
         @*Verlinkung zur Suche nach Fanarts für bestimmten Nutzer, da Suche noch nicht implementiert = kein Link*@
-        <li><i class="fa fa-user"></i> <a href="#">@Model.Fanart.UploadUser.UserName</a></li>
+        <li><i class="fa fa-user"></i> <a href="@Url.Map("profil/"+Model.Fanart.UploadUser.Url,"user")">@Model.Fanart.UploadUser.UserName</a></li>
     </ul>
     <div>
         @foreach (var tag in Model.Fanart.Tags)

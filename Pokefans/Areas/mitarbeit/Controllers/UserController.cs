@@ -66,6 +66,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 User current = userManager.FindByNameAsync(User.Identity.Name).Result;
                 if(!current.IsInRole("superadmin", cache, db))
                 {
+                    // todo: fix that
                     int id;
                     if (int.TryParse(filterContext.ActionParameters["id"].ToString(), out id)) // no id? nothing to check.
                     {
@@ -394,6 +395,13 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             else if (advertising.UserName == null && isTargeted)
             {
                 return AddAdvertisingError(idproof, advertising);
+            }
+
+            if(advertising.UserName != null && !isTargeted) 
+            {
+                advertising.UserUrl = db.Users.Where(x => x.UserName == advertising.UserName).Select(x => x.Url).FirstOrDefault();
+                advertising.UserNameExistsInDb = advertising.UserUrl != null;
+
             }
 
             int currentUserId = userManager.FindByNameAsync(User.Identity.Name).Result.Id;

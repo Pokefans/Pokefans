@@ -37,7 +37,7 @@ namespace Pokefans.Areas.user.Controllers
             if(!int.TryParse(url, out uid)) {
                 var nuid = db.Users.Where(x => x.Url == url).FirstOrDefault();
                 if(nuid == null)
-                    return View("~/Areas/user/Views/Profile/Profile.cshtml", null);
+                    return View("~/Areas/user/Views/Profile/ViewProfile.cshtml", null);
                 uid = nuid.Id;
             }
 			// uid is now guaranteed to be different to -1: either it was numeric in the first place,

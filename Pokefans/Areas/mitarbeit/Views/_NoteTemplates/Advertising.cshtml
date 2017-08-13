@@ -8,6 +8,11 @@
 Werbung für Webseite <a href="@Html.Raw(Uri.EscapeDataString(Model.Uaavm.Url))">@Model.Uaavm.Url</a> in <strong>@Model.AdvertisingForm</strong> 
 @if (Model.Uaavm.UserName != null)
 {
-    <text>(Ziel: <strong>@Url.Action("Profile", "User", new { id = Model.Uaavm.UserName }, "user", null)</strong>)</text>
+    if(Model.Uaavm.UserExistsInDb) {
+    <text>(Ziel: <strong><a href="@Url.Map("profil/"+ Model.Uaavm.UserUrl }, "user")">@Model.Uaavm.UserName</a></strong>)</text>
+    }
+    else {
+    <text>(Ziel: <strong>@Model.Uaavm.UserName</strong>)</text>
+    }
 }
 .

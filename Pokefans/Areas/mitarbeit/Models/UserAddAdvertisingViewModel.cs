@@ -33,6 +33,8 @@ namespace Pokefans.Areas.mitarbeit.Models
         /// </value>
         public string UserName { get; set; }
 
+        public string UserUrl { get; set; }
+
         /// <summary>
         /// Gets or sets the screenshot URL.
         /// </summary>
@@ -40,5 +42,7 @@ namespace Pokefans.Areas.mitarbeit.Models
         /// The screenshot URL (if any).
         /// </value>
         public string ScreenshotUrl { get; set; }
+
+        public bool UserNameExistsInDb { get; set; }
     }
 }
