@@ -70,6 +70,12 @@ namespace Pokefans.Util
         {
             get
             {
+                // there can be no user if we are not authenticated.
+                if(!User.Identity.IsAuthenticated) 
+                {
+                    return null;
+                }
+
                 // Let's lookup the user once per request.
                 if (_user == null)
                 {

@@ -2,9 +2,11 @@
 @model Pokefans.Data.UserData.UserProfile
 @using Pokefans.Areas.user.Models
 @{
+    Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
     if(Model != null)
     {
         SiteTitle = "Benutzer-Profil: " + Model.User.UserName;
+        Breadcrumbs.Add("Profil von " + Model.User.UserName);
     }
     else 
     {
@@ -14,6 +16,7 @@
     SiteDescription = "";
     ActiveMenuKey = "";
     Model.User.GravatarOptions = "&s=200";
+
 }
 @if(Model != null)
 {

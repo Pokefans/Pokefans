@@ -13,6 +13,7 @@ using System.Security.Claims;
 
 namespace Pokefans.Areas.user.Controllers
 {
+	[Authorize]
     public class ProfileController : Controller
     {
 		Entities db;
@@ -21,7 +22,6 @@ namespace Pokefans.Areas.user.Controllers
             db = ents;
         }
 
-        [Authorize]
         public ActionResult Index() {
             int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
 
