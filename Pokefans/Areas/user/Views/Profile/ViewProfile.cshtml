@@ -13,6 +13,7 @@
     SiteHeader = "Benutzer-Profil";
     SiteDescription = "";
     ActiveMenuKey = "";
+    Model.User.GravatarOptions = "&s=200";
 }
 @if(Model != null)
 {
@@ -21,7 +22,7 @@
 <div class="row">
 <div class="col-sm-8">
 <h3>Profildaten</h3>
-		<div class="col-sm-3"><img class="img-responsive" src="@Model.User.AvatarUrl&s=200"></div>
+		<div class="col-sm-3"><img class="img-responsive" src="@Model.User.AvatarUrl"></div>
 		<div class="col-sm-9">
 <dl class="dl-horizontal">
 	@if(!String.IsNullOrWhiteSpace(Model.OldUsername)) {

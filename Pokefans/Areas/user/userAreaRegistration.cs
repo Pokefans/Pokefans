@@ -62,7 +62,7 @@ namespace Pokefans.Areas.user
 
             context.Routes.Add(new DomainRoute(
                     "user." + ConfigurationManager.AppSettings["Domain"],
-                    "profil/{id}",
+                    "profil/{url}",
                     new { action = "ViewProfile", controller = "Profile"}
                 ));
 

@@ -176,14 +176,15 @@ namespace Pokefans.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new User 
-                { 
-                    UserName = model.UserName, 
+                var user = new User
+                {
+                    UserName = model.UserName,
                     Email = model.Email,
                     Registered = DateTime.Now,
                     RegisteredIp = SecurityUtils.GetIPAddressAsString(HttpContext),
                     EmailConfirmed = true, // todo: add email validation
-                    IsLockedOut = false
+                    IsLockedOut = false,
+                    GravatarEnabled = true
                 };
 
                 user.Url = user.GenerateUrl();

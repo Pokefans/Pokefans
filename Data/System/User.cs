@@ -23,6 +23,7 @@ namespace Pokefans.Data
     {
         public User()
         {
+            GravatarOptions = "";
         }
 
 
@@ -32,7 +33,7 @@ namespace Pokefans.Data
 
         [Required(ErrorMessage = "Du musst einen Benutzernamen angeben")]
         [MaxLength(45, ErrorMessage = "Dein Benutzername darf maximal 45 Zeichen lang sein.")]
-        [RegularExpression(@"^[a-zA-Z][a-zA-Z0-9-_ ]{0,43}[a-zA-Z0-9]$", ErrorMessage = "Dein Benutzername darf nur aus Großbuchstaben, Kleinbuchstaben, Bindestrich (-) und Unterstich(_) bestehen. Außerdem muss er mit einem Buchstaben beginnen und darf nicht mit Bindestrich oder Unterstrich aufhören.")]
+        [RegularExpression(@"^[a-zA-ZäöüßÄÖÜ][a-zA-Z0-9-_ äöüßÄÖÜ]{0,43}[a-zA-Z0-9äöüßÄÖÜ]$", ErrorMessage = "Dein Benutzername darf nur aus Großbuchstaben, Kleinbuchstaben, Bindestrich (-) und Unterstich(_) bestehen. Außerdem muss er mit einem Buchstaben beginnen und darf nicht mit Bindestrich oder Unterstrich aufhören.")]
         [Column("name", TypeName = "VARCHAR")]
         [Index]
         public virtual string UserName { get; set; }
@@ -130,13 +131,16 @@ namespace Pokefans.Data
         }
 
         [NotMapped]
+        public string GravatarOptions { get; set; }
+
+        [NotMapped]
         public string AvatarUrl {
             get {
                 if(GravatarEnabled)
                 {
                     byte[] bytemail = new UTF8Encoding().GetBytes(Email);
                     byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(bytemail);
-                    return "https://www.gravatar.com/avatar/"+BitConverter.ToString(hash).Replace("-","").ToLower()+"?d=identicon";
+                    return "https://www.gravatar.com/avatar/"+BitConverter.ToString(hash).Replace("-","").ToLower()+"?d=identicon"+GravatarOptions;
                 }
                 else
                 {
