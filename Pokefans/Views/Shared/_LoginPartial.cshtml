@@ -9,12 +9,12 @@
             @Html.ActionLink("Hallo " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: new { Area = "user" }, htmlAttributes: new { title = "Manage" })
         <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i> Abmelden</a>
         @* This needs to get a popover done; also loading more with AJAX. *@
-        <a href="#">&nbsp;<i class="fa fa-envelope fa-lg"></i>
+        <a href="#" id="userbar-messages-button">&nbsp;<i class="fa fa-envelope fa-lg"></i>
         @if(UnreadMessages > 0) {
             <span class="label label-default mini-counter">@UnreadMessages.ToString()</span>
 	    }
         </a>
-        <a href="#">&nbsp;<i class="fa fa-bell fa-lg"></i>
+        <a href="#" id="userbar-notification-button">&nbsp;<i class="fa fa-bell fa-lg"></i>
         @if(UnreadNotifications > 0) {
             <span class="label label-default mini-counter">@UnreadNotifications.ToString()</span>
         }
@@ -26,3 +26,11 @@ else
         @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "registerLink" })<span> | </span>
         @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "loginLink" })
 }
+
+<div id="notification-content">
+
+</div>
+
+<div id="messages-content">
+
+</div>

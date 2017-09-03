@@ -25,9 +25,13 @@ namespace Pokefans.Areas.user.Controllers
         public ActionResult Index() {
             int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
 
-            var profile = db.UserProfile.Include("User").Where(x => x.UserId == uid).FirstOrDefault();
+            UserFeedConfig config = db.UserFeedConfigs.Where(x => x.UserId == uid).First();
 
-            return View("~/Areas/user/Views/Profile/ViewProfile.cshtml", profile);
+            if (config.NewFanart > 0) {
+                    
+            }
+
+            return View("~/Areas/user/Views/Profile/Feed.cshtml", null);
         }
 
         public ActionResult ViewProfile(string url) {

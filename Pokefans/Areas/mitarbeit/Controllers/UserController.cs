@@ -72,25 +72,25 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     {
                         if (id == current.Id)
                         {
-                            RedirectToAction("Index", new { error = "self" });
+                            filterContext.Result = RedirectToAction("Index", new { error = "self" });
                         }
                         // now check the BVS roles.
                         User u = userManager.FindByIdAsync(id).Result;
                         if(u.IsInRole("bereichsassistent", cache, db) && !u.IsInRole("global-moderator", cache, db))
                         {
-                            RedirectToAction("Index", new { error = "higher" });
+                            filterContext.Result = RedirectToAction("Index", new { error = "higher" });
                         }
                         if (u.IsInRole("global-moderator", cache, db) && !u.IsInRole("bereichsleiter", cache, db))
                         {
-                            RedirectToAction("Index", new { error = "higher" });
+                            filterContext.Result = RedirectToAction("Index", new { error = "higher" });
                         }
                         if (u.IsInRole("bereichsleiter", cache, db) && !u.IsInRole("administrator", cache, db))
                         {
-                            RedirectToAction("Index", new { error = "higher" });
+                            filterContext.Result = RedirectToAction("Index", new { error = "higher" });
                         }
                         if (u.IsInRole("administrator", cache, db))
                         {
-                            RedirectToAction("Index", new { error = "higher" });
+                            filterContext.Result = RedirectToAction("Index", new { error = "higher" });
                         }
                     }
                 }

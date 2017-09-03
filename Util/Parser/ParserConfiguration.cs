@@ -131,6 +131,7 @@ namespace Pokefans.Util.Parser
                 };
                 configuration.BbCodes["sprite"] = new BasicBbCode
                 {
+                    //TODO: files. ConfigurationManager.AppSettings["Domain"]
                     Template = "<img src=\"http://files.pokefans.net/sprites/{0}.png\" alt=\"{0}\" />",
                     TemplateParameterized = "<img src=\"http://files.pokefans.net/sprites/{1}/{0}.png\" alt=\"{0}\" />"
                 };
@@ -141,7 +142,8 @@ namespace Pokefans.Util.Parser
                 };
                 configuration.BbCodes["amazon"] = new BasicBbCode
                 {
-                    Template = "<a href=\"http://tracker.pokefans.net/amazon/?suche={0}\">{0}</a>",
+					//TODO: tracker. ConfigurationManager.AppSettings["Domain"]
+					Template = "<a href=\"http://tracker.pokefans.net/amazon/?suche={0}\">{0}</a>",
                     TemplateParameterized = "<a href=\"http://tracker.pokefans.net/amazon/?suche={1}\">{0}</a>"
                 };
                 configuration.BbCodes["size"] = new BasicBbCode

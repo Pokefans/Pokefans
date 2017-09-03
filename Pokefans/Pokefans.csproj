@@ -336,6 +336,11 @@
     <Compile Include="Controllers\StaticFileController.cs" />
     <Compile Include="Areas\user\Controllers\ProfileController.cs" />
     <Compile Include="Areas\user\Models\UserSubmenuViewModel.cs" />
+    <Compile Include="Controllers\UserApiController.cs" />
+    <Compile Include="Areas\user\Models\Feed\IFeedContent.cs" />
+    <Compile Include="Areas\user\Models\Feed\FanartFeedContent.cs" />
+    <Compile Include="Areas\user\Models\Feed\FanartCommentFeedContent.cs" />
+    <Compile Include="Areas\user\Models\Feed\ICommentFeedContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -664,6 +669,8 @@
     <Folder Include="Areas\user\Models\" />
     <Folder Include="Areas\user\Views\Shared\" />
     <Folder Include="Areas\user\Views\Profile\" />
+    <Folder Include="Views\Api\" />
+    <Folder Include="Areas\user\Models\Feed\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

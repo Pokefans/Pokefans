@@ -9,7 +9,7 @@ using Microsoft.Owin.Security;
 using Pokefans.Models;
 using Pokefans.Security;
 
-namespace Pokefans.Controllers
+namespace Pokefans.Areas.user.Controllers
 {
     [Authorize]
     public class ManageController : Controller
@@ -56,12 +56,12 @@ namespace Pokefans.Controllers
         public async Task<ActionResult> Index(ManageMessageId? message)
         {
             ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Ihr Kennwort wurde geändert."
-                : message == ManageMessageId.SetPasswordSuccess ? "Ihr Kennwort wurde festgelegt."
-                : message == ManageMessageId.SetTwoFactorSuccess ? "Ihr Anbieter für zweistufige Authentifizierung wurde festgelegt."
+                message == ManageMessageId.ChangePasswordSuccess ? "Dein Kennwort wurde geändert."
+                : message == ManageMessageId.SetPasswordSuccess ? "Dein Kennwort wurde festgelegt."
+                : message == ManageMessageId.SetTwoFactorSuccess ? "Dein Anbieter für zweistufige Authentifizierung wurde festgelegt."
                 : message == ManageMessageId.Error ? "Fehler"
-                : message == ManageMessageId.AddPhoneSuccess ? "Ihre Telefonnummer wurde hinzugefügt."
-                : message == ManageMessageId.RemovePhoneSuccess ? "Ihre Telefonnummer wurde entfernt."
+                : message == ManageMessageId.AddPhoneSuccess ? "Deine Telefonnummer wurde hinzugefügt."
+                : message == ManageMessageId.RemovePhoneSuccess ? "Deine Telefonnummer wurde entfernt."
                 : "";
 
             var userId = User.Identity.GetUserId<int>();
@@ -133,6 +133,9 @@ namespace Pokefans.Controllers
         // GET: /Manage/ChangePassword
         public ActionResult ChangePassword()
         {
+            if(!HasPassword()) {
+                return RedirectToAction("SetPassword");
+            }
             return View();
         }
 
@@ -164,6 +167,9 @@ namespace Pokefans.Controllers
         // GET: /Manage/SetPassword
         public ActionResult SetPassword()
         {
+            if(HasPassword()) {
+                return RedirectToAction("ChangePassword");
+            }
             return View();
         }
 

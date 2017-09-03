@@ -252,6 +252,10 @@
     <Compile Include="Migrations\201708130048047_Gravatar.Designer.cs">
 		<DependentUpon>201708130048047_Gravatar.cs</DependentUpon>
 	</Compile>
+	<Compile Include="Migrations\201709031937346_UserFeedMinusReviews.cs" />
+    <Compile Include="Migrations\201709031937346_UserFeedMinusReviews.Designer.cs">
+        <DependentUpon>201709031937346_UserFeedMinusReviews.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -319,9 +323,6 @@
     <Compile Include="Pokedex\PokemonLocation.cs" />
     <Compile Include="Pokedex\PokemonLocationMethod.cs" />
     <Compile Include="Pokedex\PokemonItem.cs" />
-    <Compile Include="Reviews\ReviewItem.cs" />
-    <Compile Include="Reviews\ReviewIndex.cs" />
-    <Compile Include="Reviews\Review.cs" />
     <Compile Include="Pokedex\PokemonAttackEvent.cs" />
     <Compile Include="Pokedex\Ranger\RangerPokemon.cs" />
     <Compile Include="Pokedex\Ranger\PokePower.cs" />
@@ -382,6 +383,7 @@
     <Compile Include="User\PrivateMessageLabel.cs" />
     <Compile Include="User\PrivateMessageInboxLabel.cs" />
     <Compile Include="User\PrivateMessageSentLabel.cs" />
+    <Compile Include="User\UserFeedConfig.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -504,7 +506,10 @@
 	</EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708130048047_Gravatar.resx">
 		<DependentUpon>201708130048047_Gravatar.cs</DependentUpon>
-	</EmbeddedResource>	
+	</EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201709031937346_UserFeedMinusReviews.resx">
+        <DependentUpon>201709031937346_UserFeedMinusReviews.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

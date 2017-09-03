@@ -21,7 +21,7 @@ using Pokefans.Security;
 using Pokefans.Util;
 using Pokefans.Data.UserData;
 
-namespace Pokefans.Controllers
+namespace Pokefans.Areas.user.Controllers
 {
     [Authorize]
     public class AccountController : Controller
@@ -194,8 +194,11 @@ namespace Pokefans.Controllers
                 {
                     SignInManager.SignIn(user, isPersistent:false, rememberBrowser:false);
                     UserProfile p = new UserProfile();
+                    UserFeedConfig ufc = new UserFeedConfig();
                     p.UserId = user.Id;
+                    ufc.UserId = user.Id;
                     _entities.UserProfile.Add(p);
+                    _entities.UserFeedConfigs.Add(ufc);
                     _entities.SaveChanges();
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden

@@ -1,4 +1,4 @@
-﻿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+﻿// Copyright 2015-2017 the pokefans authors. See copying.md for legal info.
 
 using System;
 using System.Collections.Generic;
