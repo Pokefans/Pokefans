@@ -384,6 +384,7 @@
     <Compile Include="User\PrivateMessageInboxLabel.cs" />
     <Compile Include="User\PrivateMessageSentLabel.cs" />
     <Compile Include="User\UserFeedConfig.cs" />
+    <Compile Include="User\UserFollower.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">

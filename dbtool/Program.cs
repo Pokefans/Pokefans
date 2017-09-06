@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2017 the pokefans authors. See copying.md for legal info.
+using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Data.Entity.Migrations.Design;

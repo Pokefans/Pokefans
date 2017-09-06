@@ -11,7 +11,11 @@ namespace Pokefans.Data.UserData
         /// if we just make an inner class containing fields with the desired
         /// values. These values hold true for every field config out there,
         /// as outlined in this class or the appropriate feed classes of the
-        /// subsystems.
+        /// subsystems. There are certain fields where there is just "all" or
+        /// "none", for example everything in the calendar. However, this is
+        /// also done in the calendar subsystem, as there are multiple categories
+        /// where one should be able to define wether he/she is interested in
+        /// including them in the feed.
 		/// </summary>
 		public class Visibility
         {

@@ -1,3 +1,4 @@
+// Copyright 2017 the pokefans authors. See copying.md for legal info.
 namespace Pokefans.Data.Migrations
 {
     using System;
@@ -7,12 +8,12 @@ namespace Pokefans.Data.Migrations
     {
         public override void Up()
         {
-            DropForeignKey("dbo.Reviews", "ReviewItemId", "dbo.ReviewItems");
-            DropForeignKey("dbo.Reviews", "UserId", "dbo.system_users");
-            DropIndex("dbo.Reviews", new[] { "UserId" });
-            DropIndex("dbo.Reviews", new[] { "ReviewItemId" });
+            DropForeignKey("Reviews", "ReviewItemId", "ReviewItems");
+            DropForeignKey("Reviews", "UserId", "system_users");
+            DropIndex("Reviews", new[] { "UserId" });
+            DropIndex("Reviews", new[] { "ReviewItemId" });
             CreateTable(
-                "dbo.UserFeedConfigs",
+                "UserFeedConfigs",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -22,18 +23,18 @@ namespace Pokefans.Data.Migrations
                         CommentsOnFanart = c.Short(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.system_users", t => t.UserId, cascadeDelete: true)
+                .ForeignKey("system_users", t => t.UserId, cascadeDelete: true)
                 .Index(t => t.UserId);
             
-            DropTable("dbo.ReviewIndexes");
-            DropTable("dbo.ReviewItems");
-            DropTable("dbo.Reviews");
+            DropTable("ReviewIndexes");
+            DropTable("ReviewItems");
+            DropTable("Reviews");
         }
         
         public override void Down()
         {
             CreateTable(
-                "dbo.Reviews",
+                "Reviews",
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
@@ -50,7 +51,7 @@ namespace Pokefans.Data.Migrations
                 .PrimaryKey(t => t.id);
             
             CreateTable(
-                "dbo.ReviewItems",
+                "ReviewItems",
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
@@ -63,7 +64,7 @@ namespace Pokefans.Data.Migrations
                 .PrimaryKey(t => t.id);
             
             CreateTable(
-                "dbo.ReviewIndexes",
+                "ReviewIndexes",
                 c => new
                     {
                         id = c.Int(nullable: false, identity: true),
@@ -72,13 +73,13 @@ namespace Pokefans.Data.Migrations
                     })
                 .PrimaryKey(t => t.id);
             
-            DropForeignKey("dbo.UserFeedConfigs", "UserId", "dbo.system_users");
-            DropIndex("dbo.UserFeedConfigs", new[] { "UserId" });
-            DropTable("dbo.UserFeedConfigs");
-            CreateIndex("dbo.Reviews", "ReviewItemId");
-            CreateIndex("dbo.Reviews", "UserId");
-            AddForeignKey("dbo.Reviews", "UserId", "dbo.system_users", "Id", cascadeDelete: true);
-            AddForeignKey("dbo.Reviews", "ReviewItemId", "dbo.ReviewItems", "id", cascadeDelete: true);
+            DropForeignKey("UserFeedConfigs", "UserId", "system_users");
+            DropIndex("UserFeedConfigs", new[] { "UserId" });
+            DropTable("UserFeedConfigs");
+            CreateIndex("Reviews", "ReviewItemId");
+            CreateIndex("Reviews", "UserId");
+            AddForeignKey("Reviews", "UserId", "system_users", "Id", cascadeDelete: true);
+            AddForeignKey("Reviews", "ReviewItemId", "ReviewItems", "id", cascadeDelete: true);
         }
     }
 }

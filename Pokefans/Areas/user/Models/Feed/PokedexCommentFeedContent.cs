@@ -1,9 +1,13 @@
 ﻿// Copyright 2017 the pokefans authors. See copying.md for legal info.
 using System;
+
 namespace Pokefans.Areas.user.Models.Feed
 {
-    public class FanartCommentFeedContent : FanartFeedContent, ICommentFeedContent
+    public class PokedexCommentFeedContent : IFeedContent, ICommentFeedContent
     {
+        public DateTime Timestamp { get; set; }
+        public string Username { get; set; }
+
         public string Comment { get; set; }
     }
 }
