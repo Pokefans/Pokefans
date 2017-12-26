@@ -23,6 +23,8 @@ namespace Pokefans.Data
     using System.Linq;
     using MySql.Data.Entity;
     using Comments;
+    using Pokefans.Data.Forum;
+
     [DbConfigurationType(typeof(MySqlEFConfiguration))]
     public class Entities : DbContext
     {
@@ -324,6 +326,22 @@ namespace Pokefans.Data
         #region Comments
         public virtual DbSet<Comment> Comments { get; set; }
         public virtual DbSet<CommentAncestor> CommentAncestors { get; set; }
+        #endregion
+
+        #region Forum
+
+        public virtual DbSet<Board> Boards { get; set; }
+
+        public virtual DbSet<Category> Categories { get; set; }
+
+        public virtual DbSet<Post> Post { get; set; }
+
+        public virtual DbSet<Thread> Thread { get; set; }
+
+        public virtual DbSet<UnreadForumTracker> UnreadForumTracker { get; set; }
+
+        public virtual DbSet<UnreadThreadTracker> UnreadThreadTracker { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

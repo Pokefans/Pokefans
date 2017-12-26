@@ -382,6 +382,12 @@
     <Compile Include="User\PrivateMessageLabel.cs" />
     <Compile Include="User\PrivateMessageInboxLabel.cs" />
     <Compile Include="User\PrivateMessageSentLabel.cs" />
+    <Compile Include="Forum\Category.cs" />
+    <Compile Include="Forum\Board.cs" />
+    <Compile Include="Forum\Thread.cs" />
+    <Compile Include="Forum\Post.cs" />
+    <Compile Include="Forum\UnreadThreadTracker.cs" />
+    <Compile Include="Forum\UnreadForumTracker.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -507,6 +513,9 @@
 	</EmbeddedResource>	
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Forum\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
