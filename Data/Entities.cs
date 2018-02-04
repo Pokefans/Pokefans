@@ -298,6 +298,8 @@ namespace Pokefans.Data
 
         public virtual DbSet<UserFeedConfig> UserFeedConfigs { get; set; }
 
+        public virtual DbSet<UserFollower> UserFollowers { get; set; }
+
         #endregion
 
         #region Wifi

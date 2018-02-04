@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Pokefans.Data.User
+namespace Pokefans.Data.UserData
 {
     public class UserFollower
     {
@@ -17,7 +17,7 @@ namespace Pokefans.Data.User
         /// <value>The follower identifier.</value>
         public int FollowerId { get; set; }
 
-        [ForeignKey("UserId")]
+        [ForeignKey("FollowerId")]
         public User Follower { get; set; }
 
         /// <summary>

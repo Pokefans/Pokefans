@@ -256,6 +256,14 @@
     <Compile Include="Migrations\201709031937346_UserFeedMinusReviews.Designer.cs">
         <DependentUpon>201709031937346_UserFeedMinusReviews.cs</DependentUpon>
     </Compile>
+	<Compile Include="Migrations\201709060655454_UserFollowers.cs" />
+    <Compile Include="Migrations\201709060655454_UserFollowers.Designer.cs">
+        <DependentUpon>201709060655454_UserFollowers.cs</DependentUpon>
+    </Compile>
+	<Compile Include="Migrations\201709060905331_MoreFeedConfig.cs" />
+    <Compile Include="Migrations\201709060905331_MoreFeedConfig.Designer.cs">
+        <DependentUpon>201709060905331_MoreFeedConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -511,6 +519,12 @@
 	<EmbeddedResource Include="Migrations\201709031937346_UserFeedMinusReviews.resx">
         <DependentUpon>201709031937346_UserFeedMinusReviews.cs</DependentUpon>
     </EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201709060655454_UserFollowers.resx">
+        <DependentUpon>201709060655454_UserFollowers.cs</DependentUpon>
+    </EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201709060905331_MoreFeedConfig.resx">
+        <DependentUpon>201709060905331_MoreFeedConfig.cs</DependentUpon>
+    </EmbeddedResource> 
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

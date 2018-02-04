@@ -343,6 +343,9 @@
     <Compile Include="Areas\user\Models\Feed\ICommentFeedContent.cs" />
     <Compile Include="Areas\user\Models\Feed\CalendarFeedContent.cs" />
     <Compile Include="Areas\user\Models\Feed\PokedexCommentFeedContent.cs" />
+    <Compile Include="Areas\user\Models\Feed\NewWifiOfferFeedContent.cs" />
+    <Compile Include="Areas\user\Models\FeedViewModel.cs" />
+    <Compile Include="Areas\user\Models\Feed\NewsCommentFeedContent.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />

@@ -7,5 +7,7 @@ namespace Pokefans.Areas.user.Models.Feed
         DateTime Timestamp { get; set; }
 
         string Username { get; set; }
+
+        string Url { get; set; }
     }
 }

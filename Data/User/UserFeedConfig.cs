@@ -21,7 +21,7 @@ namespace Pokefans.Data.UserData
         {
             public const short Nobody = 0;
             public const short Own = 1;
-            public const short Friends = 2;
+            public const short Following = 2;
             public const short All = 4;
         }
 
@@ -43,6 +43,10 @@ namespace Pokefans.Data.UserData
         public short NewFanart { get; set; }
 
         public short CommentsOnFanart { get; set; }
+
+        public short NewWifiOffers { get; set; }
+
+        public short CommentsOnNews { get; set; }
 
     }
 }
