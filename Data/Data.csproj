@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright 2015 the pokefans authors. See copying.md for legal info -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
@@ -252,6 +252,18 @@
     <Compile Include="Migrations\201708130048047_Gravatar.Designer.cs">
 		<DependentUpon>201708130048047_Gravatar.cs</DependentUpon>
 	</Compile>
+	<Compile Include="Migrations\201709031937346_UserFeedMinusReviews.cs" />
+    <Compile Include="Migrations\201709031937346_UserFeedMinusReviews.Designer.cs">
+        <DependentUpon>201709031937346_UserFeedMinusReviews.cs</DependentUpon>
+    </Compile>
+	<Compile Include="Migrations\201709060655454_UserFollowers.cs" />
+    <Compile Include="Migrations\201709060655454_UserFollowers.Designer.cs">
+        <DependentUpon>201709060655454_UserFollowers.cs</DependentUpon>
+    </Compile>
+	<Compile Include="Migrations\201709060905331_MoreFeedConfig.cs" />
+    <Compile Include="Migrations\201709060905331_MoreFeedConfig.Designer.cs">
+        <DependentUpon>201709060905331_MoreFeedConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -319,9 +331,6 @@
     <Compile Include="Pokedex\PokemonLocation.cs" />
     <Compile Include="Pokedex\PokemonLocationMethod.cs" />
     <Compile Include="Pokedex\PokemonItem.cs" />
-    <Compile Include="Reviews\ReviewItem.cs" />
-    <Compile Include="Reviews\ReviewIndex.cs" />
-    <Compile Include="Reviews\Review.cs" />
     <Compile Include="Pokedex\PokemonAttackEvent.cs" />
     <Compile Include="Pokedex\Ranger\RangerPokemon.cs" />
     <Compile Include="Pokedex\Ranger\PokePower.cs" />
@@ -382,6 +391,8 @@
     <Compile Include="User\PrivateMessageLabel.cs" />
     <Compile Include="User\PrivateMessageInboxLabel.cs" />
     <Compile Include="User\PrivateMessageSentLabel.cs" />
+    <Compile Include="User\UserFeedConfig.cs" />
+    <Compile Include="User\UserFollower.cs" />
     <Compile Include="Forum\Category.cs" />
     <Compile Include="Forum\Board.cs" />
     <Compile Include="Forum\Thread.cs" />
@@ -510,7 +521,16 @@
 	</EmbeddedResource>
     <EmbeddedResource Include="Migrations\201708130048047_Gravatar.resx">
 		<DependentUpon>201708130048047_Gravatar.cs</DependentUpon>
-	</EmbeddedResource>	
+	</EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201709031937346_UserFeedMinusReviews.resx">
+        <DependentUpon>201709031937346_UserFeedMinusReviews.cs</DependentUpon>
+    </EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201709060655454_UserFollowers.resx">
+        <DependentUpon>201709060655454_UserFollowers.cs</DependentUpon>
+    </EmbeddedResource>
+	<EmbeddedResource Include="Migrations\201709060905331_MoreFeedConfig.resx">
+        <DependentUpon>201709060905331_MoreFeedConfig.cs</DependentUpon>
+    </EmbeddedResource> 
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

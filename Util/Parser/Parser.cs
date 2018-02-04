@@ -12,7 +12,7 @@ namespace Pokefans.Util.Parser
     /// <summary>
     /// Stack machine based parser for parsing markup
     /// </summary>
-    public class Parser
+    public class Parser : IParser
     {
         /// <summary>
         /// parser configuration

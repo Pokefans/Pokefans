@@ -1,4 +1,5 @@
-﻿using System;
+﻿// Copyright 2017 the pokefans authors. See copying.md for legal info.
+using System;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Data.Entity.Migrations.Design;
@@ -56,6 +57,20 @@ namespace dbtool
                     writer.AddResource(resource.Key, resource.Value);
                 }
             }
+
+            string template = @"    <Compile Include=""Migrations\{0}.cs"" />
+    <Compile Include=""Migrations\{0}.Designer.cs"">
+        <DependentUpon>{0}.cs</DependentUpon>
+    </Compile>";
+            string template2 = @"    <EmbeddedResource Include=""Migrations\{0}.resx"">
+        <DependentUpon>{0}.cs</DependentUpon>
+    </EmbeddedResource> ";
+
+            Console.WriteLine("Success!");
+            Console.WriteLine("Copy this into Data.csproj:");
+            Console.WriteLine(string.Format(template, migration.MigrationId));
+            Console.WriteLine();
+            Console.WriteLine(string.Format(template2, migration.MigrationId));
         }
 
         static void updateDb()

@@ -180,20 +180,26 @@ namespace Pokefans.Areas.fanart.Controllers
             art.Title = toUpdate.Title;
             art.Order = (short)toUpdate.Order;
 
-            // cap at +- 1000
-            art.Order = art.Order > 1000 ? (short)1000 : art.Order;
-            art.Order = art.Order < -1000 ? (short)-1000 : art.Order;
+			// cap at +- 1000
+			art.Order = art.Order > 1000 ? (short)1000 : art.Order;
+			art.Order = art.Order < -1000 ? (short)-1000 : art.Order;
 
-            ParserConfiguration pc = ParserConfiguration.Default;
-            pc.EnableInsideCodes = false;
-            pc.NewlineToHtml = true;
-            pc.EscapeHtml = true;
+            if (!string.IsNullOrWhiteSpace(toUpdate.Description))
+            {
+                ParserConfiguration pc = ParserConfiguration.Default;
+                pc.EnableInsideCodes = false;
+                pc.NewlineToHtml = true;
+                pc.EscapeHtml = true;
 
-            var p = new Util.Parser.Parser(pc);
+                var p = new Util.Parser.Parser(pc);
 
-            art.Description = p.Parse(toUpdate.Description);
-            art.DescriptionCode = toUpdate.Description;
-
+                art.Description = p.Parse(toUpdate.Description);
+                art.DescriptionCode = toUpdate.Description;
+            }
+            else {
+                art.Description = "";
+                art.DescriptionCode = "";
+            }
             db.FanartsTags.RemoveRange(art.Tags);
 
             if (!string.IsNullOrWhiteSpace(toUpdate.Taglist))

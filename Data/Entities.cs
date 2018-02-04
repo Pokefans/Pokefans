@@ -1,11 +1,10 @@
-﻿// Copyright 2015 the pokefans authors. See copying.md for legal info.
+﻿// Copyright 2015-2017 the pokefans authors. See copying.md for legal info.
 using Pokefans.Data.Calendar;
 using Pokefans.Data.Contents;
 using Pokefans.Data.Fanwork;
 using Pokefans.Data.FriendCodes;
 using Pokefans.Data.Pokedex;
 using Pokefans.Data.Pokedex.Ranger;
-using Pokefans.Data.Reviews;
 using Pokefans.Data.Service;
 using Pokefans.Data.Strategy;
 using Pokefans.Data.Tracker;
@@ -235,16 +234,6 @@ namespace Pokefans.Data
 
         #endregion
 
-        #region Reviews
-
-        public virtual DbSet<Review> Reviews { get; set; }
-
-        public virtual DbSet<ReviewIndex> ReviewIndices { get; set; }
-
-        public virtual DbSet<ReviewItem> ReviewItems { get; set; }
-
-        #endregion
-
         #region Service
 
         public virtual DbSet<FriendSafari> FriendSafaris { get; set; }
@@ -309,6 +298,10 @@ namespace Pokefans.Data
 
         public virtual DbSet<PrivateMessageSentLabel> PrivateMessagesSentLabels { get; set; }
 
+        public virtual DbSet<UserFeedConfig> UserFeedConfigs { get; set; }
+
+        public virtual DbSet<UserFollower> UserFollowers { get; set; }
+
         #endregion
 
         #region Wifi
@@ -362,10 +355,4 @@ namespace Pokefans.Data
             base.OnModelCreating(modelBuilder);
         }
     }
-
-    //public class MyEntity
-    //{
-    //    public int Id { get; set; }
-    //    public string UserName { get; set; }
-    //}
 }
