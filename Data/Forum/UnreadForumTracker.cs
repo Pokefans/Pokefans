@@ -15,5 +15,11 @@ namespace Pokefans.Data.Forum
         public int BoardId { get; set; }
 
         public DateTime ResetTime { get; set; }
+
+        [ForeignKey("BoardId")]
+        public Board Board { get; set; }
+
+        [ForeignKey("UserId")]
+        public User User { get; set; }
     }
 }

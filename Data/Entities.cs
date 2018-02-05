@@ -325,8 +325,6 @@ namespace Pokefans.Data
 
         public virtual DbSet<Board> Boards { get; set; }
 
-        public virtual DbSet<Category> Categories { get; set; }
-
         public virtual DbSet<Post> Post { get; set; }
 
         public virtual DbSet<Thread> Thread { get; set; }
@@ -334,6 +332,12 @@ namespace Pokefans.Data
         public virtual DbSet<UnreadForumTracker> UnreadForumTracker { get; set; }
 
         public virtual DbSet<UnreadThreadTracker> UnreadThreadTracker { get; set; }
+
+        public virtual DbSet<BoardPermissions> BoardPermissions { get; set; }
+
+        public virtual DbSet<ForumGroup> ForumGroups { get; set; }
+
+        public virtual DbSet<ForumGroupsUsers> ForumGroupsUsers { get; set; }
 
         #endregion
 

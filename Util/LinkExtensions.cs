@@ -174,7 +174,11 @@ namespace Pokefans.Util
         /// <param name="url">URL.</param>
         public static string Map(this UrlHelper helper, string url)
         {
-            return helper.Map(url, HttpContext.Current.Request.Url.Host.Replace("." + ConfigurationManager.AppSettings["Domain"], ""));
+            return helper.Map(url, HttpContext.Current.Request.Url.Host.Replace("." + ConfigurationManager.AppSettings["Domain"], "").Split('/')[0]);
+        }
+
+        public static string Map(this UrlHelper helper, params string[] parts) {
+            return helper.Map(String.Join("/", parts));
         }
 
         #endregion

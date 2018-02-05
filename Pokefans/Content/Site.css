@@ -1,251 +1,328 @@
 ﻿/* this is all temporary stuff and should be merged into the main stylesheet */
 .navbar + #section, .navbar + .navbar, .navbar + .sticky-wrapper {
     margin-top: -19px;
-    margin-bottom: 19px;
+    margin-bottom: 19px
 }
+
 .wrap > .sticky-wrapper {
     padding-left: 0 !important;
-    padding-right: 0 !important;
+    padding-right: 0 !important
 }
 
 .navbar-form {
     margin-top: 14.5px;
-    margin-bottom: 14.5px;
+    margin-bottom: 14.5px
 }
+
 @media (min-width: 769px) {
     .sidebar-spacer {
-        height: 65px;
+        height: 65px
     }
 }
 
 .navbar-nocollapse .navbar-collapse.collapse {
-display: block!important;
+    display: block !important
 }
 
-.navbar-nocollapse .navbar-nav>li, .navbar-nocollapse  .navbar-nav {
-float: left !important;
+.navbar-nocollapse .navbar-nav > li, .navbar-nocollapse .navbar-nav {
+    float: left !important
 }
 
-.navbar-nocollapse .navbar-nav.navbar-right:last-child {
-margin-right: -15px !important;
-}
+    .navbar-nocollapse .navbar-nav.navbar-right:last-child {
+        margin-right: -15px !important
+    }
 
 .navbar-nocollapse .navbar-right {
-float: right!important;
+    float: right !important
 }
 
 #footer {
-    margin-top: 2em;
+    margin-top: 2em
 }
 
 /* for waypoint stickies */
 .stuck {
-  position:fixed;
-  top:0;
-  z-index:100;
+    position: fixed;
+    top: 0;
+    z-index: 100
 }
-.stuck.navbar {
-    width: 100%;
-}
+
+    .stuck.navbar {
+        width: 100%
+    }
 
 /* fanart related customizations */
 .fanart-warning {
-    margin-top: 5px;
+    margin-top: 5px
 }
 
 .arrow_box {
-	position: relative;
-	background: transparent;
+    position: relative;
+    background: transparent
 }
-.arrow_box:after {
-	top: 100%;
-	left: 50%;
-	border: solid transparent;
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	pointer-events: none;
-	border-color: rgba(255, 170, 46, 0);
-	border-top-color: #FFAA2E;
-	border-width: 15px;
-	margin-left: -15px;
-}
+
+    .arrow_box:after {
+        top: 100%;
+        left: 50%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+        border-color: rgba(255, 170, 46, 0);
+        border-top-color: #FFAA2E;
+        border-width: 15px;
+        margin-left: -15px
+    }
 
 .hl {
     padding: 5px;
     text-align: center;
-
     -webkit-transition: background-color 200ms linear;
-       -moz-transition: background-color 200ms linear;
-         -o-transition: background-color 200ms linear;
-        -ms-transition: background-color 200ms linear;
-            transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear
 }
-.hl.alert {
-    background: #F7F778; /* IE */
-    background: rgba(255, 255, 0, 0.5); /* Everyone else */
-}
+
+    .hl.alert {
+        background: #F7F778; /* IE */
+        background: rgba(255, 255, 0, 0.5) /* Everyone else */
+    }
 
 .rating-star {
-    color: #E5C100; /* gold */
+    color: #E5C100 /* gold */
 }
 
 .fanart-element {
-  float: left;
-  width: 130px;
-  border: 1px solid #eee;
-  border-top: none;
-  border-right: none;
+    float: left;
+    width: 130px;
+    border: 1px solid #eee;
+    border-top: none;
+    border-right: none
 }
+
 .fanart-container {
-  max-width: 535px;
-  border: 1px solid #eee;
-  border-left: none;
-  border-bottom: none;
+    max-width: 535px;
+    border: 1px solid #eee;
+    border-left: none;
+    border-bottom: none
 }
 
 .fanart-description {
-    padding-top: 1em;
+    padding-top: 1em
 }
 
 .list-news li:before {
     font-family: 'FontAwesome';
     content: '\f1ea';
-    margin: 0 5px 0 -15px;   
+    margin: 0 5px 0 -15px
 }
 
 .list-spielehilfen li:before {
     font-family: 'FontAwesome';
     content: '\f0f6';
-    margin: 0 5px 0 -15px;
+    margin: 0 5px 0 -15px
 }
+
 .list-spielehilfen li {
-    list-style-type: none;
+    list-style-type: none
 }
 
 @media(min-width: 1366px) {
     .container {
-        width: 1366px;
+        width: 1366px
     }
+
     #content {
-        width: 1000px;
+        width: 1000px
     }
 }
 
 .select2-container--default .select2-selection--single {
     border-color: #ccc !important;
-    border-radius: 0 !important;
+    border-radius: 0 !important
 }
+
 .select2-container--default .select2-selection--single {
-    height: 34px !important;
+    height: 34px !important
 }
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    color: #555 !important;
-    line-height:34px !important;
-}
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    line-height:32px!important;
-}
+
+    .select2-container--default .select2-selection--single .select2-selection__rendered {
+        color: #555 !important;
+        line-height: 34px !important
+    }
+
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        line-height: 32px !important
+    }
+
 .lpic {
-  float: left;
-  max-width: 200px;
-  margin-right: 10px;
+    float: left;
+    max-width: 200px;
+    margin-right: 10px
 }
+
 .rpic {
-  padding-top: 20px;
+    padding-top: 20px
 }
-.rpic img {
-      max-width:75px;
-}
+
+    .rpic img {
+        max-width: 75px
+    }
 
 .tradinglist li {
     border-bottom: 1px solid #ccc;
-    padding: 15px 0 15px 0;
+    padding: 15px 0 15px 0
 }
 
 #pfcarousel .item-inner {
-   height: 400px;
-   background-size:     cover;               
-   background-repeat:   no-repeat;
-   background-position: center center;
+    height: 400px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center
 }
 
-#pfcarousel .item-inner > div {
-    width: 100%;
-    height: 100%;
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0,0,0,.7) 80%);
-}
+    #pfcarousel .item-inner > div {
+        width: 100%;
+        height: 100%;
+        background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0) 50%, rgba(0,0,0,.7) 80%)
+    }
 
 #pfcarousel h2, #pfcarousel p {
     text-shadow: 1px 1px 1px #000;
     font-weight: 500;
     color: white;
-    margin-bottom: 0;
+    margin-bottom: 0
 }
+
 #pfcarousel p {
     font-size: 18px;
     color: #fff;
-    text-shadow: 0 0 5px black;
-}
-#pfcarousel {
-	padding: 0;
-    margin-top: -19px;
+    text-shadow: 0 0 5px black
 }
 
-#pfcarousel .carousel-caption {
-    position: initial;
-    bottom: auto;
+#pfcarousel {
+    padding: 0;
+    margin-top: -19px
 }
+
+    #pfcarousel .carousel-caption {
+        position: initial;
+        bottom: auto
+    }
 
 .carousel-control {
     height: 400px;
-    padding-top: 200px;
+    padding-top: 200px
 }
+
 #search {
-    padding: 0 15px;
+    padding: 0 15px
 }
 
-#search .clearfix {
-    padding: 7px 0;
-}
+    #search .clearfix {
+        padding: 7px 0
+    }
 
-#search form {
-    padding: 9px;
-}
+    #search form {
+        padding: 9px
+    }
 
 #searchbox {
     max-width: 450px;
     padding: 0;
-    border-right: none;
+    border-right: none
 }
 
-#searchbox > input {
-    max-width: 285px;
-    min-width: 50px;
-}
+    #searchbox > input {
+        max-width: 285px;
+        min-width: 50px
+    }
 
-#searchbox select {
-    display: inline;
-    max-width: 120px;
-    min-width: 50px;
-}
+    #searchbox select {
+        display: inline;
+        max-width: 120px;
+        min-width: 50px
+    }
 
 .copyright-links .fa {
-    vertical-align: middle;
+    vertical-align: middle
 }
 
 #breadcrumbs {
-    padding: 2em 0 3em 0;
+    padding: 2em 0 3em 0
 }
+
 @media (max-width: 1199px) {
     .container {
         padding-left: 0;
-        padding-right: 0;
+        padding-right: 0
     }
 }
+
 @media (max-width: 767px) {
     .container {
-        width: auto;
+        width: auto
+    }
+}
+
+/* Forum */
+.foruminfo small {
+    font-size: 0.7em !important
+}
+
+.foruminfo div {
+    line-height: 1;
+    padding-top: 5px;
+    text-align: center
+}
+
+.foruminfo div:first-child {
+        margin-top: 10px
+}
+
+.forum {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0 9.5px 0
+}
+
+.forum ul:last-child {
+        margin-bottom: 0
+}
+
+.category .forum:last-child {
+    border: none
+}
+
+.category-header {
+    border-bottom: 1px solid #e58800
+}
+
+.forum .read {
+    color: #e5cdaa
+}
+
+.forum .unread {
+    color: #e58800
+}
+
+.forum-title {
+    font-weight: 300
+}
+
+@media(max-width:768px) {
+    /*.container {
+        padding-left: 0 !important;
+        padding-right: 0 !important
+    }
+
+    body {
+        background: #fff
+    }*/
+
+    .forum-title {
+        font-weight: 300
     }
 }

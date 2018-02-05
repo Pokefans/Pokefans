@@ -117,6 +117,7 @@
     <Compile Include="UserStore.cs" />
     <Compile Include="WebSecurity.cs" />
     <Compile Include="ApplicationSigninManager.cs" />
+    <Compile Include="ForumSecurity.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cache\Cache.csproj">

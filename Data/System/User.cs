@@ -134,13 +134,15 @@ namespace Pokefans.Data
         public string GravatarOptions { get; set; }
 
         [NotMapped]
-        public string AvatarUrl {
-            get {
-                if(GravatarEnabled)
+        public string AvatarUrl
+        {
+            get
+            {
+                if (GravatarEnabled)
                 {
                     byte[] bytemail = new UTF8Encoding().GetBytes(Email);
                     byte[] hash = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(bytemail);
-                    return "https://www.gravatar.com/avatar/"+BitConverter.ToString(hash).Replace("-","").ToLower()+"?d=identicon"+GravatarOptions;
+                    return "https://www.gravatar.com/avatar/" + BitConverter.ToString(hash).Replace("-", "").ToLower() + "?d=identicon" + GravatarOptions;
                 }
                 else
                 {

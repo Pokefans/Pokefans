@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -336,6 +336,9 @@
     <Compile Include="Controllers\StaticFileController.cs" />
     <Compile Include="Areas\user\Controllers\ProfileController.cs" />
     <Compile Include="Areas\user\Models\UserSubmenuViewModel.cs" />
+<<<<<<< HEAD
+    <Compile Include="Areas\forum\forumAreaRegistration.cs" />
+=======
     <Compile Include="Controllers\UserApiController.cs" />
     <Compile Include="Areas\user\Models\Feed\IFeedContent.cs" />
     <Compile Include="Areas\user\Models\Feed\FanartFeedContent.cs" />
@@ -346,9 +349,7 @@
     <Compile Include="Areas\user\Models\Feed\NewWifiOfferFeedContent.cs" />
     <Compile Include="Areas\user\Models\FeedViewModel.cs" />
     <Compile Include="Areas\user\Models\Feed\NewsCommentFeedContent.cs" />
-    <Compile Include="Areas\forum\forumAreaRegistration.cs" />
-    <Compile Include="Areas\forum\Controllers\BoardIndexController.cs" />
-    <Compile Include="Areas\forum\Models\BoardIndexViewModel.cs" />
+>>>>>>> tausch
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -667,8 +668,6 @@
     <Content Include="Views\Trading\My.cshtml" />
     <Content Include="Areas\user\Views\Profile\ViewProfile.cshtml" />
     <Content Include="Areas\user\Views\Shared\_submenuPartial.cshtml" />
-    <Content Include="Areas\forum\Views\_ViewStart.cshtml" />
-    <Content Include="Areas\forum\Views\BoardIndex\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -679,12 +678,12 @@
     <Folder Include="Areas\user\Models\" />
     <Folder Include="Areas\user\Views\Shared\" />
     <Folder Include="Areas\user\Views\Profile\" />
+<<<<<<< HEAD
+    <Folder Include="Areas\forum\" />
+=======
     <Folder Include="Views\Api\" />
     <Folder Include="Areas\user\Models\Feed\" />
-    <Folder Include="Areas\forum\Controllers\" />
-    <Folder Include="Areas\forum\Models\" />
-    <Folder Include="Areas\forum\Views\" />
-    <Folder Include="Areas\forum\Views\BoardIndex\" />
+>>>>>>> tausch
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

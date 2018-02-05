@@ -4,17 +4,16 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Pokefans.Data.Forum
 {
-    public class UnreadThreadTracker
+    public class ForumGroup
     {
-
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
 
-        public int UserId { get; set; }
+        [MaxLength(255)]
+        public string Name { get; set; }
 
-        public int ThreadId { get; set; }
-
-        public DateTime ResetTime { get; set; }
+        [MaxLength(500)]
+        public string Description { get; set; }
     }
 }
