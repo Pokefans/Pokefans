@@ -1,0 +1,83 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@model ViewForumViewModel
+@using System.Configuration
+@{
+    SiteTitle = "Foren-Übersicht";
+    SiteHeader = Model.Board.Name + " | Pokefans-Forum";
+    SiteDescription = "";
+    ActiveMenuKey = "forum";
+    Breadcrumbs.Add("Forum", "BoardIndex", "Index");
+    Breadcrumbs.Add(Model.Board.Name);
+}
+
+<div class="viewforum-header">
+    <div class="viewforum-title"><h2>@Model.Board.Name</h2></div>
+    <p>@Model.Board.Description</p>
+</div>
+
+<div class="row">
+    <div class="col-xs-12 clearfix">
+        @if(Model.CanWrite) {
+           <a href="@Url.Map(Model.Board.Url + "/neu.html")" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Neues Thema</a>
+        }
+        @if(CurrentUser != null) {
+           <a href="#" class="btn btn-default pull-right"><i class="fa fa-eye"></i></a>
+        }
+    </div>
+</div>
+
+@if(Model.Announcements.Count > 0) {
+<div class="panel panel-default thread-list announcements">
+    <div class="panel-heading"><h4 class="panel-title"><i class="fa fa-bullhorn"></i> Ankündigungen</h4></div>
+    <div class="panel-body">
+        @threadList(Model.Announcements, "announce")
+    </div>
+</div>
+}
+
+<div class="panel panel-default thread-list">
+    <div class="panel-heading"><h4 class="panel-title"><i class="fa fa-bullhorn"></i> Themen</h4></div>
+    <div class="panel-body">
+        @if(Model.Sticky.Count > 0 || Model.Threads.Count > 0) {
+            @threadList(Model.Sticky, "sticky")
+            @threadList(Model.Threads)
+        }
+    </div>
+</div>
+
+@Html.Partial("~/Views/Shared/_Pagination.cshtml", Model.Pagination)
+
+
+@section Submenu {
+    @Html.Partial("~/Areas/forum/Views/Shared/_ForumSubmenuPartial.cshtml")
+}
+
+@helper threadList(List<ViewForumThreadViewModel> list, string cssClass = "") {
+
+foreach(var t in list) {
+        <div class="row @cssClass">
+            <div class="col-xs-1"><i class="fa fa-comments"></i></div>
+            <div class="col-xs-11 col-sm-10 col-md-9">
+                <div>
+                    <a href="@Url.Map(Model.Board.Url, string.Format("topic{}.html", t.Thread.Id))">@t.Thread.Title</a>
+                </div>
+                <div>
+                    <a href="#">@t.Thread.Author.UserName</a> • @t.Thread.ThreadStartTime.ToString("dd.MM.yyyy HH:mm")
+                </div>
+            </div>
+            <div class="col-md-1 hidden-sm hidden-xs">
+                <dl class="dl-horizontal dl-forum">
+                    <dt>Antworten</dt>
+                    <dd>@t.Thread.Replies.ToString()</dd>
+                    <dt>Zugriffe</dt>>
+                    <dd>@t.Thread.Visits.ToString()</dd>
+                </dl>
+            </div>
+            <div class="col-sm-1 col-md-1 hidden-xs">
+                <div>@t.LastPost.Subject</div>
+                <div><a href="#">@t.LastPost.Author.UserName</a></div>
+            </div>
+        </div>
+        }
+
+}

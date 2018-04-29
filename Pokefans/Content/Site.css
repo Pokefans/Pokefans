@@ -279,18 +279,18 @@
     text-align: center
 }
 
-.foruminfo div:first-child {
+    .foruminfo div:first-child {
         margin-top: 10px
-}
+    }
 
 .forum {
     border-bottom: 1px solid #ddd;
     padding: 5px 0 9.5px 0
 }
 
-.forum ul:last-child {
+    .forum ul:last-child {
         margin-bottom: 0
-}
+    }
 
 .category .forum:last-child {
     border: none
@@ -312,6 +312,11 @@
     font-weight: 300
 }
 
+#copyright .note, #copyright .note a {
+    color: #96BADC
+    
+}
+
 @media(max-width:768px) {
     /*.container {
         padding-left: 0 !important;
@@ -326,3 +331,14 @@
         font-weight: 300
     }
 }
+
+.forum-full-editor .emojionearea-editor {
+    min-height: 15em !important;
+    max-height: 25em !important;
+}
+
+.feed-avatar {
+    max-height: 60px;
+    display: inline;
+}
+

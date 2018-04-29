@@ -24,13 +24,7 @@ namespace Pokefans.Util
             HttpContextBase currentContext = new HttpContextWrapper(HttpContext.Current);
             RouteData routeData = RouteTable.Routes.GetRouteData(currentContext);
 
-            string areaName = "";
-            if (routeData != null && routeData.DataTokens.ContainsKey("area"))
-            {
-                areaName = (string)routeData.DataTokens["area"];
-            }
-
-            switch (areaName)
+            switch (HttpContext.Current.Request.Url.Host.Split('.')[0])
             {
                 case "sfc":
                     this.Add("The Search For Cheats", "Home", "Index", new { area = "sfc" });

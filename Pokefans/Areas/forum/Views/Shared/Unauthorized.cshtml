@@ -1,0 +1,18 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@model ViewForumViewModel
+@using System.Configuration
+@{
+    SiteTitle = "Foren-Übersicht";
+    SiteHeader = "Pokefans-Forum";
+    SiteDescription = "";
+    ActiveMenuKey = "forum";
+    Breadcrumbs.Add("Forum", "BoardIndex", "Index");
+}
+
+<h2>Oh nein!</h2>
+
+<div class="alert alert-info"><strong>Da ist wohl etwas schiefgelaufen.</strong> Leider hast du keinen Zugriff zu diesem Bereich.</div>
+
+@section Submenu {
+    @Html.Partial("~/Areas/forum/Views/Shared/_ForumSubmenuPartial.cshtml")
+}

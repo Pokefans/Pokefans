@@ -9,5 +9,6 @@ namespace Pokefans.Areas.user.Models.Feed
         public string Url { get; set; }
         public string Comment { get; set; }
         public string ContentUrl { get; set; }
+        public string AvatarUrl { get; set; }
     }
 }

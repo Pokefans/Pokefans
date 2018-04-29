@@ -126,7 +126,17 @@ namespace Pokefans.Controllers
 
             content.TrackView(Request, _entities);
 
-            return View("~/Views/Home/ViewContent.cshtml", model);
+            string viewPath;
+
+            // some subomains, like sfc, use different layouts, so we must
+            // specify the appropriate ViewContent.cshtml.
+
+            switch(HttpContext.Request.Url.Host.Split('.')[0]) {
+                case "sfc": viewPath = "~/Areas/sfc/Views/Home/ViewContent.cshtml"; break;
+                default: viewPath = "~/Views/Home/ViewContent.cshtml"; break;
+            }
+
+            return View(viewPath, model);
         }
 
         public ActionResult Contact()

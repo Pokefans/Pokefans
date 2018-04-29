@@ -2,7 +2,8 @@
 <div class="navbar navbar-default navbar-nocollapse">
     <div class="clearfix">
         <ul class="nav navbar-nav">
-            <li class="@(Model.ActiveMenuKey == "home" ? "active" : "")"><a href="@Url.Action("Index", "FanartHome", null)" id="home">Dein Profil</a></li>
+            <li class="@(Model.ActiveMenuKey == "home" ? "active" : "")"><a href="@Url.Map("")" id="home">Für dich</a></li>
+            @*<li class="@(Model.ActiveMenuKey == "profile" ? "active" : "")"><a href="@Url.Map("profil/")" id="home">Dein Profil</a></li>*@
         </ul>
         <form class="navbar-form navbar-left hidden-xs" role="search" method="get" action="@Url.Map("suche")">
             <div class="input-group">
@@ -22,8 +23,8 @@
                     <li><a href="#">Benachrichtigungen verwalten</a></li>
 					<li><a href="#">Feed verwalten</a></li>
                     <li role="separator" class="divider"></li>
-                    <li><a href="@Url.Action("ChangePassword")">Passwort ändern</a></li>
-                    <li><a href="@Url.Action("ManageLogins")">Verknüpfte Logins verwalten</a></li>
+                    <li><a href="@Url.Action("ChangePassword", "Manage")">Passwort ändern</a></li>
+                    <li><a href="@Url.Action("ManageLogins", "Manage")">Verknüpfte Logins verwalten</a></li>
                 </ul>
             </li>
         </ul>

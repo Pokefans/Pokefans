@@ -171,6 +171,7 @@
     <Compile Include="CatchAllDomainRoute.cs" />
     <Compile Include="Parser\Mentions.cs" />
     <Compile Include="Parser\IParser.cs" />
+    <Compile Include="Emojione.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

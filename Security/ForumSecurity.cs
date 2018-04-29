@@ -32,6 +32,8 @@ namespace Pokefans.Security
         private List<BoardPermissions> groups;
         private Dictionary<int, List<BoardPermissions>> groupsBoards;
 
+        private enum AccessLevel { Read, Write, Moderate, Manage };
+
         public ForumSecurity(Entities entities, Cache c, User u)
         {
             db = entities;
@@ -40,7 +42,7 @@ namespace Pokefans.Security
             // TODO: Cache until manual refresh or logout.
         }
 
-        public bool CanReadBoard(int BoardId)
+        private bool checkAccess(int BoardId, AccessLevel level) 
         {
             BoardAccess access = BoardAccess.Default;
 
@@ -48,52 +50,54 @@ namespace Pokefans.Security
 
             if (User == null)
             {
-                access = setIfHigher(access, guest.CanRead);
-                access = setIfHigher(access, guestBoards[BoardId].CanRead);
+                access = setIfHigher(access, checkBoardAccess(guest, level));
+                if (guestBoards.ContainsKey(BoardId)) access = setIfHigher(access, checkBoardAccess(guestBoards[BoardId], level));
             }
             else
             {
                 // if we are superadmin, any role checking is superficient.
-                // we can see everything, and this cannot be overridden.
+                // we can do everything, and this cannot be overridden.
                 // note that the normal role chain does not apply to board
                 // permissions.
                 if (User.IsInRole("superadmin", cache, db))
                     return true;
 
-                access = setIfHigher(access, normal.CanRead);
-                access = setIfHigher(access, normalBoards[BoardId].CanRead);
+                access = setIfHigher(access, checkBoardAccess(normal, level));
+                if (normalBoards.ContainsKey(BoardId)) access = setIfHigher(access, checkBoardAccess(normalBoards[BoardId], level));
 
                 foreach (BoardPermissions r in roles)
                 {
-                    access = setIfHigher(access, r.CanRead);
+                    access = setIfHigher(access, checkBoardAccess(r, level));
                     // we can allow us a short cut here
                     if (access == BoardAccess.Never)
                         return false;
                 }
 
-                foreach (BoardPermissions r in rolesBoards[BoardId])
-                {
-                    access = setIfHigher(access, r.CanRead);
-                    // we can allow us a short cut here
-                    if (access == BoardAccess.Never)
-                        return false;
-                }
+                if (rolesBoards.ContainsKey(BoardId))
+                    foreach (BoardPermissions r in rolesBoards[BoardId])
+                    {
+                        access = setIfHigher(access, checkBoardAccess(r, level));
+                        // we can allow us a short cut here
+                        if (access == BoardAccess.Never)
+                            return false;
+                    }
 
                 foreach (BoardPermissions r in groups)
                 {
-                    access = setIfHigher(access, r.CanRead);
+                    access = setIfHigher(access, checkBoardAccess(r, level));
                     // we can allow us a short cut here
                     if (access == BoardAccess.Never)
                         return false;
                 }
 
-                foreach (BoardPermissions r in groupsBoards[BoardId])
-                {
-                    access = setIfHigher(access, r.CanRead);
-                    // we can allow us a short cut here
-                    if (access == BoardAccess.Never)
-                        return false;
-                }
+                if (groupsBoards.ContainsKey(BoardId))
+                    foreach (BoardPermissions r in groupsBoards[BoardId])
+                    {
+                        access = setIfHigher(access, checkBoardAccess(r, level));
+                        // we can allow us a short cut here
+                        if (access == BoardAccess.Never)
+                            return false;
+                    }
             }
 
 
@@ -102,6 +106,27 @@ namespace Pokefans.Security
 
             return false;
         }
+
+        private BoardAccess checkBoardAccess(BoardPermissions perms, AccessLevel level) 
+        {
+            switch(level) 
+            {
+                case AccessLevel.Read:     return perms.CanRead;
+                case AccessLevel.Write:    return perms.CanWrite;
+                case AccessLevel.Moderate: return perms.CanModerate;
+                case AccessLevel.Manage:   return perms.CanManage;
+                default: throw new ArgumentException("unknown AccessLevel");
+            }
+
+        }
+
+        // With the generic helper method aboe, we can now just alias
+        // explicit CanXXXBoard functions to the checkAccess function, which is
+        // pretty neat if you ask me.
+        public bool CanReadBoard(int BoardId) => checkAccess(BoardId, AccessLevel.Read);
+        public bool CanWriteBoard(int BoardId) => checkAccess(BoardId, AccessLevel.Write);
+        public bool CanModerateBoard(int BoardId) => checkAccess(BoardId, AccessLevel.Moderate);
+        public bool CanManageBoard(int BoardId) => checkAccess(BoardId, AccessLevel.Manage);
 
         private BoardAccess setIfHigher(BoardAccess current, BoardAccess target)
         {

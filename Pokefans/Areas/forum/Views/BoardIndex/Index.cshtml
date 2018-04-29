@@ -1,22 +1,26 @@
 ﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
-@model Pokefans.Areas.fanart.Models.FanartIndexViewModel
+@model BoardIndexViewModel
 @using System.Configuration
 @{
     SiteTitle = "Foren-Übersicht";
     SiteHeader = "Pokefans-Forum";
     SiteDescription = "";
     ActiveMenuKey = "forum";
+    Breadcrumbs.Add("Forum");
+    Breadcrumbs.Add("Foren-Übersicht");
 }
 
 <div id="boardindex">
-    @foreach(Board b in Model) {
+    @foreach(Board b in Model.Boards) {
     <div class="category">
         <div class="category-header"><h2 class="h4">@b.Name</h2></div>
         <div class="category-body">
             @foreach(Board cb in b.Children) {
             <div class="forum clearfix">
                 <div class="col-md-9"><h3 class="h4 forum-title"><i class="fa fa-comments fa-lg unread"></i> <a href="@Url.Map(cb.Url)">@cb.Name</a></h3>
-                <div class="forum-info"><i class="fa fa-history"></i> <a href="#">@cb.LastPost.Subject</a> <i class="fa fa-user"></i> @cb.LastPost.Author.UserName <i class="fa fa-clock-o"></i> @cb.LastPost.LastEditTime.ToString("d.M.yyyy H:m")</div>
+                <div class="forum-info"><i class="fa fa-history"></i> @if(cb.LastPost != null) {
+                    <a href="#">@cb.LastPost.Subject</a> <i class="fa fa-user"></i> @cb.LastPost.Author.UserName <i class="fa fa-clock-o"></i> @cb.LastPost.PostTime.ToString("d.M.yyyy H:m")
+                    } else { <span class="blur">Noch keine Posts</span> }</div>
                     @if(cb.Children.Count > 0) {
                     <ul class="list-unstyled list-inline"><li><strong>Unterforen:</strong></li>
                         @foreach(Board ccb in cb.Children) {
@@ -35,3 +39,7 @@
     </div>
     }
 </div>
+
+@section Submenu {
+    @Html.Partial("~/Areas/forum/Views/Shared/_ForumSubmenuPartial.cshtml")
+}

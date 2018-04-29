@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Pokefans.Data.Wifi;
+using Pokefans.Data.Forum;
 
 namespace Pokefans.Util.Search
 {
@@ -158,6 +159,21 @@ namespace Pokefans.Util.Search
             NumericField status = new NumericField("status", Field.Store.NO, true);
             status.SetIntValue((int)content.Status);
             doc.Add(status);
+
+            return doc;
+        }
+
+        public static Document Post(Post post) {
+            Document doc = new Document();
+
+            doc.Add(new Field("type", "forumPost", Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("Id", post.Id.ToString(), Field.Store.YES, Field.Index.NO));
+            doc.Add(new Field("title", post.Subject, Field.Store.YES, Field.Index.ANALYZED));
+            doc.Add(new Field("forumId", post.Thread.BoardId.ToString(), Field.Store.YES, Field.Index.NO));
+            doc.Add(new Field("content", post.Body, Field.Store.NO, Field.Index.ANALYZED));
+            doc.Add(new Field("author", post.Author.UserName, Field.Store.NO, Field.Index.ANALYZED));
+            doc.Add(new Field("authorId", post.AuthorId.ToString(), Field.Store.YES, Field.Index.NO));
+            doc.Add(new Field("isSolution", post.IsSolution.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED));
 
             return doc;
         }

@@ -37,9 +37,15 @@ namespace Pokefans.Areas.sfc
                     dataTokens*/
                 ));
 
+            context.Routes.Add("sfchome", new DomainRoute(
+                "sfc." + ConfigurationManager.AppSettings["Domain"],
+                 "",
+                new { action = "Index", controller = "SfcHome" },
+                dataTokens
+            ));
 
             // Default Route
-            context.Routes.Add("sfcdefault", route);
+            // context.Routes.Add("sfcdefault", route);
         }
     }
 }

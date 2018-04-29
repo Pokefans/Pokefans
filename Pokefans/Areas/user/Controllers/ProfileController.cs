@@ -13,6 +13,7 @@ using Pokefans.Areas.user.Models.Feed;
 using Pokefans.Areas.user.Models;
 using Pokefans.Data.Comments;
 using Pokefans.Util.Comments;
+using Pokefans.Util;
 
 
 namespace Pokefans.Areas.user.Controllers
@@ -71,6 +72,7 @@ namespace Pokefans.Areas.user.Controllers
                     {
                         Fanart = fanart,
                         Username = fanart.UploadUser.UserName,
+                        AvatarUrl = fanart.UploadUser.AvatarUrl,
                         Url = fanart.UploadUser.Url,
                         Timestamp = fanart.UploadTime
                     });
@@ -108,7 +110,7 @@ namespace Pokefans.Areas.user.Controllers
                                 join f in db.Fanarts.Include("UploadUserId") on a.CommentedObjectId equals f.Id
                                 where a.Context == (int)CommentContext.Fanart
                                  && (showAll || authors.Contains(f.UploadUserId))
-                                 && a.HasChildren == false
+                                 // && a.Children.Count() == 0
                                 orderby a.SubmitTime descending
                                 select new { Comment = a, Fanart = f }).Take(15);
 
@@ -117,6 +119,7 @@ namespace Pokefans.Areas.user.Controllers
                     {
                         Fanart = comment.Fanart,
                         Username = comment.Comment.Author.UserName,
+                        AvatarUrl = comment.Comment.Author.AvatarUrl,
                         Url = comment.Comment.Author.Url,
                         Timestamp = comment.Comment.SubmitTime,
                         Comment = comment.Comment.ParsedComment
@@ -147,6 +150,7 @@ namespace Pokefans.Areas.user.Controllers
                     {
                         Url = trade.User.Url,
                         Username = trade.User.UserName,
+                        AvatarUrl = trade.User.AvatarUrl,
                         Timestamp = trade.UpdateTime,
                         Offer = trade
                     });
@@ -171,15 +175,26 @@ namespace Pokefans.Areas.user.Controllers
                 string authorlist = authors.Aggregate("", (acc, i) => acc.Length == 0 ? acc + "'" + i.ToString() + "'" : acc + ",'" + i.ToString() + "'");
 
                 // Note: I know this is bad practice, but strong type safety protects us here.
+                // Unfortunately, EF does not support the "IN" keyword.
                 var news = db.Comments.SqlQuery(
                     @"SELECT * from Comments c
-                      LEFT JOIN Content i on c.CommentedObjectId == i.Id
+                      LEFT JOIN system_users u on c.AuthorId = u.id
+                      LEFT JOIN Content i on c.CommentedObjectId = i.Id
                       WHERE (@p0 OR c.AuthorId IN (" + authorlist + @")
                          OR i.AuthorUserId IN(" + authorlist + @"))
                         AND i.Type == @p1
                       ORDER BY c.SubmitTime DESC
                       LIMIT 20", new { showAll, ContentType.News});
-
+                
+                foreach(var n in news) {
+                    feedContent.Add(new NewsCommentFeedContent() {
+                        Username = n.Author.UserName,
+                        AvatarUrl = n.Author.AvatarUrl,
+                        Comment = n.ParsedComment,
+                        Url = n.Author.Url,
+                        ContentUrl = Url.Map("/inhalt/"+n.CommentedObjectId.ToString(), null)
+                    });
+                }
             }
 
             // TODO - Calendar: omitted for now because abonnement level should depend on Categories.

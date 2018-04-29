@@ -38,10 +38,10 @@ namespace Pokefans.Data.Forum
         public int? ParentBoardId { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this <see cref="T:Pokefans.Data.Forum.Board"/> is Question & Answer enabled.
+        /// Gets or sets a value indicating whether this <see cref="T:Pokefans.Data.Forum.Board"/> is Question &amp; Answer enabled.
         /// If so, Users are able to mark a Post as the solution.
         /// </summary>
-        /// <value><c>true</c> if is Q&A enabled; otherwise, <c>false</c>.</value>
+        /// <value><c>true</c> if is Q&amp;A enabled; otherwise, <c>false</c>.</value>
         public bool IsQAEnabled { get; set; }
 
         public bool ShowInParentBoard { get; set; }
@@ -51,9 +51,11 @@ namespace Pokefans.Data.Forum
         [NotMapped]
         public List<Board> Children { get; set; }
 
-        public int LastPostId { get; set; }
+        public int? LastPostId { get; set; }
 
         [ForeignKey("LastPostId")]
         public Post LastPost { get; set; }
+
+        public string Rules { get; set; }
     }
 }

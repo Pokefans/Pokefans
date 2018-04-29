@@ -349,6 +349,13 @@
     <Compile Include="Areas\forum\forumAreaRegistration.cs" />
     <Compile Include="Areas\forum\Controllers\BoardIndexController.cs" />
     <Compile Include="Areas\forum\Models\BoardIndexViewModel.cs" />
+    <Compile Include="Areas\forum\Controllers\ForumController.cs" />
+    <Compile Include="Areas\forum\Models\ViewForumViewModel.cs" />
+    <Compile Include="Areas\forum\Models\ViewForumThreadViewModel.cs" />
+    <Compile Include="Models\PaginationViewModel.cs" />
+    <Compile Include="Areas\forum\Models\NewThreadViewModel.cs" />
+    <Compile Include="Areas\forum\Models\NewPostViewModel.cs" />
+    <Compile Include="Areas\forum\Models\EditPostViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -669,6 +676,22 @@
     <Content Include="Areas\user\Views\Shared\_submenuPartial.cshtml" />
     <Content Include="Areas\forum\Views\_ViewStart.cshtml" />
     <Content Include="Areas\forum\Views\BoardIndex\Index.cshtml" />
+    <Content Include="Areas\forum\Views\web.config" />
+    <Content Include="Areas\forum\Views\Forum\Forum.cshtml" />
+    <Content Include="Areas\forum\Views\Shared\_ForumSubmenuPartial.cshtml" />
+    <Content Include="Views\Shared\_Pagination.cshtml" />
+    <Content Include="Areas\forum\Views\Shared\Unauthorized.cshtml" />
+    <Content Include="Areas\forum\Views\Forum\NewThread.cshtml" />
+    <Content Include="Areas\sfc\Views\Home\ViewContent.cshtml" />
+    <Content Include="Scripts\emojione.js" />
+    <Content Include="Scripts\emojione.min.js" />
+    <Content Include="Scripts\emojionearea.js" />
+    <Content Include="Scripts\emojionearea.min.js" />
+    <Content Include="Content\emojionearea.css" />
+    <Content Include="Content\emojionearea.min.css" />
+    <Content Include="Scripts\forum\forum.js" />
+    <Content Include="Areas\user\Views\Profile\Feed.cshtml" />
+    <Content Include="Views\Shared\Advertising\_SkyscraperPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -685,6 +708,10 @@
     <Folder Include="Areas\forum\Models\" />
     <Folder Include="Areas\forum\Views\" />
     <Folder Include="Areas\forum\Views\BoardIndex\" />
+    <Folder Include="Areas\forum\Views\Forum\" />
+    <Folder Include="Areas\forum\Views\Shared\" />
+    <Folder Include="Scripts\forum\" />
+    <Folder Include="Views\Shared\Advertising\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

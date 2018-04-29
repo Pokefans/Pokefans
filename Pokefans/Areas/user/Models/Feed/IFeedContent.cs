@@ -8,6 +8,8 @@ namespace Pokefans.Areas.user.Models.Feed
 
         string Username { get; set; }
 
+        string AvatarUrl { get; set; }
+
         string Url { get; set; }
     }
 }

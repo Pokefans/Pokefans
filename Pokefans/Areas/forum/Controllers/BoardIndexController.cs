@@ -24,7 +24,7 @@ namespace Pokefans.Controllers
             db = e;
             cache = c;
             User currentUser = null;
-            if (User.Identity.IsAuthenticated)
+            if (User != null && User.Identity.IsAuthenticated)
             {
                 int currentUserId = User.Identity.GetUserId<int>();
                 currentUser = db.Users.FirstOrDefault(g => g.Id == currentUserId);

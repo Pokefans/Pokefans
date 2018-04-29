@@ -264,6 +264,38 @@
     <Compile Include="Migrations\201709060905331_MoreFeedConfig.Designer.cs">
         <DependentUpon>201709060905331_MoreFeedConfig.cs</DependentUpon>
     </Compile>
+            <Compile Include="Migrations\201802052021508_ForumPart1.cs" />
+    <Compile Include="Migrations\201802052021508_ForumPart1.Designer.cs">
+        <DependentUpon>201802052021508_ForumPart1.cs</DependentUpon>
+    </Compile>
+        <Compile Include="Migrations\201802052040230_ForumAllowNullLastPost.cs" />
+    <Compile Include="Migrations\201802052040230_ForumAllowNullLastPost.Designer.cs">
+        <DependentUpon>201802052040230_ForumAllowNullLastPost.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802091015083_ForumMoreThreadAttributes.cs" />
+    <Compile Include="Migrations\201802091015083_ForumMoreThreadAttributes.Designer.cs">
+        <DependentUpon>201802091015083_ForumMoreThreadAttributes.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802091022188_ForumBoardRules.cs" />
+    <Compile Include="Migrations\201802091022188_ForumBoardRules.Designer.cs">
+        <DependentUpon>201802091022188_ForumBoardRules.cs</DependentUpon>
+    </Compile>
+        <Compile Include="Migrations\201802091230411_ForumThreadStuff.cs" />
+    <Compile Include="Migrations\201802091230411_ForumThreadStuff.Designer.cs">
+        <DependentUpon>201802091230411_ForumThreadStuff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201802181625499_ForumNullableAuthors.cs" />
+    <Compile Include="Migrations\201802181625499_ForumNullableAuthors.Designer.cs">
+        <DependentUpon>201802181625499_ForumNullableAuthors.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804291246413_ForumThreadPrefix.cs" />
+    <Compile Include="Migrations\201804291246413_ForumThreadPrefix.Designer.cs">
+        <DependentUpon>201804291246413_ForumThreadPrefix.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201804291252478_ForumThreadPrefix2.cs" />
+    <Compile Include="Migrations\201804291252478_ForumThreadPrefix2.Designer.cs">
+        <DependentUpon>201804291252478_ForumThreadPrefix2.cs</DependentUpon>
+    </Compile>    
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -401,6 +433,8 @@
     <Compile Include="Forum\BoardPermissions.cs" />
     <Compile Include="Forum\ForumGroup.cs" />
     <Compile Include="Forum\ForumGroupsUsers.cs" />
+    <Compile Include="Forum\ThreadPrefix.cs" />
+    <Compile Include="Forum\BoardEnabledPrefixes.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -533,6 +567,30 @@
 	<EmbeddedResource Include="Migrations\201709060905331_MoreFeedConfig.resx">
         <DependentUpon>201709060905331_MoreFeedConfig.cs</DependentUpon>
     </EmbeddedResource> 
+            <EmbeddedResource Include="Migrations\201802052021508_ForumPart1.resx">
+        <DependentUpon>201802052021508_ForumPart1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802052040230_ForumAllowNullLastPost.resx">
+        <DependentUpon>201802052040230_ForumAllowNullLastPost.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802091015083_ForumMoreThreadAttributes.resx">
+        <DependentUpon>201802091015083_ForumMoreThreadAttributes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201802091022188_ForumBoardRules.resx">
+        <DependentUpon>201802091022188_ForumBoardRules.cs</DependentUpon>
+    </EmbeddedResource>
+        <EmbeddedResource Include="Migrations\201802091230411_ForumThreadStuff.resx">
+        <DependentUpon>201802091230411_ForumThreadStuff.cs</DependentUpon>
+    </EmbeddedResource>
+     <EmbeddedResource Include="Migrations\201802181625499_ForumNullableAuthors.resx">
+        <DependentUpon>201802181625499_ForumNullableAuthors.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804291246413_ForumThreadPrefix.resx">
+        <DependentUpon>201804291246413_ForumThreadPrefix.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201804291252478_ForumThreadPrefix2.resx">
+        <DependentUpon>201804291252478_ForumThreadPrefix2.cs</DependentUpon>
+    </EmbeddedResource>     
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

@@ -84,10 +84,9 @@ namespace Pokefans
                     new { controller = "CommentApi", action = "Delete" }
                 ));
 
-            // Default route for handling content urls
-            routes.Add("Content", new ContentRoute(
-                    "Home", "ViewContent"
-                ));
+            RouteTable.Routes.Add("Content", new ContentRoute(
+                "Home", "ViewContent"
+            ));
 
             var route = routes.MapRoute(
                             name: "Default",

@@ -339,6 +339,10 @@ namespace Pokefans.Data
 
         public virtual DbSet<ForumGroupsUsers> ForumGroupsUsers { get; set; }
 
+        public virtual DbSet<ThreadPrefix> ThreadPrefixes { get; set; }
+
+        public virtual DbSet<BoardEnabledPrefixes> BoardEnabledPrefixes { get; set; }
+
         #endregion
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

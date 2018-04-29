@@ -145,6 +145,15 @@ namespace Pokefans
             bundles.Add(new StyleBundle("~/bundles/dropzone/css").Include(
                     "~/Scripts/dropzone/dropzone.css"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/emojiarea").Include(
+                "~/Scripts/emojione.js",
+                "~/Scripts/emojionearea.js"
+            ));
+
+            bundles.Add(new StyleBundle("~/bundles/emojiarea/css").Include(
+                "~/Content/emojionearea.css"
+            ));
         }
     }
 }

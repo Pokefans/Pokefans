@@ -30,6 +30,7 @@
 {
     @section CustomHeaders {
         <!-- Content specific stylesheet -->
+        @*TODO load this from the file system instead from the database (or at least from another URL)*@
         <style>
         @Html.Raw(Model.Content.StylesheetCss)
         </style>

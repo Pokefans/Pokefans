@@ -8,13 +8,11 @@ namespace Pokefans.Data.Forum
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public int? AuthorId { get; set; }
 
         public int ThreadId { get; set; }
-
-        public int BoardId { get; set; }
 
         [MaxLength(255)]
         public string Subject { get; set; }
@@ -25,7 +23,7 @@ namespace Pokefans.Data.Forum
 
         public DateTime PostTime { get; set; }
 
-        public DateTime LastEditTime { get; set; }
+        public DateTime? LastEditTime { get; set; }
 
         public string EditReason { get; set; }
 
@@ -48,7 +46,5 @@ namespace Pokefans.Data.Forum
         [ForeignKey("AuthorId")]
         public User Author { get; set; }
 
-        [ForeignKey("BoardId")]
-        public Board Board { get; set; }
     }
 }

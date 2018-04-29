@@ -1,0 +1,59 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@model NewThreadViewModel
+@using System.Configuration
+@{
+    SiteTitle = "Foren-Übersicht";
+    SiteHeader = Model.Board.Name + " | Pokefans-Forum";
+    SiteDescription = "";
+    ActiveMenuKey = "forum";
+    Breadcrumbs.Add("Forum", "BoardIndex", "Index");
+    Breadcrumbs.Add(Model.Board.Name);
+}
+
+<h2>@Model.Board.Name</h2>
+
+<div class="col-md-9">
+    <h3>Neues Thema erstellen</h3>
+    <form class="form">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label for="post-subject">Betreff</label>
+            <input type="text" class="form-control" id="post-subject" name="subject">
+        </div>
+        <div class="form-group forum-full-editor">
+            <label for="post-body" class="sr-only">Text</label>
+            <textarea class="form-control emojiarea" id="post-body" name="body" placeholder="Beitrag hier eingeben" rows="15"></textarea>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input type="checkbox" name="watch"> Beobachte dieses Thema
+                <p class="help-block">Du erhältst dann Benachrichtigungen, wenn jemand auf dieses Thema antwortet.</p>
+            </label>
+        </div>
+    </form>
+</div>
+
+<div class="col-md-3">
+    <h3>Hinweise</h3>
+    <p>Bevor du ein neues Thema eröffnest...</p>
+    <ul>
+        <li>... benutze die Suchfunktion - vielleicht hat jemand dieselbe Frage bereits gestellt?</li>
+        <li>... suche das richtige Unterforum für dein Thema aus.</li>
+        <li>... wähle einen aussagekräftigen Titel, der den Inhalt beschreibt.</li>
+    </ul>
+</div>
+
+
+@section Submenu {
+    @Html.Partial("~/Areas/forum/Views/Shared/_ForumSubmenuPartial.cshtml")
+}
+
+@section CustomHeaders {
+    @Styles.Render("~/bundles/emojiarea/css")
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/emojiarea")
+    @Scripts.Render("~/Scripts/forum/forum.js")
+
+}

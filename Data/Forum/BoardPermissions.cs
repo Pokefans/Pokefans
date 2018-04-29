@@ -16,7 +16,7 @@ namespace Pokefans.Data.Forum
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         [Index("IX_Permissionsets_Role", 3, IsUnique = true)]
         public int? BoardId { get; set; }

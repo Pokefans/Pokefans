@@ -1,0 +1,84 @@
+﻿@* Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@using Pokefans.Data
+@using System.Configuration
+@model Pokefans.Models.ContentViewModel
+@{
+    ViewBag.Title = Model.Content.Title;
+    SiteTitle = Model.Content.Title;
+
+    Breadcrumbs.Add(Model.Content.Type == ContentType.News ? "News" : "Artikel"); // TODO
+    Breadcrumbs.Add(Model.Content.Title);
+}
+<h1 itemprop="heading">@Model.Content.Title</h1>
+
+<div itemscope itemtype="http://schema.org/Article">
+    @if (!string.IsNullOrEmpty(Model.Content.Teaser))
+    {
+        <p class="intro" itemprop="description"><strong>@Html.Raw(Model.Content.Teaser)</strong></p>
+    }
+
+    <div itemprop="articleBody">
+        @Html.Raw(Model.Content.ParsedContent)
+    </div>
+
+    @if (Model.Content.Type == ContentType.News)
+    {
+        <p class="legend">Diese Meldung wurde am <span itemprop="datePublished">@Model.Content.Published</span> veröffentlicht.</p>
+    }
+</div>
+
+@if (!string.IsNullOrEmpty(Model.Content.StylesheetCss))
+{
+    @section CustomHeaders {
+        <!-- Content specific stylesheet -->
+        @*TODO load this from the file system instead from the database (or at least from another URL)*@
+        <style>
+        @Html.Raw(Model.Content.StylesheetCss)
+        </style>
+    }
+}
+
+@if (Model.Content.Type == ContentType.News)
+{
+    @section Sidebar {
+        <div class="element">
+            <div class="h3">Aktuelle Neuigkeiten</div>
+            <ul>
+                @foreach (var content in Model.News)
+                {
+                    <li><a href="/@content.DefaultUrl.Url">@content.Title</a></li>
+                }
+            </ul>
+        </div>
+
+        <div class="element">
+            <div class="h3">Neuigkeiten zum Thema</div>
+            <ul>
+                @foreach (var content in Model.RelatedNews)
+                {
+                    <li><a href="/@content.DefaultUrl.Url">@content.Title</a></li>
+                }
+            </ul>
+        </div>
+    }
+}
+else if (Model.Content.Category != null && Model.Content.Category.SidebarContent != null)
+{
+    @section Sidebar {
+        @Html.Raw(Model.Content.Category.SidebarContent.ParsedContent)
+    }
+}
+
+@section CustomHeaders {
+    @if(File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], @Model.Content.Id + ".css"))) 
+    {
+        <link rel="stylesheet" href="@Model.Content.StylesheetUrl" />
+    }
+    @foreach(ContentBoilerplate b in Model.Content.Boilerplates) {
+        string css = b.ContentId.ToString() + ".css";
+        if(File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], css)))
+        {
+            <link rel="stylesheet" href="//static.@ConfigurationManager.AppSettings["Domain"]/stylesheets/content/@css" />
+        }
+    }
+}

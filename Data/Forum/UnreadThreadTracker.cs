@@ -9,7 +9,7 @@ namespace Pokefans.Data.Forum
 
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public long Id { get; set; }
+        public int Id { get; set; }
 
         public int UserId { get; set; }
 

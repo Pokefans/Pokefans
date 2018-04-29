@@ -1,0 +1,95 @@
+﻿@model PaginationViewModel
+
+<div class="poke-pagination">
+    <nav aria-label="Seitennavigation">
+      <ul class="pagination pagination-sm">
+      @if(Model.Current == Model.Minimum) {
+        <li class="disabled">
+            <span><span aria-hidden="true">&laquo;</span></span>
+        </li>
+        } else {
+        <li>
+          <a href="@Model.GetUrl(Model.Current - 1)" aria-label="Neuer">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        }
+        @if((Model.Maximum - (Model.Minimum - 1)) < 7) {
+            @* If we have less than 7 pages, we do not abbreviate. *@
+            for(int i = Model.Minimum; i <= Model.Maximum; i++){
+                <li class="@(Model.Current == i ? "active" : "")"><a href="@Model.GetUrl(i)">@i.ToString()</a></li>
+            }
+        }
+        else {
+            @* So we need to abbreviate. Let's determine how. Essentially,
+               We have three cases:
+                    1) Current Page is 1, 2, or 3; in this case, we need to
+                       abbreviate in the form of 1 2 3 4 ... 42
+                    2) Current Page is > 3 but less than (Max - 2); in this
+                       case, we need to abbreviate in the form of
+                       1 ... 20 21 22 ... 42
+                    3) Current Page is >= (Max - 2); in this case we need
+                       to abbreviate in the form 1 ... 40 41 42
+               The case (Min + 2) and (Max - 2) need special handling too, as
+               they would cause 1 2 3 4 ... 42 or 1 ... 39 40 41 42 respectively. *@
+
+            if(Model.Current <= (Model.Minimum + 2)) {
+                int maximum = Model.Minimum + 2;
+                if(Model.Current == maximum) { maximum++; }
+
+                for(int i = Model.Minimum; i <= maximum; i++) {
+                    <li class="@(Model.Current == i ? "active" : "")"><a href="@Model.GetUrl(i)">@i.ToString()</a></li>
+                }
+                <li class="disabled">
+                    <span>
+                        <span aria-hidden="true">...</span>
+                    </span>
+                </li>
+                <li><a href="@Model.GetUrl(Model.Maximum)">@Model.Maximum.ToString()</a></li>
+            }
+            else if (Model.Current >= (Model.Maximum - 2)) {
+                int minimum = Model.Maximum - 2;
+                if(Model.Current == minimum) { minimum--; }
+
+                <li><a href="@Model.GetUrl(Model.Minimum)">@Model.Maximum.ToString()</a></li>
+                <li class="disabled">
+                    <span>
+                        <span aria-hidden="true">...</span>
+                    </span>
+                </li>
+                for(int i = minimum; i <= Model.Maximum; i++) {
+                    <li class="@(Model.Current == i ? "active" : "")"><a href="@Model.GetUrl(i)">@i.ToString()</a></li>
+                }
+            } 
+            else {
+                <li><a href="@Model.GetUrl(Model.Minimum)">@Model.Maximum.ToString()</a></li>
+                <li class="disabled">
+                    <span>
+                        <span aria-hidden="true">...</span>
+                    </span>
+                </li>
+                for(int i = Model.Current - 1; i <= Model.Current + 1; i++) {
+                    <li class="@(Model.Current == i ? "active" : "")"><a href="@Model.GetUrl(i)">@i.ToString()</a></li>
+                }
+                <li class="disabled">
+                    <span>
+                        <span aria-hidden="true">...</span>
+                    </span>
+                </li>
+                <li><a href="@Model.GetUrl(Model.Maximum)">@Model.Maximum.ToString()</a></li>
+            } 
+        }
+        @if(Model.Current == Model.Maximum) {
+        <li class="disabled">
+            <span><span aria-hidden="true">&raquo;</span></span>
+        </li>
+        } else {
+        <li>
+          <a href="@Model.GetUrl(Model.Current + 1)" aria-label="Älter">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+        }
+      </ul>
+    </nav>
+</div>

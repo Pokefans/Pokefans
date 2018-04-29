@@ -1,4 +1,5 @@
 ﻿@model Pokefans.Models.ManageLoginsViewModel
+@using Pokefans.Areas.user.Models
 @using Microsoft.Owin.Security
 @{
     ViewBag.Title = "Externe Anmeldungen verwalten";
@@ -67,4 +68,7 @@
             }
         }
     }
+}
+@section submenu {
+    @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("manage", ""))
 }

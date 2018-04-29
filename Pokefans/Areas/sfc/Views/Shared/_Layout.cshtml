@@ -19,6 +19,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     @Styles.Render("~/Content/lightbox/css")
+    @RenderSection("CustomHeaders", required:false)
   </head>
   <body>
     <div class="stripe"></div>
@@ -32,16 +33,16 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="@Url.Action("Index","Home")">The Search For Cheats</a>
+          <a class="navbar-brand" href="@Url.Map("")">The Search For Cheats</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-fixed">
-            <li><a href="@Url.Map("turorials")">Tutorials</a></li>
+            <li><a href="@Url.Map("tutorials")">Tutorials</a></li>
             <li><a href="@Url.Map("downloads")">Downloads</a></li>
-            <li><a href="http://sfc.pokefans.net/smaragd.html">Smaragd-Codes</a></li>
-            <li><a href="http://sfc.pokefans.net/frbg.html">FRBG-Codes</a></li>
+            <li><a href="http://sfc.pokefans.net/codes/smaragd.html">Smaragd-Codes</a></li>
+            <li><a href="http://sfc.pokefans.net/codes/frbg.html">FRBG-Codes</a></li>
             <li><a href="@Url.Map("codes/ards")">ARDS-Codes</a></li>
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Rips <span class="caret"></span></a>
