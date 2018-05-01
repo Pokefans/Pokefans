@@ -57,7 +57,7 @@
     <text>
         <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat ein neues Fanart hochgeladen: <a href="@content.Fanart.Url">@content.Fanart.Title</a>
         <hr>
-        <div class="feed-fanart"><img src="@content.Fanart.LargeThumbnailUrl"></div>
+        <div class="feed-fanart"><img src="@Url.Map("/fanart/uploads/"+content.Fanart.LargeThumbnailUrl, "files")"></div>
     </text>
 }
 

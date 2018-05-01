@@ -1,33 +1,8 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/user/Controllers/ProfileController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/fanart/Views/FanartHome/Index.cshtml">
     <Files>
-      <File FileName="Pokefans/Areas/forum/Controllers/ForumController.cs" Line="127" Column="9" />
-      <File FileName="Pokefans/Areas/forum/Views/Forum/NewThread.cshtml" Line="29" Column="51" />
-      <File FileName="Pokefans/Areas/forum/Models/NewThreadViewModel.cs" Line="16" Column="40" />
-      <File FileName="Data/Forum/ThreadPrefix.cs" Line="15" Column="9" />
-      <File FileName="Data/Forum/Thread.cs" Line="36" Column="9" />
-      <File FileName="Data/Forum/BoardEnabledPrefixes.cs" Line="17" Column="48" />
-      <File FileName="Data/Entities.cs" Line="344" Column="48" />
-      <File FileName="Data/Forum/Board.cs" Line="14" Column="42" />
-      <File FileName="Pokefans/Views/Shared/_Layout.cshtml" Line="108" Column="47" />
-      <File FileName="Pokefans/Scripts/forum/forum.js" Line="4" Column="36" />
-      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="155" Column="45" />
-      <File FileName="Pokefans/Content/Site.css" Line="344" Column="1" />
-      <File FileName="Pokefans/Areas/forum/Models/NewPostViewModel.cs" Line="8" Column="43" />
-      <File FileName="Pokefans/Areas/user/Controllers/ManageController.cs" Line="133" Column="39" />
-      <File FileName="Data/User/UserFeedConfig.cs" Line="20" Column="16" />
-      <File FileName="Pokefans/Areas/user/Controllers/ProfileController.cs" Line="120" Column="49" />
-      <File FileName="Pokefans/Areas/user/Views/Profile/Feed.cshtml" Line="78" Column="1" />
-      <File FileName="Pokefans/Areas/user/Models/Feed/NewWifiOfferFeedContent.cs" Line="6" Column="18" />
-      <File FileName="Pokefans/App_Start/RouteConfig.cs" Line="90" Column="1" />
-      <File FileName="Pokefans/Areas/user/Models/FeedViewModel.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Views/Profile/ViewProfile.cshtml" Line="92" Column="16" />
-      <File FileName="Pokefans/Views/Shared/Advertising/_SkyscraperPartial.cshtml" Line="1" Column="150" />
-      <File FileName="Pokefans/Areas/user/Views/Shared/_submenuPartial.cshtml" Line="6" Column="141" />
-      <File FileName="Pokefans/Areas/user/userAreaRegistration.cs" Line="81" Column="111" />
-      <File FileName="Pokefans/Areas/user/Views/Manage/ChangePassword.cshtml" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Views/Manage/ManageLogins.cshtml" Line="2" Column="34" />
-      <File FileName="Pokefans/Areas/user/Views/Manage/SetPassword.cshtml" Line="2" Column="34" />
+      <File FileName="Pokefans/Areas/user/Views/Profile/Feed.cshtml" Line="60" Column="54" />
+      <File FileName="Pokefans/Areas/fanart/Views/FanartHome/Index.cshtml" Line="31" Column="126" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
