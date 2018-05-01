@@ -183,7 +183,7 @@ namespace Pokefans.Areas.user.Controllers
                 var news = db.Comments.SqlQuery(
                     @"SELECT * from Comments c
                       LEFT JOIN system_users u on c.AuthorId = u.id
-                      LEFT JOIN Content i on c.CommentedObjectId = i.Id
+                      LEFT JOIN content i on c.CommentedObjectId = i.Id
                       WHERE (@p0 OR c.AuthorId IN (" + authorlist + @")
                          OR i.AuthorUserId IN(" + authorlist + @"))
                         AND i.Type = @p1
