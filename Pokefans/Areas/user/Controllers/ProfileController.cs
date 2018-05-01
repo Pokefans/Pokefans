@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Data.Entity;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Ajax;
@@ -106,21 +107,22 @@ namespace Pokefans.Areas.user.Controllers
 
                 bool showAll = (config.CommentsOnFanart & UserFeedConfig.Visibility.All) > 0;
 
-                var comments = (from a in db.Comments.Include("Author")
+                var comments = (from a in db.Comments
                                 join f in db.Fanarts.Include("UploadUserId") on a.CommentedObjectId equals f.Id
+                                join u in db.Users on a.AuthorId equals u.Id
                                 where a.Context == (int)CommentContext.Fanart
                                  && (showAll || authors.Contains(f.UploadUserId))
                                  // && a.Children.Count() == 0
                                 orderby a.SubmitTime descending
-                                select new { Comment = a, Fanart = f }).Take(15);
+                                select new { Comment = a, Fanart = f, Author = u }).Take(15);
 
                 foreach(var comment in comments) {
                     feedContent.Add(new FanartCommentFeedContent()
                     {
                         Fanart = comment.Fanart,
-                        Username = comment.Comment.Author.UserName,
-                        AvatarUrl = comment.Comment.Author.AvatarUrl,
-                        Url = comment.Comment.Author.Url,
+                        Username = comment.Author.UserName,
+                        AvatarUrl = comment.Author.AvatarUrl,
+                        Url = comment.Author.Url,
                         Timestamp = comment.Comment.SubmitTime,
                         Comment = comment.Comment.ParsedComment
                     });
