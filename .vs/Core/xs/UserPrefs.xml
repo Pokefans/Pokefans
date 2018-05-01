@@ -16,7 +16,7 @@
       <File FileName="Pokefans/Areas/forum/Models/NewPostViewModel.cs" Line="8" Column="43" />
       <File FileName="Pokefans/Areas/user/Controllers/ManageController.cs" Line="133" Column="39" />
       <File FileName="Data/User/UserFeedConfig.cs" Line="20" Column="16" />
-      <File FileName="Pokefans/Areas/user/Controllers/ProfileController.cs" Line="113" Column="34" />
+      <File FileName="Pokefans/Areas/user/Controllers/ProfileController.cs" Line="120" Column="49" />
       <File FileName="Pokefans/Areas/user/Views/Profile/Feed.cshtml" Line="78" Column="1" />
       <File FileName="Pokefans/Areas/user/Models/Feed/NewWifiOfferFeedContent.cs" Line="6" Column="18" />
       <File FileName="Pokefans/App_Start/RouteConfig.cs" Line="90" Column="1" />
@@ -29,30 +29,6 @@
       <File FileName="Pokefans/Areas/user/Views/Manage/ManageLogins.cshtml" Line="2" Column="34" />
       <File FileName="Pokefans/Areas/user/Views/Manage/SetPassword.cshtml" Line="2" Column="34" />
     </Files>
-    <Pads>
-      <Pad Id="ClassPad">
-        <State name="__root__">
-          <Node name="Core" expanded="True">
-            <Node name="lib" expanded="True">
-              <Node name="Data" expanded="True">
-                <Node name="Pokefans" expanded="True">
-                  <Node name="Pokefans.Data.Fanwork.Fanart" expanded="True" />
-                </Node>
-              </Node>
-            </Node>
-            <Node name="Pokefans" expanded="True">
-              <Node name="Pokefans" expanded="True">
-                <Node name="Areas" expanded="True">
-                  <Node name="user" expanded="True">
-                    <Node name="Models" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

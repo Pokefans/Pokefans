@@ -173,6 +173,8 @@ namespace Pokefans.Areas.user.Controllers
                 bool showAll = (config.CommentsOnNews & UserFeedConfig.Visibility.All) > 0;
 
                 string authorlist = authors.Aggregate("", (acc, i) => acc.Length == 0 ? acc + "'" + i.ToString() + "'" : acc + ",'" + i.ToString() + "'");
+                if (authorlist.Trim().Length == 0)
+                    authorlist = "-2";
 
                 // Note: I know this is bad practice, but strong type safety protects us here.
                 // Unfortunately, EF does not support the "IN" keyword.
@@ -182,7 +184,7 @@ namespace Pokefans.Areas.user.Controllers
                       LEFT JOIN Content i on c.CommentedObjectId = i.Id
                       WHERE (@p0 OR c.AuthorId IN (" + authorlist + @")
                          OR i.AuthorUserId IN(" + authorlist + @"))
-                        AND i.Type == @p1
+                        AND i.Type = @p1
                       ORDER BY c.SubmitTime DESC
                       LIMIT 20", new { showAll, ContentType.News});
                 
