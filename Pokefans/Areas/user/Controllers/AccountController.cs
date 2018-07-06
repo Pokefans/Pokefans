@@ -20,6 +20,7 @@ using Pokefans.Models;
 using Pokefans.Security;
 using Pokefans.Util;
 using Pokefans.Data.UserData;
+using Pokefans.Areas.user.Models;
 
 namespace Pokefans.Areas.user.Controllers
 {
@@ -96,24 +97,34 @@ namespace Pokefans.Areas.user.Controllers
             // Temporary Solution: Resolve User here. But we want to resolve the email in the Manager class, just like it works for the username
             // see https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Owin/SignInManager.cs
             User u = _entities.Users.Where(g => g.Email == model.Email).FirstOrDefault();
-            if(u != null)
+
+            if (!u.EmailConfirmed)
             {
-                result = SignInManager.PasswordSignIn(u.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                ModelState.AddModelError("", "Deine E-Mail-Adresse wurde noch nicht bestätigt, deshalb kannst du dich noch nicht anmelden. Klicke auf den Link, den du per E-Mail erhalten hast. Falls du die E-Mail nicht finden solltest, kannst du dir unten einen neuen Aktivierungslink zuschicken.");
             }
-            
-            switch (result)
+            else
             {
-                case SignInStatus.Success:
-                    return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
-                    return View("~/Areas/user/Views/Account/Login.cshtml", model);
+
+                if (u != null)
+                {
+                    result = SignInManager.PasswordSignIn(u.UserName, model.Password, model.RememberMe, shouldLockout: false);
+                }
+
+                switch (result)
+                {
+                    case SignInStatus.Success:
+                        return RedirectToLocal(returnUrl);
+                    case SignInStatus.LockedOut:
+                        return View("Lockout");
+                    case SignInStatus.RequiresVerification:
+                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    case SignInStatus.Failure:
+                    default:
+                        ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
+                        break;
+                }
             }
+            return View("~/Areas/user/Views/Account/Login.cshtml", model);
         }
 
         //
@@ -182,7 +193,7 @@ namespace Pokefans.Areas.user.Controllers
                     Email = model.Email,
                     Registered = DateTime.Now,
                     RegisteredIp = SecurityUtils.GetIPAddressAsString(HttpContext),
-                    EmailConfirmed = true, // todo: add email validation
+                    EmailConfirmed = false, // todo: add email validation
                     IsLockedOut = false,
                     GravatarEnabled = true
                 };
@@ -192,7 +203,7 @@ namespace Pokefans.Areas.user.Controllers
                 var result = UserManager.Create(user, model.Password);
                 if (result.Succeeded)
                 {
-                    SignInManager.SignIn(user, isPersistent:false, rememberBrowser:false);
+                    //SignInManager.SignIn(user, isPersistent:false, rememberBrowser:false);
                     UserProfile p = new UserProfile();
                     UserFeedConfig ufc = new UserFeedConfig();
                     p.UserId = user.Id;
@@ -202,9 +213,9 @@ namespace Pokefans.Areas.user.Controllers
                     _entities.SaveChanges();
                     // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                     // E-Mail-Nachricht mit diesem Link senden
-                    // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    // await UserManager.SendEmailAsync(user.Id, "Konto bestätigen", "Bitte bestätigen Sie Ihr Konto. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
+                    string code = UserManager.GenerateEmailConfirmationToken(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    UserManager.SendEmail(user.Id, "[Pokefans] E-Mail bestätigen", this.RenderViewToString("~/Areas/user/Mails/Confirm.cshtml", new ConfirmationMailViewModel() { User = user, CallbackUrl = callbackUrl, ConfirmationKey = code}));
 
                     return Redirect(Url.Map("/", null));
                 }
@@ -226,6 +237,29 @@ namespace Pokefans.Areas.user.Controllers
             }
             var result = UserManager.ConfirmEmail(userId, code);
             return View(result.Succeeded ? "~/Areas/user/Views/Account/ConfirmEmail.cshtml" : "~/Areas/user/Views/Account/Error");
+        }
+
+        [AllowAnonymous]
+        public ActionResult ResendMailVerification() 
+        {
+            return View("~/Areas/user/Views/Account/ResendMailVerification.cshtml");   
+        }
+
+        [AllowAnonymous]
+        [ActionName("ResendMailVerification")]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ResendMailVerificationConfirm(string mail) {
+            User u = _entities.Users.FirstOrDefault(x => x.Email == mail);
+
+            if (u != null && u.EmailConfirmed == false)
+            {
+                string code = UserManager.GenerateEmailConfirmationToken(u.Id);
+                var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = u.Id, code = code }, protocol: Request.Url.Scheme);
+                UserManager.SendEmail(u.Id, "[Pokefans] E-Mail bestätigen", this.RenderViewToString("~/Areas/user/Mails/Confirm.cshtml", new ConfirmationMailViewModel() { User = u, CallbackUrl = callbackUrl, ConfirmationKey = code }));
+            }
+
+            return View("~/Areas/user/Views/Account/ResendMailVerificationConfirmed.cshtml");
         }
 
         //
@@ -254,10 +288,10 @@ namespace Pokefans.Areas.user.Controllers
 
                 // Weitere Informationen zum Aktivieren der Kontobestätigung und Kennwortzurücksetzung finden Sie unter "http://go.microsoft.com/fwlink/?LinkID=320771".
                 // E-Mail-Nachricht mit diesem Link senden
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Kennwort zurücksetzen", "Bitte setzen Sie Ihr Kennwort zurück. Klicken Sie dazu <a href=\"" + callbackUrl + "\">hier</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = UserManager.GeneratePasswordResetToken(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
+                UserManager.SendEmail(user.Id, "Kennwort zurücksetzen", this.RenderViewToString("~/Areas/user/Mails/ResetPassword.cshtml", new ConfirmationMailViewModel() {}));
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // Wurde dieser Punkt erreicht, ist ein Fehler aufgetreten; Formular erneut anzeigen.
@@ -444,6 +478,39 @@ namespace Pokefans.Areas.user.Controllers
         public ActionResult ExternalLoginFailure()
         {
             return View("~/Areas/user/Views/Account/ExternalLoginFailure.cshtml");
+        }
+
+
+
+        public ActionResult DsgvoCompliance(string redirect) 
+        {
+            var dsgvo = _entities.DsgvoComplianceInfos.Where(x => x.EffectiveTime <= DateTime.Now).OrderByDescending(g => g.EffectiveTime).First();
+            ViewBag.Redirect = redirect;
+
+            return View("~/Areas/user/Views/Account/DsgvoCompliance.cshtml", dsgvo);    
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [ActionName("DsgvoCompliance")]
+        public ActionResult DsgvoComplianceSave(string Password, string Redirect) 
+        {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+            User u = _entities.Users.First(x => x.Id == uid);
+
+            Pbkdf2PasswordHasher hasher = new Pbkdf2PasswordHasher();
+
+            if(hasher.VerifyHashedPassword(u.Password, Password) != PasswordVerificationResult.Success) {
+                ViewBag.Error = "password";
+                ViewBag.Redirect = Redirect;
+                var dsgvo = _entities.DsgvoComplianceInfos.Where(x => x.EffectiveTime <= DateTime.Now).OrderByDescending(g => g.EffectiveTime).First();
+                return View("~/Areas/user/Views/Account/DsgvoCompliance.cshtml", dsgvo);
+            }
+            u.LastTermsOfServiceAgreement = DateTime.Now;
+            _entities.SetModified(u);
+            _entities.SaveChanges();
+
+            return this.Redirect(Redirect);
         }
 
         protected override void Dispose(bool disposing)

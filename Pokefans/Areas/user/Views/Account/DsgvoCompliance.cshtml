@@ -1,0 +1,42 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Areas.user.Models
+@using Pokefans.Data
+@model DsgvoComplianceInfo
+@{
+    Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
+    Breadcrumbs.Add("Einstellungen", "Profile", "Index");
+    Breadcrumbs.Add("Nutzungsbedingungen", "Account", "DsgvoCompliance");
+    SiteTitle = "Nutzungsbedingungen: Zustimmung erforderlich";
+    SiteHeader = SiteTitle;
+    SiteDescription = "";
+    ActiveMenuKey = "";
+}
+<h1>Nutzungsbedingungen: Zustimmung erforderlich</h1>
+<p>Wir haben unsere Nutzungsbestimmungen aktualisiert. Um weiter auf Pokefans unterwegs sein zu können, ist deine Zustimmung zu den Nutzungsbedingungen, Datenschutzbestimmungen und Foren-Regeln vom 
+@Model.EffectiveTime.ToString("dd.MM.yyyy") erforderlich.</p>
+
+<h2>Nutzungsbedingungen</h2>
+<div class="dsgvo-container">
+    @Html.Raw(Model.TermsOfUsage)
+</div>
+
+<h2>Datenschutzbestimmungen</h2>
+<div class="dsgvo-container">
+    @Html.Raw(Model.DataProtectionStatement)
+</div>
+
+<h2>Forenregeln</h2>
+<div class="dsgvo-container">
+    @Html.Raw(Model.ForumRules)
+</div>
+
+<p>Um sicherzustellen, dass du es bist, gib bitte noch einmal dein Passwort ein.</p>
+<form class="form-inline" method="post">
+    @Html.AntiForgeryToken()
+    <div class="form-group">
+        <label class="sr-only" for="Password">Passwort</label>
+        <input type="password" class="form-control" id="Password" name="Password" placeholder="Passwort">
+    </div>
+    <input type="hidden" value="@ViewBag.Redirect" name="Redirect" id="Redirect" />
+    <button type="submit" class="btn btn-success">Zustimmen</button>
+</form>

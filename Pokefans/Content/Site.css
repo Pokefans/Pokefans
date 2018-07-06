@@ -342,3 +342,63 @@
     display: inline;
 }
 
+table.private-messages tr th:first-child, table.private-messages td th:first-child {
+    /* checkbox column */
+    width: 1.5em
+
+}
+
+table.private-messages tr th:first-child input[type="checkbox"]:not(:checked), 
+  table.private-messages tr td:first-child input[type="checkbox"]:not(:checked) {
+        visibility: hidden
+}
+
+table.private-messages tr:hover th:first-child input[type="checkbox"]:not(:checked),
+table.private-messages tr:hover td:first-child input[type="checkbox"]:not(:checked) {
+    visibility: visible;
+    transition: opacity .25s ease-in-out;
+    -moz-transition: opacity .25s ease-in-out;
+    -webkit-transition: opacity .25s ease-in-out;
+        }
+
+table.private-messages tr th:nth-child(3), table.private-messages tr td:nth-child(3) {
+    width: 17%;
+}
+table.private-message tr th:last-child, table.private-messages tr td:last-child {
+    width: 15%;
+}
+
+.btn-fullwidth {
+    width: 100%;
+}
+
+.bootstrap-tagsinput {
+    width: 100%
+}
+
+.bootstrap-tagsinput input {
+    font: inherit !important;
+    border: none !important;
+}
+
+.pm-body {
+    border-top: 1px #eee solid;
+    border-bottom: 1px #eee solid;
+
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.oldmessages {
+    max-height: 200px;
+    overflow: scroll;
+    padding: 10px;
+}
+
+.oldmessages .oldmessage {
+    border-top: 1px #eee solid;
+}
+
+.oldmessages .oldmessage:first-child {
+    border-top: none;
+}

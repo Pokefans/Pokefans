@@ -14,7 +14,7 @@
             </div>
         </form>
         <ul class="nav navbar-nav navbar-right">
-            <li class="@(Model.ActiveMenuKey == "privmsgs" ? "active" : "")"><a href="#"><i class="fa fa-envelope fa-lg"></i> Nachrichten <span class="badge">@UnreadMessages.ToString()</span></a></li>
+            <li class="@(Model.ActiveMenuKey == "privmsgs" ? "active" : "")"><a href="@Url.Map("nachrichten")"><i class="fa fa-envelope fa-lg"></i> Nachrichten <span class="badge">@UnreadMessages.ToString()</span></a></li>
             <li class="@(Model.ActiveMenuKey == "notifications" ? "active" : "")"><a href="#"><i class="fa fa-envelope fa-lg"></i> Benachrichtigungen <span class="badge">@UnreadNotifications.ToString()</span></a></li>
             <li class="@(Model.ActiveMenuKey == "settings" ? "active" : "")">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Profileinstellungen"><i class="fa fa-gears fa-lg"></i> Einstellungen <span class="caret"></span></a>

@@ -66,6 +66,8 @@ namespace Pokefans.Data
 
         public virtual DbSet<UserLoginProvider> UserLoginProvides { get; set; }
 
+        public virtual DbSet<DsgvoComplianceInfo> DsgvoComplianceInfos { get; set; }
+
         #endregion
 
         #region Content
@@ -301,6 +303,8 @@ namespace Pokefans.Data
         public virtual DbSet<UserFeedConfig> UserFeedConfigs { get; set; }
 
         public virtual DbSet<UserFollower> UserFollowers { get; set; }
+
+        public virtual DbSet<PrivateMessageReport> PrivateMessageReports { get; set; }
 
         #endregion
 

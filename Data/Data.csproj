@@ -295,7 +295,43 @@
     <Compile Include="Migrations\201804291252478_ForumThreadPrefix2.cs" />
     <Compile Include="Migrations\201804291252478_ForumThreadPrefix2.Designer.cs">
         <DependentUpon>201804291252478_ForumThreadPrefix2.cs</DependentUpon>
-    </Compile>    
+    </Compile>
+    <Compile Include="Migrations\201805011654323_PrivateMessageConversations.cs" />
+    <Compile Include="Migrations\201805011654323_PrivateMessageConversations.Designer.cs">
+        <DependentUpon>201805011654323_PrivateMessageConversations.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805021820036_ConversationIdGuid.cs" />
+    <Compile Include="Migrations\201805021820036_ConversationIdGuid.Designer.cs">
+        <DependentUpon>201805021820036_ConversationIdGuid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805050905243_MessageToLine.cs" />
+    <Compile Include="Migrations\201805050905243_MessageToLine.Designer.cs">
+        <DependentUpon>201805050905243_MessageToLine.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805051053100_SenderToRemove.cs" />
+    <Compile Include="Migrations\201805051053100_SenderToRemove.Designer.cs">
+        <DependentUpon>201805051053100_SenderToRemove.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805051232330_PMSentLabelsRemoveFK.cs" />
+    <Compile Include="Migrations\201805051232330_PMSentLabelsRemoveFK.Designer.cs">
+        <DependentUpon>201805051232330_PMSentLabelsRemoveFK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805051259207_PMSentLabelsAddFK1.cs" />
+    <Compile Include="Migrations\201805051259207_PMSentLabelsAddFK1.Designer.cs">
+        <DependentUpon>201805051259207_PMSentLabelsAddFK1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805161750550_PMReports.cs" />
+    <Compile Include="Migrations\201805161750550_PMReports.Designer.cs">
+        <DependentUpon>201805161750550_PMReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201805162047293_PMSaveIPs.cs" />
+    <Compile Include="Migrations\201805162047293_PMSaveIPs.Designer.cs">
+        <DependentUpon>201805162047293_PMSaveIPs.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201807060745531_Dsgvo.cs" />
+    <Compile Include="Migrations\201807060745531_Dsgvo.Designer.cs">
+        <DependentUpon>201807060745531_Dsgvo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -435,6 +471,8 @@
     <Compile Include="Forum\ForumGroupsUsers.cs" />
     <Compile Include="Forum\ThreadPrefix.cs" />
     <Compile Include="Forum\BoardEnabledPrefixes.cs" />
+    <Compile Include="User\PrivateMessageReport.cs" />
+    <Compile Include="System\DsgvoComplianceInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -591,6 +629,33 @@
     <EmbeddedResource Include="Migrations\201804291252478_ForumThreadPrefix2.resx">
         <DependentUpon>201804291252478_ForumThreadPrefix2.cs</DependentUpon>
     </EmbeddedResource>     
+    <EmbeddedResource Include="Migrations\201805011654323_PrivateMessageConversations.resx">
+        <DependentUpon>201805011654323_PrivateMessageConversations.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805021820036_ConversationIdGuid.resx">
+        <DependentUpon>201805021820036_ConversationIdGuid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805050905243_MessageToLine.resx">
+        <DependentUpon>201805050905243_MessageToLine.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805051053100_SenderToRemove.resx">
+        <DependentUpon>201805051053100_SenderToRemove.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805051232330_PMSentLabelsRemoveFK.resx">
+        <DependentUpon>201805051232330_PMSentLabelsRemoveFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805051259207_PMSentLabelsAddFK1.resx">
+        <DependentUpon>201805051259207_PMSentLabelsAddFK1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805161750550_PMReports.resx">
+        <DependentUpon>201805161750550_PMReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201805162047293_PMSaveIPs.resx">
+        <DependentUpon>201805162047293_PMSaveIPs.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201807060745531_Dsgvo.resx">
+        <DependentUpon>201807060745531_Dsgvo.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

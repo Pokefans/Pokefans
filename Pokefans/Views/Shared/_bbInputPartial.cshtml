@@ -1,0 +1,23 @@
+﻿<div class="bb-picker clearfix" data-target="@Model">
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default"><i class="fa fa-bold "></i></button>
+      <button type="button" class="btn btn-default"><i class="fa fa-italic "></i></button>
+      <button type="button" class="btn btn-default"><i class="fa fa-underline "></i></button>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default"><i class="fa fa-list-ul "></i></button>
+      <button type="button" class="btn btn-default"><i class="fa fa-list-ol "></i></button>
+      <button type="button" class="btn btn-default"><i class="fa fa-asterisk "></i></button>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <button type="button" class="btn btn-default"><i class="fa fa-code "></i></button>
+      <button type="button" class="btn btn-default"><i class="fa fa-quote-left "></i></button>
+      <button type="button" class="btn btn-default"><i class="fa fa-picture-o "></i></button>
+    </div>
+    <div class="btn-group" role="group" aria-label="...">
+      <a class="btn btn-default" href="@Url.Map("","upload")"><i class="fa fa-upload "></i></a>
+      <a class="btn btn-default" href="@Url.Map("tools/tabellen", "inside")"><i class="fa fa-table "></i></a>
+      <a class="btn btn-default" href="@Url.Map("tools/stlyegenerator", "inside")"><i class="fa fa-paint-brush "></i></a>
+    </div>
+    <a class="btn btn-default pull-right" href="@Url.Map("hilfe/formatierung","inside")"><i class="fa fa-question-circle "></i></a>
+</div>

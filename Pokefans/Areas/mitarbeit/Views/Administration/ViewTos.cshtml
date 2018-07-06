@@ -1,0 +1,46 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Data.UserData
+@using Pokefans.Data;
+@using System.Linq;
+@model DsgvoComplianceInfo
+@{
+    SiteTitle = "Pokefans | Mitarbeitsbereich - Alte Nutzungsbedingungen ansehen";
+    SiteHeader = "Nutzungebdingungen vom " + Model.EffectiveTime.ToString("dd.MM.yyyy");
+    SiteDescription = "";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+
+<div class="col-xs-12">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Nutzungsbedingungen</h3>
+        </div>
+        <div class="box-body">
+            @Html.Raw(Model.TermsOfUsage)
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Datenschutzerklärung</h3>
+        </div>
+        <div class="box-body">
+            @Html.Raw(Model.DataProtectionStatement)
+        </div>
+    </div>
+</div>
+
+<div class="col-xs-12">
+    <div class="box box-primary">
+        <div class="box-header">
+            <h3 class="box-title">Community-Richtlinien</h3>
+        </div>
+        <div class="box-body">
+            @Html.Raw(Model.ForumRules)
+        </div>
+    </div>
+</div>
+
+<a href="@Url.Action("TermsOfService")" class="btn btn-primary">Zurück zur Übersicht</a>

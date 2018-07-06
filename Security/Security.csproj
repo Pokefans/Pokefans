@@ -100,12 +100,21 @@
     <Reference Include="System.Web.Razor">
       <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.3\lib\net45\System.Web.Razor.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\packages\BouncyCastle.1.8.2\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="MimeKit">
+      <HintPath>..\packages\MimeKit.2.0.4\lib\net45\MimeKit.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="MailKit">
+      <HintPath>..\packages\MailKit.2.0.4\lib\net45\MailKit.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationRoleManager.cs" />
     <Compile Include="ApplicationUserManager.cs" />
     <Compile Include="Cryptography\Pbkdf2.cs" />
-    <Compile Include="EmailService.cs" />
     <Compile Include="Exceptions\PasswordMismatchException.cs" />
     <Compile Include="Exceptions\PermissionNotFoundException.cs" />
     <Compile Include="Exceptions\UserNotFoundException.cs" />
@@ -118,6 +127,8 @@
     <Compile Include="WebSecurity.cs" />
     <Compile Include="ApplicationSigninManager.cs" />
     <Compile Include="ForumSecurity.cs" />
+    <Compile Include="EmailService.cs" />
+    <Compile Include="MailSettingsSection.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cache\Cache.csproj">

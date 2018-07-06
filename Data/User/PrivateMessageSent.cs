@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 
 namespace Pokefans.Data.UserData
 {
+    /// <summary>
+    ///  This Table solely exists that the sender can add his own lables.
+    /// </summary>
     public class PrivateMessageSent
     {
 		[Column("id")]
@@ -21,9 +25,7 @@ namespace Pokefans.Data.UserData
 		[ForeignKey("UserFromId")]
 		public User From { get; set; }
 
-		public int UserToId { get; set; }
-
-		[ForeignKey("UserToId")]
-		public User To { get; set; }
+        [InverseProperty("Message")]
+        public List<PrivateMessageSentLabel> Labels { get; set; }
     }
 }

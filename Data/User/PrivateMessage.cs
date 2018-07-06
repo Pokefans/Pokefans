@@ -19,5 +19,14 @@ namespace Pokefans.Data.UserData
         public string BodyRaw { get; set; }
 
         public DateTime Sent { get; set; }
+
+        public Guid ConversationId { get; set; }
+
+        public int ReplyTo { get; set; }
+
+        public string ToLine { get; set; }
+
+        [MaxLength(39)]
+        public string SenderIpAddress { get; set; }
     }
 }

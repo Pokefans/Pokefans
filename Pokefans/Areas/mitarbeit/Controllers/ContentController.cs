@@ -15,6 +15,7 @@ using Pokefans.Areas.mitarbeit.Models;
 using Pokefans.Data;
 using Pokefans.Util;
 using System.Configuration;
+using HtmlAgilityPack;
 
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
@@ -363,18 +364,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
                 if (User.IsInRole("artikel-administrator"))
                 {
-                    if (model.Status == ContentStatus.Published && content.Status != ContentStatus.Published)
-                    {
-                        // Publish the content
-                        content.Published = DateTime.Now;
-                        content.PublishedByUserId = User.Identity.GetUserId<int>();
-                    }
-                    else if (model.Status != ContentStatus.Published && content.Status == ContentStatus.Published)
-                    {
-                        // Unpublish the content
-                        content.Published = DateTime.MinValue;
-                        content.PublishedByUserId = null;
-                    }
+
 
                     var permission = _entities.Roles.FirstOrDefault(r => r.Id == model.PermissionId);
                     if (permission != null && permission.Metapermission.Name == "mitarbeiter")
@@ -475,6 +465,36 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 }
 
                 content.Parse();
+
+                if (User.IsInRole("artikel-administrator")) 
+                {
+                    if (model.Status == ContentStatus.Published && content.Status != ContentStatus.Published)
+                    {
+
+                        HtmlDocument document = new HtmlDocument();
+                        document.LoadHtml(content.ParsedContent);
+
+                        bool hasHttpImages = document.DocumentNode.Descendants("img").Any(q => q.GetAttributeValue("src", "").StartsWith("http://", StringComparison.InvariantCultureIgnoreCase));
+                        bool hasHttpPokefans = document.DocumentNode.Descendants("a").Any(q => q.GetAttributeValue("href", "").Contains("pokefans.net") && q.GetAttributeValue("href", "").StartsWith("http://", StringComparison.InvariantCultureIgnoreCase));
+                        bool hasHttpCss = content.StylesheetCss.Contains("http://");
+
+                        if (!hasHttpImages && !hasHttpPokefans && !hasHttpCss)
+                        {
+                            // Publish the content
+                            content.Published = DateTime.Now;
+                            content.PublishedByUserId = User.Identity.GetUserId<int>();
+                        }
+                        else {
+                            ModelState.AddModelError("UnparsedContent", "Der Artikel enthält Links innerhalb Pokefans, die http verwenden oder bindet Resourcen per http ein. Er kann deshalb nicht freigeschalten werden.");
+                        }
+                    }
+                    else if (model.Status != ContentStatus.Published && content.Status == ContentStatus.Published)
+                    {
+                        // Unpublish the content
+                        content.Published = DateTime.MinValue;
+                        content.PublishedByUserId = null;
+                    }
+                }
 
                 // Calculate Changes
                 int updateCharsDeleted = 0;

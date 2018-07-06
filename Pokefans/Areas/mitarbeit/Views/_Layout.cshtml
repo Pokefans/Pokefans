@@ -217,11 +217,7 @@
                             </ul>
                         </li>
                     }
-                  @*<li class="header">Inhalte</li>
-                    <li><a href="#"><i class='fa fa-newspaper-o'></i> <span>Artikel- &amp; Newsverwaltung</span></a></li>
-                    <li><a href="#"><i class='fa fa-puzzle-piece'></i> <span>Bausteine</span></a></li>
-                    <li><a href="#"><i class='fa fa-comments'></i> <span>Feedback</span></a></li>
-                    <li><a href="#"><i class='fa fa-calendar'></i> <span>Terminkalender</span></a></li>
+                  @*
 
                     <li class="header">Pokedex</li>
                     <li><a href="#"><i class='fa fa-book'></i> <span>Pokedex</span></a></li>
@@ -248,8 +244,12 @@
                     @*<li class="header">Diverses</li>
                     <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
                     <li><a href="#"><i class='fa fa-clock-o'></i> <span>Cronjobs</span></a></li>*@
+                    @if (User.IsInRole("superadmin"))
+                    {
+                        <li class="header">Administration</li>
+                        <li><a href="@Url.Action("TermsOfService", "Administration")"><i class="fa fa-gavel"></i> <span>Nutzungsbedingungen</span></a></li>
+                    }
 
-    
                 </ul><!-- /.sidebar-menu -->
             </section>
             <!-- /.sidebar -->

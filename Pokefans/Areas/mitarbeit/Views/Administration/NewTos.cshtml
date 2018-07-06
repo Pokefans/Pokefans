@@ -1,0 +1,64 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Data.UserData
+@using Pokefans.Data;
+@using System.Linq;
+@using Pokefans.Areas.mitarbeit.Models
+@model NewTosViewModel
+@{
+    SiteTitle = "Pokefans | Mitarbeitsbereich - Neue Nutzungsbedingungen gültig stellen";
+    SiteHeader = "Nutzungsbedingungen gültig stellen";
+    SiteDescription = "";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+}
+<div class="row">
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Nutzungsbedingungen</h3>
+            </div>
+            <div class="box-body">
+                @Html.Raw(Model.TermsOfService.ParsedContent)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Datenschutzerklärung</h3>
+            </div>
+            <div class="box-body">
+                @Html.Raw(Model.PrivacyStatement.ParsedContent)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Community-Richtlinien</h3>
+            </div>
+            <div class="box-body">
+                @Html.Raw(Model.ForumRules.ParsedContent)
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xs-12">
+        <div class="box box-primary">
+            <div class="box-danger">
+                <h3 class="box-title">Diese Nutzungsbedingungen als gültig übernehmen</h3>
+            </div>
+            <div class="box-body">
+                <span class="text-danger"><strong>Achtung:</strong></span> Wenn du diesen Haken aktivierst und speicherst, werden alle Nutzer (inklusive dir) dazu aufgefordert, die obenstehenden
+                Nutzungsbedingungen zu akzeptieren. Ein späteres Ändern dieser Nutzungsbedingungen ist nicht mehr möglich, ohne eine neue Version, der wieder alle zustimmen müssen, zu erstellen.
+                <form method="post">
+                    @Html.AntiForgeryToken()
+                    <p><input type="checkbox" value="true" name="publish" /> Ja, publiziere diese Nuztungsbedingungen.</p>
+
+                    <button type="submit" class="btn btn-danger">Gültig stellen</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,19 @@
+﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
+@model Pokefans.Areas.user.Models.ConfirmationMailViewModel
+Hallo @Model.User.UserName!
+
+Deine Registrierung bei Pokefans ist fast abgeschlossen. Als letzten Schritt musst du noch deinen Account aktivieren.
+
+Dafür klickst du ganz einfach auf folgenden Link:
+@Html.Raw(Model.CallbackUrl)
+
+Falls du den Link nicht anklicken kannst, kopiere ihn bitte in die Adresszeile deines Browsers.
+
+Wenn du deinen Account nicht aktivieren kannst, wirst du beim nächsten Login zur manuellen Aktivierung weitergeleitet. Dort musst du dann folgende Daten angeben:
+
+E-Mail-Addresse:       @Model.User.Email
+Aktivierungsschlüssel: @Model.ConfirmationKey
+
+Wir wünschen dir viel Spaß in unserer Community!
+
+Dein Pokefans-Team

@@ -9,7 +9,6 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using Pokefans.Data;
-using Pokefans.Util;
 
 namespace Pokefans.Security
 {

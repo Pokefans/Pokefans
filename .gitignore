@@ -170,3 +170,6 @@ Pokefans/contrib/
 
 # ignore subdomains-folder, which would be mapped to eg. files. or static. while in development.
 subdomains/
+
+# ignore mail.config as it contains passwords
+mail.config

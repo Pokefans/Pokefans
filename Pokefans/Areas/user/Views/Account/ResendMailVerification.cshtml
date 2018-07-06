@@ -1,0 +1,17 @@
+﻿@using Pokefans.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Aktivierungs-E-Mail erneut senden";
+}
+
+<h2>Aktivierungs-E-Mail erneut senden</h2>
+
+<p>Gib hier deine E-Mail-Adresse ein, die du zur Registrierung benutzt hast. Wenn wir sie in unserer Datenbank finden,
+senden wir dir einen neuen Aktivierungslink zu. Bitte prüfe, ob dieser eventuell in deinem Spam-Ordner landet. Falls
+du dich immer noch nicht anmelden kannst oder keine E-Mail kommt, <a href="mailto:forum@pokefans.net">kontaktiere uns bitte</a>.</p>
+
+<form method="post">
+    @Html.AntiForgeryToken()
+    <input type="email" placeholder="Deine E-Mail" name="mail" />
+    <button type="submit" class="btn btn-primary">Erneut senden</button>
+</form>

@@ -252,6 +252,9 @@
     <Reference Include="Base36Encoder">
       <HintPath>..\packages\csharpbase36.1.0.0\lib\Base36Encoder.dll</HintPath>
     </Reference>
+    <Reference Include="HtmlAgilityPack">
+      <HintPath>..\packages\HtmlAgilityPack.1.8.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Owin">
@@ -356,6 +359,19 @@
     <Compile Include="Areas\forum\Models\NewThreadViewModel.cs" />
     <Compile Include="Areas\forum\Models\NewPostViewModel.cs" />
     <Compile Include="Areas\forum\Models\EditPostViewModel.cs" />
+    <Compile Include="Areas\user\Controllers\PrivateMessageController.cs" />
+    <Compile Include="Areas\user\Models\PrivateMessageFolderViewModel.cs" />
+    <Compile Include="Areas\user\Models\PrivateMessageComposeViewModel.cs" />
+    <Compile Include="Areas\user\Models\PrivateMessageViewModel.cs" />
+    <Compile Include="Areas\user\Models\PrivateMessageDeleteViewModel.cs" />
+    <Compile Include="Areas\user\Models\OldMessageViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\ModerationController.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\PrivateMessageModerationController.cs" />
+    <Compile Include="Areas\mitarbeit\Models\DashboardViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\Dashboard\PrivateMessageReportDashboardViewModel.cs" />
+    <Compile Include="Areas\user\Models\ConfirmationMailViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\AdministrationController.cs" />
+    <Compile Include="Areas\mitarbeit\Models\NewTosViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -692,6 +708,30 @@
     <Content Include="Scripts\forum\forum.js" />
     <Content Include="Areas\user\Views\Profile\Feed.cshtml" />
     <Content Include="Views\Shared\Advertising\_SkyscraperPartial.cshtml" />
+    <Content Include="Areas\user\Views\PrivateMessage\Inbox.cshtml" />
+    <Content Include="Areas\user\Views\PrivateMessage\Labels.cshtml" />
+    <Content Include="Scripts\pm-labels.js" />
+    <Content Include="Areas\user\Views\PrivateMessage\Compose.cshtml" />
+    <Content Include="Views\Shared\_bbInputPartial.cshtml" />
+    <Content Include="Scripts\pm-compose.js" />
+    <Content Include="Areas\user\Views\PrivateMessage\Outbox.cshtml" />
+    <Content Include="Areas\user\Views\PrivateMessage\Sent.cshtml" />
+    <Content Include="Areas\user\Views\PrivateMessage\View.cshtml" />
+    <Content Include="Areas\user\Views\PrivateMessage\Delete.cshtml" />
+    <Content Include="Scripts\charts\Chart.bundle.js" />
+    <Content Include="Scripts\charts\Chart.bundle.min.js" />
+    <Content Include="Areas\user\Views\PrivateMessage\Report.cshtml" />
+    <Content Include="mail.config" />
+    <None Include="mail.config.example" />
+    <Content Include="Areas\user\Mails\Confirm.cshtml" />
+    <Content Include="Areas\user\Mails\ResetPassword.cshtml" />
+    <Content Include="Areas\user\Mails\web.config" />
+    <Content Include="Areas\user\Views\Account\ResendMailVerification.cshtml" />
+    <Content Include="Areas\user\Views\Account\ResendMailVerificationConfirmed.cshtml" />
+    <Content Include="Areas\user\Views\Account\DsgvoCompliance.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Administration\TermsOfService.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Administration\ViewTos.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Administration\NewTos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -712,6 +752,10 @@
     <Folder Include="Areas\forum\Views\Shared\" />
     <Folder Include="Scripts\forum\" />
     <Folder Include="Views\Shared\Advertising\" />
+    <Folder Include="Areas\user\Views\PrivateMessage\" />
+    <Folder Include="Areas\mitarbeit\Models\Dashboard\" />
+    <Folder Include="Areas\user\Mails\" />
+    <Folder Include="Areas\mitarbeit\Views\Administration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

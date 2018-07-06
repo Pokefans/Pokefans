@@ -31,6 +31,8 @@ namespace Pokefans.Areas.fanart
                             dataTokens
                         );
 
+
+
             context.Routes.Add("fanartHome", new DomainRoute(
                             "fanart." + ConfigurationManager.AppSettings["Domain"],
                             "",

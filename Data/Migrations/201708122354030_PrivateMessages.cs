@@ -92,7 +92,7 @@ namespace Pokefans.Data.Migrations
                     })
                 .PrimaryKey(t => t.id)
                 .ForeignKey("dbo.PrivateMessageLabels", t => t.PrivateMessageLabelId, cascadeDelete: true)
-                .ForeignKey("dbo.PrivateMessageInboxes", t => t.PrivateMessageInboxId, cascadeDelete: true)
+                //.ForeignKey("dbo.PrivateMessageInboxes", t => t.PrivateMessageInboxId, cascadeDelete: true)
                 .Index(t => t.PrivateMessageInboxId)
                 .Index(t => t.PrivateMessageLabelId);
             

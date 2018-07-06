@@ -1,0 +1,66 @@
+﻿@*Copyright 2017 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Areas.user.Models
+@using Pokefans.Data.UserData
+@model PrivateMessageFolderViewModel<PrivateMessageSent>
+@{
+    Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
+    Breadcrumbs.Add("Private Nachrichten", "PrivateMessage", "Index");
+    Breadcrumbs.Add("Postausgang", "PrivateMessage", "Outbox");
+    SiteTitle = "Private Nachrichten - Postausgang";
+    SiteHeader = "Private Nachrichten - Postausgang";
+    SiteDescription = "";
+    ActiveMenuKey = "";
+}
+
+<h1>Private Nachrichten</h1>
+
+<div class="col-md-9">
+<div class="col-md-10"><h2 class="h4">Postausgang</h2></div>
+<div class="col-md-2"><a href="@Url.Map("nachrichten/neu","user")" class="btn btn-default pull-right"><i class="fa fa-pencil-square fa-lg"></i> Neue Nachricht</a></div>
+    <table class="table table-striped table-hover private-messages">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Betreff</th>
+                <th>An</th>
+                <th>Datum</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var message in Model.Messages) {
+            <tr>
+                <td><input type="checkbox" /></td>
+                <td><a href="@Url.Map("nachrichten/"+message.Message.Id.ToString())">@message.Message.Subject</a> @foreach(var label in message.Labels) {
+                    <span class="label label-default" style="background-color: @Model.Labels[label.PrivateMessageLabelId].Color">@Model.Labels[label.PrivateMessageLabelId].Label</span> 
+                }</td>
+                <td>@message.Message.ToLine</td>
+                <td>@message.Message.Sent.ToString("dd.MM.yyyy HH:mm")</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-md-3">
+    <h3 class="h4">Ordner</h3>
+    <nav class="nav nav-pills nav-stacked">
+        <li class=""><a href="@Url.Action("Index")">Posteingang</a></li>
+        <li class="active"><a href="@Url.Action("Outbox")">Postausgang</a></li>
+        <li class=""><a href="#">Gesendet</a></li>
+    </nav>
+    <hr>
+    <h3 class="h4">Label</h3>
+    <p class="help-block">Klicken, um zu filtern.</p>
+    <p>@foreach(var label in Model.Labels) {
+        <a href="#"><span class="label label-default" style="background-color: @label.Value.Color">@label.Value.Label</span></a>
+    }</p>
+    <hr>
+    <h3 class="h4">Einstellungen</h3>
+    <nav class="nav nav-pills nav-stacked">
+        <li><a href="@Url.Action("ManageLabels")"><i class="fa fa-tags fa-lg"></i> Label verwalten</a></li>
+        <li><a href="@Url.Action("ManageRules")"><i class="fa fa-filter fa-lg"></i> Regeln verwalten</a></li>
+    </nav>
+</div>
+
+@section submenu {
+    @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("manage", ""))
+}

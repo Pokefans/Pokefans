@@ -1,0 +1,93 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Areas.user.Models
+@using Pokefans.Data.UserData;
+@using Pokefans.Data;
+@model PrivateMessageComposeViewModel
+@{
+    Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
+    Breadcrumbs.Add("Private Nachrichten", "PrivateMessage", "Index");
+    Breadcrumbs.Add("Neue Nachricht erstellen", "PrivateMessage", "Compose");
+    SiteTitle = "Neue Nachricht erstellen";
+    SiteHeader = "Neue Nachricht erstellen";
+    SiteDescription = "";
+    ActiveMenuKey = "";
+
+    string css = "";
+
+    if (ViewBag.Error == null)
+    {
+        css = "hidden";
+    }
+}
+<h1>Neue Nachricht</h1>
+<div class="col-md-9">
+    <div class="@css alert alert-danger" id="usernotfound">Der Benutzer konnte leider nicht gefunden werden.</div>
+    <form method="post" role="form">
+        @Html.AntiForgeryToken()
+        <div class="form-group">
+            <label for="to">An</label>
+            <input type="text" class="form-control" placeholder="User1, User2, ..." name="To" id="input-to" value="@Model.To">
+        </div>
+        <div class="form-group">
+            <label for="to">BCC</label>
+            <input type="text" class="form-control" placeholder="User1, User2, ..." name="Bcc" id="input-bcc" value="@Model.Bcc">
+        </div>
+        <div class="form-group">
+            <label for="subject">Betreff</label>
+            <input type="text" class="form-control" placeholder="" name="Subject" value="@Model.Subject">
+        </div>
+        @Html.Partial("~/Views/Shared/_bbInputPartial.cshtml", "#message-body")
+        <div class="form-group forum-full-editor">
+            <label for="message-body" class="sr-only">Text</label>
+            <textarea class="form-control emojiarea" id="message-body" name="Body" placeholder="Beitrag hier eingeben" rows="15">@Model.Body</textarea>
+        </div>
+        @if (Model.ConversationId.HasValue)
+        {
+<input type="hidden" name="ConversationId" value="@Model.ConversationId.Value.ToString()" />
+        }
+                    @if (Model.ReplyTo.HasValue)
+                    {
+                    <input type="hidden" name="ReplyTo" value="@Model.ReplyTo.Value.ToString()" />
+                    }
+        <button type="submit" class="btn btn-primary">Absenden</button>
+    </form>
+    <hr />
+    <div class="oldmessages">
+        @foreach (OldMessageViewModel data in Model.OldMessages)
+        {
+            string style = "";
+            if (data.User.Color != null)
+            {
+                style = "font-weight: bold; color: " + data.User.Color;
+            }
+            <div class="oldmessage">
+                <div class="fromline">Am @data.Message.Sent.ToString("dd.MM.yyyy HH:mm") schrieb <a href="@Url.Map("profile/"+data.User.Url, "user")" style="@style">@data.User.UserName</a>:</div>
+                <div class="oldbody">@Html.Raw(data.Message.Body)</div>
+            </div>
+        }
+    </div>
+</div>
+<div class="col-md-3">
+    <h3 class="h4">Ordner</h3>
+    <nav class="nav nav-pills nav-stacked">
+        <li class=""><a href="@Url.Action("Index")">Posteingang</a></li>
+        <li class=""><a href="@Url.Action("Outbox")">Postausgang</a></li>
+        <li class=""><a href="@Url.Action("Sent")">Gesendet</a></li>
+    </nav>
+    <hr>
+    <h3 class="h4">Einstellungen</h3>
+    <nav class="nav nav-pills nav-stacked">
+        <li><a href="@Url.Action("ManageLabels")"><i class="fa fa-tags fa-lg"></i> Label verwalten</a></li>
+        <li><a href="@Url.Action("ManageRules")"><i class="fa fa-filter fa-lg"></i> Regeln verwalten</a></li>
+    </nav>
+</div>
+@section submenu {
+    @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("privmsgs", ""))
+}
+@section CustomHeaders {
+    @Styles.Render("~/bundles/emojiarea/css")
+}
+@section scripts {
+    @Scripts.Render("~/bundles/emojiarea")
+    @Scripts.Render("~/bundles/pm-compose")
+}

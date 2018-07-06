@@ -1,7 +1,9 @@
 ﻿// Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info.
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -17,6 +19,59 @@ namespace Pokefans.Util
         {
             base.InitHelpers();
             Breadcrumbs = DependencyResolver.Current.GetService<IBreadcrumbs>();
+        }
+
+        public string MaskIp(string IP) {
+            string censored = "";
+            if (!User.IsInRole("superadmin"))
+            {
+
+
+
+                if (IP.Contains("."))
+                {
+                    // IPv4
+                    string[] parts = IP.Split('.');
+
+                    censored = parts[0] + "." + parts[1] + "." + parts[2] + ".XXX";
+                }
+                else
+                {
+                    // IPv6
+                    string[] parts = IP.Split(':');
+
+                    censored = String.Join(":", parts.Take(parts.Count() - 2).ToArray());
+                }
+            }
+            else {
+                censored = IP;
+            }
+
+            string prehash = ConfigurationManager.AppSettings["MaskSalt"] + "-" + IP;
+            var sha1 = SHA1.Create();
+            string hash = BitConverter.ToString(sha1.ComputeHash(Encoding.Unicode.GetBytes(prehash))).Replace("-", "").ToLower();
+
+            censored += " (" + hash + ")";
+
+            return censored;
+        }
+
+        public string MaskMail(string email) 
+        {
+            string censored = "";
+
+            string prehash = ConfigurationManager.AppSettings["MaskSalt"] + "-" + email;
+            var sha1 = SHA1.Create();
+            string hash = BitConverter.ToString(sha1.ComputeHash(Encoding.Unicode.GetBytes(prehash))).Replace("-", "").ToLower();
+
+            censored += hash;
+
+            if(User.IsInRole("superadmin")) 
+            {
+                censored = email + "(" + censored + ")";
+            }
+
+            return censored;
         }
 
         public IBreadcrumbs Breadcrumbs

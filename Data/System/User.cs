@@ -68,6 +68,16 @@ namespace Pokefans.Data
         [Column("color")]
         public virtual string Color { get; set; }
 
+        [NotMapped]
+        public string DisplayCss {
+            get {
+                if (String.IsNullOrEmpty(Color)) {
+                    return "";
+                }
+                return String.Format("font-weight: bold; color: {0};", Color);
+            }
+        }
+
         [Column("unread_notifications")]
         public virtual Nullable<short> UnreadNotificationCount { get; set; }
 
@@ -116,6 +126,8 @@ namespace Pokefans.Data
         public bool GravatarEnabled { get; set; }
 
         public virtual int FanartCount { get; set; }
+
+        public DateTime? LastTermsOfServiceAgreement { get; set; }
 
         [NotMapped]
         public virtual string MiniAvatarFileName

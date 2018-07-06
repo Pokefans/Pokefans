@@ -44,10 +44,9 @@
                 <p>
                     @Html.ActionLink("Als neuer Benutzer registrieren", "Register")
                 </p>
-                @* Diese Option aktivieren, nachdem Sie die Kontobestätigung für die Funktion zum Zurücksetzen des Kennworts aktiviert haben
                     <p>
-                        @Html.ActionLink("Kennwort vergessen?", "ForgotPassword")
-                    </p>*@
+                        @Html.ActionLink("Ich habe mein Passwort vergessen", "ForgotPassword") | @Html.ActionLink("Ich habe keine Aktivierungs-E-Mail bekommen", "ResendMailVerification")
+                    </p>
             }
         </section>
     </div>

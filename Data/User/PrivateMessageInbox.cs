@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
 namespace Pokefans.Data.UserData
@@ -28,5 +29,8 @@ namespace Pokefans.Data.UserData
         public bool Read { get; set; }
 
         public bool IsBcc { get; set; }
+
+        [InverseProperty("Message")]
+        public List<PrivateMessageInboxLabel> Labels { get; set; }
     }
 }

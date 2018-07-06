@@ -80,6 +80,13 @@ namespace Pokefans.Areas.user
 					"einstellungen/accounts-verwalten",
                 new { action = "ManageLogins", controller = "Manage", id = UrlParameter.Optional }, dataTokens));
 
+            /*context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "einstellungen/nutzungsbedingungen",
+                new { action = "DsgvoCompliance", controller = "Account" }
+            ));*/
+
+
             context.Routes.Add(new DomainRoute(
                 "user." + ConfigurationManager.AppSettings["Domain"],
                 "einstellungen/{action}/{id}",
@@ -94,6 +101,68 @@ namespace Pokefans.Areas.user
                     "profil/{url}",
                     new { action = "ViewProfile", controller = "Profile"}
                 ));
+
+            // Private messages
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "nachrichten/",
+                    new { action = "Index", controller = "PrivateMessage"}
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "nachrichten/labels",
+                    new { action = "ManageLabels", controller = "PrivateMessage"}
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "nachrichten/regeln",
+                    new { action = "ManageRules", controller = "PrivateMessage"}            
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/labels/delete",
+                    new { action = "DeleteLabel", Controller = "PrivateMessage" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/labels/edit",
+                    new { action = "EditLabel", Controller = "PrivateMessage" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                    "user." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/validateuser",
+                new { action = "ValidateUser", Controller = "PrivateMessage" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "nachrichten/neu",
+                new { action = "Compose", Controller = "PrivateMessage" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "nachrichten/postausgang",
+                new { action = "Outbox", Controller = "PrivateMessage" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "nachrichten/gesendet",
+                new { action = "Sent", Controller = "PrivateMessage" }
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "nachrichten/{id}",
+                new { action = "View", Controller = "PrivateMessage" }
+            ));
 
             context.Routes.Add("userDefault", route);
         }

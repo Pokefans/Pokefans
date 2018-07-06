@@ -136,6 +136,10 @@
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="BouncyCastle.Crypto">
+      <HintPath>..\packages\BouncyCastle.1.8.2\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AllowCorsAttribute.cs" />
@@ -162,7 +166,6 @@
     <Compile Include="Validation\NoJavascriptAttribute.cs" />
     <Compile Include="DiffMatchPatch.cs" />
     <Compile Include="DomainRoute.cs" />
-    <Compile Include="EmailService.cs" />
     <Compile Include="EnumExtensions.cs" />
     <Compile Include="IBreadcrumbs.cs" />
     <Compile Include="LinkExtensions.cs" />
@@ -172,6 +175,7 @@
     <Compile Include="Parser\Mentions.cs" />
     <Compile Include="Parser\IParser.cs" />
     <Compile Include="Emojione.cs" />
+    <Compile Include="StringExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

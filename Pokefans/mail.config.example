@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<mail>
+    <server host="mail.pokefans.net" port="25" trustAllSSL="false" />
+    <credentials user="user" password="redacted" />
+    <identity from="user" replyto="forum@pokefans.net" />
+</mail>

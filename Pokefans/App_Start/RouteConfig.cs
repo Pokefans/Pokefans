@@ -84,6 +84,8 @@ namespace Pokefans
                     new { controller = "CommentApi", action = "Delete" }
                 ));
 
+
+
             RouteTable.Routes.Add("Content", new ContentRoute(
                 "Home", "ViewContent"
             ));

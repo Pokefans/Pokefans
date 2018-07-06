@@ -1,0 +1,36 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Areas.user.Models
+@using Pokefans.Data.UserData
+@model PrivateMessageDeleteViewModel
+@{
+    Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
+    Breadcrumbs.Add("Private Nachrichten", "PrivateMessage", "Index");
+    SiteTitle = "Private Nachrichten - Posteingang";
+    SiteHeader = "Private Nachrichten - Posteingang";
+    SiteDescription = "";
+    ActiveMenuKey = "";
+}
+
+<div class="panel panel-warning">
+    <div class="panel-heading">
+        <h3 class="panel-title">Bestätigen</h3>
+    </div>
+    <div class="panel-body">
+        <p> Bestätige, dass du diese Private Nachricht löschen möchtest. <br /> Nach dem Löschen kann sie nicht wiederhergestellt werden! </p>
+        <p>
+            <form method="post">
+                <input type="hidden" name="id" value="@Model.Id" />
+                <input type="hidden" name="inbox" value="@Model.Inbox.ToString()" />
+                <button type="submit" class="btn btn-danger">Löschen</button> @if (Model.Inbox)
+                {<a href="@Url.Action("Index")">Zurück zum Posteingang</a> }
+                else
+                { <a href="@Url.Action("Outbox")">Zurück zum Postausgang</a>            }
+                @Html.AntiForgeryToken()
+            </form>
+        </p>
+    </div>
+</div>
+
+@section submenu {
+    @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("privmsgs", ""))
+}

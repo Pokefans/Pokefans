@@ -115,6 +115,10 @@ namespace Pokefans
                     "~/Scripts/bbCodeEdit.js"
                 ));
 
+            bundles.Add(new ScriptBundle("~/bundles/charts").Include(
+                    "~/Scripts/charts/Chart.bundle.js"
+            ));
+
             // waypoints
 
             bundles.Add(new ScriptBundle("~/bundles/waypoints").Include(
@@ -153,6 +157,16 @@ namespace Pokefans
 
             bundles.Add(new StyleBundle("~/bundles/emojiarea/css").Include(
                 "~/Content/emojionearea.css"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/pm-label").Include(
+                "~/Scripts/editable/bootstrap-editable.js",
+                "~/Scripts/pm-labels.js"
+            ));
+
+            bundles.Add(new ScriptBundle("~/bundles/pm-compose").Include(
+                "~/Scripts/bootstrap-tagsinput.js",
+                "~/Scripts/pm-compose.js"
             ));
         }
     }
