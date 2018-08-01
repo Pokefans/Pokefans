@@ -156,7 +156,7 @@ namespace Pokefans.Util
                 if (_notifications == null)
                 {
                     var db = DependencyResolver.Current.GetService<Entities>();
-                    _notifications = db.UserNotifications.Where(x => x.UserId == CurrentUser.Id).Count();
+                    _notifications = db.UserNotifications.Where(x => x.UserId == CurrentUser.Id && x.IsUnread == true).Count();
                 }
                 return _notifications.Value;
             }

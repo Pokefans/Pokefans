@@ -16,6 +16,9 @@ using Microsoft.AspNet.Identity;
 using Lucene.Net.Analysis;
 using Lucene.Net.Search;
 using Lucene.Net.Index;
+using Pokefans.Security;
+using Pokefans.Util.Comments;
+using Pokefans.Util;
 
 namespace Pokefans.Controllers
 {
@@ -26,14 +29,18 @@ namespace Pokefans.Controllers
         private Analyzer analyzer;
         private Searcher searcher;
         private IndexWriter writer;
+        ApplicationUserManager userManager;
+        NotificationManager notificationManager;
 
-        public TradingController(Entities ents, Cache c, IndexWriter wrtr, Searcher srchr, Analyzer ana)
+        public TradingController(Entities ents, Cache c, IndexWriter wrtr, Searcher srchr, Analyzer ana, ApplicationUserManager um, NotificationManager mgr)
         {
             db = ents;
             cache = c;
             analyzer = ana;
             searcher = srchr;
             writer = wrtr;
+            userManager = um;
+            notificationManager = mgr;
         }
 
         // GET: Trading
@@ -83,7 +90,7 @@ namespace Pokefans.Controllers
 			int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
 
             //var query = db.TradeLogs.Include("Offer").Include("Offer.Pokemon").Include("Offer.Item").Include("UserTo").Where(x => x.UserFromId == uid);
-            var query = db.WifiOffers.Include("Pokemon").Include("Item").Where(x => x.UserId == uid);
+            var query = db.WifiOffers.Include("Pokemon").Include("Item").Include("User").Where(x => x.UserId == uid);
 
 			if (start > 0)
 				query = query.Where(x => x.Id < start);
@@ -224,7 +231,34 @@ namespace Pokefans.Controllers
 
             ViewBag.OfferCount = db.WifiOffers.Where(g => g.UserId == o.UserId).Count();
 
-            return View(o);
+            OfferViewModel offerViewModel = new OfferViewModel();
+
+            TradingCommentManager tcm = new TradingCommentManager(db, cache, HttpContext, notificationManager);
+            CommentsViewModel cvm = new CommentsViewModel();
+
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
+                cvm.CanHideComment = currentUser.IsInRole("fanart-moderator", cache, db);
+                cvm.CurrentUser = currentUser;
+            }
+            else
+            {
+                cvm.CanHideComment = false;
+                cvm.CurrentUser = null;
+            }
+
+            cvm.Comments = tcm.GetCommentsForObjectId(id);
+            cvm.CommentedObjectId = id;
+            cvm.Context = CommentContext.Trading;
+
+            cvm.Level = 0; //note that this is the level we start from, so we can arbitrarily limit comment indentation between 0 and 4 levels
+            cvm.Manager = tcm;
+
+            offerViewModel.Offer = o;
+            offerViewModel.Comments = cvm;
+
+            return View(offerViewModel);
         }
     }
 }

@@ -1,42 +1,19 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Views/Administration/ViewTos.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Util/AllowCorsAttribute.cs">
     <Files>
-      <File FileName="Security/ApplicationUserManager.cs" Line="37" Column="36" />
-      <File FileName="Pokefans/Areas/user/Controllers/AccountController.cs" Line="496" Column="59" />
-      <File FileName="Security/Pbkdf2PasswordHasher.cs" Line="43" Column="54" />
-      <File FileName="Pokefans/Global.asax.cs" Line="65" Column="46" />
-      <File FileName="Pokefans/Areas/user/Models/DsgvoComplianceModel.cs" Line="6" Column="31" />
-      <File FileName="Pokefans/Areas/user/Controllers/PrivateMessageController.cs" Line="34" Column="13" />
-      <File FileName="Pokefans/Areas/user/Views/Account/DsgvoCompliance.cshtml" Line="38" Column="96" />
-      <File FileName="Pokefans/Areas/user/Views/Account/ExternalLoginConfirmation.cshtml" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Views/Account/ForgotPassword.cshtml" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Views/Account/ResendMailVerification.cshtml" Line="17" Column="8" />
-      <File FileName="Pokefans/Areas/user/Views/PrivateMessage/Compose.cshtml" Line="21" Column="2" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Dashboard/Index.cshtml" Line="13" Column="34" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/_Layout.cshtml" Line="250" Column="156" />
-      <File FileName="Pokefans/Areas/mitarbeit/Controllers/AdministrationController.cs" Line="31" Column="38" />
-      <File FileName="Pokefans/Areas/mitarbeit/Models/NewTosViewModel.cs" Line="9" Column="24" />
-      <File FileName="Pokefans/Web.config" Line="28" Column="31" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Administration/TermsOfService.cshtml" Line="14" Column="26" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Fanart/Categories.cshtml" Line="53" Column="7" />
-      <File FileName="Data/System/DsgvoComplianceInfo.cs" Line="19" Column="46" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Administration/NewTos.cshtml" Line="64" Column="7" />
-      <File FileName="Pokefans/Areas/user/userAreaRegistration.cs" Line="88" Column="13" />
-      <File FileName="Pokefans/App_Start/RouteConfig.cs" Line="87" Column="1" />
-      <File FileName="Pokefans/App_Start/CacheFill.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/mail.config" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/fanart/fanartAreaRegistration.cs" Line="34" Column="13" />
-      <File FileName="Pokefans/mail.config.example" Line="5" Column="56" />
-      <File FileName="Pokefans/Areas/user/Models/ConfirmationMailViewModel.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Models/OldMessageViewModel.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Models/PrivateMessageComposeViewModel.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Administration/ViewTos.cshtml" Line="31" Column="12" />
+      <File FileName="Pokefans/Controllers/TradingController.cs" Line="257" Column="1" />
+      <File FileName="Pokefans/Areas/fanart/Controllers/FanartHomeController.cs" Line="194" Column="1" />
+      <File FileName="Pokefans/Views/Trading/Details.cshtml" Line="105" Column="42" />
+      <File FileName="Pokefans/Areas/fanart/Views/FanartHome/Single.cshtml" Line="105" Column="5" />
+      <File FileName="Pokefans/Controllers/CommentApiController.cs" Line="38" Column="17" />
+      <File FileName="Util/AllowCorsAttribute.cs" Line="33" Column="50" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/Users/katharina/Documents/Pokefans/core/Util/AllowCorsAttribute.cs" relfile="Util/AllowCorsAttribute.cs" line="28" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />

@@ -33,7 +33,7 @@
                         <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
                     </div>
                     <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
-                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="#">@offer.User.UserName</a><br />
+                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="@Url.Map("profile/"+offer.User.Url, "user")">@offer.User.UserName</a><br />
                     @{
                         List<string> l = new List<string>();
                         l.Add(string.Format("Level {0}", offer.Level));

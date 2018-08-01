@@ -230,5 +230,31 @@ namespace Pokefans.Areas.user.Controllers
 
 			return View("~/Areas/user/Views/Profile/ViewProfile.cshtml", profile);
         }
+
+        public ActionResult ViewNotifications() 
+        {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            var notifications = db.UserNotifications.Where(x => x.UserId == uid).OrderByDescending(x => x.Sent).Take(25);
+
+            // set all notifications to read
+            // Use a raw query because it's pointless to select the entities first.
+            db.Database.ExecuteSqlCommand("UPDATE UserNotifications SET IsRead = 1 WHERE UserId = @p0;", uid);
+
+            return View("~/Areas/user/Views/Profile/ViewNotifications.cshtml", notifications);
+        }
+
+        public ActionResult ViewNotificationsJson()
+        {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            var notifications = db.UserNotifications.Where(x => x.UserId == uid).OrderByDescending(x => x.Sent).Take(25);
+
+            // set all notifications to read
+            // Use a raw query because it's pointless to select the entities first.
+            db.Database.ExecuteSqlCommand("UPDATE UserNotifications SET IsRead = 1 WHERE UserId = @p0;", uid);
+
+            return Json(notifications);
+        }
     }
 }

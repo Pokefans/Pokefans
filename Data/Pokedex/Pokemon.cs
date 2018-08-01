@@ -116,7 +116,7 @@ namespace Pokefans.Data.Pokedex
 
         public bool InPokemonConquest { get; set; }
 
-        public int ForumTopicId { get; set; }
+        public int? ForumTopicId { get; set; }
 
         public int? FormItemNeededId { get; set; }
 

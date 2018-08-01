@@ -22,12 +22,14 @@ namespace Pokefans.Controllers
         private Entities db;
         private Cache cache;
         private ApplicationUserManager userManager;
+        private NotificationManager notificationManager;
 
-        public CommentApiController(Entities ents, Cache c, ApplicationUserManager umgr)
+        public CommentApiController(Entities ents, Cache c, ApplicationUserManager umgr, NotificationManager mgr)
         {
             db = ents;
             cache = c;
             userManager = umgr;
+            notificationManager = mgr;
         }
 
         [HttpPost]
@@ -143,9 +145,11 @@ namespace Pokefans.Controllers
                 case CommentContext.Content:
                     return manager = new ContentCommentManager(db, cache, HttpContext);
                 case CommentContext.Fanart:
-                    return manager = new FanartCommentManager(db, cache, HttpContext);
+                    return manager = new FanartCommentManager(db, cache, HttpContext, notificationManager);
                 case CommentContext.Movesets:
-                    return manager = new FanartCommentManager(db, cache, HttpContext);
+                    return manager = new FanartCommentManager(db, cache, HttpContext, notificationManager);
+                case CommentContext.Trading:
+                    return manager = new TradingCommentManager(db, cache, HttpContext, notificationManager);
                 default:
                     throw new Exception("CommentManager not found");
             }

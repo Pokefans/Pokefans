@@ -30,6 +30,7 @@ namespace Pokefans
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/anmeldung"),
+                ExpireTimeSpan = TimeSpan.FromDays(3650), // this should solve the nasty log-out after 20 mins if "remember me" is checked
                 Provider = new CookieAuthenticationProvider
                 {
                     OnApplyRedirect = ApplyRedirect, 

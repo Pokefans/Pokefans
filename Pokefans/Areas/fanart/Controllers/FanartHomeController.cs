@@ -28,14 +28,16 @@ namespace Pokefans.Areas.fanart.Controllers
         private ApplicationUserManager userManager;
         private Searcher searcher;
         private Analyzer analyzer;
+        private NotificationManager notificationManager;
 
-        public FanartHomeController(Entities ents, Cache c, ApplicationUserManager um, Searcher srch, Analyzer ana)
+        public FanartHomeController(Entities ents, Cache c, ApplicationUserManager um, Searcher srch, Analyzer ana, NotificationManager mgr)
         {
             db = ents;
             cache = c;
             userManager = um;
             searcher = srch;
             analyzer = ana;
+            notificationManager = mgr;
         }
 
         public ActionResult UserRss(int id)
@@ -166,7 +168,7 @@ namespace Pokefans.Areas.fanart.Controllers
             }
 
             FanartSingleViewModel fsvm = new FanartSingleViewModel();
-            FanartCommentManager fcm = new FanartCommentManager(db, cache, HttpContext);
+            FanartCommentManager fcm = new FanartCommentManager(db, cache, HttpContext, notificationManager);
             CommentsViewModel cvm = new CommentsViewModel();
 
             if (HttpContext.User.Identity.IsAuthenticated)

@@ -11,12 +11,19 @@ using System.Web;
 using Pokefans.Data.Comments;
 using Pokefans.Data.Fanwork;
 using Pokefans.Data.ViewModels;
+using System.Web.Mvc;
+using Pokefans.Util;
 
 namespace Pokefans.Util.Comments
 {
     public class FanartCommentManager : CommentManager
     {
-        public FanartCommentManager(Entities ents, Cache c, HttpContextBase b) : base(ents, c, b) { }
+        NotificationManager  notificationManager;
+
+        public FanartCommentManager(Entities ents, Cache c, HttpContextBase b, NotificationManager mgr) : base(ents, c, b) 
+        {
+            notificationManager = mgr;
+        }
 
         protected override CommentContext context
         {
@@ -38,7 +45,7 @@ namespace Pokefans.Util.Comments
             }
             base.AddComment(comment);
 
-            Fanart f = db.Fanarts.Single(x => x.Id == comment.CommentedObjectId);
+            Fanart f = db.Fanarts.Include("UploadUser").Single(x => x.Id == comment.CommentedObjectId);
             if(f == null)
             {
                 throw new CommentException("Commented Object does not exist");
@@ -47,8 +54,19 @@ namespace Pokefans.Util.Comments
             db.SetModified(f);
             db.SaveChanges();
 
-            // TODO: Benachrichtigung senden
+            User author = db.Users.Single(x => x.Id == comment.AuthorId);
+
+            UrlHelper helper = new UrlHelper();
+            notificationManager.SendNotification(f.UploadUserId,
+                                                 string.Format("<a href=\"{0}\">{1}</a> hat <a href=\"{2}\">dein Fanart {3}</a> kommentiert.", 
+                                                               helper.Map("profil/" + author.Url, "user"),
+                                                               author.UserName,
+                                                               helper.Map(f.Url, "fanart"),
+                                                               f.Title
+                                                              ), 
+                                                 String.Format("<img class=\"img-responsive\" src=\"{0}\" />", helper.Map(f.SmallThumbnailUrl, "files")));
         }
+
 
         /// <summary>
         /// Override default action to reduce comment counter.

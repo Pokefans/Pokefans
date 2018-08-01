@@ -372,6 +372,7 @@
     <Compile Include="Areas\user\Models\ConfirmationMailViewModel.cs" />
     <Compile Include="Areas\mitarbeit\Controllers\AdministrationController.cs" />
     <Compile Include="Areas\mitarbeit\Models\NewTosViewModel.cs" />
+    <Compile Include="Models\OfferViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -732,6 +733,7 @@
     <Content Include="Areas\mitarbeit\Views\Administration\TermsOfService.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Administration\ViewTos.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Administration\NewTos.cshtml" />
+    <Content Include="Areas\user\Views\Profile\ViewNotifications.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -27,13 +27,20 @@ namespace Pokefans.Util
         {
             if (all || Domains.Any(x => x + "." + ConfigurationManager.AppSettings["Domain"] == filterContext.RequestContext.HttpContext.Request.UrlReferrer.Host))
             {
+                string port = "";
                 if (filterContext.RequestContext.HttpContext.Request.IsSecureConnection)
                 {
-                    filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "https://" + filterContext.RequestContext.HttpContext.Request.UrlReferrer.Host + " env=HTTPS");
+                    if (filterContext.HttpContext.Request.Url.Port != 443)
+                        port = ":" + filterContext.HttpContext.Request.Url.Port.ToString();
+                    
+                    filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "https://" + filterContext.RequestContext.HttpContext.Request.UrlReferrer.Host + port + " env=HTTPS");
                 }
                 else
                 {
-                    filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "http://" + filterContext.RequestContext.HttpContext.Request.UrlReferrer.Host);
+                    if (filterContext.HttpContext.Request.Url.Port != 80)
+                        port = ":" + filterContext.HttpContext.Request.Url.Port.ToString();
+                    
+                    filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Origin", "http://" + filterContext.RequestContext.HttpContext.Request.UrlReferrer.Host + port);
                 }
                 filterContext.RequestContext.HttpContext.Response.AddHeader("Access-Control-Allow-Credentials", "true");
             }

@@ -1,0 +1,33 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@model List<Pokefans.Data.UserData.UserNotification>
+@{
+    Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
+    Breadcrumbs.Add("Benachrichtigungen");
+}
+
+<h1>Benachrichtigungen</h1>
+
+
+    @if (Model.Count > 0)
+    {
+<table class="table table-striped">
+    <tbody>
+        @foreach (var notification in Model)
+        {
+            string css = "";
+            if (!notification.IsRead) { css = "info"; }
+
+        <tr class="@css">
+            <td>@Html.Raw(notification.Title)</td>
+            <td>@Html.Raw(notification.Message)</td>
+            <td>@notification.Sent.ToString("dd.MM.yyyy HH:mm")</td>
+    </tr>
+        }
+    </tbody>
+</table>
+
+    }
+    else
+    {
+        <div class="alert alert-info">Du hast im Moment keine Benachrichtigungen.</div>
+    }

@@ -149,6 +149,7 @@
     <Compile Include="Comments\ContentCommentManager.cs" />
     <Compile Include="Comments\FanartCommentManager.cs" />
     <Compile Include="Comments\MovesetCommentManager.cs" />
+        <Compile Include="Comments\TradingCommentManager.cs" />
     <Compile Include="ControllerExtensions.cs" />
     <Compile Include="ContentExtensions.cs" />
     <Compile Include="ContentRoute.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="Parser\IParser.cs" />
     <Compile Include="Emojione.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="NotificationManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

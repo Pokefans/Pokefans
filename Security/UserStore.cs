@@ -18,7 +18,8 @@ namespace Pokefans.Security
                       IUserLockoutStore<User, int>,
                       IQueryableUserStore<User, int>,
                       IUserRoleStore<User, int>,
-                      IUserTwoFactorStore<User, int>
+                      IUserTwoFactorStore<User, int>,
+                      IUserSecurityStampStore<User, int>
     {
         private Entities entities;
         private Cache cache;
@@ -345,6 +346,21 @@ namespace Pokefans.Security
             entities.SetModified(user);
             return entities.SaveChangesAsync();
 
+        }
+
+        public Task SetSecurityStampAsync(User user, string stamp)
+        {
+            if (user == null)
+                throw new ArgumentNullException("user");
+            user.SecurityStamp = stamp;
+
+            entities.SetModified(user);
+            return entities.SaveChangesAsync();
+        }
+
+        public Task<string> GetSecurityStampAsync(User user)
+        {
+            return Task.FromResult(user.SecurityStamp);
         }
     }
 }

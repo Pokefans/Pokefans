@@ -332,6 +332,14 @@
     <Compile Include="Migrations\201807060745531_Dsgvo.Designer.cs">
         <DependentUpon>201807060745531_Dsgvo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808011117393_Notifications.cs" />
+    <Compile Include="Migrations\201808011117393_Notifications.Designer.cs">
+        <DependentUpon>201808011117393_Notifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808011254174_PokemonForumTopicOptional1.cs" />
+    <Compile Include="Migrations\201808011254174_PokemonForumTopicOptional1.Designer.cs">
+        <DependentUpon>201808011254174_PokemonForumTopicOptional1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -655,6 +663,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201807060745531_Dsgvo.resx">
         <DependentUpon>201807060745531_Dsgvo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011117393_Notifications.resx">
+        <DependentUpon>201808011117393_Notifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808011254174_PokemonForumTopicOptional1.resx">
+        <DependentUpon>201808011254174_PokemonForumTopicOptional1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -97,6 +97,11 @@ namespace Pokefans.Areas.user.Controllers
             // Temporary Solution: Resolve User here. But we want to resolve the email in the Manager class, just like it works for the username
             // see https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Owin/SignInManager.cs
             User u = _entities.Users.Where(g => g.Email == model.Email).FirstOrDefault();
+            if (u == null)
+            {
+                ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
+                return View("~/Areas/user/Views/Account/Login.cshtml", model);
+            }
 
             if (!u.EmailConfirmed)
             {

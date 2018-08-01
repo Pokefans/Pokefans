@@ -20,9 +20,7 @@ namespace Pokefans.Data.UserData
 
         public bool IsUnread { get; set; }
 
-        public DateTime ReadTime { get; set; }
-
-        public string Title { get; set; }
+        public string Icon { get; set; }
 
         public string Message { get; set; }
     }

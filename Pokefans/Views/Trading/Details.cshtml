@@ -1,4 +1,4 @@
-﻿@model Pokefans.Data.Wifi.NormalOffer
+﻿@model Pokefans.Models.OfferViewModel
 @using Pokefans.Data.Pokedex
 @using Pokefans.Models
 @{
@@ -6,6 +6,7 @@
     SiteHeader = "Tauschbörse: Pokemon online tauschen";
     SiteDescription = "";
     ActiveMenuKey = "trading";
+    Pokefans.Data.Wifi.NormalOffer Offer = Model.Offer;
 
     Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
     {
@@ -19,46 +20,46 @@
     };
 }
 
-<h2>Angebot: @Model.Title</h2>
+<h2>Angebot: @Offer.Title</h2>
 <div class="clearfix">
     <div class="col-sm-2">
-        <img src="//files.pokefans.net/sprites/global-link/120px/@(Model.Pokemon.PokedexId.ToString()).png" class="img-responsive pull-left" />
+        <img src="//files.pokefans.net/sprites/global-link/120px/@(Offer.Pokemon.PokedexId.ToString()).png" class="img-responsive pull-left" />
     </div>
     <div class="col-sm-10">
-        <h3>@Model.Pokemon.Name.German</h3>
+        <h3>@Offer.Pokemon.Name.German</h3>
         <ul class="list-unstyled">
-            <li>Zu tauschen auf @names[Model.Generation]</li>
-            @tickcross(Model.IsOriginalTrainer, "Qualität vom Originaltrainer", "Nicht vom Originaltrainer")
-            @displayIf(Model.HasPokerus, "Hat den Pokerus")
-            @displayIf(Model.IsShiny, "Dieses Pokemon ist Shiny")
-            @displayIf(Model.CheatUsed, "Dieses Pokemon wurde durch Cheats beeinflusst")
-            @tickcross(Model.IsClone, "Dieses Pokemon wurde geklont", "Dieses Pokemon wurde nicht geklont")
-            @displayIf(Model.IsEvent, "Dieses Pokemon ist ein Event-Pokemon")
-            @displayIf(Model.RngUsed, "Für dieses Pokemon wurde gezielt Einfluss auf den PRNG genommen")
-            @if (Model.Ability != null)
+            <li>Zu tauschen auf @names[Offer.Generation]</li>
+            @tickcross(Offer.IsOriginalTrainer, "Qualität vom Originaltrainer", "Nicht vom Originaltrainer")
+            @displayIf(Offer.HasPokerus, "Hat den Pokerus")
+            @displayIf(Offer.IsShiny, "Dieses Pokemon ist Shiny")
+            @displayIf(Offer.CheatUsed, "Dieses Pokemon wurde durch Cheats beeinflusst")
+            @tickcross(Offer.IsClone, "Dieses Pokemon wurde geklont", "Dieses Pokemon wurde nicht geklont")
+            @displayIf(Offer.IsEvent, "Dieses Pokemon ist ein Event-Pokemon")
+            @displayIf(Offer.RngUsed, "Für dieses Pokemon wurde gezielt Einfluss auf den PRNG genommen")
+            @if (Offer.Ability != null)
             {
-                <li>Fähigkeit: @Model.Ability.Name.German</li>
+                <li>Fähigkeit: @Offer.Ability.Name.German</li>
             }
-            <li>Level @Model.Level</li>
+            <li>Level @Offer.Level</li>
         </ul>
     </div>
 </div>
 <div class="col-xs-12">
-    <p>@Model.InterestCount Interessenten <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Ich interessiere mich für dieses Pokemon!</a></p>
+    <p>@Offer.InterestCount Interessenten <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Ich interessiere mich für dieses Pokemon!</a></p>
     <h3>Details</h3>
-    @if (Model.HasAttacks)
+    @if (Offer.HasAttacks)
     {
         <p>
             Attacken:
             <ul>
-                @displayAttack(Model.Attack1)
-                @displayAttack(Model.Attack2)
-                @displayAttack(Model.Attack3)
-                @displayAttack(Model.Attack4)
+                @displayAttack(Offer.Attack1)
+                @displayAttack(Offer.Attack2)
+                @displayAttack(Offer.Attack3)
+                @displayAttack(Offer.Attack4)
             </ul>
         </p>
     }
-    @if (Model.AbsoluteValues.Any() || Model.EffortValues.Any() || Model.DeterValues.Any())
+    @if (Offer.AbsoluteValues.Any() || Offer.EffortValues.Any() || Offer.DeterValues.Any())
     {
         <table class="table table-striped">
             <thead>
@@ -73,21 +74,23 @@
                 </tr>
             </thead>
             <tbody>
-                @displayStatusvalues(Model.AbsoluteValues, "Statuswerte")
-                @displayStatusvalues(Model.EffortValues, "EVs")
-                @displayStatusvalues(Model.DeterValues, "DVs")
+                @displayStatusvalues(Offer.AbsoluteValues, "Statuswerte")
+                @displayStatusvalues(Offer.EffortValues, "EVs")
+                @displayStatusvalues(Offer.DeterValues, "DVs")
             </tbody>
         </table>
     }
     <hr />
-    @Html.Raw(Model.Description)
+    @Html.Raw(Offer.Description)
+    <hr />
+    @{ Html.RenderPartial("CommentPartial", Model.Comments); }
 </div>
 @section sidebar {
     <h3>Über den Anbieter</h3>
-    <img class="img-responsive" src="@Html.ResourceLink("user/avatare/" + Model.User.MiniAvatarFileName, "files")" />
-    <strong class="size-h4"><a href="@Url.Action("View", "Profile", new { area = "user", id = Model.User.Url })">@Model.User.UserName</a></strong>
+    <img class="img-responsive" src="@Offer.User.AvatarUrl" />
+    <strong class="size-h4"><a href="@Url.Action("View", "Profile", new { area = "user", id = Offer.User.Url })">@Offer.User.UserName</a></strong>
     <ul class="list-unstyled">
-        <li><i class="fa fa-clock-o"></i> Registriert seit @Model.User.Registered.ToString("d.M.yyyy")</li>
+        <li><i class="fa fa-clock-o"></i> Registriert seit @Offer.User.Registered.ToString("d.M.yyyy")</li>
         <li><i class="fa fa-list"></i>Insgesamt @ViewBag.OfferCount Angebote in der Tauschbörse</li>
         @*Forenposts*@
         @*Sonstige sinnvolle Metriken?*@
@@ -96,6 +99,10 @@
 
 @section submenu {
     @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}
+
+@section scripts {
+    @Scripts.Render("~/bundles/comments")
 }
 
 @helper tickcross(bool value, string displayText)

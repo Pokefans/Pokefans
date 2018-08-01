@@ -54,6 +54,7 @@ namespace Pokefans.App_Start
             container.RegisterType<IRoleStore<Role, int>, RoleStore>(new InjectionConstructor(typeof(Entities)));
             container.RegisterType<SmartThreadPool>(new InjectionFactory(c => new SmartThreadPool()));
             container.RegisterType<CommentManager>(new PerResolveLifetimeManager());
+            container.RegisterType<NotificationManager>(new PerRequestLifetimeManager());
 
             // TODO: Register your types here
             // container.RegisterType<IProductRepository, ProductRepository>();
