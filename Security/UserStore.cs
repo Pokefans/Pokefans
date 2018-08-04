@@ -106,7 +106,16 @@ namespace Pokefans.Security
 
             user.Password = passwordHash;
 
-            return entities.SaveChangesAsync();
+            if (entities.Users.Any(x => x.UserName == user.UserName))
+            {
+                // user is already in the database
+                user.Password = passwordHash;
+
+                entities.SetModified(user);
+                return entities.SaveChangesAsync();
+            }
+            user.Password = passwordHash;
+            return Task.Run(() => 1 + 1); // yay async
         }
 
         public Task AddLoginAsync(User user, UserLoginInfo login)
@@ -352,10 +361,15 @@ namespace Pokefans.Security
         {
             if (user == null)
                 throw new ArgumentNullException("user");
-            user.SecurityStamp = stamp;
+            if (user.SecurityStamp == null)
+            {
+                user.SecurityStamp = stamp;
 
-            entities.SetModified(user);
-            return entities.SaveChangesAsync();
+                entities.SetModified(user);
+                return entities.SaveChangesAsync();
+            }
+            user.SecurityStamp = stamp;
+            return Task.Run(() => 1 + 1);
         }
 
         public Task<string> GetSecurityStampAsync(User user)
