@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using Pokefans.Areas.mitarbeit.Models;
 using Pokefans.Areas.mitarbeit.Models.Dashboard;
 using Pokefans.Data;
+using Pokefans.Util;
+using ChartJSCore.Models;
 
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
@@ -23,35 +25,96 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         // GET: mitarbeit/Dashboard
         public ActionResult Index()
         {
-            var dashboard = new DashboardViewModel();
-
-            if(User.IsInRole("global-moderator"))
-                dashboard.PMReport = PrivateMessagReports();
-
-
-            return View("~/Areas/mitarbeit/Views/Dashboard/Index.cshtml", dashboard);
+            return View("~/Areas/mitarbeit/Views/Dashboard/Index.cshtml");
         }
 
-        public PrivateMessageReportDashboardViewModel PrivateMessagReports() 
+        [AllowCors]
+        [Authorize(Roles ="global-moderator")]
+        public ActionResult PMReportTable()
         {
-            var report = new PrivateMessageReportDashboardViewModel();
 
-            report.Reports = db.PrivateMessageReports.Include(q => q.PrivateMessage).Include(q => q.Reporter).Include(q => q.From).Where(x => x.Resolved == false).OrderByDescending(x => x.Timestamp).Take(5).ToList();
+            var reportsRaw = db.PrivateMessageReports
+                .Include(q => q.PrivateMessage)
+                .Include(q => q.Reporter)
+                .Include(q => q.From)
+                .Where(x => x.Resolved == false)
+                .OrderByDescending(x => x.Timestamp)
+                .Take(5)
+                .ToList();
+
+            var reports = new List<object>();
+
+            // we cannot serialize what comes out of the database directly (because of reasons),
+            // and we don't want to push all fields anyways. so let's convert it.
+            foreach (var x in reportsRaw)
+                reports.Add(new
+                {
+                    subject = x.PrivateMessage.Subject,
+                    reportUrl = Url.Action("ViewPMReport", "PrivateMessageModeration", new { id = x.Id }),
+                    user = new
+                    {
+                        url = x.From.Url,
+                        displayCSS = x.From.DisplayCss,
+                        name = x.From.UserName
+                    },
+                    reporter = new
+                    {
+                        url = x.Reporter.Url,
+                        displayCSS = x.Reporter.DisplayCss,
+                        name = x.Reporter.UserName
+                    }
+                });
+
+            return Json(reports, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowCors]
+        [Authorize(Roles="global-moderator")]
+        public ActionResult PMReportChart()
+        {
+            Chart chart = new Chart();
+            chart.Type = "line";
+
+            ChartJSCore.Models.Data data = new ChartJSCore.Models.Data();
 
             DateTime current = DateTime.Now.AddDays(-30);
 
             var reportsOfLastMonth = db.PrivateMessageReports.Where(x => x.Timestamp > current).ToList();
 
-            report.ReportsPerDay = new Dictionary<DateTime, int>();
-            while(current < DateTime.Now) 
+            var ReportsPerDay = new Dictionary<DateTime, int>();
+            while (current < DateTime.Now)
             {
-                report.ReportsPerDay.Add(current, reportsOfLastMonth.Where(x => x.Timestamp.DayOfYear == current.DayOfYear).Count());
+                ReportsPerDay.Add(current, reportsOfLastMonth.Where(x => x.Timestamp.DayOfYear == current.DayOfYear).Count());
                 current = current.AddDays(1);
             }
 
-            report.Open = db.PrivateMessageReports.Count(x => x.Resolved == false);
+            data.Labels = ReportsPerDay.Select(x => x.Key.ToString("dd.MM.yyyy")).ToList();
+            data.Datasets = new List<Dataset>();
 
-            return report;
+            data.Datasets.Add(new LineDataset()
+            {
+                Label = "Meldungen",
+                Data = ReportsPerDay.Select(x => (double)x.Value).ToList(),
+                BackgroundColor = "#dd4b39"
+            });
+            chart.Options.Legend = new Legend();
+            chart.Options.Legend.Display = false;
+            chart.Options.Responsive = true;
+            chart.Options.MaintainAspectRatio = true;
+            chart.Options.Scales = new Scales();
+            chart.Options.Scales.YAxes = new List<Scale>();
+            chart.Options.Scales.YAxes.Add(new CartesianScale()
+            {
+                Ticks = new CartesianLinearTick()
+                {
+                    SuggestedMin = 0,
+                    SuggestedMax = 20,
+                    StepSize = 2
+                }
+            });
+            chart.Data = data;
+
+            return Content(chart.SerializeBody(), "text/json");
         }
 
         [HttpPost]

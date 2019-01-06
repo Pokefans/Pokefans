@@ -588,7 +588,22 @@ function _init() {
  * - Custom Plugins -
  * ------------------
  * All custom plugins are defined below.
- */
+*/
+
+
+$("#notifications-dropdown").click(function (ev) {
+    var foo = $(this).data('poload');
+        
+        $.ajax({
+            url: foo, 
+            xhrFields: {
+                withCredentials: true
+            }, 
+            success: function(d) {
+               $("#outernotifications").html(d);
+            }
+        })
+});
 
 /*
  * BOX REFRESH BUTTON

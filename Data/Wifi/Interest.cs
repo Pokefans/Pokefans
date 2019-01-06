@@ -26,5 +26,7 @@ namespace Pokefans.Data.Wifi
 
         [ForeignKey("OfferId")]
         public Offer Offer { get; set; }
+
+        public string Comment { get; set; }
     }
 }

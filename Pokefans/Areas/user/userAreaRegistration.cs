@@ -164,6 +164,12 @@ namespace Pokefans.Areas.user
                 new { action = "View", Controller = "PrivateMessage" }
             ));
 
+            context.Routes.Add(new DomainRoute(
+                "user." + ConfigurationManager.AppSettings["Domain"],
+                "benachrichtigungen",
+                new {action = "ViewNotifications", controller = "Notifications" } 
+            ));
+
             context.Routes.Add("userDefault", route);
         }
     }

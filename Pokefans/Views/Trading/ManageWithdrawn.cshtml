@@ -1,0 +1,14 @@
+﻿@model OfferArchiveViewModel
+@using Pokefans.Models
+@using Pokefans.Data.Wifi
+@{
+    ViewBag.Title = "Tausch wiedereröffnen";
+}
+
+<h2>Angebot @Model.Offer.Title verwalten</h2>
+
+<p>Du hast dieses Angebot zurückgezogen. <a class="btn btn-primary" href="@Url.Action("Reopen", new { id = Model.Offer.Id })">Wiedereröffnen</a></p>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

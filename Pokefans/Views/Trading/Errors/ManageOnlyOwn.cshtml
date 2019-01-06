@@ -1,0 +1,18 @@
+﻿@{
+                /**/
+
+                SiteTitle = "Tauschbörse";
+                SiteHeader = "Zugriff verweigert";
+                SiteDescription = "";
+                ActiveMenuKey = "trading";
+}
+
+<h2>Zugriff verweigert</h2>
+
+<div class="alert alert-info">Du kannst nur deine eigenen Tauschvorgänge verwalten.</div>
+
+<a href="javascript:window.history.back()">Zurück</a> | <a href="@Url.Action("Index")">Zurück zur Übersicht</a>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

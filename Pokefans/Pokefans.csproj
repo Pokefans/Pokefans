@@ -127,10 +127,6 @@
       <HintPath>..\packages\MySql.Data.Entity.6.9.9\lib\net45\MySql.Data.Entity.EF6.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PagedList">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -255,6 +251,12 @@
     <Reference Include="HtmlAgilityPack">
       <HintPath>..\packages\HtmlAgilityPack.1.8.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="ChartJSCore">
+      <HintPath>..\binpkgs\ChartJSCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Owin">
@@ -373,6 +375,9 @@
     <Compile Include="Areas\mitarbeit\Controllers\AdministrationController.cs" />
     <Compile Include="Areas\mitarbeit\Models\NewTosViewModel.cs" />
     <Compile Include="Models\OfferViewModel.cs" />
+    <Compile Include="Models\ManageInterestViewModel.cs" />
+    <Compile Include="Models\OfferArchiveViewModel.cs" />
+    <Compile Include="Areas\user\Controllers\NotificationsController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -595,10 +600,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\knockout-3.4.0.debug.js" />
-    <Content Include="Scripts\knockout-3.4.0.js" />
-    <Content Include="Scripts\knockout-pre-rendered.js" />
-    <Content Include="Scripts\knockout-pre-rendered.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
@@ -734,6 +735,33 @@
     <Content Include="Areas\mitarbeit\Views\Administration\ViewTos.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Administration\NewTos.cshtml" />
     <Content Include="Areas\user\Views\Profile\ViewNotifications.cshtml" />
+    <Content Include="Views\Trading\Errors\ManageOnlyOwn.cshtml" />
+    <Content Include="Views\Trading\Errors\NoInterestOwn.cshtml" />
+    <Content Include="Views\Trading\Errors\AlreadyInterested.cshtml" />
+    <Content Include="Views\Trading\InterestSuccess.cshtml" />
+    <Content Include="Views\Trading\Interest.cshtml" />
+    <Content Include="Views\Trading\ManageArchive.cshtml" />
+    <Content Include="Views\Trading\Errors\ModerationDeleted.cshtml" />
+    <Content Include="Views\Trading\ManageWithdrawn.cshtml" />
+    <Content Include="Views\Trading\ManageInterests.cshtml" />
+    <Content Include="Views\Trading\ManageCompletion.cshtml" />
+    <Content Include="Views\Trading\_WizardStepPartial.cshtml" />
+    <Content Include="Views\Trading\Errors\RateTamper.cshtml" />
+    <Content Include="Scripts\notifications.js" />
+    <Content Include="Views\Api\Notifications.cshtml" />
+    <Content Include="Areas\user\Views\Notifications\ViewNotifications.cshtml" />
+    <Content Include="Scripts\knockout\knockout.chart.js" />
+    <Content Include="Scripts\knockout\knockout-3.4.0.js" />
+    <Content Include="Scripts\knockout\knockout-3.4.0.debug.js" />
+    <Content Include="Scripts\knockout\knockout-pre-rendered.js" />
+    <Content Include="Scripts\knockout\knockout-pre-rendered.min.js" />
+    <Content Include="Scripts\dashboard.js" />
+    <Content Include="Scripts\backend\dashboard\charts.js" />
+    <Content Include="App_Code\Widgets.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Dashboard\_PMReportPartial.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Dashboard\_PostReportPartial.cshtml" />
+    <Content Include="Scripts\backend\dashboard\table.js" />
+    <Content Include="Scripts\backend\dashboard\activate.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -758,6 +786,11 @@
     <Folder Include="Areas\mitarbeit\Models\Dashboard\" />
     <Folder Include="Areas\user\Mails\" />
     <Folder Include="Areas\mitarbeit\Views\Administration\" />
+    <Folder Include="Views\Trading\Errors\" />
+    <Folder Include="Areas\user\Views\Notifications\" />
+    <Folder Include="Scripts\knockout\" />
+    <Folder Include="Scripts\backend\dashboard\" />
+    <Folder Include="App_Code\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

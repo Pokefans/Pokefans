@@ -6,6 +6,8 @@ using Pokefans.Data.Pokedex;
 
 namespace Pokefans.Data.Wifi
 {
+    public enum TradeRating { Negative = -1, Neutral = 0, Positive = 1 };
+
     public class TradeLog
     {
         [Column("id")]
@@ -30,9 +32,17 @@ namespace Pokefans.Data.Wifi
         [ForeignKey("UserFromId")]
         public User UserFrom { get; set; }
 
-        public DateTime CompletedTime { get; set; }
+        public DateTime? CompletedTime { get; set; }
 
-        public DateTime ValidOn { get; set; }
+        public DateTime? ValidOn { get; set; }
+
+        public bool IsValid { get; set; }
+
+        // The Customer rates the seller thus influences the SellerRating
+        public TradeRating? SellerRating { get; set; }
+
+        // The Seller rates the Customer thus influences the CustomerRating
+        public TradeRating? CustomerRating { get; set; }
     }
 }
 

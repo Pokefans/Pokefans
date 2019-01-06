@@ -340,6 +340,14 @@
     <Compile Include="Migrations\201808011254174_PokemonForumTopicOptional1.Designer.cs">
         <DependentUpon>201808011254174_PokemonForumTopicOptional1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808040942437_WifiInterestComment1.cs" />
+    <Compile Include="Migrations\201808040942437_WifiInterestComment1.Designer.cs">
+        <DependentUpon>201808040942437_WifiInterestComment1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812301826429_WifiSomething.cs" />
+    <Compile Include="Migrations\201812301826429_WifiSomething.Designer.cs">
+        <DependentUpon>201812301826429_WifiSomething.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -481,6 +489,7 @@
     <Compile Include="Forum\BoardEnabledPrefixes.cs" />
     <Compile Include="User\PrivateMessageReport.cs" />
     <Compile Include="System\DsgvoComplianceInfo.cs" />
+    <Compile Include="Mysql8MigrationSqlGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -669,6 +678,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808011254174_PokemonForumTopicOptional1.resx">
         <DependentUpon>201808011254174_PokemonForumTopicOptional1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808040942437_WifiInterestComment1.resx">
+        <DependentUpon>201808040942437_WifiInterestComment1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812301826429_WifiSomething.resx">
+        <DependentUpon>201812301826429_WifiSomething.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

@@ -64,6 +64,32 @@ namespace Pokefans
                     url: "tausch/{id}",
                     defaults: new { controller = "Trading", action = "Details" }
                 ));
+            routes.Add("TauschVerwaltung", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/{id}/verwalten",
+                    defaults: new { controller = "Trading", action = "Manage" }
+                ));
+            routes.Add("TauschInteresse", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/{id}/interesse",
+                    defaults: new { controller = "Trading", action = "Interest" }
+                ));
+            routes.Add("TauschSelectPartner", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/{id}/partner-waehlen",
+                    defaults: new {controller = "Trading", action = "SelectPartner" }
+                ));
+
+            routes.Add("TauschInteresseJson", new DomainRoute(
+                    "api."+ConfigurationManager.AppSettings["Domain"],
+                    "v1/tausch/interesse",
+                    new { controller = "Trading", action = "InterestApi" }
+            ));
+            routes.Add("TauschRateJson", new DomainRoute(
+                    "api." + ConfigurationManager.AppSettings["Domain"],
+                    "v1/tausch/rate",
+                    new { controller = "Trading", action = "RateJson" }
+            ));
 
 
             // api routes
@@ -83,7 +109,11 @@ namespace Pokefans
                     "v1/comments/delete/{id}",
                     new { controller = "CommentApi", action = "Delete" }
                 ));
-
+            routes.Add("NotificationsBar", new DomainRoute(
+                    "api." + ConfigurationManager.AppSettings["Domain"],
+                    "v1/user/notifications",
+                    new { controller = "UserApi", action = "Notifications" }
+            ));
 
 
             RouteTable.Routes.Add("Content", new ContentRoute(

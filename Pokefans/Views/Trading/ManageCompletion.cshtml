@@ -1,0 +1,27 @@
+﻿@model OfferArchiveViewModel
+@using Pokefans.Models
+@using Pokefans.Data.Wifi
+@{
+    SiteTitle = "Tausch als erledigt markieren";
+}
+
+<h2>Angebot @Model.Offer.Title verwalten</h2>
+
+
+@Html.Partial("_WizardStepPartial", 3)
+
+<p>Du hast <a href="@Url.Profile(Model.TradeLog.UserTo)">@Model.TradeLog.UserTo.UserName</a> als Tauschpartner ausgewählt.</p>
+<p>
+    Bitte kontaktiere ihn/sie <a href="@Url.Map("nachrichten/neu?to="+Model.TradeLog.UserTo.Id.ToString(), "user")">per privater Nachricht</a>
+    und kläre die Details zum Tausch. Wenn der Tausch stattgefunden hat, kannst du den Tausch hier bestätigen. Um Missbrauch vorzubeugen,
+    wird der Tausch erst nach Ablauf von 48 Stunden oder wenn dein Tauschpartner
+    den Tausch bestätigt gültig gestellt und in deinen Statistiken aufgeführt.
+</p>
+
+<a href="@Url.Action("SetDone", new { id = Model.Offer.Id })" class="btn btn-success">Tausch als erledigt markieren</a>
+
+<p>Falls du es dir anders überlegt hast, kannst du <a href="@Url.Action("BackToPartnerSelect", new { id = Model.Offer.Id })">einen anderen Tauschpartner auswählen.</a></p>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

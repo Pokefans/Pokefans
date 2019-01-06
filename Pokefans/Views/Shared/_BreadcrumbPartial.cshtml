@@ -1,9 +1,11 @@
-﻿
-@foreach(var crumb in Breadcrumbs.Current)
-{ 
-    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="@Url.Action(crumb.Action, crumb.Controller, crumb.RouteValues)" itemprop="url"><span itemprop="title">@crumb.Text</span></a></span> 
-    if(crumb != Breadcrumbs.Current.Last())
+﻿@if (Breadcrumbs != null)
+{
+    foreach (var crumb in Breadcrumbs.Current)
     {
+    <span itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb"><a href="@Url.Action(crumb.Action, crumb.Controller, crumb.RouteValues)" itemprop="url"><span itemprop="title">@crumb.Text</span></a></span> 
+        if (crumb != Breadcrumbs.Current.Last())
+        {
         <i class="fa fa-angle-right"></i>
+        }
     }
 }

@@ -1,0 +1,36 @@
+﻿@model Offer
+@using Pokefans.Data.Wifi
+@using Pokefans.Data.Pokedex
+@using Pokefans.Models
+@{
+    SiteTitle = "Tauschbörse";
+    SiteHeader = "Interesse eintragen";
+    SiteDescription = "";
+    ActiveMenuKey = "trading";
+}
+
+<h2>Interesse am Angebot "@Model.Title"</h2>
+
+<p>Hier kannst du noch einen kleinen Kommentar abgeben, der dem/der Anbieter_in angezeigt wird:</p>
+<form method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="id" value="@Model.Id" />
+    <textarea name="comment" rows="4" class="form-control" placeholder="Kommentar"></textarea>
+    <button class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Absenden</button>
+</form>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}
+
+@section sidebar {
+    <h3>Was passiert als nächstes?</h3>
+    <p>
+        Anbieter wird sich entscheiden, an wen das Pokémon getauscht werden soll. Du erhältst eine Benachrichtigung,
+        wenn du als Tauschpartner ausgewählt oder abgelehnt wurdest.
+    </p>
+
+    <p>
+        Behalte außerdem deine privaten Nachrichten im Auge! Gegebenfalls möchte der Anbieter weitere Details mit dir besprechen.
+    </p>
+}

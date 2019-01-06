@@ -202,9 +202,9 @@ namespace Pokefans.Security
 
             user.EmailConfirmed = confirmed;
 
-            entities.SetModified(user);
+            entities.SetModified(user); // ?
 
-            return entities.SaveChangesAsync();
+            return Task.FromResult(0);
         }
 
         public Task<int> GetAccessFailedCountAsync(User user)
@@ -361,15 +361,9 @@ namespace Pokefans.Security
         {
             if (user == null)
                 throw new ArgumentNullException("user");
-            if (user.SecurityStamp == null)
-            {
-                user.SecurityStamp = stamp;
 
-                entities.SetModified(user);
-                return entities.SaveChangesAsync();
-            }
             user.SecurityStamp = stamp;
-            return Task.Run(() => 1 + 1);
+            return Task.FromResult(0);
         }
 
         public Task<string> GetSecurityStampAsync(User user)

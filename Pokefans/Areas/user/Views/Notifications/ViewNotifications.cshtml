@@ -1,0 +1,42 @@
+﻿@*Copyright 2018 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Areas.user.Models
+@using Pokefans.Data.UserData;
+@using Pokefans.Data;
+@model IEnumerable<UserNotification>
+    @{
+        Breadcrumbs.Add("Mitgliedsbereich", "Profile", "Index");
+        Breadcrumbs.Add("Benachrichtigungen");
+        SiteTitle = "Benachrichtigungen";
+        SiteHeader = "Benachrichtigungen";
+        SiteDescription = "";
+        ActiveMenuKey = "";
+
+    }
+    <h1>Benachrichtigungen</h1>
+
+    @foreach (Pokefans.Data.UserData.UserNotification notification in Model)
+    {
+        <div class="notification @(notification.IsUnread ? "unread" : "")">@Html.Raw(notification.Message)</div>
+    }
+
+    @if (ViewBag.Start > 0)
+    {
+        int newstart = ViewBag.Start - 25;
+        if (newstart < 0)
+        {
+            newstart = 0;
+        }
+        <a href="@Url.Map("benachrichtigungen", "user")?start=@newstart.ToString()">Neuere</a>
+    }
+    @if (ViewBag.HasMore)
+    {
+        <a href="@Url.Map("benachrichtigungen", "user")?start=@((ViewBag.Start + 25).ToString())">Ältere</a>
+    }
+
+    @section submenu {
+        @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("privmsgs", ""))
+    }
+
+    @section sidebar {
+        @Html.Partial("~/Views/Shared/Advertising/_SkyscraperPartial.cshtml")
+    }

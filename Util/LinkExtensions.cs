@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Html;
 using System.Web.Routing;
+using Pokefans.Data;
 
 namespace Pokefans.Util
 {
@@ -144,10 +145,10 @@ namespace Pokefans.Util
         public static string Map(this UrlHelper helper, string url, string domain)
         {
             string port = "";
-            if(HttpContext.Current.Request.Url.Port != 80 && !HttpContext.Current.Request.IsSecureConnection)
-                port = ":"+HttpContext.Current.Request.Url.Port.ToString();
+            if (HttpContext.Current.Request.Url.Port != 80 && !HttpContext.Current.Request.IsSecureConnection)
+                port = ":" + HttpContext.Current.Request.Url.Port.ToString();
             else if (HttpContext.Current.Request.Url.Port != 443 && HttpContext.Current.Request.IsSecureConnection)
-                port = ":"+HttpContext.Current.Request.Url.Port.ToString();
+                port = ":" + HttpContext.Current.Request.Url.Port.ToString();
 
             if (domain == null)
             {
@@ -177,8 +178,14 @@ namespace Pokefans.Util
             return helper.Map(url, HttpContext.Current.Request.Url.Host.Replace("." + ConfigurationManager.AppSettings["Domain"], "").Split('/')[0]);
         }
 
-        public static string Map(this UrlHelper helper, params string[] parts) {
-            return helper.Map(String.Join("/", parts));
+        public static string Profile(this UrlHelper helper, string user_url)
+        {
+            return helper.Map("profil/" + user_url, "user");
+        }
+
+        public static string Profile(this UrlHelper helper, User user)
+        {
+            return helper.Profile(user.Url);
         }
 
         #endregion

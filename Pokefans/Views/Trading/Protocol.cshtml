@@ -35,7 +35,7 @@
                         <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
                     </div>
                     <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
-                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="#">@offer.User.UserName</a> an <a href="#">@log.UserTo.UserName</a> (@log.CompletedTime.ToString("DD.MM.YYYY"))<br />
+                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="@Url.Profile(log.UserFrom)">@log.UserFrom.UserName</a> an <a href="@Url.Profile(log.UserTo)">@log.UserTo.UserName</a> (@(log.CompletedTime.Value.ToString("dd.MM.yyyy")))<br />
                     @{
                         List<string> l = new List<string>();
                         l.Add(string.Format("Level {0}", offer.Level));
@@ -45,7 +45,7 @@
                         }
                         if (offer.Item != null)
                         {
-                            l.Add(string.Format("Hält <a href=\"" + Url.Action("View", "Itemdex", new { item = offer.Item.Url }) + "\">" + offer.Item.Name + "</a>"));
+                            l.Add(string.Format("Hält <a href=\"" + Url.Action("View", "Itemdex", new { item = offer.Item.Url }) + "\">" + offer.Item.Name.ToString() + "</a>"));
                         }
                         if (offer.CheatUsed)
                         {
@@ -73,8 +73,50 @@
                 <div class="col-sm-2 hidden-xs rpic">
                     <img src="@images[offer.Generation]" alt="Generation @offer.Generation" />
                 </div>
-            </li>
+                <div class="col-xs-12">
+                    @if (offer.Status == TradingStatus.Completed)
+                    {
+                        if(log.UserToId == CurrentUser.Id && log.ValidOn.HasValue && log.ValidOn.Value > DateTime.Now) {
+                            <p>
+                                <a href="@Url.Action("ConfirmTrade", new { id = log.Id })" class="btn btn-success">Tausch bestätigen</a>
+                            </p>
                         }
+                        if((CurrentUser.Id == log.UserToId && log.SellerRating == null) || (CurrentUser.Id == log.UserFromId && log.CustomerRating == null))
+                        {
+                            <text> Bitte bewerte diesen Tausch: 
+                            <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Positive })" class="text-success"><i class="fa fa-lg fa-thumbs-up"></i></a>
+                            <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Neutral })" class="blur"><i class="fa fa-lg fa-minus"></i></a>
+                            <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Negative })" class="text-danger"><i class="fa fa-lg fa-thumbs-down"></i></a>
+                           </text>
+                       }
+                       else
+                       {
+                           TradeRating? rating = null;
+                           <text>Bewertung:</text>
+                           if (CurrentUser.Id == log.UserToId)
+                           {
+                               rating = log.SellerRating;
+                           }
+                           else if(CurrentUser.Id == log.UserFromId)
+                           {
+                               rating = log.CustomerRating;
+                           }
+                           switch(rating)
+                               {
+                                   case TradeRating.Positive:
+                                       <i class="fa fa-lg fa-thumbs-up text-success"></i> break;
+                                   case TradeRating.Neutral:
+                                       <i class="fa fa-lg fa-minus blur"></i> break;
+                                   case TradeRating.Negative:
+                                       <i class="fa fa-lg fa-thumbs-down text-danger"></i> break;
+                                   default:
+                                       <i class="fa fa-question-circle"></i> break;
+                               }
+                       }
+                    }
+                </div>
+            </li>
+        }
     </ul>
 }
 else {

@@ -295,7 +295,7 @@ namespace Pokefans.Areas.user.Controllers
                 // E-Mail-Nachricht mit diesem Link senden
                 string code = UserManager.GeneratePasswordResetToken(user.Id);
                 var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                UserManager.SendEmail(user.Id, "Kennwort zurücksetzen", this.RenderViewToString("~/Areas/user/Mails/ResetPassword.cshtml", new ConfirmationMailViewModel() {}));
+                UserManager.SendEmail(user.Id, "Kennwort zurücksetzen", this.RenderViewToString("~/Areas/user/Mails/ResetPassword.cshtml", new ConfirmationMailViewModel() { User = user, CallbackUrl = callbackUrl}));
                 return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 

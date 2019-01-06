@@ -1,0 +1,13 @@
+﻿@{
+                SiteTitle = "Tauschbörse";
+                SiteHeader = "Zugriff verweigert";
+                SiteDescription = "";
+                ActiveMenuKey = "trading";
+}
+
+<h2>Gelöscht</h2>
+<div class="alert alert-info">Dieses Angebot wurde von der Moderation wegen Regelverstößen gelöscht.</div>
+<a href="javascript:window.history.back()">Zurück</a> | <a href="@Url.Action(" Index")">Zurück zur Übersicht</a>
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

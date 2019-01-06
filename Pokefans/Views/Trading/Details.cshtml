@@ -1,5 +1,6 @@
 ﻿@model Pokefans.Models.OfferViewModel
 @using Pokefans.Data.Pokedex
+@using Pokefans.Data.Wifi
 @using Pokefans.Models
 @{
     SiteTitle = "Tauschbörse";
@@ -9,18 +10,38 @@
     Pokefans.Data.Wifi.NormalOffer Offer = Model.Offer;
 
     Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
-    {
-        { PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
-        { PokemonGeneration.Generation7, "//files.pokefans.net/images/sonne-mond/sonne-mond-logo-klein.png" }
-    };
+{
+{ PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
+{ PokemonGeneration.Generation7, "//files.pokefans.net/images/sonne-mond/sonne-mond-logo-klein.png" }
+};
     Dictionary<PokemonGeneration, string> names = new Dictionary<PokemonGeneration, string>
-    {
-        { PokemonGeneration.Generation6, "Generation 6 (XY, OR/AS)" },
-        { PokemonGeneration.Generation7, "Generation 7 (Sonne/Mond)" }
-    };
+{
+{ PokemonGeneration.Generation6, "Generation 6 (XY, OR/AS)" },
+{ PokemonGeneration.Generation7, "Generation 7 (Sonne/Mond)" }
+};
+    Breadcrumbs.Add("Tauschbörse", "Trading", "Index");
+    Breadcrumbs.Add("Angebot " + Offer.Title);
 }
 
 <h2>Angebot: @Offer.Title</h2>
+@if (Offer.Status == TradingStatus.Completed || Offer.Status == TradingStatus.PartnerChosen)
+{
+    <div class="alert alert-info">Dieses Pokemon wurde bereits vertauscht. Diese Seite ist eine Archivversion des Angebots.</div>
+}
+else if (Offer.Status == TradingStatus.Withdrawn)
+{
+    <div class="alert alert-warning">Der Anbieter hat das Angebot zurückgezogen. Diese Seite ist eine Archivversion des Angebots.</div>
+}
+@if (Offer.UpdateTime.AddDays(180) < DateTime.Now)
+{
+    <div class="alert alert-info">
+        Dieses Angebot ist schon sehr alt, es kann daher sein, dass es nicht mehr aktuell ist.
+        @if (CurrentUser.Id == Offer.UserId)
+        {
+            <a href="@Url.Action("Reactivate", new { id = Offer.Id })" class="btn btn-primary">Mein Angebot ist noch aktuell</a>
+        }
+    </div>
+}
 <div class="clearfix">
     <div class="col-sm-2">
         <img src="//files.pokefans.net/sprites/global-link/120px/@(Offer.Pokemon.PokedexId.ToString()).png" class="img-responsive pull-left" />
@@ -45,7 +66,24 @@
     </div>
 </div>
 <div class="col-xs-12">
-    <p>@Offer.InterestCount Interessenten <a href="#" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Ich interessiere mich für dieses Pokemon!</a></p>
+    <p>
+        @Offer.InterestCount Interessenten
+        @if (CurrentUser != null && Offer.UserId == CurrentUser.Id)
+        {
+            <a href="@Url.Action("Manage", new { id = Offer.Id })" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Tauschpartner auswählen und Tausch verwalten</a>
+        }
+        else
+        {
+            if (Model.Interest == null)
+            {
+                <a href="@Url.Action("Interest", new { id = Offer.Id })" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Ich interessiere mich für dieses Pokemon!</a>
+            }
+            else
+            {
+                <div class="alert alert-success"><i class="fa fa-2x fa-check"></i> Du hast dich am @Model.Interest.Timestamp.ToString("dd.MM.yyyy") als Interessent_in gemeldet.</div>
+            }
+        }
+    </p>
     <h3>Details</h3>
     @if (Offer.HasAttacks)
     {
@@ -92,9 +130,27 @@
     <ul class="list-unstyled">
         <li><i class="fa fa-clock-o"></i> Registriert seit @Offer.User.Registered.ToString("d.M.yyyy")</li>
         <li><i class="fa fa-list"></i>Insgesamt @ViewBag.OfferCount Angebote in der Tauschbörse</li>
+        <li>
+            @if (Offer.User.TradingPercentPositive == 0 && Offer.User.TradingPercentNeutral == 0 && Offer.User.TradingPercentNegative == 0)
+            {
+                <span>Noch keine Bewertungen</span>
+            }
+            else
+            {
+                <i class="fa fa-thumbs-up fa-lg text-success"></i> @String.Format("{0}%", Offer.User.TradingPercentPositive)
+                <i class="fa fa-lg fa-minus blur"></i> @String.Format("{0}%", Offer.User.TradingPercentNeutral)
+                <i class="fa fa-thumbs-down fa-lg text-danger"></i> @String.Format("{0}%", Offer.User.TradingPercentNegative)
+            }
+        </li>
         @*Forenposts*@
         @*Sonstige sinnvolle Metriken?*@
     </ul>
+    @if (Context.User.IsInRole("wifi-moderator"))
+    {
+        <p>
+            <a href="@Url.Map($"moderation/tausch/{Offer.Id}", "mitarbeit")" class="btn btn-danger">Moderieren</a>
+        </p>
+    }
 }
 
 @section submenu {
@@ -106,7 +162,8 @@
 }
 
 @helper tickcross(bool value, string displayText)
-{
+    {
+
 tickcross(value, displayText, displayText);
 }
 
@@ -115,11 +172,11 @@ tickcross(value, displayText, displayText);
     <li>
         @if (value)
         {
-            <i class="fa fa-check text-success fa-lg"></i> @displayTrue
+        <i class="fa fa-check text-success fa-lg"></i>  @displayTrue
         }
         else
         {
-            <i class="fa fa-times fa-lg text-danger"></i> @displayFalse
+        <i class="fa fa-times fa-lg text-danger"></i>  @displayFalse
         }
     </li>
 }
@@ -137,7 +194,7 @@ if (att != null)
 {
 if (value)
 {
-        <li><i class="fa fa-check text-success fa-lg"></i> @displayText</li>
+    <li><i class="fa fa-check text-success fa-lg"></i> @displayText</li>
 }
 }
 
@@ -145,14 +202,14 @@ if (value)
 {
 if (vals.Any())
 {
-        <tr>
-            <td>@label</td>
-            <td>@vals.HP</td>
-            <td>@vals.Attack</td>
-            <td>@vals.Defense</td>
-            <td>@vals.SpecialAttack</td>
-            <td>@vals.SpecialDefense</td>
-            <td>@vals.Speed</td>
-        </tr>
+    <tr>
+        <td>@label</td>
+        <td>@vals.HP</td>
+        <td>@vals.Attack</td>
+        <td>@vals.Defense</td>
+        <td>@vals.SpecialAttack</td>
+        <td>@vals.SpecialDefense</td>
+        <td>@vals.Speed</td>
+    </tr>
 }
 }

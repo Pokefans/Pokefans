@@ -1,0 +1,51 @@
+﻿@using Pokefans.Data.UserData
+@using Pokefans.Util
+@using System.Linq;
+<div class="col-md-6" id="pm-report-box">
+    <div class="box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">Meldungen: Private Nachrichten</h3>
+        </div>
+        <div class="box-body">
+            <p class="pull-right col-xs-1"><a href="#" data-reload="pm-report-chart" class="text-muted" role="reload-chart"><i class="fa fa-refresh"></i></a></p>
+            @Widgets.Spinner("pm-reports-spinner")
+            <p class="text-danger hidden" id="pm-reports-chart-error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a href="#" data-reload="pm-report-chart" role="reload-chart">Diagramm neu laden</a></p>
+            <canvas style="height: 100px; width: content-box;" id="pm-report-chart" role="dashboard-chart"
+                    data-load="@Url.Map("api/v1/dashboard/pm-report-chart", "mitarbeit")" data-spinner="pm-reports-spinner" data-error="pm-reports-chart-error"></canvas>
+            <hr />
+            <p class="col-xs-11">Die letzten 5 unbearbeiten Meldungen:</p>
+            <p class="col-xs-1"><a href="#" role="pm-report-table-reload" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover" 
+                id="pm-report-table" 
+                data-load="@Url.Map("api/v1/dashboard/pm-report-table")"
+                data-spinner="pm-report-table-spinner"
+                data-error="pm-report-table-error"
+                data-reload="pm-report-table-reload"
+                role="ko-table"
+                data-bind="pm-report-box">
+                <thead>
+                    <tr>
+                        <th>Titel</th>
+                        <th>Absender*in</th>
+                        <th>Melder*in</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbpdy data-bind="template: { name: 'pm-report-table-template', foreach: pmreports }">
+
+                </tbpdy>
+            </table>
+            @Widgets.Spinner("pm-report-table-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: pmreports().length == 0 && loaded">Wunderbar! Keine Meldungen.</p>
+            <p class="text-danger hidden" id="pm-report-table-error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a href="#" role="pm-report-table-reload">Diagramm neu laden</a></p>
+        </div>
+    </div>
+    <script type="text/html" id="pm-report-table-template">
+        <tr>
+            <td data-bind="text: subject"></td>
+            <td><a data-bind="attr: { class: user.displayCss, href: user.url }, text: user.name"></a></td>
+            <td><a data-bind="attr: { class: reporter.displayCss, href: reporter.url }, text: reporter.name"></a></td>
+            <td><a data-bind="attr: { href: reportUrl }"><i class="fa fa-lg fa-info-circle"></i></a></td>
+        </tr>
+    </script>
+</div>

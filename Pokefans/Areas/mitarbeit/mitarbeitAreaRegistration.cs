@@ -182,6 +182,19 @@ namespace Pokefans.Areas.mitarbeit
                     new { action = "Names", Controller = "PokemonApi"}
                 ));
 
+            // Dashboard API
+            context.Routes.Add(new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "api/v1/dashboard/pm-report-chart",
+                new { action = "PMReportChart", Controller = "Dashboard" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "api/v1/dashboard/pm-report-table",
+                new { action = "PmReportTable", Controller = "Dashboard" }
+                ));
+
             // Default Route
             context.Routes.Add(new DomainRoute(
                     "mitarbeit." + ConfigurationManager.AppSettings["Domain"],

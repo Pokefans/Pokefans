@@ -1,0 +1,67 @@
+﻿@model ManageInterestViewModel
+@using Pokefans.Models
+@using Pokefans.Data.Wifi
+@{
+    ViewBag.Title = "Interessenten auswählen";
+}
+
+<h2>Angebot @Model.Offer.Title verwalten</h2>
+
+@Html.Partial("_WizardStepPartial", 2)
+
+@if (Model.Interests.Count == 0)
+{
+    <div class="alert alert-info">Leider interessiert sich im Moment niemand für dein Pokémon. Das ändert sich sicher
+    bald!</div>
+}
+else
+{
+    <p>Wähle deine_n Tauschpartner_in aus dieser Liste aus. Wir benachrichtigen ihn/sie, dass du mit ihm/ihr tauschen
+    möchtest. Tauschzeitpunkt, Freundescodes und anderes sprecht bitte per privater Nachricht ab.</p>
+
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Benutzer</th>
+                <th>TP</th>
+                <th>Bewertung</th>
+                <th>Kommentar</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(Interest i in Model.Interests)
+            {
+                <tr>
+                    <td><a href="@Url.Profile(i.User.Url)">@i.User.UserName</a></td>
+                    <td>@i.User.TradingPoints</td>
+                    <td>
+                        @if (i.User.TradingPercentPositive != 0 || i.User.TradingPercentNeutral != 0 && i.User.TradingPercentPositive != 0)
+                        {
+                            <span class="text-success">@i.User.TradingPercentPositive % <i class="fa fa-thumbs-up fa-lg"></i></span>
+                            <span class="">@i.User.TradingPercentNeutral % <i class="fa fa-minus fa-lg"></i></span>
+                            <span class="text-danger">@i.User.TradingPercentNegative % <i class="fa fa-thumbs-down fa-lg"></i></span>
+                        }
+                        else
+                        {
+                            <span class="blur">Noch keine Bewertungen</span>
+                        }
+                    </td>
+                    <td>
+                        @i.Comment
+                    </td>
+                    <td>
+                        <a href="@Url.Map("nachrichten/neu?to="+i.UserId, "user")"><i class="fa fa-envelope fa-lg"></i> PN senden</a><br/>
+                        <a href="@Url.Action("SelectPartner", new { id = Model.Offer.Id, interest = i.Id })"><i class="fa fa-lg fa-check"></i> Als Tauschpartner auswählen</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<a href="@Url.Action("Withdraw", new { id = Model.Offer.Id })" class="btn btn-danger">Tausch zurückziehen</a>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

@@ -12,7 +12,7 @@ namespace Pokefans.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
-            SetSqlGenerator("MySql.Data.MySqlClient", new MySqlMigrationSqlGenerator());
+            SetSqlGenerator("MySql.Data.MySqlClient", new Mysql8MigrationSqlGenerator());
             SetHistoryContextFactory("MySql.Data.MySqlClient", (conn, schema) => new MySqlHistoryContext(conn, schema));
         }
 
@@ -144,6 +144,15 @@ namespace Pokefans.Data.Migrations
                         Name = "comment-moderator",
                         FriendlyName = "Kommentar-Moderator"
                     });
+
+            if (!context.Roles.Any(x => x.Name == "wifi-moderator"))
+                context.Roles.Add(
+                    new Role()
+                    {
+                        Name = "wifi-moderator",
+                        FriendlyName = "Tauschb?rsenmoderator"
+                    }
+                );
 
             context.SaveChanges();
             #endregion

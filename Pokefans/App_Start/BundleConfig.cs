@@ -12,10 +12,21 @@ namespace Pokefans
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
                     "~/Scripts/jquery-{version}.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/global").Include(
+                    "~/Scripts/notifications.js"
+            ));
+
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
-                    "~/Scripts/knockout-{version}.js",
-                    "~/Scripts/knockout-pre-rendered.js"
+                    "~/Scripts/knockout/knockout-{version}.js",
+                    "~/Scripts/knockout/knockout-pre-rendered.js"
                 ));
+
+            bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
+                    "~/Scripts/backend/dashboard/charts.js",
+                    "~/Scripts/backend/dashboard/table.js",
+                    "~/Scripts/backend/dashboard/activate.js" // this script must be included last in the bundle
+            ));
+
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
                     "~/Scripts/jquery.validate*"));
@@ -84,9 +95,9 @@ namespace Pokefans
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
-                    "~/Scripts/adminlte/bootstrap.min.js",
-                    "~/Scripts/adminlte/app.min.js",
-                    "~/Scripts/adminlte/jquery.slimscroll.min.js"
+                    "~/Scripts/adminlte/bootstrap.js",
+                    "~/Scripts/adminlte/app.js",
+                    "~/Scripts/adminlte/jquery.slimscroll.js"
                 ));
 
             // Ace Editor

@@ -129,6 +129,14 @@ namespace Pokefans.Data
 
         public DateTime? LastTermsOfServiceAgreement { get; set; }
 
+        public virtual int TradingPoints { get; set; }
+
+        public virtual int TradingPercentPositive { get; set; }
+
+        public virtual int TradingPercentNeutral { get; set; }
+
+        public virtual int TradingPercentNegative { get; set; }
+
         [NotMapped]
         public virtual string MiniAvatarFileName
         {

@@ -1,0 +1,8 @@
+﻿@model  IEnumerable<Pokefans.Data.UserData.UserNotification>
+@{
+    Layout = null;
+}
+
+@foreach(Pokefans.Data.UserData.UserNotification notification in Model) {
+<div class="notification @(notification.IsUnread ? "unread" : "")">@Html.Raw(notification.Message)</div>
+}

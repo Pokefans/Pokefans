@@ -1,0 +1,16 @@
+﻿@{
+                /**/
+
+                SiteTitle = "Tauschbörse";
+                SiteHeader = "Fehler";
+                SiteDescription = "";
+                ActiveMenuKey = "trading";
+}
+
+<h2>Fehler</h2>
+<div class="alert alert-info">Du interessierst dich bereits für dieses Angebot.</div>
+<a href="javascript:window.history.back()">Zurück</a> | <a href="@Url.Action(" Index")">Zurück zur Übersicht</a>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

@@ -18,8 +18,8 @@ namespace Pokefans.Util.Search
         {
             Document doc = new Document();
 
-            doc.Add(new Field("type", "fanert", Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
-            doc.Add(new Field("Id", o.Id.ToString(), Field.Store.YES, Field.Index.NO));
+            doc.Add(new Field("type", "wifioffer", Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
+            doc.Add(new Field("Id", o.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
             // let's store just enough so we can display results without a database roundtrip
             doc.Add(new Field("title", o.Title, Field.Store.YES, Field.Index.ANALYZED));
@@ -101,7 +101,7 @@ namespace Pokefans.Util.Search
             // the value itself is pretty pointless to store.
             doc.Add(new Field("type", "fanart", Field.Store.NO, Field.Index.NOT_ANALYZED_NO_NORMS));
 
-            doc.Add(new Field("Id", fanart.Id.ToString(), Field.Store.YES, Field.Index.NO));
+            doc.Add(new Field("Id", fanart.Id.ToString(), Field.Store.YES, Field.Index.NOT_ANALYZED_NO_NORMS));
 
             // We store some fields so we don't need a database roundtrip to display search results.
             doc.Add(new Field("title", fanart.Title, Field.Store.YES, Field.Index.ANALYZED));

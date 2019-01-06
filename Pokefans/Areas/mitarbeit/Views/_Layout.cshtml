@@ -69,7 +69,7 @@
                         <!-- Notifications Menu -->
                         <li class="dropdown notifications-menu">
                             <!-- Menu toggle button -->
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" id="notifications-dropdown" data-poload="@Url.Map("v1/user/notifications","api")">
                                 <i class="fa fa-bell-o"></i>
                                 <span class="label label-warning">@UnreadNotifications</span>
                             </a>
@@ -77,9 +77,9 @@
                                 <li class="header">Du hast @UnreadNotifications neue Benachrichtigungen.</li>
                                 <li>
                                     <!-- Inner Menu: contains the notifications -->
-                                    <ul class="menu"></ul>
+                                    <div id="outernotifications"></div>
                                 </li>
-                                <li class="footer"><a href="#">Zum Benachrichtigungscenter</a></li>
+                                <li class="footer"><a href="@Url.Action("benachrichtigungen", "user")">Zum Benachrichtigungscenter</a></li>
                             </ul>
                         </li>
                         <!-- Tasks Menu -->
@@ -277,7 +277,9 @@
 
             <!-- Main content -->
             <section class="content">
-            @RenderBody()
+                <div class="clearfix">
+                    @RenderBody()
+                </div>
 
             </section><!-- /.content -->
         </div><!-- /.content-wrapper -->

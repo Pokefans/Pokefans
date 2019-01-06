@@ -79,7 +79,7 @@
                 <li><a href="@Model.GetUrl(Model.Maximum)">@Model.Maximum.ToString()</a></li>
             } 
         }
-        @if(Model.Current == Model.Maximum) {
+        if(Model.Current == Model.Maximum) {
         <li class="disabled">
             <span><span aria-hidden="true">&raquo;</span></span>
         </li>

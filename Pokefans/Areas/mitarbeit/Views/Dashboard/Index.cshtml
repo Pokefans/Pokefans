@@ -1,8 +1,4 @@
 ﻿@*Copyright 2015 the pokefans-core authors. See copying.md for legal info.*@
-@using Pokefans.Data.UserData
-@using Pokefans.Util
-@using System.Linq;
-@model Pokefans.Areas.mitarbeit.Models.DashboardViewModel
 @{
     SiteTitle = "Pokefans | Mitarbeitsbereich - Dashboard";
     SiteHeader = "Dashboard";
@@ -10,88 +6,19 @@
     Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
 }
 
-<div class="panel panel-default">
-    <div class="panel-heading"><h3 class="panel-title">Hallo!</h3></div>
-    <div class="panel-body">
-        Ich befinde mich derzeit noch im Aufbau. Schau bald wieder vorbei!
-    </div>
-</div>
-
 @if (User.IsInRole("global-moderator"))
 {
-<div class="col-md-6">
-    <div class="box box-danger">
-        <div class="box-header">
-            <h3 class="box-title">Meldungen: Private Nachrichten</h3>
-        </div>
-        <div class="box-body">
-            <canvas style="height: 100px; width: content-box;" id="pm-report-chart"></canvas>
-            <hr />
-            Die letzten 5 unbearbeiten Meldungen:
-            <table class="table table-striped table-hover">
-                <tr>
-                    <th>Titel</th>
-                    <th>Absender*in</th>
-                    <th>Melder*in</th>
-                    <th></th>
-                </tr>
-                @foreach (PrivateMessageReport report in Model.PMReport.Reports)
-                {
-                    <tr>
-                        <td>@report.PrivateMessage.Subject.Truncate(25)</td>
-                        <td><a class="@report.From.DisplayCss" href="@Url.Map("profil/" + report.From.Url, "user")">@report.From.UserName</a></td>
-                        <td><a class="@report.Reporter.DisplayCss" href="@Url.Map(" profil/" + report.Reporter.Url, "user")">@report.Reporter.UserName</a></td>
-                        <td><a href="@Url.Action("ViewPMReport", "Moderation", new { id = report.Id })"><i class="fa fa-lg fa-info-circle"></i></a></td>
-                    </tr>
-                }
-            </table>
-        </div>
-    </div>
-</div>
-<div class="col-md-6">
-    <div class="box box-danger">
-        <div class="box-header">
-            <h3 class="box-title">Meldungen: Forenbeiträge</h3>
-        </div>
-        <div class="box-body">
-            ...
-        </div>
-    </div>
-</div>
+    @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_PMReportPartial.cshtml")
+    @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_PostReportPartial.cshtml")
+
 }
 @section scripts {
     @Scripts.Render("~/bundles/charts")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/dashboard")
+
 <script type="text/javascript">
-    var commonOptions = {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    suggestedMin: 0,
-                    suggestedMax: 20,
-                    stepSize: 2
-                }
-            }],
-            esponsive: true,
-            maintainAspectRatio: false,
-            legend: {
-                display: false
-            }
-        }
-    };
-var ctx = document.getElementById("pm-report-chart");
-var myChart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels : [
-                "@Html.Raw(String.Join("\",\"", Model.PMReport.ReportsPerDay.Select(x => x.Key.ToString("dd.MM.yyyy")).ToArray()))"
-            ],
-            datasets : [{
-                label : "Meldungen",
-                data : [@String.Join(",", Model.PMReport.ReportsPerDay.Select(x => x.Value.ToString()).ToArray())],
-                backgroundColor: "#dd4b39"
-            }]
-        },
-        options: commonOptions
-    });
+
 </script>
 }
+

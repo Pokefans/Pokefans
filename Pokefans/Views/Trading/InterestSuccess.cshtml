@@ -1,0 +1,17 @@
+﻿@model int
+@{
+    SiteTitle = "Tauschbörse";
+    SiteHeader = "Interesse erfolgreich bekundet";
+    SiteDescription = "";
+    ActiveMenuKey = "trading";
+}
+<h2>Erfolgreich abgeschickt</h2>
+<div class="alert alert-success">
+    Du bist jetzt als Interessent_in für dieses Angebot gelistet. Wir haben den/die Anbieter_in benachrichtig. Wir halten dich selbstverständlich am Laufenden - ggf. meldet
+    sich der/die Anbieter_in auch direkt bei dir..
+</div>
+<a href="@Url.Action("Details", "Trading", new { id = Model })">Zurück zum Angebot</a> | <a href="@Url.Action("Index")">Zurück zur Übersicht</a>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

@@ -79,5 +79,10 @@ namespace Pokefans.Data.Pokedex
         /// The chinese transcribed name.
         /// </value>
         public string ChineseTranscribed { get; set; }
+
+        public override string ToString()
+        {
+            return German;
+        }
     }
 }

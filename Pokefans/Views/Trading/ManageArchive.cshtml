@@ -1,0 +1,19 @@
+﻿@model OfferArchiveViewModel
+@using Pokefans.Models
+@using Pokefans.Data.Wifi
+@{
+    ViewBag.Title = "Tausch erledigt";
+}
+
+<h2>Angebot @Model.Offer.Title verwalten</h2>
+
+@Html.Partial("_WizardStepPartial", 4)
+
+
+<div class="alert alert-success"><i class="fa fa-2x fa-check"></i>Du hast das Angebot @Model.Offer.Title erfolgreich abgeschlossen.</div>
+<p>Der Tausch wird spätestens am @Model.TradeLog.ValidOn.Value.ToString("dd.MM.yyyy HH:mm") gütig gestellt.</p>
+<p>Bitte nimm dir einen Moment Zeit und bewerte deinen Tauschpartner im @Html.ActionLink("Tauschprotokoll", "Protocol").</p>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

@@ -14,7 +14,7 @@
             <span class="label label-default mini-counter">@UnreadMessages.ToString()</span>
 	    }
         </a>
-        <a href="@Url.Map("benachrichtigungen", "user")" id="userbar-notification-button">&nbsp;<i class="fa fa-bell fa-lg"></i>
+        <a href="@Url.Map("benachrichtigungen", "user")" id="userbar-notification-button" data-poload="@Url.Map("v1/user/notifications","api")">&nbsp;<i class="fa fa-bell fa-lg"></i>
         @if(UnreadNotifications > 0) {
             <span class="label label-default mini-counter">@UnreadNotifications.ToString()</span>
         }

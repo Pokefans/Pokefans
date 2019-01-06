@@ -1,0 +1,13 @@
+﻿@{
+                SiteTitle = "Tauschbörse";
+                SiteHeader = "Zugriff verweigert";
+                SiteDescription = "";
+                ActiveMenuKey = "trading";
+}
+
+<h2>Ungültiger Bewertungsversuch</h2>
+<div class="alert alert-info">Beim Bewerten dieses Tauschs ist ein Fehler aufgetreten..</div>
+<a href="javascript:window.history.back()">Zurück</a> | <a href="@Url.Action(" Index")">Zurück zur Übersicht</a>
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

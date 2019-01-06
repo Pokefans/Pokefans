@@ -7,5 +7,7 @@ namespace Pokefans.Models
     {
         public NormalOffer Offer { get; set; }
         public CommentsViewModel Comments { get; set; }
+
+        public Interest Interest { get; set; }
     }
 }
