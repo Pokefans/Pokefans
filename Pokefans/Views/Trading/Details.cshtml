@@ -23,6 +23,7 @@
     Breadcrumbs.Add("Angebot " + Offer.Title);
 }
 
+
 <h2>Angebot: @Offer.Title</h2>
 @if (Offer.Status == TradingStatus.Completed || Offer.Status == TradingStatus.PartnerChosen)
 {
@@ -67,7 +68,7 @@ else if (Offer.Status == TradingStatus.Withdrawn)
 </div>
 <div class="col-xs-12">
     <p>
-        @Offer.InterestCount Interessenten
+        @Offer.InterestCount Interessenten <br />
         @if (CurrentUser != null && Offer.UserId == CurrentUser.Id)
         {
             <a href="@Url.Action("Manage", new { id = Offer.Id })" class="btn btn-primary"><i class="fa fa-shopping-cart"></i> Tauschpartner auswählen und Tausch verwalten</a>
@@ -84,45 +85,52 @@ else if (Offer.Status == TradingStatus.Withdrawn)
             }
         }
     </p>
-    <h3>Details</h3>
-    @if (Offer.HasAttacks)
+    @if (Offer.HasAttacks || Offer.AbsoluteValues.Any() || Offer.EffortValues.Any() || Offer.DeterValues.Any())
     {
-        <p>
-            Attacken:
-            <ul>
-                @displayAttack(Offer.Attack1)
-                @displayAttack(Offer.Attack2)
-                @displayAttack(Offer.Attack3)
-                @displayAttack(Offer.Attack4)
-            </ul>
-        </p>
-    }
-    @if (Offer.AbsoluteValues.Any() || Offer.EffortValues.Any() || Offer.DeterValues.Any())
+        <h3>Details</h3>
+        if (Offer.HasAttacks)
+        {
+            <p>
+                Attacken:
+                <ul>
+                    @displayAttack(Offer.Attack1)
+                    @displayAttack(Offer.Attack2)
+                    @displayAttack(Offer.Attack3)
+                    @displayAttack(Offer.Attack4)
+                </ul>
+            </p>
+        } 
+        if (Offer.AbsoluteValues.Any() || Offer.EffortValues.Any() || Offer.DeterValues.Any())
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>KP</th>
+                        <th>Angr</th>
+                        <th>Vert</th>
+                        <th>SpAngr</th>
+                        <th>SpVert</th>
+                        <th>Init</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @displayStatusvalues(Offer.AbsoluteValues, "Statuswerte")
+                    @displayStatusvalues(Offer.EffortValues, "EVs")
+                    @displayStatusvalues(Offer.DeterValues, "DVs")
+                </tbody>
+            </table>
+        }
+    } 
+    @if (!string.IsNullOrEmpty(Offer.Description))
     {
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>KP</th>
-                    <th>Angr</th>
-                    <th>Vert</th>
-                    <th>SpAngr</th>
-                    <th>SpVert</th>
-                    <th>Init</th>
-                </tr>
-            </thead>
-            <tbody>
-                @displayStatusvalues(Offer.AbsoluteValues, "Statuswerte")
-                @displayStatusvalues(Offer.EffortValues, "EVs")
-                @displayStatusvalues(Offer.DeterValues, "DVs")
-            </tbody>
-        </table>
-    }
-    <hr />
-    @Html.Raw(Offer.Description)
-    <hr />
-    @{ Html.RenderPartial("CommentPartial", Model.Comments); }
-</div>
+                <hr />
+                @Html.Raw(Offer.Description)
+            }
+            <span class="pull-right"><a href="@Url.Action("Report", "Trading", new { id = Offer.Id })" class="text-muted small"><i class="fa fa-exclamation-circle"></i> Angebot melden</a></span>
+            <hr />
+            @{ Html.RenderPartial("CommentPartial", Model.Comments); }
+        </div>
 @section sidebar {
     <h3>Über den Anbieter</h3>
     <img class="img-responsive" src="@Offer.User.AvatarUrl" />

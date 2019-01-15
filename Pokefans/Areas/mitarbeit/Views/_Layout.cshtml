@@ -119,24 +119,28 @@
                                     </p>
                                 </li>
                                 @*<!-- Menu Body -->
-                                  <!--<li class="user-body">
-                                      <div class="col-xs-4 text-center">
-                                          <a href="#">Followers</a>
-                                      </div>
-                                      <div class="col-xs-4 text-center">
-                                          <a href="#">Sales</a>
-                                      </div>
-                                      <div class="col-xs-4 text-center">
-                                          <a href="#">Friends</a>
-                                      </div>
-                                  </li>-->*@
+                                    <!--<li class="user-body">
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Followers</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Sales</a>
+                                        </div>
+                                        <div class="col-xs-4 text-center">
+                                            <a href="#">Friends</a>
+                                        </div>
+                                    </li>-->*@
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Profil</a>
+                                        <a href="@Url.Map("", "user")" class="btn btn-default btn-flat">Profil</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="#" class="btn btn-default btn-flat">Abmelden</a>
+                                        <form method="POST" action="@Url.Map("logout", "user")" id="logoutForm">
+                                            @Html.AntiForgeryToken()
+                                            <a href="javascript:document.getElementById('logoutForm').submit()" class="btn-default btn-flat"><i class="fa fa-sign-out fa-lg"></i> Abmelden</a>
+                                            </a>
+                                        </form>
                                     </div>
                                 </li>
                             </ul>
@@ -189,27 +193,30 @@
                         <li class="@liclass">
                             <a href="@Url.RouteUrl("ContentIndex")">
                                 <i class='fa fa-newspaper-o'></i> <span>Artikelverwaltung</span>
-                            @if (IsSectionDefined("ContentSubMenu"))
-                                {  <i class="fa fa-angle-left pull-right"></i> }
+                                @if (IsSectionDefined("ContentSubMenu"))
+                                {<i class="fa fa-angle-left pull-right"></i>}
                             </a> @RenderSection("ContentSubMenu", false)
                         </li>
 
                     }
 
                     @if (User.IsInRole("moderator"))
-                    { 
-                    @*<li class="header">Benutzer</li>*@
+                    {
+                        <li class="header">Benutzer</li>
                         string liclass = "";
                         if (IsSectionDefined("BvsSubMenu"))
                         {
                             liclass = "treeview active";
                         }
-                        <li class="@liclass"><a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-user'></i> <span>Benutzerverwaltung</span>@if (IsSectionDefined("BvsSubMenu"))
-                                                                                                                                                                              {  <i class="fa fa-angle-left pull-right"></i> }</a> @RenderSection("BvsSubMenu", false) </li>
+                        <li class="@liclass">
+                            <a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)">
+                                <i class='fa fa-user'></i> <span>Benutzerverwaltung</span>@if (IsSectionDefined("BvsSubMenu"))
+                                {<i class="fa fa-angle-left pull-right"></i>}
+                            </a> @RenderSection("BvsSubMenu", false)
+                        </li>
                         <li class="treeview">
                             <a href="@Url.Action("Index", "User", new { Area ="mitarbeit"}, true)"><i class='fa fa-list'></i> <span>Benutzerlisten</span> <i class="fa fa-angle-left pull-right"></i></a>
                             <ul class="treeview-menu">
-                                <li><a href="@Url.Action("BbsList", "UserLists", new { Area ="mitarbeit"}, true)">BBS-Vergaben</a></li>
                                 <li><a href="@Url.Action("Posthunter", "UserLists", new { Area ="mitarbeit"}, true)">Posthunter</a></li>
                                 <li><a href="@Url.Action("Trashhunter", "UserLists", new { Area ="mitarbeit"}, true)">Müllschlucker-Posthunter</a></li>
                                 <li><a href="@Url.Action("Multiaccounts", "UserLists", new { Area ="mitarbeit"}, true)">Doppelacounts</a></li>
@@ -217,33 +224,38 @@
                             </ul>
                         </li>
                     }
-                  @*
+                    @*
 
-                    <li class="header">Pokedex</li>
-                    <li><a href="#"><i class='fa fa-book'></i> <span>Pokedex</span></a></li>
-                    <li><a href="#"><i class='fa fa-bolt'></i> <span>Attackendex</span></a></li>
-                    <li><a href="#"><i class='fa fa-flask'></i> <span>Itemdex</span></a></li>
+                        <li class="header">Pokedex</li>
+                        <li><a href="#"><i class='fa fa-book'></i> <span>Pokedex</span></a></li>
+                        <li><a href="#"><i class='fa fa-bolt'></i> <span>Attackendex</span></a></li>
+                        <li><a href="#"><i class='fa fa-flask'></i> <span>Itemdex</span></a></li>
 
-                    <li class="header">Strategie</li>
-                    <li><a href="#"><i class='fa fa-book'></i> <span>Lexikon</span></a></li>
-                    <li><a href="#"><i class='fa fa-tachometer'></i> <span>Movesets</span></a></li>
-                    <li><a href="#"><i class='fa fa-list-ol'></i> <span>Ladder</span></a></li>
-
-                    <li class="header">Tauschbörse</li>
-                    <li><a href="#"><i class='fa fa-cart-arrow-down'></i> <span>Angebot bearbeiten</span></a></li>
-                    <li><a href="#"><i class='fa fa-bug'></i> <span>Gemeldete Tauschvorgänge</span></a></li>
-                    <li><a href="#"><i class='fa fa-list'></i> <span>Sperrliste</span></a></li>*@
-                    @if(User.IsInRole("fanart-moderator")) {
-                    <li class="header">Fanart</li>
-                    if (User.IsInRole("superadmin"))
-                    { 
-                        <li><a href="@Url.Action("Categories", "Fanart")"><i class="fa fa-tags"></i> <span>Fanart-Kategorien</span></a></li> 
+                        <li class="header">Strategie</li>
+                        <li><a href="#"><i class='fa fa-book'></i> <span>Lexikon</span></a></li>
+                        <li><a href="#"><i class='fa fa-tachometer'></i> <span>Movesets</span></a></li>
+                        <li><a href="#"><i class='fa fa-list-ol'></i> <span>Ladder</span></a></li>
+                    *@
+                    @if (User.IsInRole("wifi-moderator"))
+                    {
+                        <li class="header">Tauschbörse</li>
+                        <li><a href="@Url.Action("Index", "Wifi", new {Area = "mitarbeit"}, true)"><i class="fa fa-bar-chart"></i> <span>Übersicht</span></a></li>
+                        <li><a href="@Url.Action("SelectOffer", "Wifi", new { Area = "mitarbeit" }, true)"><i class='fa fa-cart-arrow-down'></i> <span>Angebot bearbeiten</span></a></li>
+                        <li><a href="@Url.Action("Reports", "Wifi", new { Area = "mitarbeit" }, true)"><i class='fa fa-bug'></i> <span>Gemeldete Tauschvorgänge</span></a></li>
+                        <li><a href="@Url.Action("Banlist", "Wifi", new { Area = "mitarbeit" }, true)"><i class='fa fa-list'></i> <span>Sperrliste</span></a></li>
                     }
-                    <li><a href="@Url.Action("Select", "Fanart")"><i class='fa fa-trash-o'></i> <span>Fanart verwalten</span></a></li>
+                    @if (User.IsInRole("fanart-moderator"))
+                    {
+                        <li class="header">Fanart</li>
+                        if (User.IsInRole("superadmin"))
+                        {
+                            <li><a href="@Url.Action("Categories", "Fanart")"><i class="fa fa-tags"></i> <span>Fanart-Kategorien</span></a></li>
+                        }
+                        <li><a href="@Url.Action("Select", "Fanart")"><i class='fa fa-trash-o'></i> <span>Fanart verwalten</span></a></li>
                     }
                     @*<li class="header">Diverses</li>
-                    <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
-                    <li><a href="#"><i class='fa fa-clock-o'></i> <span>Cronjobs</span></a></li>*@
+                        <li><a href="#"><i class='fa fa-upload'></i> <span>Datei-Upload</span></a></li>
+                            <li><a href="#"><i class='fa fa-clock-o'></i> <span>Cronjobs</span></a></li>*@
                     @if (User.IsInRole("superadmin"))
                     {
                         <li class="header">Administration</li>

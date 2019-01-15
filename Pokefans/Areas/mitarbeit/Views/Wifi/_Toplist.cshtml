@@ -1,0 +1,225 @@
+﻿@{
+    DateTime min = DateTime.Now.AddDays(-30);
+    DateTime max = DateTime.Now;
+}
+<div class="col-md-6" id="pokemon-top10-box">
+    <div class="box box-info">
+        <div class="box box-header">
+            <h3 class="box-title">Pokémon mit den meisten Angeboten</h3>
+        </div>
+        <div class="box-body no-padding">
+            <div class="col-sm-11"><button class="btn btn-default btn-sm" data-bind="daterangepicker: dateRange"></button></div>
+            <p class="col-sm-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover"
+                   id="wifi-report-table"
+                   data-load="@Url.Map("api/v1/wifi/pokemon-top10")"
+                   data-spinner="pokemon-top10-spinner"
+                   data-timepicker="true"
+                   role="ko-table"
+                   data-bind="pokemon-top10-box"
+                   data-min="@min.ToString("yyyy-MM-dd")"
+                   data-max="@max.ToString("yyyy-MM-dd")">
+                <thead>
+                    <tr>
+                        <th>Pokemon</th>
+                        <th>Offen</th>
+                        <th>Geschlossen</th>
+                        <th>Gesamt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="template: { name: 'pokemon-top10-table-template', foreach: tableData }"></tbody>
+            </table>
+            @Widgets.Spinner("pokemon-top10-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Derzeit keine Daten verfügbar.</p>
+            <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" id="pokemon-top10-completed-box">
+    <div class="box box-info">
+        <div class="box box-header">
+            <h3 class="box-title">Pokémon mit den meisten abgeschlossenen Angeboten</h3>
+        </div>
+        <div class="box-body no-padding">
+            <div class="col-sm-11"><button class="btn btn-default btn-sm" data-bind="daterangepicker: dateRange"></button></div>
+            <p class="col-sm-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover"
+                   id="wifi-report-table"
+                   data-load="@Url.Map("api/v1/wifi/pokemon-top10-completed")"
+                   data-spinner="pokemon-top10-completed-spinner"
+                   role="ko-table"
+                   data-timepicker="true"
+                   data-bind="pokemon-top10-completed-box"
+                   data-min="@min.ToString("yyyy-MM-dd")"
+                   data-max="@max.ToString("yyyy-MM-dd")">
+                <thead>
+                    <tr>
+                        <th>Pokemon</th>
+                        <th>Offen</th>
+                        <th>Geschlossen</th>
+                        <th>Gesamt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="template: { name: 'pokemon-top10-table-template', foreach: tableData }"></tbody>
+            </table>
+            @Widgets.Spinner("pokemon-top10-completed-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Derzeit keine Daten verfügbar.</p>
+            <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" id="pokemon-top10-open-box">
+    <div class="box box-info">
+        <div class="box box-header">
+            <h3 class="box-title">Pokémon mit den meisten offenen Angeboten</h3>
+        </div>
+        <div class="box-body no-padding">
+            <div class="col-sm-11"><button class="btn btn-default btn-sm" data-bind="daterangepicker: dateRange"></button></div>
+            <p class="col-sm-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover"
+                   id="wifi-report-table"
+                   data-load="@Url.Map("api/v1/wifi/pokemon-top10-open")"
+                   data-spinner="pokemon-top10-open-spinner"
+                   role="ko-table"
+                   data-timepicker="true"
+                   data-bind="pokemon-top10-open-box"
+                   data-min="@min.ToString("yyyy-MM-dd")"
+                   data-max="@max.ToString("yyyy-MM-dd")">
+                <thead>
+                    <tr>
+                        <th>Pokemon</th>
+                        <th>Offen</th>
+                        <th>Geschlossen</th>
+                        <th>Gesamt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="template: { name: 'pokemon-top10-table-template', foreach: tableData }"></tbody>
+            </table>
+            @Widgets.Spinner("pokemon-top10-open-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Derzeit keine Daten verfügbar.</p>
+            <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+        </div>
+    </div>
+    <script type="text/html" id="pokemon-top10-table-template">
+        <tr>
+            <td data-bind="text: pokemon"></td>
+            <td data-bind="text: offen"></td>
+            <td data-bind="text: completed"></td>
+            <td data-bind="text: sum"></td>
+        </tr>
+    </script>
+</div>
+
+<div class="col-md-6" id="item-top10-box">
+    <div class="box box-info">
+        <div class="box box-header">
+            <h3 class="box-title">Items mit den meisten Angeboten</h3>
+        </div>
+        <div class="box-body no-padding">
+            <div class="col-sm-11"><button class="btn btn-default btn-sm" data-bind="daterangepicker: dateRange"></button></div>
+            <p class="col-sm-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover"
+                   id="wifi-report-table"
+                   data-load="@Url.Map("api/v1/wifi/item-top10")"
+                   data-spinner="item-top10-spinner"
+                   data-timepicker="true"
+                   role="ko-table"
+                   data-bind="item-top10-box"
+                   data-min="@min.ToString("yyyy-MM-dd")"
+                   data-max="@max.ToString("yyyy-MM-dd")">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Offen</th>
+                        <th>Geschlossen</th>
+                        <th>Gesamt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="template: { name: 'item-top10-table-template', foreach: tableData }"></tbody>
+            </table>
+            @Widgets.Spinner("item-top10-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Derzeit keine Daten verfügbar.</p>
+            <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" id="item-top10-completed-box">
+    <div class="box box-info">
+        <div class="box box-header">
+            <h3 class="box-title">Items mit den meisten abgeschlossenen Angeboten</h3>
+        </div>
+        <div class="box-body no-padding">
+            <div class="col-sm-11"><button class="btn btn-default btn-sm" data-bind="daterangepicker: dateRange"></button></div>
+            <p class="col-sm-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover"
+                   id="wifi-report-table"
+                   data-load="@Url.Map("api/v1/wifi/item-top10-completed")"
+                   data-spinner="item-top10-completed-spinner"
+                   role="ko-table"
+                   data-timepicker="true"
+                   data-bind="item-top10-completed-box"
+                   data-min="@min.ToString("yyyy-MM-dd")"
+                   data-max="@max.ToString("yyyy-MM-dd")">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Offen</th>
+                        <th>Geschlossen</th>
+                        <th>Gesamt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="template: { name: 'item-top10-table-template', foreach: tableData }"></tbody>
+            </table>
+            @Widgets.Spinner("item-top10-completed-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Derzeit keine Daten verfügbar.</p>
+            <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+        </div>
+    </div>
+</div>
+<div class="col-md-6" id="item-top10-open-box">
+    <div class="box box-info">
+        <div class="box box-header">
+            <h3 class="box-title">Items mit den meisten offenen Angeboten</h3>
+        </div>
+        <div class="box-body no-padding">
+            <div class="col-sm-11"><button class="btn btn-default btn-sm" data-bind="daterangepicker: dateRange"></button></div>
+            <p class="col-sm-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+            <table class="table table-striped table-hover"
+                   id="wifi-report-table"
+                   data-load="@Url.Map("api/v1/wifi/item-top10-open")"
+                   data-spinner="item-top10-open-spinner"
+                   role="ko-table"
+                   data-timepicker="true"
+                   data-bind="item-top10-open-box"
+                   data-min="@min.ToString("yyyy-MM-dd")"
+                   data-max="@max.ToString("yyyy-MM-dd")">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Offen</th>
+                        <th>Geschlossen</th>
+                        <th>Gesamt</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody data-bind="template: { name: 'item-top10-table-template', foreach: tableData }"></tbody>
+            </table>
+            @Widgets.Spinner("item-top10-open-spinner")
+            <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Derzeit keine Daten verfügbar.</p>
+            <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+        </div>
+    </div>
+    <script type="text/html" id="item-top10-table-template">
+        <tr>
+            <td data-bind="text: item"></td>
+            <td data-bind="text: offen"></td>
+            <td data-bind="text: completed"></td>
+            <td data-bind="text: sum"></td>
+        </tr>
+    </script>
+</div>

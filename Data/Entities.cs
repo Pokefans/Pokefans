@@ -318,6 +318,8 @@ namespace Pokefans.Data
 
         public virtual DbSet<WifiBanlist> WifiBanlist { get; set; }
 
+        public virtual DbSet<OfferReport> OfferReports { get; set; }
+
         #endregion
 
         #region Comments

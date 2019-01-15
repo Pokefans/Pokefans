@@ -18,14 +18,22 @@ namespace Pokefans
 
             bundles.Add(new ScriptBundle("~/bundles/knockout").Include(
                     "~/Scripts/knockout/knockout-{version}.js",
-                    "~/Scripts/knockout/knockout-pre-rendered.js"
+                    "~/Scripts/knockout/knockout.mapping.js",
+                    "~/Scripts/knockout/knockout-pre-rendered.js",
+                    "~/Scripts/moment.js",
+                    "~/Scripts/knockout/daterangepicker.js"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/dashboard").Include(
                     "~/Scripts/backend/dashboard/charts.js",
                     "~/Scripts/backend/dashboard/table.js",
+                    "~/Scripts/backend/dashboard/data.js",
                     "~/Scripts/backend/dashboard/activate.js" // this script must be included last in the bundle
             ));
+
+            bundles.Add(new ScriptBundle("~/bundles/reports").Include(
+                    "~/Scripts/backend/reports.js"
+                ));
 
 
             bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
@@ -91,7 +99,8 @@ namespace Pokefans
                     "~/Content/adminlte/skin-blue.css",
                     "~/Content/editable/bootstrap-editable.css",
                     "~/Content/font-awesome.css",
-                    "~/Content/select2-bootstrap.css"
+                    "~/Content/select2-bootstrap.css",
+                    "~/Content/adminlte/datetimepicker.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(

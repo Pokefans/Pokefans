@@ -1,0 +1,46 @@
+﻿@using Pokefans.Data.UserData
+@using Pokefans.Util
+@using System.Linq;
+<div class="col-md-6" id="wifi-report-box">
+    <div class="box box-danger">
+        <div class="box-header">
+            <h3 class="box-title">Meldungen: Angebote in der Tauschbörse</h3>
+        </div>
+        <div class="box-body">
+            @Widgets.AjaxChart("wifi-reports", Url.Map("api/v1/dashboard/wifi-report-chart", "mitarbeit"))
+            <hr />
+            <div id="wifi-report-box-inner">
+                <p class="col-xs-11">Die letzten 5 unbearbeiten Meldungen:</p>
+                <p class="col-xs-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+                <table class="table table-striped table-hover"
+                       id="wifi-report-table"
+                       data-load="@Url.Map("api/v1/dashboard/wifi-report-table")"
+                       data-spinner="wifi-report-table-spinner"
+                       role="ko-table"
+                       data-bind="wifi-report-box-inner">
+                    <thead>
+                        <tr>
+                            <th>Titel</th>
+                            <th>Absender*in</th>
+                            <th>Melder*in</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody data-bind="template: { name: 'wifi-report-table-template', foreach: tableData }"></tbody>
+                </table>
+                @Widgets.Spinner("wifi-report-table-spinner")
+                <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Wunderbar! Keine Meldungen.</p>
+                <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
+                <a href="btn btn-default" href="@Url.Action("Reports", "Wifi")">Alle Meldungen</a>
+            </div>
+        </div>
+    </div>
+    <script type="text/html" id="wifi-report-table-template">
+        <tr>
+            <td data-bind="text: subject"></td>
+            <td><a data-bind="attr: { class: user.displayCss, href: user.url }, text: user.name"></a></td>
+            <td><a data-bind="attr: { class: reporter.displayCss, href: reporter.url }, text: reporter.name"></a></td>
+            <td><a data-bind="attr: { href: reportUrl }"><i class="fa fa-lg fa-info-circle"></i></a></td>
+        </tr>
+    </script>
+</div>

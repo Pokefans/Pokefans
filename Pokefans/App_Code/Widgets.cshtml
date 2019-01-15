@@ -1,7 +1,70 @@
 ﻿@helper Spinner(string id) {
-<ul id="@id" class="bokeh">
-    <li></li>
-    <li></li>
-    <li></li>
-</ul>
+    <ul id="@id" class="bokeh">
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+}
+
+@helper AnimatedSuccess() {
+    <div class="check_mark">
+        <div class="sa-icon sa-success animate">
+            <span class="sa-line sa-tip animateSuccessTip"></span>
+            <span class="sa-line sa-long animateSuccessLong"></span>
+            <div class="sa-placeholder"></div>
+            <div class="sa-fix"></div>
+        </div>
+    </div>
+}
+
+@helper AjaxChart(string prefix, string load) {
+    <div id="@(prefix)-chart-container" 
+        role="dashboard-chart-container"
+        data-load="@load"
+        data-spinner="@(prefix)-spinner"
+        data-canvas="@(prefix)-chart">
+        <p class="pull-right col-xs-1">
+            <a data-bind="click: loadData"
+               class="text-muted"><i class="fa fa-refresh"></i></a>
+        </p>
+        @Widgets.Spinner(prefix+"-spinner")
+        <p class="text-danger" style="display: none;" data-bind="visible: error">
+            <i class="fa fa-exclamation-triangle fa-lg"></i>
+            Ups, da lief etwas schief.
+            <a data-bind="click: loadData">Diagramm neu laden</a>
+        </p>
+        <canvas style="height: 100px; width: content-box;" id="@(prefix)-chart"></canvas>
+    </div>
+}
+
+@helper AjaxChart(string prefix, string load, DateTime min)
+{
+    @AjaxChart(prefix, load, min, DateTime.Now)
+}
+
+@helper AjaxChart(string prefix, string load, DateTime min, DateTime max)
+{
+    <div id="@(prefix)-chart-container"
+         role="dashboard-chart-container"
+         data-load="@load"
+         data-spinner="@(prefix)-spinner"
+         data-canvas="@(prefix)-chart"
+         data-timepicker="true"
+         data-min="@min.ToString("yyyy-MM-dd")"
+         data-max="@max.ToString("yyyy-MM-dd")">
+        <p class="col-sm-11">
+            <button data-bind="daterangepicker: dateRange" class="btn btn-default btn-sm"></button>
+        </p>
+        <p class="pull-right col-sm-1">
+            <a data-bind="click: loadData"
+               class="text-muted"><i class="fa fa-refresh"></i></a>
+        </p>
+        @Widgets.Spinner(prefix+"-spinner")
+        <p class="text-danger" style="display: none;" data-bind="visible: error">
+            <i class="fa fa-exclamation-triangle fa-lg"></i>
+            Ups, da lief etwas schief.
+            <a data-bind="click: loadData">Diagramm neu laden</a>
+        </p>
+        <canvas style="height: 100px; width: content-box;" id="@(prefix)-chart"></canvas>
+    </div>
 }

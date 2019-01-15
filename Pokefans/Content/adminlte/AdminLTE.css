@@ -4234,3 +4234,7 @@ table.text-center th {
         transform: rotate(360deg);
     }
 }
+
+.statistics-large {
+    font-size: 24px;
+}

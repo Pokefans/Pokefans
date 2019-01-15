@@ -29,6 +29,94 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         }
 
         [AllowCors]
+        [Authorize(Roles = "wifi-moderator")]
+        public ActionResult WifiReportTable()
+        {
+            var reportsRaw = db.OfferReports
+                .Include(x => x.User)
+                .Include(x => x.Offer)
+                .Include(x => x.Offer.User)
+                .Where(x => x.Resolved == false)
+                .OrderByDescending(x => x.ReportedOn)
+                .Take(5)
+                .ToList();
+
+            var reports = new List<object>();
+
+            // we cannot serialize what comes out of the database directly (because of reasons),
+            // and we don't want to push all fields anyways. so let's convert it.
+            foreach (var x in reportsRaw)
+                reports.Add(new
+                {
+                    title = x.Offer.Title,
+                    reportUrl = Url.Action("Reports", "Wifi") + "#" + x.Id.ToString(),
+                    user = new
+                    {
+                        url = x.Offer.User.Url,
+                        displayCSS = x.Offer.User.DisplayCss,
+                        name = x.Offer.User.UserName
+                    },
+                    reporter = new
+                    {
+                        url = x.User.Url,
+                        displayCSS = x.User.DisplayCss,
+                        name = x.User.UserName
+                    }
+                });
+
+            return Json(reports, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowCors]
+        [Authorize(Roles = "wifi-moderator")]
+        public ActionResult WifiReportChart()
+        {
+            Chart chart = new Chart();
+            chart.Type = "line";
+
+            ChartJSCore.Models.Data data = new ChartJSCore.Models.Data();
+
+            DateTime current = DateTime.Now.AddDays(-30);
+
+            var reportsOfLastMonth = db.OfferReports.Where(x => x.ReportedOn > current).ToList();
+
+            var ReportsPerDay = new Dictionary<DateTime, int>();
+            while (current < DateTime.Now)
+            {
+                ReportsPerDay.Add(current, reportsOfLastMonth.Where(x => x.ReportedOn.DayOfYear == current.DayOfYear).Count());
+                current = current.AddDays(1);
+            }
+
+            data.Labels = ReportsPerDay.Select(x => x.Key.ToString("dd.MM.yyyy")).ToList();
+            data.Datasets = new List<Dataset>();
+
+            data.Datasets.Add(new LineDataset()
+            {
+                Label = "Meldungen",
+                Data = ReportsPerDay.Select(x => (double)x.Value).ToList(),
+                BackgroundColor = "#dd4b39"
+            });
+            chart.Options.Legend = new Legend();
+            chart.Options.Legend.Display = false;
+            chart.Options.Responsive = true;
+            chart.Options.MaintainAspectRatio = true;
+            chart.Options.Scales = new Scales();
+            chart.Options.Scales.YAxes = new List<Scale>();
+            chart.Options.Scales.YAxes.Add(new CartesianScale()
+            {
+                Ticks = new CartesianLinearTick()
+                {
+                    SuggestedMin = 0,
+                    SuggestedMax = 20,
+                    StepSize = 2
+                }
+            });
+            chart.Data = data;
+
+            return Content(chart.SerializeBody(), "text/json");
+        }
+
+        [AllowCors]
         [Authorize(Roles ="global-moderator")]
         public ActionResult PMReportTable()
         {

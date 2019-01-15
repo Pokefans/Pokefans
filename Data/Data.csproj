@@ -84,6 +84,9 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="ChartJSCore">
+      <HintPath>..\packages\ChartJSCore.1.3.2\lib\net45\ChartJSCore.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Attributes\RegularExpressionWithOptionsAttribute.cs" />
@@ -348,6 +351,14 @@
     <Compile Include="Migrations\201812301826429_WifiSomething.Designer.cs">
         <DependentUpon>201812301826429_WifiSomething.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901062256064_WifiReports.cs" />
+    <Compile Include="Migrations\201901062256064_WifiReports.Designer.cs">
+        <DependentUpon>201901062256064_WifiReports.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901111724511_WifiBanlist.cs" />
+    <Compile Include="Migrations\201901111724511_WifiBanlist.Designer.cs">
+        <DependentUpon>201901111724511_WifiBanlist.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -490,6 +501,7 @@
     <Compile Include="User\PrivateMessageReport.cs" />
     <Compile Include="System\DsgvoComplianceInfo.cs" />
     <Compile Include="Mysql8MigrationSqlGenerator.cs" />
+    <Compile Include="Wifi\OfferReport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -685,6 +697,12 @@
     <EmbeddedResource Include="Migrations\201812301826429_WifiSomething.resx">
         <DependentUpon>201812301826429_WifiSomething.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901062256064_WifiReports.resx">
+        <DependentUpon>201901062256064_WifiReports.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901111724511_WifiBanlist.resx">
+        <DependentUpon>201901111724511_WifiBanlist.cs</DependentUpon>
+    </EmbeddedResource> 
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

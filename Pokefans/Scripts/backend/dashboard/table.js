@@ -1,41 +1,51 @@
 ﻿// copyright 2019 the pokefans authors. see copying.md for legal info
 
 function DashboardTableViewModel(selector) {
-    this.pmreports = ko.observableArray();
+    this.tableData = ko.observableArray();
     this.loaded = ko.observable(false);
+    this.error = ko.observable(false);
+    this.dateRange = ko.observable([moment(selector.data("min")), moment(selector.data("max"))]);
 
     var self = this;
     this.target = selector;
-    this.error = $("#"+this.target.data("error"));
-    this.spinner = $("#"+this.target.data("spinner"));
-    this.loading = false;
 
-    $("a[role='"+this.target.data("reload")+"']").click(function(ev) {
-        ev.preventDefault();
-        if(!self.loading)
-            self.loadData();
-    });
+    this.spinner = $("#"+this.target.data("spinner"));
+    this.hasTimeRangePicker = this.target.data("timepicker") == true;
+    this.loading = false;
+    this.url = this.target.data("load");
 
     this.loadData = function() {
+        if(this.loading) return;
+
         this.loading = true;
         this.spinner.show();
+        this.spinner.addClass("bokeh");
+        var url = this.url;
+        if(this.hasTimeRangePicker) {
+            url += "?from="+this.dateRange()[0].format("YYYY-MM-DD")+"&until="+this.dateRange()[1].format("YYYY-MM-DD");
+        }
+
         var self = this;
         $.ajax({
-            url: self.target.data("load"),
+            url: url,
             xhrFields: {
                 withCredentials: true
             },
             success: function (data) {
-                if(!self.error.hasClass("hidden")) this.error.addClass("hidden");
+                self.error(false);
                 self.spinner.hide();
-                self.pmreports.removeAll();
-                ko.utils.arrayPushAll(self.pmreports, data);
+                self.spinner.removeClass("bokeh");
+
+                self.tableData.removeAll();
+                ko.utils.arrayPushAll(self.tableData, data);
+
                 self.loading = false;
                 self.loaded(true);
             },
             error: function() {
                 self.spinner.hide();
-                self.error.removeClass("hidden");
+                self.spinner.removeClass("bokeh");
+                self.error(true);
                 self.loading = false;
             }
         });

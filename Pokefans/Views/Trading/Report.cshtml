@@ -1,0 +1,32 @@
+﻿@model Pokefans.Data.Wifi.Offer
+@using Pokefans.Models
+@{
+    SiteTitle = "Angebot melden";
+    SiteHeader = "Angebot melden";
+    SiteDescription = "";
+    ActiveMenuKey = "trading";
+}
+
+<h2>Angebot "@Model.Title" melden</h2>
+
+<p>Hier kannst du das Angebot @Model.Title melden. Mögliche Gründe für eine Meldung sind u.A.</p>
+<ul>
+    <li>Falschangaben &emdash; z.B. offensichtlich gecheatete Pokémon, die nicht als Cheat markiert sind</li>
+    <li>Spam, Werbung, o.Ä.</li>
+    <li>Sonstige Verstöße gegen unsere Nutzungsbedingungen</li>
+</ul>
+<p>
+    Um Missbrauch vorzubeugen, speichern wir zu jeder Meldung deine IP-Adresse. Du kannst außerdem noch einen Kommentar
+    hinterlassen, um unseren Moderator_innen näheres zum Grund der Meldung mitzuteilen (optional):
+</p>
+<form method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    @Html.AntiForgeryToken()
+    <textarea class="from-control" rows="10" placeholder="Text hier eingeben"></textarea>
+    <button type="submit" class="btn btn-primary">Meldung abschicken</button>
+    <a href="@Url.Action("Details", "Trading", new { id = Model.Id })">Zurück zum Angebot</a>
+</form>
+
+@section submenu {
+    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "", SearchTerm = "" })
+}

@@ -252,10 +252,10 @@
       <HintPath>..\packages\HtmlAgilityPack.1.8.2\lib\Net45\HtmlAgilityPack.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.10.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="ChartJSCore">
-      <HintPath>..\binpkgs\ChartJSCore.dll</HintPath>
+      <HintPath>..\packages\ChartJSCore.1.3.2\lib\net45\ChartJSCore.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +378,7 @@
     <Compile Include="Models\ManageInterestViewModel.cs" />
     <Compile Include="Models\OfferArchiveViewModel.cs" />
     <Compile Include="Areas\user\Controllers\NotificationsController.cs" />
+    <Compile Include="Areas\mitarbeit\Controllers\WifiController.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -762,6 +763,27 @@
     <Content Include="Areas\mitarbeit\Views\Dashboard\_PostReportPartial.cshtml" />
     <Content Include="Scripts\backend\dashboard\table.js" />
     <Content Include="Scripts\backend\dashboard\activate.js" />
+    <Content Include="Views\Trading\Report.cshtml" />
+    <Content Include="Views\Trading\ReportSuccess.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Dashboard\_WifiReportPartial.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\Index.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\_BaseStatistics.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\_Generations.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\_Activity.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\_Toplist.cshtml" />
+    <Content Include="Scripts\backend\dashboard\data.js" />
+    <Content Include="Scripts\knockout\knockout.mapping.js" />
+    <Content Include="Scripts\moment.min.js" />
+    <Content Include="Scripts\moment.js" />
+    <Content Include="Scripts\moment-with-locales.min.js" />
+    <Content Include="Scripts\moment-with-locales.js" />
+    <Content Include="Content\adminlte\datetimepicker.css" />
+    <Content Include="Content\adminlte\datetimepicker.min.css" />
+    <Content Include="Scripts\knockout\daterangepicker.js" />
+    <Content Include="Scripts\knockout\daterangepicker.min.js" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\Banlist.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\Wifi\Reports.cshtml" />
+    <Content Include="Scripts\backend\reports.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -791,6 +813,7 @@
     <Folder Include="Scripts\knockout\" />
     <Folder Include="Scripts\backend\dashboard\" />
     <Folder Include="App_Code\" />
+    <Folder Include="Areas\mitarbeit\Views\Wifi\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

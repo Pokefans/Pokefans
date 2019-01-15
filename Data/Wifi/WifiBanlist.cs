@@ -20,9 +20,16 @@ namespace Pokefans.Data.Wifi
 
         public bool CanAddOffers { get; set; }
 
+        public DateTime? ExpireAddOffers { get; set; }
+
         public bool CanInterest { get; set; }
+
+        public DateTime? ExpireInterest { get; set; }
+
+        public string BanReason { get; set; }
 
         [ForeignKey("UserId")]
         public User User { get; set; }
+
     }
 }

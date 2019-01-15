@@ -1,0 +1,68 @@
+﻿@*Copyright 2019 the pokefans authors. See copying.md for legal info.*@
+@using Pokefans.Data.Wifi
+@model List<WifiBanlist>
+    @{
+        SiteTitle = "Pokefans | Wifi-Banliste";
+        SiteHeader = "Wifi-Banliste";
+        SiteDescription = "";
+        Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+        Breadcrumbs.Add("Mitarbeitsbereich");
+    }
+
+    <div class="box box-warning">
+        <div class="box-header">
+            Sperren und Entsperren kann über die BVS vorgenommen werden. Drücke dazu auf das <i class="fa fa-info-circle"></i>-Symbol in der betreffenden Zeile.
+        </div>
+        <div class="box-body no-padding">
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>Benutzername</th>
+                        <th>Angebotssperre</th>
+                        <th>Interessenssperre</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (WifiBanlist ban in Model)
+                    {
+                        <tr>
+                            <td><a href="@Url.Action("Notes", "User", new { id = ban.UserId })" class="@ban.User.DisplayCss">@ban.User.UserName</a></td>
+                            <td>@tickCross(ban.CanAddOffers) @expire(ban.ExpireAddOffers)</td>
+                            <td>@tickCross(ban.CanInterest) @expire(ban.ExpireInterest)</td>
+                            <td><a href="@Url.Action("Bans", "User", new { id = ban.UserId })"><i class="fa fa-info-circle fa-lg"></i></a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            @if(ViewBag.Start > 0) {
+                int start = ViewBag.Start - 50;
+                if (start < 0) start = 0;
+                <a href="@Url.Action("Banlist", "Wifi", new { start = start })" class="btn btn-default">Vorherige</a>
+            }
+            @if(ViewBag.HasMore) {
+                <a href="@Url.Action("Banlist", "Wifi", new { start = (ViewBag.Start + 50) })" class="btn btn-default">Nächste</a>
+            }
+        </div>
+    </div>
+
+    @helper tickCross(bool value) {
+        if (value) {
+            <i class="text-success fa fa-lg fa-check"></i>
+        } else {
+            <i class="text-danger fa fa-lg fa-times"></i>
+        }
+    }
+
+    @helper expire(DateTime? value) {
+        if(value.HasValue) {
+            <text>bis zum @value.Value.ToString("dd.MM.yyyy hh:mm")</text>
+        } else {
+            <text>Unbegrenzt</text>
+        }
+    }
+
+    @section scripts {
+
+    }
+

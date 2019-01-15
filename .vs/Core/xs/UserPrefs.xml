@@ -1,19 +1,22 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Controllers/DashboardController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Views/Trading/Report.cshtml">
     <Files>
-      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="27" Column="113" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Dashboard/Index.cshtml" Line="2" Column="1" />
-      <File FileName="Pokefans/Scripts/backend/dashboard/charts.js" Line="11" Column="34" />
-      <File FileName="Pokefans/App_Code/Widgets.cshtml" Line="2" Column="9" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Dashboard/_PMReportPartial.cshtml" Line="20" Column="38" />
-      <File FileName="Pokefans/Areas/mitarbeit/Controllers/DashboardController.cs" Line="96" Column="29" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/Dashboard/_PostReportPartial.cshtml" Line="10" Column="7" />
-      <File FileName="Pokefans/Scripts/backend/dashboard/table.js" Line="23" Column="13" />
-      <File FileName="Pokefans/Scripts/backend/dashboard/activate.js" Line="5" Column="100" />
-      <File FileName="Pokefans/Areas/mitarbeit/mitarbeitAreaRegistration.cs" Line="194" Column="18" />
-      <File FileName="Pokefans/Content/Site.css" Line="625" Column="2" />
-      <File FileName="Pokefans/Content/adminlte/AdminLTE.css" Line="4236" Column="2" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/Wifi/Banlist.cshtml" Line="27" Column="34" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/WifiController.cs" Line="42" Column="13" />
+      <File FileName="Data/Wifi/OfferReport.cs" Line="21" Column="9" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/Wifi/Reports.cshtml" Line="25" Column="137" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/_Layout.cshtml" Line="205" Column="25" />
+      <File FileName="Pokefans/Views/Shared/_LoginPartial.cshtml" Line="6" Column="1" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/Dashboard/_WifiReportPartial.cshtml" Line="30" Column="25" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/DashboardController.cs" Line="52" Column="86" />
+      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="35" Column="47" />
+      <File FileName="Pokefans/Scripts/backend/reports.js" Line="11" Column="45" />
+      <File FileName="Data/Data.csproj" Line="705" Column="25" />
+      <File FileName="Data/Migrations/201901111724511_WifiBanlist.cs" Line="1" Column="1" />
+      <File FileName="Data/Wifi/WifiBanlist.cs" Line="29" Column="45" />
+      <File FileName="Pokefans/Controllers/TradingController.cs" Line="803" Column="35" />
+      <File FileName="Pokefans/Views/Trading/Report.cshtml" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

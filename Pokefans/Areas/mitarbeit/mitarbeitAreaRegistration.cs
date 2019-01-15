@@ -141,6 +141,61 @@ namespace Pokefans.Areas.mitarbeit
                     new { action = "Edit", Controller = "Fanart" }
                 ));
 
+            // wifi
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
+                    "tauschboerse",
+                    new { action = "Index", Controller = "Wifi" }
+                ));
+
+            // wifi api
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/statistics",
+                    new { action = "Statistics", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/generations",
+                    new { action = "Generations", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/activity",
+                    new { action = "Activity", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/pokemon-top10",
+                    new { action = "PokemonTop10", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/pokemon-top10-completed",
+                    new { action = "PokemonTop10Completed", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/pokemon-top10-open",
+                    new { action = "PokemonTop10Open", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/item-top10",
+                    new { action = "PokemonTop10", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/item-top10-completed",
+                    new { action = "PokemonTop10Completed", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/item-top10-open",
+                    new { action = "PokemonTop10Open", Controller = "Wifi" }
+                ));
+
+
             // AJAX API below
             context.Routes.Add(new DomainRoute(
                     "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
@@ -193,6 +248,18 @@ namespace Pokefans.Areas.mitarbeit
                 "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
                 "api/v1/dashboard/pm-report-table",
                 new { action = "PmReportTable", Controller = "Dashboard" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "api/v1/dashboard/wifi-report-chart",
+                new { action = "WifiReportChart", Controller = "Dashboard" }
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                "api/v1/dashboard/wifi-report-table",
+                new { action = "WifiReportTable", Controller = "Dashboard" }
                 ));
 
             // Default Route

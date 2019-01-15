@@ -80,6 +80,12 @@ namespace Pokefans
                     defaults: new {controller = "Trading", action = "SelectPartner" }
                 ));
 
+            routes.Add("TauschReport", new DomainRoute(
+                    ConfigurationManager.AppSettings["Domain"],
+                    url: "tausch/{id}/melden",
+                    defaults: new { controller = "Trading", action = "Report" }
+                ));
+
             routes.Add("TauschInteresseJson", new DomainRoute(
                     "api."+ConfigurationManager.AppSettings["Domain"],
                     "v1/tausch/interesse",

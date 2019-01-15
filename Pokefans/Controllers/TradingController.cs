@@ -252,6 +252,14 @@ namespace Pokefans.Controllers
         [Authorize]
         public ActionResult AddOffer()
         {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            if (db.WifiBanlist.Any(x => x.UserId == uid && x.CanInterest == false && (x.ExpireInterest == null || x.ExpireInterest.Value > DateTime.Now)))
+            {
+                WifiBanlist ban = db.WifiBanlist.First(x => x.UserId == uid);
+                return View("~/Views/Trading/Errors/Banned.cshtml", ban);
+            }
+
             fetchAddData();
 
             return View();
@@ -333,8 +341,14 @@ namespace Pokefans.Controllers
         [Authorize]
         public ActionResult AddOffer(NormalOffer no)
         {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+            if (db.WifiBanlist.Any(x => x.UserId == uid && x.CanInterest == false && (x.ExpireInterest == null || x.ExpireInterest.Value > DateTime.Now)))
+            {
+                WifiBanlist ban = db.WifiBanlist.First(x => x.UserId == uid);
+                return View("~/Views/Trading/Errors/Banned.cshtml", ban);
+            }
 
-            if(no.Title == null)
+            if (no.Title == null)
             {
                 no.Title = db.Pokemon.Where(x => x.Id == no.PokemonId).Select(x => x.Name.German).First();
             }
@@ -343,8 +357,9 @@ namespace Pokefans.Controllers
             sanitizer.AllowedAttributes.Add("class");
             no.Description = sanitizer.Sanitize(no.DescriptionCode);
 
-            no.UserId = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+            no.UserId = uid;
             no.UpdateTime = DateTime.Now;
+            no.CreationDate = DateTime.Now;
 
             db.WifiOffers.Add(no);
             db.SaveChanges();
@@ -688,6 +703,11 @@ namespace Pokefans.Controllers
             {
                 return View("~/Views/Trading/Errors/AlreadyInterested.cshtml");
             }
+            if (db.WifiBanlist.Any(x => x.UserId == uid && x.CanInterest == false && (x.ExpireInterest == null || x.ExpireInterest.Value > DateTime.Now)))
+            {
+                WifiBanlist ban = db.WifiBanlist.First(x => x.UserId == uid);
+                return View("~/Views/Trading/Errors/Banned.cshtml", ban);
+            }
 
             Interest interest = new Interest();
             interest.OfferId = id;
@@ -746,6 +766,44 @@ namespace Pokefans.Controllers
                                                 "<i class=\"fa fa-shopping-cart\"></i>");
 
             return Json(new { success = true, error = "" });
+        }
+
+        [Authorize]
+        public ActionResult Report(int id)
+        {
+            Offer offer = db.WifiOffers.FirstOrDefault(x => x.Id == id);
+
+            if (offer == null)
+                return HttpNotFound();
+
+            return View(offer);
+        }
+
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Report(int id, string comment)
+        {
+            Offer offer = db.WifiOffers.FirstOrDefault(x => x.Id == id);
+
+            if (offer == null)
+                return HttpNotFound();
+
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            OfferReport report = new OfferReport()
+            {
+                UserId = uid,
+                OfferId = offer.Id,
+                Comment = comment,
+                ReportedOn = DateTime.Now,
+                Resolved = false
+            };
+
+            db.OfferReports.Add(report);
+            db.SaveChanges();
+
+            return View("~/Views/Trading/ReportSuccess.cshtml", offer);
         }
 
     }

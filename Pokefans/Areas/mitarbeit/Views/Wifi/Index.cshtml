@@ -1,0 +1,24 @@
+﻿@*Copyright 2019 the pokefans authors. See copying.md for legal info.*@
+@{
+    SiteTitle = "Pokefans | Wifi - Dashboard";
+    SiteHeader = "Wifi & Tauschbörse";
+    SiteDescription = "Dashboard";
+    Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+    Breadcrumbs.Add("Mitarbeitsbereich");
+}
+<div class="row">
+    @Html.Partial("~/Areas/mitarbeit/Views/Wifi/_BaseStatistics.cshtml")
+</div>
+<div class="row">
+    @Html.Partial("~/Areas/mitarbeit/Views/Wifi/_Generations.cshtml")
+    @Html.Partial("~/Areas/mitarbeit/Views/Wifi/_Activity.cshtml")
+    @Html.Partial("~/Areas/mitarbeit/Views/Wifi/_Toplist.cshtml")
+    @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_WifiReportPartial.cshtml")
+</div>
+
+@section scripts {
+    @Scripts.Render("~/bundles/charts")
+    @Scripts.Render("~/bundles/knockout")
+    @Scripts.Render("~/bundles/dashboard")
+}
+

@@ -4,21 +4,22 @@
     SiteHeader = "Dashboard";
     SiteDescription = "Deine Übersicht";
     Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
+    Breadcrumbs.Add("Mitarbeitsbereich");
 }
 
 @if (User.IsInRole("global-moderator"))
 {
     @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_PMReportPartial.cshtml")
-    @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_PostReportPartial.cshtml")
+    @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_PostReportPartial.cshtml") @* braucht das nicht ba-foo? *@
 
+}
+@if (User.IsInRole("wifi-moderator"))
+{
+    @Html.Partial("~/Areas/mitarbeit/Views/Dashboard/_WifiReportPartial.cshtml")
 }
 @section scripts {
     @Scripts.Render("~/bundles/charts")
     @Scripts.Render("~/bundles/knockout")
     @Scripts.Render("~/bundles/dashboard")
-
-<script type="text/javascript">
-
-</script>
 }
 

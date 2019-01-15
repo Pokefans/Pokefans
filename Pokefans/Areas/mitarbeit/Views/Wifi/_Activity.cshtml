@@ -1,0 +1,10 @@
+﻿<div class="col-md-6">
+    <div class="box box-success">
+        <div class="box-header">
+            <h3 class="box-title">Angebote im Verlauf</h3>
+        </div>
+        <div class="box-body">
+            @Widgets.AjaxChart("wifi-activity", Url.Map("api/v1/wifi/activity", "mitarbeit"), DateTime.Now.AddDays(-30))
+        </div>
+    </div>
+</div>
