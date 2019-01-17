@@ -27,6 +27,15 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CustomCommands>
+      <CustomCommands>
+        <Command>
+          <type>AfterBuild</type>
+          <command>npm run dist</command>
+          <workingdir>${ProjectDir}</workingdir>
+        </Command>
+      </CustomCommands>
+    </CustomCommands>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -382,10 +391,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
-    <Content Include="Content\bootstrap-theme.css" />
-    <Content Include="Content\bootstrap-theme.min.css" />
-    <Content Include="Content\css\select2.css" />
-    <Content Include="Content\css\select2.min.css" />
     <Content Include="Content\editable\bootstrap-editable.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -393,7 +398,6 @@
     <Content Include="Content\img\clear.png" />
     <Content Include="Content\img\loading.gif" />
     <Content Include="Content\PagedList.css" />
-    <Content Include="Content\select2-bootstrap.css" />
     <Content Include="Content\select2.css" />
     <Content Include="Content\select2.min.css" />
     <Content Include="Content\trumbowyg.colors.css" />
@@ -418,8 +422,6 @@
     <Content Include="Content\adminlte\bootstrap.min.css" />
     <Content Include="Content\adminlte\skin-blue.css" />
     <Content Include="Content\adminlte\skin-blue.min.css" />
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\img\boxed-bg.jpg" />
     <Content Include="Content\img\boxed-bg.png" />
     <Content Include="Content\img\credit\american-express.png" />
@@ -433,10 +435,8 @@
     <Content Include="Content\img\icons.png" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <Content Include="Content\Site.css" />
     <Content Include="Areas\user\Views\web.config" />
     <Content Include="Areas\user\Views\_ViewStart.cshtml" />
-    <Content Include="Content\bootstrap.css.map" />
     <Content Include="Areas\tools\Views\web.config" />
     <Content Include="Areas\tools\Views\_ViewStart.cshtml" />
     <Content Include="Areas\mitarbeit\Views\web.config" />
@@ -495,11 +495,6 @@
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\bootstrap-theme.css.map" />
-    <Content Include="Content\select2-bootstrap.scss" />
-    <Content Include="Content\select2-bootstrap.less" />
-    <Content Include="Content\select2-bootstrap-build.scss" />
-    <Content Include="Content\select2-bootstrap-build.less" />
     <Content Include="Areas\mitarbeit\Views\Fanart\Challenges.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Fanart\ChallengeDetail.cshtml" />
     <Content Include="Areas\fanart\Views\FanartHome\Single.cshtml" />
@@ -784,6 +779,23 @@
     <Content Include="Areas\mitarbeit\Views\Wifi\Banlist.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Wifi\Reports.cshtml" />
     <Content Include="Scripts\backend\reports.js" />
+    <Content Include="Content\select2-bootstrap.css" />
+    <Content Include="scss\pokefans.scss" />
+    <Content Include="scss\_variables.scss" />
+    <Content Include="scss\_layout.scss" />
+    <Content Include="scss\_search.scss" />
+    <Content Include="scss\_sidebar.scss" />
+    <Content Include="scss\_sticky.scss" />
+    <Content Include="scss\_fanart.scss" />
+    <Content Include="scss\select2-bootstrap4\_layout.scss" />
+    <Content Include="scss\select2-bootstrap4\_single.scss" />
+    <Content Include="scss\select2-bootstrap4\_multiple.scss" />
+    <Content Include="scss\_trading.scss" />
+    <Content Include="scss\_content.scss" />
+    <Content Include="scss\_forum.scss" />
+    <Content Include="scss\_user.scss" />
+    <Content Include="scss\animations\_spinner.scss" />
+    <Content Include="scss\animations\_checkmark.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -814,6 +826,8 @@
     <Folder Include="Scripts\backend\dashboard\" />
     <Folder Include="App_Code\" />
     <Folder Include="Areas\mitarbeit\Views\Wifi\" />
+    <Folder Include="scss\select2-bootstrap4\" />
+    <Folder Include="scss\animations\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

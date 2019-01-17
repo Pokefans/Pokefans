@@ -1,1 +1,23 @@
 // copyright 2019 the pokefans authors. see copying.md for legal info
+
+// include our own variables
+@import "variables";
+
+// then include bootstrap
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+// then include the rest of our stuff
+@import "content";
+@import "fanart";
+@import "forum";
+@import "layout";
+@import "search";
+@import "sidebar";
+@import "sticky";
+@import "trading";
+@import "user";
+
+// finally, any libraries
+@import "select2-bootstrap4/layout";
+@import "animations/spinner";
+@import "animations/checkmark";

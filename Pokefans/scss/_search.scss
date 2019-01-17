@@ -1,1 +1,57 @@
-﻿
+﻿// copyright 2019 the pokefans authors. see coyping.md for legal info
+
+#search {
+    padding: 0 15px;
+
+    .clearfix {
+        padding: 7px 0;
+    }
+
+    form {
+        padding: 9px;
+        margin: 0;
+    }
+
+    label {
+        font-weight: normal;
+    }
+
+    @include media-breakpoint-down("md") {
+        input[type='submit'] {
+            padding-left: 0.3em;
+            padding-right: 0.3em;
+        }
+    }
+}
+
+// TODO: responsive
+#searchbox {
+    max-width: 450px;
+    padding: 0;
+    border-right: none;
+
+
+    &> input {
+        max-width: 285px;
+        min-width: 50px;
+    }
+
+    select {
+        display: inline;
+        max-width: 120px;
+        min-width: 50px;
+    }
+
+    @include media-breakpoint-down("md") {
+        margin: 0;
+        input {
+            width: 150px;
+        }
+    }
+
+    @include media-breakpoint-down("xs") {
+        input {
+            width: 100px;
+        }
+    }
+}

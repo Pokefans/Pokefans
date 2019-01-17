@@ -49,8 +49,7 @@ namespace Pokefans
                 ));
 
             bundles.Add(new StyleBundle("~/bundles/select2/css").Include(
-                    "~/Content/select2.css",
-                    "~/Content/select2-bootstrap.css"
+                    "~/Content/select2.css"
                 ));
 
             // Verwenden Sie die Entwicklungsversion von Modernizr zum Entwickeln und Erweitern Ihrer Kenntnisse. Wenn Sie dann
@@ -65,8 +64,7 @@ namespace Pokefans
                 ));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                    "~/Content/bootstrap.css",
-                    "~/Content/Site.css",
+                    "~/Content/pokefans.css",
                     "~/Content/font-awesome.min.css",
                     "~/Content/bootstrap-tagsinput.css"));            
 

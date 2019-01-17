@@ -1,2 +1,51 @@
-﻿body {
+﻿/* Forum */
+.foruminfo {
+    small {
+        font-size: 0.7em !important
+    }
+
+    div {
+        line-height: 1;
+        padding-top: 5px;
+        text-align: center;
+        
+        &:first-child {
+            margin-top: 10px
+        }
+    }
+
+}
+
+.forum {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0 9.5px 0;
+
+    ul:last-child {
+        margin-bottom: 0
+    }
+
+    .read {
+        color: #e5cdaa
+    }
+
+    .unread {
+        color: $color-complement-4;
+    }
+}
+
+.category .forum:last-child {
+    border: none
+}
+
+.category-header {
+    border-bottom: 1px solid #e58800
+}
+
+.forum-title {
+    font-weight: 300
+}
+
+.forum-full-editor .emojionearea-editor {
+    min-height: 15em !important;
+    max-height: 25em !important;
 }

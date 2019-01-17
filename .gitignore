@@ -162,7 +162,6 @@ $RECYCLE.BIN/
 # MonoDevelop stuff
 *.userprefs
 
-
 # not intended for the repo
 Pokefans/contrib/
 
@@ -174,3 +173,6 @@ subdomains/
 
 # ignore mail.config as it contains passwords
 mail.config
+
+# node and npm shenaningans
+**/node_modules/

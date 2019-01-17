@@ -40,42 +40,39 @@
                     </form>
                 </div>
             </div>
-            <div class="navbar navbar-inverse" id="menu">
+            <nav class="navbar navbar-dark bg-brand navbar-expand-lg" id="menu">
                 <div class="container">
-                    <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                        </button>
-                        @Html.ActionLink("POKEFANS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand visible-xs visible-sm" })
-                    </div>
-                    <div class="navbar-collapse collapse">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    @Html.ActionLink("POKEFANS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand visible-xs visible-sm visible-md" })
+
+                    <div class="navbar-collapse collapse" id="main-navbar">
                         <ul class="nav navbar-nav">
-                            <li>@Html.ActionLink("Pokefans", "Index", "Home", new { area = "" }, new { @class = "hidden-xs hidden-sm" })</li>
-                            <li>@Html.ActionLink("Pokémon-Spiele", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Pokedex", "Index", "Home")</li>
-                            <li>@Html.ActionLink("Kampf & Strategie", "Index", "Home")</li>
-                            <li class="@isActive("fanart")"><a href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
-                            <li class="@isActive("trading")"><a href="@Url.Map("tausch", null)">Tauschbörse</a></li>
-                            <li class="@isActive("forum")"><a href="@Url.Action("Index", "BoardIndex", new { area = "forum"}, "forum", null)">Forum</a></li>
+                            <li class="nav-item">@Html.ActionLink("Pokefans", "Index", "Home", new { area = "" }, new { @class = "nav-link hidden-xs hidden-sm" })</li>
+                            <li class="nav-item">@Html.ActionLink("Pokémon-Spiele", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Pokedex", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                            <li class="nav-item">@Html.ActionLink("Kampf & Strategie", "Index", "Home", new { area = "" }, new { @class = "nav-link" }))</li>
+                            <li class="nav-item @isActive("fanart")"><a class="nav-link" href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
+                            <li class="nav-item @isActive("trading")"><a class="nav-link"  href="@Url.Map("tausch", null)">Tauschbörse</a></li>
+                            <li class="nav-item @isActive("forum")"><a class="nav-link"  href="@Url.Action("Index", "BoardIndex", new { area = "forum"}, "forum", null)">Forum</a></li>
                             @if (User.IsInRole("mitarbeiter"))
-                            {
-                                <li>@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: null)</li>
-                            }
+            {
+                <li class="nav-item">@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: new  { @class = "nav-link"})</li>
+}
                         </ul>
                     </div>
                 </div>
-            </div>
+            </nav>
             @RenderSection("Submenu", false)
             @RenderSection("FullWidth", false)
             <div class="clearfix">
-                <div id="content" class="content @(IsSectionDefined("Sidebar") ? "column" : "article-100")">
+                <div id="content" class="content @(IsSectionDefined("Sidebar") ? "has-sidebar" : "")">
                     @RenderBody()
                 </div>
                 @if (IsSectionDefined("Sidebar"))
                 {
-                    <div id="sidebar" class="column">
+                    <div id="sidebar">
                         @RenderSection("Sidebar")
                     </div>
                 }

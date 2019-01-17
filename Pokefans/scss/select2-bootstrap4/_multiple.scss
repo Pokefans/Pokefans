@@ -1,2 +1,66 @@
-﻿body {
+﻿/*
+This file was taken from select2-bootstrap4,
+Copyright (c) 2018 Takashi Kanemoto
+It's licensed under the terms of the MIT license.
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+Modifications Copyright 2014-2014 the pokefans authors.
+See copying.md for further legal info.*/
+
+.select2-container--bootstrap4 {
+    .select2-selection--multiple {
+        // height of input box
+        min-height: $input-height !important;
+        // input box
+        .select2-selection__rendered {
+            box-sizing: border-box;
+            list-style: none;
+            margin: 0;
+            padding: 0 5px;
+            width: 100%;
+        }
+        // each selected item in input box
+        .select2-selection__choice {
+            color: $dark;
+            border: 1px solid darken($light, 20%);
+            border-radius: $btn-border-radius-sm;
+            padding: 0;
+            padding-right: 5px;
+            cursor: pointer;
+            float: left;
+            margin-top: 0.3em;
+            margin-right: 5px;
+        }
+        // x button of each selected item in input box
+        .select2-selection__choice__remove {
+            color: darken($light, 20%);
+            font-weight: bold;
+            margin-left: 3px;
+            margin-right: 1px;
+            padding-right: 3px;
+            padding-left: 3px;
+            float: left;
+
+            &:hover {
+                color: $dark;
+            }
+        }
+    }
 }

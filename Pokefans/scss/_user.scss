@@ -1,2 +1,71 @@
-﻿body {
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info
+
+.feed-avatar {
+    max-height: 60px;
+    display: inline;
+}
+
+// private messages
+table.private-messages {
+    tr th:first-child, table.private-messages td th:first-child {
+        /* checkbox column */
+        width: 1.5em
+    }
+
+    tr {
+        th, td {
+            &:first-child input[type="checkbox"]:not(:checked) {
+                visibility: hidden
+            }
+        }
+
+        &:hover th, &:hover td {
+            &:first-child input[type="checkbox"]:not(:checked) {
+                visibility: visible;
+                transition: opacity .25s ease-in-out;
+                -moz-transition: opacity .25s ease-in-out;
+                -webkit-transition: opacity .25s ease-in-out;
+            }
+        }
+
+        th:nth-child(3), td:nth-child(3) {
+            width: 17%;
+        }
+
+        th:last-child, td:last-child {
+            width: 15%;
+        }
+    }
+}
+
+.pm-body {
+    border-top: 1px #eee solid;
+    border-bottom: 1px #eee solid;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
+.oldmessages {
+    max-height: 200px;
+    overflow: scroll;
+    padding: 10px;
+
+    .oldmessage {
+        border-top: 1px #eee solid;
+        
+        &:first-child {
+            border-top: none;
+        }
+    }
+}
+
+// notifications
+.notification {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1em;
+    padding: 0.5em;
+
+    &.unread {
+        border-left: 4px solid #eea236;
+    }
 }

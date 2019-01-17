@@ -1,2 +1,16 @@
-﻿body {
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info
+.wrap > .sticky-wrapper {
+    padding-left: 0 !important;
+    padding-right: 0 !important
+}
+
+/* for waypoint stickies */
+.stuck {
+    position: fixed;
+    top: 0;
+    z-index: 100
+}
+
+.stuck.navbar {
+    width: 100%
 }

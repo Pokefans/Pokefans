@@ -359,6 +359,10 @@
     <Compile Include="Migrations\201901111724511_WifiBanlist.Designer.cs">
         <DependentUpon>201901111724511_WifiBanlist.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901151440550_WifiBanreason.cs" />
+    <Compile Include="Migrations\201901151440550_WifiBanreason.Designer.cs">
+        <DependentUpon>201901151440550_WifiBanreason.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -702,7 +706,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901111724511_WifiBanlist.resx">
         <DependentUpon>201901111724511_WifiBanlist.cs</DependentUpon>
-    </EmbeddedResource> 
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901151440550_WifiBanreason.resx">
+        <DependentUpon>201901151440550_WifiBanreason.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

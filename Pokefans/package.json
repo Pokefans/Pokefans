@@ -1,0 +1,25 @@
+{
+  "name": "pokefans",
+  "version": "1.0.0",
+  "description": "One of europes leading pokemon communities",
+  "main": "index.js",
+  "scripts": {
+    "dist": "npm-run-all css-* post-*",
+    "css-pokefans": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss/pokefans.scss Content/pokefans.css",
+    "post-pokefans": "postcss --config node_modules/bootstrap/build/postcss.config.js --replace Content/pokefans.css"
+  },
+  "author": "",
+  "license": "AGPL-3.0-or-later",
+  "dependencies": {
+    "bootstrap": "file:bootstrap",
+    "jquery": "^3.3.1",
+    "popper.js": "^1.14.6"
+  },
+  "devDependencies": {
+    "autoprefixer": "^9.4.5",
+    "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5",
+    "postcss": "^7.0.13",
+    "postcss-cli": "^6.1.1"
+  }
+}

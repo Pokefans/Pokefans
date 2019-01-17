@@ -1,2 +1,64 @@
-﻿body {
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info
+
+/* fanart related customizations */
+.fanart-warning {
+    margin-top: 5px
+}
+
+.arrow_box {
+    position: relative;
+    background: transparent
+}
+
+.arrow_box:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(255, 170, 46, 0);
+    border-top-color: #FFAA2E;
+    border-width: 15px;
+    margin-left: -15px
+}
+
+.hl {
+    padding: 5px;
+    text-align: center;
+    -webkit-transition: background-color 200ms linear;
+    -moz-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
+    -ms-transition: background-color 200ms linear;
+    transition: background-color 200ms linear
+}
+
+.hl.alert {
+    background: #F7F778; /* IE */
+    background: rgba(255, 255, 0, 0.5) /* Everyone else */
+}
+
+.rating-star {
+    color: #E5C100 /* gold */
+}
+
+.fanart-element {
+    float: left;
+    width: 130px;
+    border: 1px solid #eee;
+    border-top: none;
+    border-right: none
+}
+
+.fanart-container {
+    max-width: 535px;
+    border: 1px solid #eee;
+    border-left: none;
+    border-bottom: none
+}
+
+.fanart-description {
+    padding-top: 1em
 }

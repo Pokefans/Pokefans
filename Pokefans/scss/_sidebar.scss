@@ -1,10 +1,7 @@
 ﻿// copyright 2019 the pokefans authors. see copying.md for legal info
 
-// navbars have a default margin added after them.
-// if they are stacked, we need to fix this.
-.navbar + #section, 
-.navbar + .navbar, 
-.navbar + .sticky-wrapper {
-    margin-top: -19px;
-    margin-bottom: 19px;
+@include media-breakpoint-up("md") {
+    .sidebar-spacer {
+        height: 65px
+    }
 }

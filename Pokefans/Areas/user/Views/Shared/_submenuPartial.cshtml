@@ -1,11 +1,11 @@
 ﻿@model Pokefans.Areas.user.Models.UserSubmenuViewModel
-<div class="navbar navbar-default navbar-nocollapse">
+<div class="navbar navbar-light bg-light navbar-expand">
     <div class="clearfix">
-        <ul class="nav navbar-nav">
-            <li class="@(Model.ActiveMenuKey == "home" ? "active" : "")"><a href="@Url.Map("")" id="home">Für dich</a></li>
-            @*<li class="@(Model.ActiveMenuKey == "profile" ? "active" : "")"><a href="@Url.Map("profil/")" id="home">Dein Profil</a></li>*@
+        <ul class="navbar-nav">
+            <li class="nav-item @(Model.ActiveMenuKey == "home" ? "active" : "")"><a href="@Url.Map("")" id="home">Für dich</a></li>
+            <li class="nav-item @(Model.ActiveMenuKey == "profile" ? "active" : "")"><a href="@Url.Map("profil/")" id="home">Dein Profil</a></li>
         </ul>
-        <form class="navbar-form navbar-left hidden-xs" role="search" method="get" action="@Url.Map("suche")">
+        <form class="form-inline navbar-left hidden-xs mr-auto" role="search" method="get" action="@Url.Map("suche")">
             <div class="input-group">
                 <input type="text" class="form-control" id="term" name="term" placeholder="Suche Benutzer" value="@Model.SearchTerm" />
                 <span class="input-group-btn">
@@ -13,19 +13,21 @@
                 </span>
             </div>
         </form>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="@(Model.ActiveMenuKey == "privmsgs" ? "active" : "")"><a href="@Url.Map("nachrichten")"><i class="fa fa-envelope fa-lg"></i> Nachrichten <span class="badge">@UnreadMessages.ToString()</span></a></li>
-            <li class="@(Model.ActiveMenuKey == "notifications" ? "active" : "")"><a href="#"><i class="fa fa-envelope fa-lg"></i> Benachrichtigungen <span class="badge">@UnreadNotifications.ToString()</span></a></li>
-            <li class="@(Model.ActiveMenuKey == "settings" ? "active" : "")">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Profileinstellungen"><i class="fa fa-gears fa-lg"></i> Einstellungen <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                    <li><a href="#">Profildetails bearbeiten</a></li>
-                    <li><a href="#">Benachrichtigungen verwalten</a></li>
-					<li><a href="#">Feed verwalten</a></li>
-                    <li role="separator" class="divider"></li>
-                    <li><a href="@Url.Action("ChangePassword", "Manage")">Passwort ändern</a></li>
-                    <li><a href="@Url.Action("ManageLogins", "Manage")">Verknüpfte Logins verwalten</a></li>
-                </ul>
+        <ul class="navbar-nav">
+            <li class="nav-item @(Model.ActiveMenuKey == "privmsgs" ? "active" : "")"><a href="@Url.Map("nachrichten")"><i class="fa fa-envelope fa-lg"></i> Nachrichten <span class="badge">@UnreadMessages.ToString()</span></a></li>
+            <li class="nav-item @(Model.ActiveMenuKey == "notifications" ? "active" : "")"><a href="#"><i class="fa fa-envelope fa-lg"></i> Benachrichtigungen <span class="badge">@UnreadNotifications.ToString()</span></a></li>
+            <li class="nav-item dropdown @(Model.ActiveMenuKey == "settings" ? "active" : "")">
+                <a href="#" class="nav-link dropdown-toggle" id="settings-dropdown" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" title="Profileinstellungen">
+                    <i class="fa fa-gears fa-lg"></i> Einstellungen
+                </a>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">Profildetails bearbeiten</a>
+                    <a class="dropdown-item" href="#">Benachrichtigungen verwalten</a>
+					<a class="dropdown-item" href="#">Feed verwalten</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="@Url.Action("ChangePassword", "Manage")">Passwort ändern</a>
+                    <a class="dropdown-item" href="@Url.Action("ManageLogins", "Manage")">Verknüpfte Logins verwalten</a>
+                </div>
             </li>
         </ul>
     </div>

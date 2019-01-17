@@ -1,2 +1,57 @@
-﻿body {
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info
+
+// Reset some padding
+header, main, footer, nav {
+    padding: 0;
+    margin: 0;
 }
+
+// add some padding around some elements
+#search, #breadcrumbs, #copyright {
+    padding: 1.5em 0;
+}
+
+// breadcrumb bar has grey background.
+.breadcrumbs {
+    background-color: $gray-200;
+}
+
+#breadcrumbs {
+    padding: 2em 0 3em 0
+}
+
+#copyright, #footer {
+    background-color: theme-color("brand");
+    color: $navbar-dark-color;
+}
+
+#main {
+    padding: 0 0 2em;
+}
+
+#footer {
+    margin-top: 2em
+}
+
+.copyright-links .fa {
+    vertical-align: middle
+}
+
+#copyright .note, #copyright .note a {
+    color: #96BADC; // emojione
+}
+
+// various fixes
+.btn-fullwidth {
+    width: 100%;
+}
+
+.bootstrap-tagsinput {
+    width: 100%
+}
+
+.bootstrap-tagsinput input {
+    font: inherit !important;
+    border: none !important;
+}
+
