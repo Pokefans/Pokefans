@@ -2,3 +2,6 @@
 	path = bootstrap
 	url = git@github.com:Pokefans/bootstrap.git
 	branch = v4-dev
+[submodule "Pokefans/bootstrap"]
+	path = Pokefans/bootstrap
+	url = https://github.com/twbs/bootstrap.git
