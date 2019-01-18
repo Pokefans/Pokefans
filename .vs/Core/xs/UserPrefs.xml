@@ -1,23 +1,31 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Pokefans.csproj">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Controllers/WifiController.cs">
     <Files>
-      <File FileName="Pokefans/scss/pokefans.scss" Line="7" Column="26" />
-      <File FileName="Pokefans/scss/_variables.scss" Line="32" Column="23" />
-      <File FileName="Pokefans/scss/_fanart.scss" Line="2" Column="1" />
-      <File FileName="Pokefans/scss/_forum.scss" Line="28" Column="23" />
-      <File FileName="Pokefans/scss/_sidebar.scss" Line="3" Column="10" />
-      <File FileName="Pokefans/scss/_sticky.scss" Line="1" Column="70" />
-      <File FileName="Pokefans/scss/_trading.scss" Line="23" Column="16" />
-      <File FileName="Pokefans/scss/_user.scss" Line="42" Column="32" />
-      <File FileName="Pokefans/scss/_content.scss" Line="46" Column="15" />
-      <File FileName="Pokefans/scss/_search.scss" Line="57" Column="2" />
-      <File FileName="Pokefans/scss/_layout.scss" Line="26" Column="2" />
-      <File FileName="Pokefans/Content/bootstrap-tagsinput.css" Line="1" Column="1" />
-      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="67" Column="40" />
-      <File FileName="Pokefans/scss/select2-bootstrap4/_layout.scss" Line="28" Column="20" />
-      <File FileName="Pokefans/scss/select2-bootstrap4/_multiple.scss" Line="66" Column="2" />
-      <File FileName="Pokefans/Pokefans.csproj" Line="1" Column="1" />
+      <File FileName="Pokefans/scss/_layout.scss" Line="22" Column="1" />
+      <File FileName="Pokefans/scss/_search.scss" Line="42" Column="27" />
+      <File FileName="Pokefans/scss/pokefans.scss" Line="10" Column="23" />
+      <File FileName="Pokefans/scss/legacy/_layout.scss" Line="19" Column="24" />
+      <File FileName="Pokefans/scss/legacy/_tabs.scss" Line="12" Column="45" />
+      <File FileName="Pokefans/scss/_content.scss" Line="72" Column="31" />
+      <File FileName="Pokefans/scss/_variables.scss" Line="23" Column="15" />
+      <File FileName="Pokefans/scss/_comments.scss" Line="13" Column="37" />
+      <File FileName="Pokefans/Views/Shared/CommentPartial.cshtml" Line="91" Column="99" />
+      <File FileName="Pokefans/scss/_breadcrumbs.scss" Line="18" Column="27" />
+      <File FileName="Pokefans/Views/Shared/_Layout.cshtml" Line="68" Column="99" />
+      <File FileName="Pokefans/scss/_sidebar.scss" Line="14" Column="60" />
+      <File FileName="Pokefans/scss/_trading.scss" Line="10" Column="23" />
+      <File FileName="Pokefans/Views/Trading/Index.cshtml" Line="34" Column="30" />
+      <File FileName="Pokefans/Views/Trading/Protocol.cshtml" Line="29" Column="40" />
+      <File FileName="Pokefans/Views/Trading/My.cshtml" Line="65" Column="42" />
+      <File FileName="Pokefans/Views/Trading/Report.cshtml" Line="24" Column="24" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/Dashboard/_WifiReportPartial.cshtml" Line="36" Column="15" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/Wifi/Reports.cshtml" Line="6" Column="37" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/Wifi/Banlist.cshtml" Line="40" Column="48" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/WifiController.cs" Line="72" Column="56" />
+      <File FileName="Data/Wifi/OfferReport.cs" Line="21" Column="1" />
+      <File FileName="Pokefans/Scripts/backend/reports.js" Line="10" Column="19" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserListsController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

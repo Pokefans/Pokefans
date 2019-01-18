@@ -1,9 +1,9 @@
 ﻿@*Copyright 2019 the pokefans authors. See copying.md for legal info.*@
 @using Pokefans.Data.Wifi
-@model List<OfferReport>
+@model IQueryable<OfferReport>
     @{
-        SiteTitle = "Pokefans | Wifi-Banliste";
-        SiteHeader = "Wifi-Banliste";
+        SiteTitle = "Pokefans | Wifi-Meldungen";
+        SiteHeader = "Wifi-Meldungen";
         SiteDescription = "";
         Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
         Breadcrumbs.Add("Mitarbeitsbereich");
@@ -48,8 +48,9 @@
             @if (ViewBag.Start > 0)
             {
                 int start = ViewBag.Start - 50;
-                if (start < 0) start = 0;
+                if (start < 0) { start = 0; }
                 <a href="@Url.Action("Reports", "Wifi", new { start = start })" class="btn btn-default">Vorherige</a>
+            }
             @if (ViewBag.HasMore)
             {
                 <a href="@Url.Action("Reports", "Wifi", new { start = (ViewBag.Start + 50) })" class="btn btn-default">Nächste</a>

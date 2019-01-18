@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Mvc.Ajax;
 using ChartJSCore.Models;
 using Pokefans.Data;
 using Pokefans.Data.Wifi;
@@ -39,9 +37,12 @@ namespace Pokefans.Controllers
 
         public ActionResult Reports(int start = 0)
         {
+            var reports = db.OfferReports.Include("User").Include("Offer").Include("Offer.User").OrderByDescending(x => x.ReportedOn).Skip(start).Take(50);
 
+            ViewBag.HasMore = db.OfferReports.Count() > (start + 50);
+            ViewBag.Start = start;
 
-            return View("~/Areas/mitarbeit/Views/Wifi/Reports.cshtml");
+            return View("~/Areas/mitarbeit/Views/Wifi/Reports.cshtml", reports);
         }
 
         public ActionResult SelectOffer(int start = 0)

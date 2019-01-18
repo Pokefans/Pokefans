@@ -5,9 +5,8 @@ function ReportsViewModel() {
 
     this.baseurl = $("table[role='report-table']").first().data("load");
 
+    var self = this;
     this.investigate = function (id) {
-        var self = this;
-
         alert(self.baseurl + id.toString());
     }
 }

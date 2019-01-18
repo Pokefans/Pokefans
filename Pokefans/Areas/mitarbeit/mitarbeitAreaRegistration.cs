@@ -194,7 +194,11 @@ namespace Pokefans.Areas.mitarbeit
                     "api/v1/wifi/item-top10-open",
                     new { action = "PokemonTop10Open", Controller = "Wifi" }
                 ));
-
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/report/{id}",
+                    new { action = "Report", Comtroller = "Wifi" }
+                ));
 
             // AJAX API below
             context.Routes.Add(new DomainRoute(

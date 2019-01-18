@@ -35,9 +35,9 @@
                     }
                 </tbody>
             </table>
-            @if(ViewBag.Start > 0) {
+            @if (ViewBag.Start > 0) {
                 int start = ViewBag.Start - 50;
-                if (start < 0) start = 0;
+                if (start < 0) { } start = 0; }
                 <a href="@Url.Action("Banlist", "Wifi", new { start = start })" class="btn btn-default">Vorherige</a>
             }
             @if(ViewBag.HasMore) {
