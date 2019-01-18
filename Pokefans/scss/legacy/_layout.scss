@@ -1,0 +1,20 @@
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info
+
+// were does an intro have a menu and is not in an article?
+#intro menu li {
+    padding: 0px;
+    margin: 0px;
+    line-height: 1em;
+    font-size: 0.75rem; // font size is always rem!
+}
+
+.fakt {
+    text-transform: uppercase;
+    font-size: 85%;
+    border-bottom: 1px solid $gray-300;
+    color: $gray-400;
+}
+
+.legend, .legend td, td.legend {
+    @extend .text-muted;
+}

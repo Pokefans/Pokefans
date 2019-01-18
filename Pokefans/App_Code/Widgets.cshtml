@@ -23,7 +23,7 @@
         data-load="@load"
         data-spinner="@(prefix)-spinner"
         data-canvas="@(prefix)-chart">
-        <p class="pull-right col-xs-1">
+        <p class="pull-right col-1">
             <a data-bind="click: loadData"
                class="text-muted"><i class="fa fa-refresh"></i></a>
         </p>
@@ -52,10 +52,10 @@
          data-timepicker="true"
          data-min="@min.ToString("yyyy-MM-dd")"
          data-max="@max.ToString("yyyy-MM-dd")">
-        <p class="col-sm-11">
+        <p class="col-md-11">
             <button data-bind="daterangepicker: dateRange" class="btn btn-default btn-sm"></button>
         </p>
-        <p class="pull-right col-sm-1">
+        <p class="pull-right col-md-1">
             <a data-bind="click: loadData"
                class="text-muted"><i class="fa fa-refresh"></i></a>
         </p>

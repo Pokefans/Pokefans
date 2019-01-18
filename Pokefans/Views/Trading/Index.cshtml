@@ -7,6 +7,8 @@
     SiteDescription = "";
     ActiveMenuKey = "trading";
 
+    Breadcrumbs.Add("Tauschbörse");
+
     Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
 {
 { PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
@@ -29,14 +31,11 @@ else
 <ul class="list-unstyled tradinglist">
     @foreach (var offer in Model.Offers)
     {
-        <li class="clearfix">
-            <div class="col-sm-10">
-                <div class="lpic">
-                    @*Use the global link sprites, because they're the nicest.*@
-                    <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
-                </div>
+        <li class="media mt-3">
+            <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" class="lpic" /></a>
+            <div class="media-body">
                 <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
-                @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="#">@offer.User.UserName</a><br />
+                @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="@Url.Map("profile/"+offer.User.Url, "user")">@offer.User.UserName</a><br />
                 @{
                     List<string> l = new List<string>();
                     l.Add(string.Format("Level {0}", offer.Level));
@@ -67,19 +66,17 @@ else
                     // maybe this should produce an inline list, but eh...
                 }
                 @Html.Raw(string.Join(" &bull; ", l.ToArray()))
-                <p class="visible-xs">
+                <p class="d-sm-none">
                     Generation @offer.Generation
                 </p>
             </div>
-            <div class="col-sm-2 hidden-xs rpic">
-                <img src="@images[offer.Generation]" alt="Generation @offer.Generation" />
-            </div>
+            <img class="rpic d-none d-md-block" src="@images[offer.Generation]" alt="Generation @offer.Generation" />
         </li>
     }
 </ul>
 
 @section sidebar {
-<iframe src="https://discordapp.com/widget?id=378642358797074433&theme=dark" width="600" height="500" style="max-width:100%;" allowtransparency="true" frameborder="0"></iframe>
+    <iframe src="https://discordapp.com/widget?id=378642358797074433&theme=dark" width="600" height="500" style="max-width:100%;" allowtransparency="true" frameborder="0"></iframe>
 }
 
 @section submenu {

@@ -17,7 +17,7 @@
         <div class="category-body">
             @foreach(Board cb in b.Children) {
             <div class="forum clearfix">
-                <div class="col-md-9"><h3 class="h4 forum-title"><i class="fa fa-comments fa-lg unread"></i> <a href="@Url.Map(cb.Url)">@cb.Name</a></h3>
+                <div class="col-lg-9"><h3 class="h4 forum-title"><i class="fa fa-comments fa-lg unread"></i> <a href="@Url.Map(cb.Url)">@cb.Name</a></h3>
                 <div class="forum-info"><i class="fa fa-history"></i> @if(cb.LastPost != null) {
                     <a href="#">@cb.LastPost.Subject</a> <i class="fa fa-user"></i> @cb.LastPost.Author.UserName <i class="fa fa-clock-o"></i> @cb.LastPost.PostTime.ToString("d.M.yyyy H:m")
                     } else { <span class="blur">Noch keine Posts</span> }</div>
@@ -29,7 +29,7 @@
                     </ul>
                     }
                 </div>
-                <div class="col-md-2 hidden-sm hidden-xs foruminfo">
+                <div class="col-lg-2 hidden-sm hidden-xs foruminfo">
                     <div><strong>@cb.PostCount</strong><br /><small>Beiträge</small></div>
                     <div><strong>@cb.ThreadCount</strong><br /><small>Themen</small></div>
                 </div>

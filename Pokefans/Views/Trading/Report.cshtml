@@ -11,7 +11,7 @@
 
 <p>Hier kannst du das Angebot @Model.Title melden. Mögliche Gründe für eine Meldung sind u.A.</p>
 <ul>
-    <li>Falschangaben &emdash; z.B. offensichtlich gecheatete Pokémon, die nicht als Cheat markiert sind</li>
+    <li>Falschangaben &mdash; z.B. offensichtlich gecheatete Pokémon, die nicht als Cheat markiert sind</li>
     <li>Spam, Werbung, o.Ä.</li>
     <li>Sonstige Verstöße gegen unsere Nutzungsbedingungen</li>
 </ul>
@@ -22,9 +22,10 @@
 <form method="post">
     <input type="hidden" name="id" value="@Model.Id" />
     @Html.AntiForgeryToken()
-    <textarea class="from-control" rows="10" placeholder="Text hier eingeben"></textarea>
+
+    <textarea class="form-control" rows="10" placeholder="Text hier eingeben"></textarea>
     <button type="submit" class="btn btn-primary">Meldung abschicken</button>
-    <a href="@Url.Action("Details", "Trading", new { id = Model.Id })">Zurück zum Angebot</a>
+    <a class="btn btn-link" href="@Url.Action("Details", "Trading", new { id = Model.Id })">Zurück zum Angebot</a>
 </form>
 
 @section submenu {

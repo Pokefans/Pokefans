@@ -10,7 +10,6 @@
 
 <h1>@SiteHeader</h1>
 
-<div class="col-md-8">
     <form class="form" method="post">
         <h2 class="size-h4">Basisdaten</h2>
         <div class="form-group">
@@ -29,89 +28,91 @@
             <label for="Nickname">Spitzname</label>
             @Html.TextBoxFor(g => g.Nickname, new { @class = "form-control" })
         </div>
-        <div class="form-group col-sm-6">
-            <label for="Level">Level</label>
-            @Html.TextBoxFor(g => g.Level, new { @class = "form-control" })
-        </div>
-        <div class="form-group col-sm-6">
-            <label for="Generation">Ich tausche dieses Pokemon in...</label>
-            <select name="Generation" id="Generation" class="form-control">
-                <option value="6">Generation 6 (XY, OR/AS)</option>
-                <option value="7" selected="selected">Generation 7 (Sonne/Mond)</option>
-            </select>
+        <div class="row">
+            <div class="form-group col-md-6">
+                <label for="Level">Level</label>
+                @Html.TextBoxFor(g => g.Level, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                <label for="Generation">Ich tausche dieses Pokemon in...</label>
+                <select name="Generation" id="Generation" class="form-control">
+                    <option value="6">Generation 6 (XY, OR/AS)</option>
+                    <option value="7" selected="selected">Generation 7 (Sonne/Mond)</option>
+                </select>
+            </div>
         </div>
         <p><button type="submit" class="btn btn-primary">Absenden</button></p>
         <h2 class="size-h4">Eigenschaften</h2>
-        <div class="clearfix">
-            <div class="form-group col-sm-6">
+        <div class="row">
+            <div class="form-group col-md-6">
                 <label for="AbilityId">Fähigkeit</label>
                 @Html.DropDownListFor(g => g.AbilityId, (IEnumerable<SelectListItem>)ViewBag.Abilities, new { @class = "form-control" })
             </div>
-            <div class="form-group col-sm-6">
+            <div class="form-group col-md-6">
                 <label for="AbilityId">Wesen</label>
                 @Html.DropDownListFor(g => g.NatureId, (IEnumerable<SelectListItem>)ViewBag.Natures, new { @class = "form-control" })
             </div>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.IsEvent)
-                Ist ein Eventpokemon
-            </label>
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.IsEvent, new { @class="form-check-input"})
+            <label class="form-check-label" for="IsEvent">Ist ein Eventpokemon</label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.IsShiny)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.IsShiny, new { @class = "form-check-input" })
+            <label class="form-check-label" for="IsShiny">
                 Ist Shiny
             </label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.IsOriginalTrainer)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.IsOriginalTrainer, new { @class = "form-check-input" })
+            <label class="form-check-label" for="IsOriginalTrainer">
                 Ich bin der Originaltrainer dieses Pokemon
             </label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.IsClone)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.IsClone, new { @class = "form-check-input" })
+            <label class="form-check-label" for="IsClone">
                 Ist Geklont
             </label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.CheatUsed)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.CheatUsed, new { @class = "form-check-input" })
+            <label class="form-check-label" for="CheatUsed">
                 Es wurden Cheats verwendet
             </label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.HasPokerus)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.HasPokerus, new { @class = "form-check-input" })
+            <label class="form-check-label" for="HasPokerus">
                 Dieses Pokemon hat den Pokerus
             </label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.RngUsed)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.RngUsed, new { @class = "form-check-input" })
+            <label class="form-check-label" for="RngUsed">
                 Für dieses Pokemon wurde der PRNG berechnet
             </label>
         </div>
-        <div class="checkbox">
-            <label>
-                @Html.CheckBoxFor(g => g.BottleCapsUsed)
+        <div class="form-check">
+            @Html.CheckBoxFor(g => g.BottleCapsUsed, new { @class = "form-check-input" })
+            <label class="form-check-label" for="BottleCapsUsed">
                 Kronkorken verwendet
             </label>
         </div>
         <h2 class="size-h4">Attacken</h2>
-        <div class="form-group col-sm-6">
-            @Html.DropDownListFor(g => g.Attack1Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
-        </div>
-        <div class="form-group col-sm-6">
-            @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
-        </div>
-        <div class="form-group col-sm-6">
-            @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
-        </div>
-        <div class="form-group col-sm-6">
-            @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+        <div class="row">
+            <div class="form-group col-md-6">
+                @Html.DropDownListFor(g => g.Attack1Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+            </div>
+            <div class="form-group col-md-6">
+                @Html.DropDownListFor(g => g.Attack2Id, (IEnumerable<SelectListItem>)ViewBag.Attacks, new { @class = "form-control" })
+            </div>
         </div>
         <h2 class="size-h4">Statuswerte</h2>
         <div class="form-group">
@@ -155,8 +156,8 @@
         </div>
         <p><button type="submit" class="btn btn-primary">Absenden</button></p>
     </form>
-</div>
-<div class="col-md-4">
+
+@section sidebar {
     @if (ViewBag.Infosection == null)
     {
         <text>Config error: section article not found</text>
@@ -164,7 +165,7 @@
     else {
         <text>@Html.Raw(((Content)ViewBag.Infosection).ParsedContent)</text>
     }
-</div>
+}
 
 @section submenu{
     @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "add", SearchTerm = "" })

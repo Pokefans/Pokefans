@@ -1,28 +1,46 @@
 ﻿@using Microsoft.AspNet.Identity
 @using System.Configuration;
-@if (Request.IsAuthenticated)
-{
 
-    <form method="POST" action="@Url.Map("logout", "user")" id="logoutForm">
-    @Html.AntiForgeryToken()
 
-        <a href="@Url.Map("", "user")">Hallo @User.Identity.GetUserName()!</a>
-        <a href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i> Abmelden</a>
+<ul class="navbar-nav">
+    @if (Request.IsAuthenticated)
+    {
+        <li class="nav-item"><a class="nav-link" href="@Url.Map("", "user")">Hallo @User.Identity.GetUserName()!</a></li>
+        <li class="nav-item">
+            <form method="POST" action="@Url.Map("logout", "user")" id="logoutForm">
+                @Html.AntiForgeryToken()
+                <a class="nav-link" href="javascript:document.getElementById('logoutForm').submit()"><i class="fa fa-sign-out fa-lg"></i> <span class="d-none d-md-inline"> Abmelden</span></a>
+            </form>
+        </li>
+
         @* This needs to get a popover done; also loading more with AJAX. *@
-        <a href="@Url.Map("nachrichten","user")" id="userbar-messages-button">&nbsp;<i class="fa fa-envelope fa-lg"></i>
-        @if(UnreadMessages > 0) {
-            <span class="label label-default mini-counter">@UnreadMessages.ToString()</span>
-	    }
-        </a>
-        <a href="@Url.Map("benachrichtigungen", "user")" id="userbar-notification-button" data-poload="@Url.Map("v1/user/notifications","api")">&nbsp;<i class="fa fa-bell fa-lg"></i>
-        @if(UnreadNotifications > 0) {
-            <span class="label label-default mini-counter">@UnreadNotifications.ToString()</span>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Map("nachrichten","user")" id="userbar-messages-button">
+                &nbsp;<i class="fa fa-envelope fa-lg"></i>
+                @if (UnreadMessages > 0)
+                {
+                    <span class="label label-default mini-counter">@UnreadMessages.ToString()</span>
+                }
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="@Url.Map("benachrichtigungen", "user")" id="userbar-notification-button" data-poload="@Url.Map("v1/user/notifications","api")">
+                &nbsp;<i class="fa fa-bell fa-lg"></i>
+                @if (UnreadNotifications > 0)
+                {
+                    <span class="label label-default mini-counter">@UnreadNotifications.ToString()</span>
+                }
+            </a>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "registerLink", @class = "nav-link" })
+        </li>
+
+        <li class="nav-item">
+            @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "loginLink", @class = "nav-link" })
+        </li>
         }
-        </a>
-    </form>
-}
-else
-{
-        @Html.ActionLink("Registrieren", "Register", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "registerLink" })<span> | </span>
-        @Html.ActionLink("Anmelden", "Login", "Account", "user", routeValues: new { Area = "user" }, htmlAttributes: new { id = "loginLink" })
-}
+</ul>

@@ -18,56 +18,54 @@
         <div class="wrap">
             <div id="search" class="hidden-xs">
                 <div class="clearfix">
-                    <a href="@Url.Map("", null)" class="pull-left"><img src="//static.pokefans.net/images/logo.svg" style="height:50px;"></a>
+                    <a href="@Url.Map("", null)" class="float-left"><img src="//static.pokefans.net/images/logo.svg" style="height:50px;"></a>
 
                     <form action="http://pokefans.net/search" method="post" class="search-form">
                         @* Sobald die Suche portiert wird, hier den HTML-Helper einsetzen.*@
                         <div class="input-group pull-right" id="searchbox" style="max-width: 450px">
                             <input type="text" name="search" class="form-control" placeholder="Suche auf Pokefans">
                             <select name="search-index" class="form-control">
-                              <option value="pokefans">Website</option>
-                              <option value="pokedex">Pokedex</option>
-                              <option value="forum">Forum</option>
-                              <option value="mainpage">ohne Forum</option>
-                              <option value="user">User</option>
-                              <option value="internet">Internet</option>
-                          </select>
-                          <span class="input-group-btn">
-                             @*<input type="submit" value="Jetzt suchen" class="button">*@
-                             <button type="submit" class="btn btn-warning"><i class="fa fa-search fa-lg"></i></button>
-                          </span>
-                      </div>
+                                <option value="pokefans">Website</option>
+                                <option value="pokedex">Pokedex</option>
+                                <option value="forum">Forum</option>
+                                <option value="mainpage">ohne Forum</option>
+                                <option value="user">User</option>
+                                <option value="internet">Internet</option>
+                            </select>
+                            <span class="input-group-append">
+                                @*<input type="submit" value="Jetzt suchen" class="button">*@
+                                <button type="submit" class="btn btn-warning"><i class="fa fa-search fa-lg"></i></button>
+                            </span>
+                        </div>
                     </form>
                 </div>
             </div>
             <nav class="navbar navbar-dark bg-brand navbar-expand-lg" id="menu">
-                <div class="container">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    @Html.ActionLink("POKEFANS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand visible-xs visible-sm visible-md" })
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-navbar" aria-controls="main-navbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                @Html.ActionLink("POKEFANS", "Index", "Home", new { area = "" }, new { @class = "navbar-brand d-lg-none" })
 
-                    <div class="navbar-collapse collapse" id="main-navbar">
-                        <ul class="nav navbar-nav">
-                            <li class="nav-item">@Html.ActionLink("Pokefans", "Index", "Home", new { area = "" }, new { @class = "nav-link hidden-xs hidden-sm" })</li>
-                            <li class="nav-item">@Html.ActionLink("Pokémon-Spiele", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Pokedex", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
-                            <li class="nav-item">@Html.ActionLink("Kampf & Strategie", "Index", "Home", new { area = "" }, new { @class = "nav-link" }))</li>
-                            <li class="nav-item @isActive("fanart")"><a class="nav-link" href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
-                            <li class="nav-item @isActive("trading")"><a class="nav-link"  href="@Url.Map("tausch", null)">Tauschbörse</a></li>
-                            <li class="nav-item @isActive("forum")"><a class="nav-link"  href="@Url.Action("Index", "BoardIndex", new { area = "forum"}, "forum", null)">Forum</a></li>
-                            @if (User.IsInRole("mitarbeiter"))
-            {
-                <li class="nav-item">@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: new  { @class = "nav-link"})</li>
-}
-                        </ul>
-                    </div>
+                <div class="navbar-collapse collapse" id="main-navbar">
+                    <ul class="nav navbar-nav">
+                        <li class="nav-item"><a class="nav-link d-none d-md-block" href="@Url.Map("", null)">Pokefans</a></li>
+                        <li class="nav-item">@Html.ActionLink("Pokémon-Spiele", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Pokedex", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item">@Html.ActionLink("Kampf & Strategie", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                        <li class="nav-item @isActive("fanart")"><a class="nav-link" href="@Url.Action("Index", "FanartHome", new { area = "fanart" }, "fanart", null)">Fanart & Zeichnungen</a></li>
+                        <li class="nav-item @isActive("trading")"><a class="nav-link" href="@Url.Map("tausch", null)">Tauschbörse</a></li>
+                        <li class="nav-item @isActive("forum")"><a class="nav-link" href="@Url.Action("Index", "BoardIndex", new { area = "forum"}, "forum", null)">Forum</a></li>
+                        @if (User.IsInRole("mitarbeiter"))
+                        {
+                            <li class="nav-item">@Html.ActionLink("Mitarbeit", "Index", "Dashboard", "mitarbeit", routeValues: null, htmlAttributes: new { @class = "nav-link" })</li>
+                        }
+                    </ul>
                 </div>
             </nav>
             @RenderSection("Submenu", false)
             @RenderSection("FullWidth", false)
-            <div class="clearfix">
-                <div id="content" class="content @(IsSectionDefined("Sidebar") ? "has-sidebar" : "")">
+            <div class="clearfix" id="mainbody">
+                <div id="content" class="content @(IsSectionDefined("Sidebar") ? "has-sidebar mr-3" : "")">
                     @RenderBody()
                 </div>
                 @if (IsSectionDefined("Sidebar"))
@@ -78,20 +76,17 @@
                 }
             </div>
             <footer id="footer">
-                <div id="breadcrumbs">
-                    <div class="col-sm-6">
+                <nav id="breadcrumbs" class="navbar navbar-light bg-pf-grey navbar-expand">
+                    <p class="navbar-text mr-md-auto d-md-inline">
                         @Html.Partial("_BreadcrumbPartial")
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="pull-right">
-                            @Html.Partial("_LoginPartial")
-                        </div>
-                    </div>
-                </div>
+                    </p>
+
+                    @Html.Partial("_LoginPartial")
+                </nav>
                 <div id="copyright">
-                    <div class="clearfix">
-                        <div class="copyright-note"><p>&copy; 2006 - @DateTime.Now.Year. Pokefans ist eine private Pokémon-Fanseite. <span class="note">Emojis von <a href="https://www.emojione.com">EmojiOne</a>.</span> </p></div>
-                        <div class="copyright-links"><p><a href="http://pokefans.net/pokefans/impressum">Kontakt</a> <a href="http://pokefans.net/pokefans/impressum#datenschutz">Datenschutz</a> <a href="http://pokefans.net/sitemap">Sitemap</a> <a href="http://www.facebook.com/pokefans.net"><i class="fa fa-facebook-official fa-2x"></i></a> <a href="http://pinterest.com/pokefans/pins/"><i class="fa fa-pinterest-square fa-2x"></i></a> <a href="http://www.youtube.com/user/pokefansnet"><i class="fa fa-youtube-square fa-2x"></i></a> <a href="http://twitter.com/PokefansNET"><i class="fa fa-twitter-square fa-2x"></i></a> <a href="https://github.com/Pokefans/Pokefans"><i class="fa fa-github-square fa-2x"></i></a></p></div>
+                    <div class="row">
+                        <div class="col-md-6"><p>&copy; 2006 - @DateTime.Now.Year. Pokefans ist eine private Pokémon-Fanseite. <span class="note">Emojis von <a href="https://www.emojione.com">EmojiOne</a>.</span> </p></div>
+                        <div class="col-md-6"><p class="text-right"><a href="http://pokefans.net/pokefans/impressum">Kontakt</a> <a href="http://pokefans.net/pokefans/impressum#datenschutz">Datenschutz</a> <a href="http://pokefans.net/sitemap">Sitemap</a> <a href="http://www.facebook.com/pokefans.net"><i class="fa fa-facebook-official fa-2x"></i></a> <a href="http://pinterest.com/pokefans/pins/"><i class="fa fa-pinterest-square fa-2x"></i></a> <a href="http://www.youtube.com/user/pokefansnet"><i class="fa fa-youtube-square fa-2x"></i></a> <a href="http://twitter.com/PokefansNET"><i class="fa fa-twitter-square fa-2x"></i></a> <a href="https://github.com/Pokefans/Pokefans"><i class="fa fa-github-square fa-2x"></i></a></p></div>
                     </div>
                 </div>
             </footer>

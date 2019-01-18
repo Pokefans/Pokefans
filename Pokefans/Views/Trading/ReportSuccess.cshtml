@@ -7,15 +7,23 @@
     ActiveMenuKey = "trading";
 }
 
-<div class="col-md-2">
-    @Widgets.AnimatedSuccess()
-</div>
-<div class="col-md-10">
-    <h2>Du hast das Angebot "@Model.Title" erfolgreich gemeldet.</h2
-    <p>Danke für deine Meldung! Ein_e Moderator_in wird sich bald darum kümmern. <br />
-    Du erhältst eine Benachrichtigung, sobald deine Meldung bearbeitet wurde.</p>
-    <p><a href="@Url.Action("Details", "Trading", new { id = Model.Id })">Zurück zum Angebot</a> 
-    <a href="@Url.Action("Index")">Zurück zur Übersicht</a></p>
+<div class="row align-items-center">
+    <div class="col-lg-2">
+        @Widgets.AnimatedSuccess()
+    </div>
+    <div class="col-lg-10">
+        <h2>
+            Du hast das Angebot "@Model.Title" erfolgreich gemeldet.
+        </h2>
+        <p>
+            Danke für deine Meldung! Ein_e Moderator_in wird sich bald darum kümmern. <br />
+            Du erhältst eine Benachrichtigung, sobald deine Meldung bearbeitet wurde.
+        </p>
+        <p>
+            <a class="btn btn-link" href="@Url.Action("Details", "Trading", new { id = Model.Id })">Zurück zum Angebot</a>
+            <a class="btn btn-link" href="@Url.Action("Index")">Zurück zur Übersicht</a>
+        </p>
+    </div>
 </div>
 
 @section submenu {

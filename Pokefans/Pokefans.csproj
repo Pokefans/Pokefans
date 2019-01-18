@@ -796,6 +796,11 @@
     <Content Include="scss\_user.scss" />
     <Content Include="scss\animations\_spinner.scss" />
     <Content Include="scss\animations\_checkmark.scss" />
+    <Content Include="scss\legacy\_tabs.scss" />
+    <Content Include="scss\legacy\_layout.scss" />
+    <Content Include="scss\legacy\_content.scss" />
+    <Content Include="scss\_comments.scss" />
+    <Content Include="scss\_breadcrumbs.scss" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -828,6 +833,7 @@
     <Folder Include="Areas\mitarbeit\Views\Wifi\" />
     <Folder Include="scss\select2-bootstrap4\" />
     <Folder Include="scss\animations\" />
+    <Folder Include="scss\legacy\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

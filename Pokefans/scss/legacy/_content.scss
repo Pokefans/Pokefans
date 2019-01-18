@@ -1,0 +1,69 @@
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info.
+
+// various fixes for old articles
+#content div[itemprop="articleBody"] table {
+    @extend .table;
+
+    table:not(.table-singlecolor) {
+        @extend .table-striped;
+    }
+
+    // quotations
+    // we only fix that for old articles, everyting else is.. well duh
+
+
+}
+
+// Damit der Rahmen von Zellen mit einem rowspan > 1 nicht irgendwo im nichts mitten in der Tabelle
+// endet, umrahmen wir die Zelle mit dem rowspan zusätzlich passend
+table:not(.table-force-nocolumnborder) {
+    td[rowspan] {
+        &:not(:last-child) {
+            border-right: $table-border-width solid $table-border-color;
+        }
+
+        &:not(:first-child) {
+            border-left: $table-border-width solid $table-border-color;
+        }
+    }
+}
+
+
+// Some addidtional quote styles
+q {
+    quotes: '\201E' '\201C' '\201A' '\2018';
+
+    &:before {
+        content: '\201E';
+    }
+
+    &:after {
+        content: '\201C';
+    }
+
+    q {
+
+        &:before {
+            content: '\201A';
+        }
+
+        &:after {
+            content: '\2018';
+        }
+    }
+}
+
+blockquote.quote {
+    border: 5px solid $gray-400;
+    border-width: 0px 0px 0px 5px;
+    padding: 15px 10px;
+    background-color: $gray-200;
+    font-size: 0.9em;
+}
+
+cite {
+    padding: 0 2em;
+    margin: 1.6em 0;
+    color: $gray-600;
+}
+

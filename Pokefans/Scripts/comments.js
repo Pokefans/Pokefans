@@ -13,7 +13,7 @@ function nl2br(str) {
  */
 function insertComment(comment) {
     // #ID für Kommentar-Anker setzen
-    $commentTemplate = $('[data-role="commentTemplate"]').clone().attr('id', 'k' + comment.CommentId).removeClass('hidden').removeAttr('data-role');
+    $commentTemplate = $('[data-role="commentTemplate"]').clone().attr('id', 'k' + comment.CommentId).removeClass('d-none').removeAttr('data-role');
 
     // Den Anker zum Kommentar setzen
     $commentTemplate.find('a[data-role="commentLink"]').attr('href', '#k' + comment.CommentId);
@@ -123,7 +123,7 @@ $(document).ready(function (e) {
             $commentForm.find('[name="parentId"]').val(commentId);
             $commentForm.find('[name="commentedObjectId"]').val(commentedObjectId);
             $commentForm.find('[name="context"]').val(context);
-            $commentForm.find('[data-role="submitError"]').removeClass('hide').addClass('hide');
+            $commentForm.find('[data-role="submitError"]').removeClass('d-none').addClass('d-none');
 
             $commentFormContainer.html($commentForm);
         }
@@ -168,7 +168,7 @@ $(document).ready(function (e) {
 
                     // Das Textfeld leeren
                     $form.find('[name="text"]').val('');
-                    $submitErrorBox.removeClass('hide').addClass('hide');
+                    $submitErrorBox.removeClass('d-none').addClass('d-none');
 
                     // Formular ausblenden, wenn es nicht das Hauptformular ist
                     if (parentId != 0) {
@@ -176,15 +176,15 @@ $(document).ready(function (e) {
                     }
                 }
                 else {
-                    $submitErrorBox.removeClass('hide').html(data.error);
+                    $submitErrorBox.removeClass(d-none).html(data.error);
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 if (errorThrown == "Bad Request") {
-                    $submitErrorBox.removeClass('hide').html('Dein Kommentar darf nicht leer sein.');
+                    $submitErrorBox.removeClass('d-none').html('Dein Kommentar darf nicht leer sein.');
                 }
                 else {
-                    $submitErrorBox.removeClass('hide').html('Es gab ein Problem beim Speichern deines Kommentars. Bitte melde ihn im Forum und gib dabei folgende Information an:' + window.btoa(errorThrown));
+                    $submitErrorBox.removeClass('d-none').html('Es gab ein Problem beim Speichern deines Kommentars. Bitte melde ihn im Forum und gib dabei folgende Information an:' + window.btoa(errorThrown));
                 }
             },
 
@@ -289,7 +289,7 @@ $(document).ready(function (e) {
         // Den Ladevorgang anzeigen
         $link.blur().find('i').removeClass('fa-comments').addClass('fa-spinner').addClass('fa-pulse');
 
-        $commentBox.removeClass('hide');
+        $commentBox.removeClass('d-none');
 
         if (!$link.attr('disabled')) {
             $link.attr('disabled', '');

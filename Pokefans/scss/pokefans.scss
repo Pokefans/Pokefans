@@ -7,6 +7,8 @@
 @import "../node_modules/bootstrap/scss/bootstrap";
 
 // then include the rest of our stuff
+@import "breadcrumbs";
+@import "comments";
 @import "content";
 @import "fanart";
 @import "forum";
@@ -16,6 +18,13 @@
 @import "sticky";
 @import "trading";
 @import "user";
+
+// legacy stuff
+// not sure if this still needs to be around.
+// TODO: investigate
+@import "legacy/layout";
+@import "legacy/tabs";
+@import "legacy/content";
 
 // finally, any libraries
 @import "select2-bootstrap4/layout";

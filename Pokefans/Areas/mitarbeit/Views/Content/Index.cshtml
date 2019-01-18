@@ -117,19 +117,19 @@
             </div>
             <div class="collapse in" style="margin-top: -30px" id="collapse-type">
                 <div class="box-body">
-                    <menu class="nav nav-pills nav-stacked col-lg-6 col-md-12">
+                    <menu class="nav nav-pills nav-stacked col-xl-6 col-lg-12">
                         @ShowFilter("type:news", "News", "file-text-o")
                         @ShowFilter("type:article", "Artikel", "file-text-o")
                         @ShowFilter("type:element", "Spezialelemente", "file-text-o")
                         @ShowFilter("type:boilerplate", "Textbausteine", "file-text-o")
                     </menu>
-                    <menu class="nav nav-pills nav-stacked col-lg-6 col-md-12">
+                    <menu class="nav nav-pills nav-stacked col-xl-6 col-lg-12">
                         @ShowFilter("status:public", "Öffentlich", "clock-o")
                         @ShowFilter("status:ready", "Fertig", "clock-o")
                         @ShowFilter("status:progress", "In Arbeit", "clock-o")
                         @ShowFilter("status:discarded", "Verworfen", "clock-o")
                     </menu>
-                    <menu class="nav nav-pills nav-stacked col-md-12 col-lg-12">
+                    <menu class="nav nav-pills nav-stacked col-lg-12 col-xl-12">
                         <li>
                             <a href="@Url.RouteUrl("ContentIndex", new { Page = Model.Page })">
                                 <i class="fa fa-times"></i> Alle Filter aufheben

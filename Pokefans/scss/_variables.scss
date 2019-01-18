@@ -16,12 +16,12 @@ $color-complement-4: #E58800;
 
 $theme-colors: (
     "brand": $color-primary-0,
-    "complement": $color-complement-0
+    "complement": $color-complement-0,
+    "pf-grey": #eee
 );
 
-// set primary and secondary to our liking
+// set primary to our liking
 $primary: $color-primary-0;
-$secondary: $color-complement-0; // let's see if this is a good idea
 
 // disable rounded stuff
 $enable-rounded: false;
@@ -40,5 +40,32 @@ $h4-font-size: $font-size-base * 1.3;
 $h5-font-size: $font-size-base;
 $h6-font-size: $font-size-base * 0.85;
 
+$intro-font-size: $font-size-base * 1.1;
+
 $headings-font-weight: 300;
 $headings-color: $color-complement-4;
+
+// alter the grid slighty
+$grid-breakpoints: (
+    xs: 0,
+    sm: 576px,
+    md: 768px,
+    lg: 992px,
+    xl: 1366px
+);
+
+$container-max-widths: (
+    sm: 540px,
+    md: 720px,
+    lg: 960px,
+    xl: 1366px
+);
+
+// bump navbar-dark color
+$navbar-dark-color: rgba(255, 255, 255, .9);
+
+$mainbody-padding: 15px;
+
+// Sidebar
+$sidebar-width: 258px;
+$sidebar-distance: 40px;

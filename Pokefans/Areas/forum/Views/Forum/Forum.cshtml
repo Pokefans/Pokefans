@@ -16,7 +16,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-12 clearfix">
+    <div class="col-12 clearfix">
         @if(Model.CanWrite) {
            <a href="@Url.Map(Model.Board.Url + "/neu.html")" class="btn btn-primary pull-left"><i class="fa fa-plus"></i> Neues Thema</a>
         }
@@ -56,8 +56,8 @@
 
 foreach(var t in list) {
         <div class="row @cssClass">
-            <div class="col-xs-1"><i class="fa fa-comments"></i></div>
-            <div class="col-xs-11 col-sm-10 col-md-9">
+            <div class="col-1"><i class="fa fa-comments"></i></div>
+            <div class="col-11 col-md-10 col-lg-9">
                 <div>
                     <a href="@Url.Map(Model.Board.Url, string.Format("topic{}.html", t.Thread.Id))">@t.Thread.Title</a>
                 </div>
@@ -65,7 +65,7 @@ foreach(var t in list) {
                     <a href="#">@t.Thread.Author.UserName</a> • @t.Thread.ThreadStartTime.ToString("dd.MM.yyyy HH:mm")
                 </div>
             </div>
-            <div class="col-md-1 hidden-sm hidden-xs">
+            <div class="col-lg-1 hidden-sm hidden-xs">
                 <dl class="dl-horizontal dl-forum">
                     <dt>Antworten</dt>
                     <dd>@t.Thread.Replies.ToString()</dd>
@@ -73,7 +73,7 @@ foreach(var t in list) {
                     <dd>@t.Thread.Visits.ToString()</dd>
                 </dl>
             </div>
-            <div class="col-sm-1 col-md-1 hidden-xs">
+            <div class="col-md-1 col-lg-1 hidden-xs">
                 <div>@t.LastPost.Subject</div>
                 <div><a href="#">@t.LastPost.Author.UserName</a></div>
             </div>

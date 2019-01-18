@@ -5,3 +5,43 @@
         height: 65px
     }
 }
+
+.content.has-sidebar {
+    flex-grow: 1;
+    flex-shrink: 0;
+    @include media-breakpoint-up("lg") {
+        width: 1px; // set that to 1px so that it grows due to flexbox magic
+                    // but only if we're not in column mode
+    }
+}
+
+#sidebar {
+    max-width: 100%;
+    flex-grow: 0;
+    flex-shrink: 0;
+    
+    h4 {
+        margin-top: 0px !important;
+    }
+
+    @include media-breakpoint-up("lg") {
+        width: $sidebar-width;
+        // we only need this trickery if we are in sidebar mode
+        // Erste Seitenüberschrift (h3) auf gleiche Basislinie wie Seitenüberschrift setzen
+        .element:first-child h3, .element:first-child .size-h3 {
+            padding-top: 8px;
+        }
+        // Erste Seitenüberschrift (h4) auf gleiche Basislinie wie Seitenüberschrift setzen
+        .element:first-child h4 {
+            margin-top: 29px !important;
+        }
+    }
+
+    .element {
+        margin-top: 35px;
+
+        &:first-child {
+            margin-top: 0px !important;
+        }
+    }
+}

@@ -4,7 +4,6 @@
 
 #pfcarousel {
     padding: 0;
-    margin-top: -19px;
 
     .item-inner {
         height: 400px;
@@ -34,7 +33,8 @@
     
     .carousel-caption {
         position: initial;
-        bottom: auto
+        bottom: auto;
+        padding-top: 250px;
     }
 }
 
@@ -59,4 +59,16 @@
 
 .list-spielehilfen li {
     list-style-type: none
+}
+
+// Content intro
+.intro {
+    font-weight: 600;
+    font-size: $intro-font-size;
+}
+
+// fix people that cannot use html properly.
+#content div[itemprop="articleBody"] br + h2 {
+    margin-top: 0px !important;
+    padding-top: 0px !important;
 }

@@ -26,16 +26,6 @@
     }
 </div>
 
-@if (!string.IsNullOrEmpty(Model.Content.StylesheetCss))
-{
-    @section CustomHeaders {
-        <!-- Content specific stylesheet -->
-        @*TODO load this from the file system instead from the database (or at least from another URL)*@
-        <style>
-        @Html.Raw(Model.Content.StylesheetCss)
-        </style>
-    }
-}
 
 @if (Model.Content.Type == ContentType.News)
 {
@@ -69,15 +59,26 @@ else if (Model.Content.Category != null && Model.Content.Category.SidebarContent
 }
 
 @section CustomHeaders {
-    @if(File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], @Model.Content.Id + ".css"))) 
+
+
+
+    @if (File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], @Model.Content.Id + ".css")))
     {
         <link rel="stylesheet" href="@Model.Content.StylesheetUrl" />
     }
-    @foreach(ContentBoilerplate b in Model.Content.Boilerplates) {
-        string css = b.ContentId.ToString() + ".css";
-        if(File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], css)))
-        {
-            <link rel="stylesheet" href="//static.@ConfigurationManager.AppSettings["Domain"]/stylesheets/content/@css" />
-        }
+    else if (!string.IsNullOrEmpty(Model.Content.StylesheetCss))
+    {
+        <style>
+        @Html.Raw(Model.Content.StylesheetCss)
+        </style>
     }
+
+@foreach (ContentBoilerplate b in Model.Content.Boilerplates)
+{
+    string css = b.ContentId.ToString() + ".css";
+    if (File.Exists(Path.Combine(ConfigurationManager.AppSettings["ContentStylesheetPath"], css)))
+    {
+        <link rel="stylesheet" href="//static.@ConfigurationManager.AppSettings["Domain"]/stylesheets/content/@css" />
+    }
+}
 }

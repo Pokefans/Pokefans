@@ -14,7 +14,7 @@
 
 <h1>Private Nachrichten</h1>
 
-<div class="col-md-9">
+<div class="col-lg-9">
     <h2>@Model.Message.Subject</h2>
     <dl class="dl-horizontal">
         <dt>Von:</dt>
@@ -43,7 +43,7 @@
         <div class="pull-right text-danger">Du hast diese Nachricht am @Model.ReportTime.Value.ToString("dd.MM.yyyy") um @Model.ReportTime.Value.ToString("HH:mm") gemeldet.</div>
     }
 </div>
-<div class="col-md-3">
+<div class="col-lg-3">
     <h3>Aktive Labels</h3>
     <p class="help-block">Klicken zum entfernen.</p>
     <p class="current-labels">@foreach (var label in Model.MessageLabels) {

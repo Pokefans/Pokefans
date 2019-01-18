@@ -29,6 +29,7 @@ See copying.md for further legal info.*/
 
 // basic
 .select2-container {
+    max-width: 100% !important; // select2 sucks with flexbox apparently
     *:focus {
         outline: 0;
     }

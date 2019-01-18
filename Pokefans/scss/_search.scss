@@ -28,22 +28,23 @@
 #searchbox {
     max-width: 450px;
     padding: 0;
-    border-right: none;
 
-
-    &> input {
+    & > input {
         max-width: 285px;
         min-width: 50px;
+        border-right: none;
     }
 
     select {
         display: inline;
         max-width: 120px;
         min-width: 50px;
+        border-left: none;
     }
 
     @include media-breakpoint-down("md") {
         margin: 0;
+
         input {
             width: 150px;
         }

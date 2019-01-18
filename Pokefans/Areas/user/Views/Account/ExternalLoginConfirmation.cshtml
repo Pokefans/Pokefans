@@ -18,14 +18,14 @@
         fertigzustellen.
     </p>
     <div class="form-group">
-        @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
+        @Html.LabelFor(m => m.Email, new { @class = "col-lg-2 control-label" })
+        <div class="col-lg-10">
             @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
         </div>
     </div>
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-lg-offset-2 col-lg-10">
             <input type="submit" class="btn btn-default" value="Registrieren" />
         </div>
     </div>

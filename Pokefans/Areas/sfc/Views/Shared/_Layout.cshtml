@@ -69,10 +69,10 @@
     </nav>
     <section class="container content">
       <div class="row">
-        <div class="col-md-9" id="inhalt">
+        <div class="col-lg-9" id="inhalt">
           @RenderBody()
         </div>
-        <div class="col-md-3" id="sidebar">
+        <div class="col-lg-3" id="sidebar">
             <h3>Diverses</h3>
               <ul class="nav nav-pills nav-stacked">
                 <li><a href="@Url.Map("wallpaper")">Wallpaper</a></li>
@@ -106,7 +106,7 @@
           }
         </ul>
         <div class="row">
-          <div class="col-xs-12 help-block">
+          <div class="col-12 help-block">
             <p><small>"Pokémon" ist ein eingetragenes Warenzeichen der Firma Nintendo. "Action Replay" ist ein eingetragenes Warenzeichen von Datel Interact. www.SearchForCheats.de.vu © 2006 - @DateTime.Now.Year by Mastermind_X</small></p>
             <p><small>TheSearchForCheats ist Teil des <a href="@Url.Action("Index", "Home", new { area = "" }, null, true)">Pokefans-Netzwerks</a>. <a href="@Url.Map("impressum",null)">Impressum</a> | <a href="@Url.Map("impressum#datenschutz",null)">Datenschutz</a> | <a href="@Url.Action("Sitemap","Home")">Sitemap</a></small></p>
           </div>

@@ -7,74 +7,82 @@
     SiteTitle = "Aktivitätsfeed";
     SiteHeader = "Aktivitätsfeed";
     SiteDescription = "";
-    ActiveMenuKey = "";
-}
+    ActiveMenuKey = ""; }
 
-<div class="col-sm-9">
 <h2>Neuigkeiten für dich</h2>
-@foreach(var content in Model.FeedContent) {
-    <div class="panel panel-default">
-        <div class="feed-content panel-body">
-            <img src="@content.AvatarUrl" class="img-responsive feed-avatar">
-            @if(content is FanartCommentFeedContent) {
-                <text>@FanartComment((FanartCommentFeedContent)content)</text>
-            }
-            else if (content is FanartFeedContent) {
-                <text>@Fanart((FanartFeedContent)content)</text>
-            }
-            else if (content is NewsCommentFeedContent) {
-                <text>@NewsComment((NewsCommentFeedContent)content)</text>
-            }
-            else if (content is NewWifiOfferFeedContent) {
-                <text>@NewWifiOffer((NewWifiOfferFeedContent)content)</text>
-            }
-            else if (content is PokedexCommentFeedContent) {
-                <text>@PokedexComment((PokedexCommentFeedContent)content)</text>
-            }
+<div class="feed pl-3">
+    @foreach (var content in Model.FeedContent)
+    {
+        <div class="media mt-3">
+            <img src="@content.AvatarUrl" class="mr-3 d-flex"> @*flexbug 12: ie11 needs d-flex to display properly*@
+            <div class="media-body">
+                @if (content is FanartCommentFeedContent)
+                {
+                    <text>@FanartComment((FanartCommentFeedContent)content)</text>
+                }
+                else if (content is FanartFeedContent)
+                {
+                    <text>@Fanart((FanartFeedContent)content)</text>
+                }
+                else if (content is NewsCommentFeedContent)
+                {
+                    <text>@NewsComment((NewsCommentFeedContent)content)</text>
+                }
+                else if (content is NewWifiOfferFeedContent)
+                {
+                    <text>@NewWifiOffer((NewWifiOfferFeedContent)content)</text>
+                }
+                else if (content is PokedexCommentFeedContent)
+                {
+                    <text>@PokedexComment((PokedexCommentFeedContent)content)</text>
+                }
+            </div>
         </div>
-    </div>
-}    
+    }
 </div>
-<div class="col-sm-3">
-    <div>
+@section sidebar {
         <h3>Sidebar</h3>
         Hier muss noch irgendwas hin.
         <hr>
         @Html.Partial("~/Views/Shared/Advertising/_SkyscraperPartial.cshtml")
-    </div>
-
-</div>
+}
 
 @helper FanartComment(FanartCommentFeedContent content) {
     <text>
-        <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat einen neuen Kommentar zum Fanart <a href="@content.Fanart.Url">@content.Fanart.Title</a> gepostet.
-        <hr>
-        <div class="feed-comment">@content.Comment</div> 
+        <h5 class="mt-0"><a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat einen neuen Kommentar zum Fanart <a href="@content.Fanart.Url">@content.Fanart.Title</a> gepostet.</h5>
+        <div class="feed-comment">@Html.Raw(content.Comment)</div>
     </text>
 }
 
 @helper Fanart(FanartFeedContent content) {
     <text>
-        <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat ein neues Fanart hochgeladen: <a href="@content.Fanart.Url">@content.Fanart.Title</a>
-        <hr>
-        <div class="feed-fanart"><img src="@Url.Map("/fanart/uploads/"+content.Fanart.LargeThumbnailUrl, "files")"></div>
+        <h5 class="mt-0">
+            <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat ein neues Fanart hochgeladen: <a href="@content.Fanart.Url">@content.Fanart.Title</a>
+        </h5>
+        <div class="feed-fanart"><img src="@Url.Map("fanart/uploads/"+content.Fanart.LargeThumbnailUrl, "files")"></div>
     </text>
 }
 
 @helper NewsComment(NewsCommentFeedContent content) {
     <text>
-        <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat einen neuen Kommentar <a href="@content.ContentUrl">zu einer Newsmeldung</a> verfasst.
-        <hr>
-        <div class="feed-comment">@content.Comment</div>
+        <h5 class="mt-0">
+            <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat einen neuen Kommentar <a href="@content.ContentUrl">zu einer Newsmeldung</a> verfasst.
+        </h5>
+        <div class="feed-comment">@Html.Raw(content.Comment)</div>
     </text>
 }
 @helper NewWifiOffer(NewWifiOfferFeedContent content) {
-    <text><a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat <a href="@Url.Map("/tausch/"+@content.Offer.Id.ToString(), null)">ein neues Angebot</a> in die Tauschbörse gestellt.</text>
-
+    <text>
+        <h5 class="mt-0">
+            <a href="@Url.Map("profil/"+content.Url, "user")">@content.Username</a> hat <a href="@Url.Map("/tausch/"+@content.Offer.Id.ToString(), null)">ein neues Angebot</a> in die Tauschbörse gestellt.
+        </h5>
+    </text>
 }
+
 @helper PokedexComment(PokedexCommentFeedContent content) {
     <text>PokedexCommentContent</text>
 }
+       
 @section submenu {
     @Html.Partial("~/Areas/user/Views/Shared/_submenuPartial.cshtml", new UserSubmenuViewModel("manage", ""))
 }

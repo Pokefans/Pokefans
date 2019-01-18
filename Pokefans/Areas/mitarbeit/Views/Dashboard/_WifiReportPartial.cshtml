@@ -10,8 +10,8 @@
             @Widgets.AjaxChart("wifi-reports", Url.Map("api/v1/dashboard/wifi-report-chart", "mitarbeit"))
             <hr />
             <div id="wifi-report-box-inner">
-                <p class="col-xs-11">Die letzten 5 unbearbeiten Meldungen:</p>
-                <p class="col-xs-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
+                <p class="col-11">Die letzten 5 unbearbeiten Meldungen:</p>
+                <p class="col-1"><a data-bind="click: loadData" class="text-muted"><i class="fa fa-refresh"></i></a></p>
                 <table class="table table-striped table-hover"
                        id="wifi-report-table"
                        data-load="@Url.Map("api/v1/dashboard/wifi-report-table")"

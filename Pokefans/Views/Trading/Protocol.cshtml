@@ -1,128 +1,128 @@
-@model List<TradeLog>
-@using Pokefans.Data.Wifi
-@using Pokefans.Data.Pokedex
-@using Pokefans.Models
-@{
-    SiteTitle = "Tauschbörse";
-    SiteHeader = "Mein Tauschprotokoll";
-    SiteDescription = "";
-    ActiveMenuKey = "trading";
+﻿@model List<TradeLog>
+    @using Pokefans.Data.Wifi
+    @using Pokefans.Data.Pokedex
+    @using Pokefans.Models
+    @{
+        SiteTitle = "Tauschbörse";
+        SiteHeader = "Mein Tauschprotokoll";
+        SiteDescription = "";
+        ActiveMenuKey = "trading";
 
-    Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
+        Dictionary<PokemonGeneration, string> images = new Dictionary<PokemonGeneration, string>
+{
+{ PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
+{ PokemonGeneration.Generation7, "//files.pokefans.net/images/sonne-mond/sonne-mond-logo-klein.png" }
+};
+        Dictionary<PokemonGeneration, string> names = new Dictionary<PokemonGeneration, string>
+{
+{ PokemonGeneration.Generation6, "Generation 6 (XY, OR/AS)" },
+{ PokemonGeneration.Generation7, "Generation 7 (Sonne/Mond)" }
+};
+    }
+
+    <h2>@SiteHeader</h2>
+
+
+    @if (Model.Count > 0)
     {
-        { PokemonGeneration.Generation6, "//files.pokefans.net/images/or-as/logo-gemeinsam-klein.png" },
-        { PokemonGeneration.Generation7, "//files.pokefans.net/images/sonne-mond/sonne-mond-logo-klein.png" }
-    };
-    Dictionary<PokemonGeneration, string> names = new Dictionary<PokemonGeneration, string>
-    {
-        { PokemonGeneration.Generation6, "Generation 6 (XY, OR/AS)" },
-        { PokemonGeneration.Generation7, "Generation 7 (Sonne/Mond)" }
-    };
-}
-
-<h2>@SiteHeader</h2>
-
-
-@if(Model.Count > 0) {
-<ul class="list-unstyled tradinglist">
-        @foreach (var log in Model)
-        {
-	        var offer = log.Offer;
-            <li class="clearfix">
-                <div class="col-sm-10">
-                    <div class="lpic">
-                        @*Use the global link sprites, because they're the nicest.*@
-                        <a href="@Url.Action("Details", new { id = offer.Id })"><img src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
-                    </div>
-                    <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
-                    @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von @*User url*@<a href="@Url.Profile(log.UserFrom)">@log.UserFrom.UserName</a> an <a href="@Url.Profile(log.UserTo)">@log.UserTo.UserName</a> (@(log.CompletedTime.Value.ToString("dd.MM.yyyy")))<br />
-                    @{
-                        List<string> l = new List<string>();
-                        l.Add(string.Format("Level {0}", offer.Level));
-                        if (offer.IsShiny)
-                        {
-                            l.Add(string.Format("<i class=\"fa fa-star\"></i> Shiny"));
+        <ul class="list-unstyled tradinglist">
+            @foreach (var log in Model)
+            {
+                var offer = log.Offer;
+                <li class="media mt-3">
+                    <a href="@Url.Action("Details", new { id = offer.Id })"><img class="lpic" src="//files.pokefans.net/sprites/global-link/120px/@(offer.Pokemon.PokedexId.ToString()).png" /></a>
+                    <div class="media-body">
+                        <h3><a href="@Url.Action("Details", new { id = offer.Id })">@offer.Title</a></h3>
+                        <p>
+                            @*Pokedex url*@<a href="#">@offer.Pokemon.Name.German</a> von <a href="@Url.Profile(log.UserFrom)">@log.UserFrom.UserName</a> an <a href="@Url.Profile(log.UserTo)">@log.UserTo.UserName</a> (@(log.CompletedTime.Value.ToString("dd.MM.yyyy")))<br />
+                            @{
+                                List<string> l = new List<string>();
+                                l.Add(string.Format("Level {0}", offer.Level));
+                                if (offer.IsShiny)
+                                {
+                                    l.Add(string.Format("<i class=\"fa fa-star\"></i> Shiny"));
+                                }
+                                if (offer.Item != null)
+                                {
+                                    l.Add(string.Format("Hält <a href=\"" + Url.Action("View", "Itemdex", new { item = offer.Item.Url }) + "\">" + offer.Item.Name.ToString() + "</a>"));
+                                }
+                                if (offer.CheatUsed)
+                                {
+                                    l.Add(string.Format("Cheat verwendet"));
+                                }
+                                if (offer.IsOriginalTrainer)
+                                {
+                                    l.Add(string.Format("Vom Originaltrainer"));
+                                }
+                                if (offer.EffortValues.Any())
+                                {
+                                    l.Add("EV-trainiert");
+                                }
+                                if (offer.DeterValues.Any())
+                                {
+                                    l.Add("DV-Werte bekannt");
+                                }
+                                // maybe this should produce an inline list, but eh...
+                            }
+                            @Html.Raw(string.Join(" &bull; ", l.ToArray()))
+                        </p>
+                        <p class="d-sm-none">
+                            Generation @offer.Generation
+                        </p>
+                        <p>
+                            @if (offer.Status == TradingStatus.Completed)
+                            {
+                                if (log.UserToId == CurrentUser.Id && log.ValidOn.HasValue && log.ValidOn.Value > DateTime.Now)
+                                {
+                                <p>
+                                    <a href="@Url.Action("ConfirmTrade", new { id = log.Id })" class="btn btn-success">Tausch bestätigen</a>
+                                </p>
+                            }
+                            if ((CurrentUser.Id == log.UserToId && log.SellerRating == null) || (CurrentUser.Id == log.UserFromId && log.CustomerRating == null))
+                            {
+                                <text> Bitte bewerte diesen Tausch:
+                                    <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Positive })" class="text-success"><i class="fa fa-lg fa-thumbs-up"></i></a>
+                                    <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Neutral })" class="blur"><i class="fa fa-lg fa-minus"></i></a>
+                                    <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Negative })" class="text-danger"><i class="fa fa-lg fa-thumbs-down"></i></a>
+                                </text>
+                            }
+                            else
+                            {
+                                TradeRating? rating = null;
+                                <text>Bewertung:</text>
+                                if (CurrentUser.Id == log.UserToId)
+                                {
+                                    rating = log.SellerRating;
+                                }
+                                else if (CurrentUser.Id == log.UserFromId)
+                                {
+                                    rating = log.CustomerRating;
+                                }
+                                switch (rating)
+                                {
+                                    case TradeRating.Positive:
+                                        <i class="fa fa-lg fa-thumbs-up text-success"></i> break;
+                                    case TradeRating.Neutral:
+                                        <i class="fa fa-lg fa-minus blur"></i> break;
+                                    case TradeRating.Negative:
+                                        <i class="fa fa-lg fa-thumbs-down text-danger"></i> break;
+                                    default:
+                                        <i class="fa fa-question-circle"></i>break;
+                                }
+                            }
                         }
-                        if (offer.Item != null)
-                        {
-                            l.Add(string.Format("Hält <a href=\"" + Url.Action("View", "Itemdex", new { item = offer.Item.Url }) + "\">" + offer.Item.Name.ToString() + "</a>"));
-                        }
-                        if (offer.CheatUsed)
-                        {
-                            l.Add(string.Format("Cheat verwendet"));
-                        }
-                        if(offer.IsOriginalTrainer)
-                        {
-                            l.Add(string.Format("Vom Originaltrainer"));
-                        }
-                        if (offer.EffortValues.Any())
-                        {
-                            l.Add("EV-trainiert");
-                        }
-                        if (offer.DeterValues.Any())
-                        {
-                            l.Add("DV-Werte bekannt");
-                        }
-                        // maybe this should produce an inline list, but eh...
-                    }
-                    @Html.Raw(string.Join(" &bull; ", l.ToArray()))
-                    <p class="visible-xs">
-                        Generation @offer.Generation
-                    </p>
-                </div>
-                <div class="col-sm-2 hidden-xs rpic">
-                    <img src="@images[offer.Generation]" alt="Generation @offer.Generation" />
-                </div>
-                <div class="col-xs-12">
-                    @if (offer.Status == TradingStatus.Completed)
-                    {
-                        if(log.UserToId == CurrentUser.Id && log.ValidOn.HasValue && log.ValidOn.Value > DateTime.Now) {
-                            <p>
-                                <a href="@Url.Action("ConfirmTrade", new { id = log.Id })" class="btn btn-success">Tausch bestätigen</a>
                             </p>
-                        }
-                        if((CurrentUser.Id == log.UserToId && log.SellerRating == null) || (CurrentUser.Id == log.UserFromId && log.CustomerRating == null))
-                        {
-                            <text> Bitte bewerte diesen Tausch: 
-                            <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Positive })" class="text-success"><i class="fa fa-lg fa-thumbs-up"></i></a>
-                            <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Neutral })" class="blur"><i class="fa fa-lg fa-minus"></i></a>
-                            <a href="@Url.Action("Rate", new { id=log.Id, amount=(int)TradeRating.Negative })" class="text-danger"><i class="fa fa-lg fa-thumbs-down"></i></a>
-                           </text>
-                       }
-                       else
-                       {
-                           TradeRating? rating = null;
-                           <text>Bewertung:</text>
-                           if (CurrentUser.Id == log.UserToId)
-                           {
-                               rating = log.SellerRating;
-                           }
-                           else if(CurrentUser.Id == log.UserFromId)
-                           {
-                               rating = log.CustomerRating;
-                           }
-                           switch(rating)
-                               {
-                                   case TradeRating.Positive:
-                                       <i class="fa fa-lg fa-thumbs-up text-success"></i> break;
-                                   case TradeRating.Neutral:
-                                       <i class="fa fa-lg fa-minus blur"></i> break;
-                                   case TradeRating.Negative:
-                                       <i class="fa fa-lg fa-thumbs-down text-danger"></i> break;
-                                   default:
-                                       <i class="fa fa-question-circle"></i> break;
-                               }
-                       }
-                    }
-                </div>
-            </li>
-        }
-    </ul>
-}
-else {
-    <div class="alert alert-info">Du scheinst noch nichts getauscht zu haben. <a href="@Url.Action("AddOffer")">Erstelle jetzt ein Angebot!</a></div>
-}
+                        </div>
+                        <img class="rpic d-none d-md-block" src="@images[offer.Generation]" alt="Generation @offer.Generation" />
+                    </li>
+                }
+        </ul>
+    }
+    else
+    {
+        <div class="alert alert-info">Du scheinst noch nichts getauscht zu haben. <a href="@Url.Action("AddOffer")">Erstelle jetzt ein Angebot!</a></div>
+    }
 
-@section submenu {
-    @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "protocol", SearchTerm = "" })
-}
+    @section submenu {
+        @Html.Partial("_submenuPartial", new TradingSubmenuViewModel() { ActiveMenuKey = "protocol", SearchTerm = "" })
+    }

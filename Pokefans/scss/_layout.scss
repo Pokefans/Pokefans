@@ -7,22 +7,46 @@ header, main, footer, nav {
 }
 
 // add some padding around some elements
-#search, #breadcrumbs, #copyright {
-    padding: 1.5em 0;
+#copyright {
+    padding: 1.5rem $mainbody-padding;
 }
 
-// breadcrumb bar has grey background.
-.breadcrumbs {
-    background-color: $gray-200;
+// content gets more padding
+#mainbody {
+    padding: $mainbody-padding;
+    display: flex;
+    @include media-breakpoint-down("lg") {
+        flex-direction: column;
+    }
 }
 
-#breadcrumbs {
-    padding: 2em 0 3em 0
-}
-
-#copyright, #footer {
+#copyright {
     background-color: theme-color("brand");
     color: $navbar-dark-color;
+
+    &> .row > div:first-child {
+        padding-top: 3px; // align with fontawesome stuff on the right
+    }
+
+    a {
+        color: $navbar-dark-color;
+
+        &:hover {
+            color: $navbar-dark-hover-color;
+        }
+
+        &:active {
+            color: $navbar-dark-active-color;
+        }
+    }
+
+    .fa {
+        vertical-align: middle
+    }
+
+    .note, .note a {
+        color: #96BADC; // emojione
+    }
 }
 
 #main {
@@ -33,12 +57,17 @@ header, main, footer, nav {
     margin-top: 2em
 }
 
-.copyright-links .fa {
-    vertical-align: middle
-}
 
-#copyright .note, #copyright .note a {
-    color: #96BADC; // emojione
+
+// the body gets our nice background
+body {
+    background: url("/contrib/alola.jpg") no-repeat fixed;
+    background-size: cover;
+
+    & > .container > .wrap {
+        box-shadow: 0 0 10px 2px #222;
+        background-color: #fff;
+    }
 }
 
 // various fixes
@@ -55,3 +84,32 @@ header, main, footer, nav {
     border: none !important;
 }
 
+// let's alter the navbars a bit
+.navbar {
+    padding: 0 $navbar-padding-x;
+
+    // so now we have removed the y padding, let's add it back for a few child elements
+    &> button, &> a, &> form, &>.navbar-text {
+        margin-top: $navbar-padding-y;
+        margin-bottom: $navbar-padding-y;
+    }
+
+    .navbar-nav > li {
+        // the padding now affects the list elements
+        padding-top: $navbar-padding-y;
+        padding-bottom: $navbar-padding-y;
+    }
+
+    &.bg-brand .navbar-nav > li.active {
+        background-color: $color-primary-3;
+    }
+
+    &.bg-pf-grey .navbar-nav > li.active {
+        background-color: $gray-400;
+    }
+}
+
+// also re-enable border radi on badge pills
+.badge-pill {
+    border-radius: $badge-pill-border-radius;
+}
