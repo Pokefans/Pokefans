@@ -33,6 +33,11 @@ else if (Offer.Status == TradingStatus.Withdrawn)
 {
     <div class="alert alert-warning">Der Anbieter hat das Angebot zurückgezogen. Diese Seite ist eine Archivversion des Angebots.</div>
 }
+else if (Offer.Status == TradingStatus.Deleted)
+{
+    <div class="alert alert-danger">Dieses Angebot wurde von der Moderation gelöscht; Details siehe BVS des Anbieters.</div>
+}
+
 @if (Offer.UpdateTime.AddDays(180) < DateTime.Now)
 {
     <div class="alert alert-info">
@@ -133,8 +138,8 @@ else if (Offer.Status == TradingStatus.Withdrawn)
         </div>
 @section sidebar {
     <h3>Über den Anbieter</h3>
-    <img class="img-responsive" src="@Offer.User.AvatarUrl" />
-    <strong class="size-h4"><a href="@Url.Action("View", "Profile", new { area = "user", id = Offer.User.Url })">@Offer.User.UserName</a></strong>
+    <p><img class="img-responsive" src="@Offer.User.AvatarUrl" /></p>
+    <strong class="size-h4"><a href="@Url.Profile(Offer.User)" class="@Offer.User.Color">@Offer.User.UserName</a></strong>
     <ul class="list-unstyled">
         <li><i class="fa fa-clock-o"></i> Registriert seit @Offer.User.Registered.ToString("d.M.yyyy")</li>
         <li><i class="fa fa-list"></i>Insgesamt @ViewBag.OfferCount Angebote in der Tauschbörse</li>

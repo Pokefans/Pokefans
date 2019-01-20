@@ -55,13 +55,8 @@
     <div class="oldmessages">
         @foreach (OldMessageViewModel data in Model.OldMessages)
         {
-            string style = "";
-            if (data.User.Color != null)
-            {
-                style = "font-weight: bold; color: " + data.User.Color;
-            }
             <div class="oldmessage">
-                <div class="fromline">Am @data.Message.Sent.ToString("dd.MM.yyyy HH:mm") schrieb <a href="@Url.Map("profile/"+data.User.Url, "user")" style="@style">@data.User.UserName</a>:</div>
+                <div class="fromline">Am @data.Message.Sent.ToString("dd.MM.yyyy HH:mm") schrieb <a href="@Url.Map("profile/"+data.User.Url, "user")" class="@data.User.Color">@data.User.UserName</a>:</div>
                 <div class="oldbody">@Html.Raw(data.Message.Body)</div>
             </div>
         }

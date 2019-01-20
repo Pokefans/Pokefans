@@ -148,6 +148,18 @@ namespace Pokefans.Areas.mitarbeit
                     new { action = "Index", Controller = "Wifi" }
                 ));
 
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
+                    "tauschboerse/banliste",
+                    new { action = "Banlist", Controller = "Wifi"}
+            ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "tauschboerse/meldungen",
+                    new { action = "Reports", Controller = "Wifi" }
+            ));
+
             // wifi api
             context.Routes.Add(new DomainRoute(
                     "mitarbeit."+ConfigurationManager.AppSettings["Domain"],
@@ -197,7 +209,22 @@ namespace Pokefans.Areas.mitarbeit
             context.Routes.Add(new DomainRoute(
                     "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
                     "api/v1/wifi/report/{id}",
-                    new { action = "Report", Comtroller = "Wifi" }
+                    new { action = "Report", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/cheat",
+                    new { action = "Cheat", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/resolve",
+                    new { action = "Resolve", Controller = "Wifi" }
+                ));
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/wifi/delete",
+                    new { action = "Delete", Controller = "Wifi" }
                 ));
 
             // AJAX API below

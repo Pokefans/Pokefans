@@ -9,6 +9,7 @@
 .content.has-sidebar {
     flex-grow: 1;
     flex-shrink: 0;
+    width: 100%;
     @include media-breakpoint-up("lg") {
         width: 1px; // set that to 1px so that it grows due to flexbox magic
                     // but only if we're not in column mode
@@ -23,7 +24,7 @@
     h4 {
         margin-top: 0px !important;
     }
-
+    width: 100%;
     @include media-breakpoint-up("lg") {
         width: $sidebar-width;
         // we only need this trickery if we are in sidebar mode

@@ -179,10 +179,12 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             UserBanViewModel ubvm = new UserBanViewModel()
             {
                 User = idproof,
-                FanartBan = db.FanartBanlist.FirstOrDefault(g => g.UserId == idproof.Id)
+                GlobalBan = db.UserBanlist.FirstOrDefault(g => g.UserId == idproof.Id),
+                FanartBan = db.FanartBanlist.FirstOrDefault(g => g.UserId == idproof.Id),
+                WifiBan = db.WifiBanlist.FirstOrDefault(g => g.UserId == idproof.Id)
             };
 
-            return View("~/Areas/mitarbeit/Views/User/Bans.cshmtl", ubvm);
+            return View("~/Areas/mitarbeit/Views/User/Bans.cshtml", ubvm);
         }
 
         // POST: api/user/bans/fanart
@@ -297,7 +299,6 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
             if (String.IsNullOrEmpty(note.Content) || note.ActionId < 0 || note.RoleIdNeeded < 0)
             {
-            fail:
                 int i = this.ModelState.Count;
                 Dictionary<int, string> actions = cache.Get<Dictionary<int, string>>("UserUserNoteActions");
                 Dictionary<int, string> bvsroles = cache.Get<Dictionary<int, string>>("BvsRoles");

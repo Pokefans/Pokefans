@@ -8,21 +8,91 @@
         Layout = "~/Areas/mitarbeit/Views/_Layout.cshtml";
         Breadcrumbs.Add("Mitarbeitsbereich");
     }
-    <div class="box box-primary" data-bind="with: selected">
-        <div class="box-header">
-            <h3 class="box-title">Meldung zum Angebot <span data-bind="text: title"></span></h3>
-        </div>
-        <div class="box-body">
+    <form>@Html.AntiForgeryToken()</form>
+    <div data-bind="with: selected">
+        <div class="box box-primary">
+            <div class="box-header">
+                <h3 class="box-title">Meldung zum Angebot <span data-bind="text: title"></span></h3>
+                <div class="box-tools pull-right">
+                    <button type="button" class="btn btn-box-tool" data-widget="remove" data-bind="click: $parent.close"><i class="fa fa-times"></i></button>
+                </div>
+            </div>
+            <div class="box-body">
+                <p class="text-danger" style="display: none" data-bind="visible: $parent.error">
+                    <i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. 
+                    <a data-bind="click: $parent.reload">Nochmal probieren</a>
+                </p>
+                <div class="row">
+                    <div class="col-xs-12">
+                        Gemeldet von <i class="fa fa-user"></i> <a data-bind="text: reportingUser.name, attr: { class: reportingUser.css, href: reportingUser.url }" ></a>
+                         um <i class="fa fa-clock-o"></i> <span data-bind="text: time"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-12">Es wurden folgende Details angegeben:</div>
+                    <p class="col-xs-12" data-bind="text: reportText"></p>
+                    <p class="col-xs-12 text-info"  data-bind="ifnot: reportText">
+                        <i class="fa fa-info-circle"></i> Es wurde kein Kommentar angegeben.
+                    </p>
+                </div>
+            </div>
+            <div class="box-footer">
+                <a class="btn btn-primary" data-bind="attr: { href: offerUrl }" target="_blank">Zum Angebot <i class="fa fa-external-link"></i></a>
+                <span data-bind="if: canDelete">
+                    <a class="btn btn-warning" data-bind="click: $parent.markCheat">
+                        <i class="fa fa-star fa-lg"></i>
+                        <span data-bind="ifnot: isCheat">
+                            Als Cheat markieren
+                        </span>
+                        <span data-bind="if: isCheat">
+                            Cheat-Marker entfernen
+                        </span>
+                    </a>
+                </span>
+                <span data-bind="ifnot: canDelete">
+                    <a class="btn btn-warning" disabled="disabled">
+                        <i class="fa fa-star fa-lg"></i> Angebot bereits abgeschlossen
+                    </a>
+                </span>
+                <span data-bind="if: canDelete">
+                    <a class="btn btn-danger" data-bind="click: $parent.delete">
+                        <i class="fa fa-trash fa-lg"></i>
+                        <span data-bind="ifnot: isDeleted">
+                            Angebot löschen
+                        </span>
+                        <span data-bind="if: isDeleted">
+                            Angebot öffnen
+                        </span>
+                    </a>
+                </span>
+                <span data-bind="ifnot: canDelete">
+                    <a class="btn btn-danger" disabled="disabled">
+                        <i class="fa fa-trash fa-lg"></i> Angebot bereits abgeschlossen
+                    </a>
+                </span>
+                <a class="btn btn-success" data-bind="click: $parent.resolve"><i class="fa fa-check-square"></i>
+                    <span data-bind="if: isResolved">Als offen markieren</span>
+                    <span data-bind="ifnot: isResolved">Als erledigt markieren</span>
+                </a>
 
+            </div>
+            <div class="overlay" data-bind="visible: $parent.loading">
+                <i class="fa fa-refresh fa-spin"></i>
+            </div>
         </div>
     </div>
 
     <div class="box box-danger">
         <div class="box-header">
-            <h3>Meldungen</h3>
+            <h3 class="box-title">Meldungen</h3>
         </div>
         <div class="box-body no-padding">
-            <table class="table table-striped table-hover" role="report-table" data-load="@Url.Map("api/v1/wifi/report/", "mitarbeit")">
+            <table class="table table-striped table-hover" 
+                   id="wifi-reports" 
+                   data-load="@Url.Map("api/v1/wifi/report/", "mitarbeit")"
+                   data-cheat="@Url.Map("api/v1/wifi/cheat", "mitarbeit")"
+                   data-resolve="@Url.Map("api/v1/wifi/resolve", "mitarbeit")"
+                   data-delete="@Url.Map("api/v1/wifi/delete", "mitarbeit")">
                 <thead>
                     <tr>
                         <th>Benutzername</th>
@@ -35,10 +105,14 @@
                 <tbody>
                     @foreach (OfferReport report in Model)
                     {
-                        <tr>
-                            <td><a href="@Url.Action("Notes", "User", new { id = report.Offer.UserId })" class="@report.Offer.User.DisplayCss">@report.Offer.User.UserName</a></td>
-                            <td>@report.Offer.Title</td>
-                            <td><a href="@Url.Action("Notes", "User", new { id = report.UserId })" class="@report.User.DisplayCss">@report.User.UserName</a></td>
+                        <tr class="@(report.Resolved ? "success" : "")">
+                            <td><a href="@Url.Action("Notes", "User", new { id = report.Offer.UserId })" class="@report.Offer.User.Color">@report.Offer.User.UserName</a></td>
+                            <td>@report.Offer.Title
+                                @if(report.Resolved) {
+                                    <span class="sr-only"> (erledigt)</span>
+                                }
+                            </td>
+                            <td><a href="@Url.Action("Notes", "User", new { id = report.UserId })" class="@report.User.Color">@report.User.UserName</a></td>
                             <td>@report.ReportedOn.ToString("dd.MM.yyyy hh:mm")</td>
                             <td><button class="btn btn-default" data-bind="click: investigate.bind(this, @report.Id)"><i class="fa fa-pencil"></i></button></td>
                         </tr>
@@ -60,22 +134,22 @@
 
     @helper tickCross(bool value) {
         if (value) {
-        <i class="text-success fa fa-lg fa-check"></i>
+            <i class="text-success fa fa-lg fa-check"></i>
         } else {
-        <i class="text-danger fa fa-lg fa-times"></i>
+            <i class="text-danger fa fa-lg fa-times"></i>
         }
-}
+    }
 
     @helper expire(DateTime? value) {
         if(value.HasValue) {
         <text>bis zum @value.Value.ToString("dd.MM.yyyy hh:mm")</text>
         } else {
         <text>Unbegrenzt</text>
-        }
-}
+    }
+    }
 
     @section scripts {
         @Scripts.Render("~/bundles/knockout")
-        @Scripts.Render("~/bundles/reports")
+        @Scripts.Render("~/bundles/backend")
     }
 

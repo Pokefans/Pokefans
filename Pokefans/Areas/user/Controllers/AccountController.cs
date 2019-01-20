@@ -18,6 +18,7 @@ using Microsoft.Owin.Security;
 using Pokefans.Data;
 using Pokefans.Models;
 using Pokefans.Security;
+using Pokefans.Security.phpBB;
 using Pokefans.Util;
 using Pokefans.Data.UserData;
 using Pokefans.Areas.user.Models;
@@ -97,35 +98,106 @@ namespace Pokefans.Areas.user.Controllers
             // Temporary Solution: Resolve User here. But we want to resolve the email in the Manager class, just like it works for the username
             // see https://aspnetidentity.codeplex.com/SourceControl/latest#src/Microsoft.AspNet.Identity.Owin/SignInManager.cs
             User u = _entities.Users.Where(g => g.Email == model.Email).FirstOrDefault();
+            // if email not found, try the username
+            if(u == null)
+                u = _entities.Users.Where(x => x.UserName == model.Email).FirstOrDefault();
+
+            // if the user is still null, that's it
             if (u == null)
             {
-                ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
+                ModelState.AddModelError("", "Benutzername, E-Mail-Adresse oder Passwort falsch.");
                 return View("~/Areas/user/Views/Account/Login.cshtml", model);
             }
+
+            // Do we have an old phpBB password?
+            if(!string.IsNullOrEmpty(u.phpBBPassword))
+            {
+                // check if this string matches
+                var provider = new phpBBCryptoServiceProvider();
+
+                if(provider.phpbbCheckHash(model.Password, u.phpBBPassword))
+                {
+                    var hasher = new Pbkdf2PasswordHasher();
+
+                    // password is valid, let's set up the new system & delete the old password.
+                    u.Password = hasher.HashPassword(model.Password);
+                    u.phpBBPassword = null;
+
+                    _entities.SetModified(u);
+                    _entities.SaveChanges();
+                }
+            }
+
+            // Construct a Login record
+            UserLogin l = new UserLogin
+            {
+                Ip = SecurityUtils.GetIPAddressAsString(HttpContext),
+                Time = DateTime.Now
+            };
 
             if (!u.EmailConfirmed)
             {
                 ModelState.AddModelError("", "Deine E-Mail-Adresse wurde noch nicht bestätigt, deshalb kannst du dich noch nicht anmelden. Klicke auf den Link, den du per E-Mail erhalten hast. Falls du die E-Mail nicht finden solltest, kannst du dir unten einen neuen Aktivierungslink zuschicken.");
+                l.Success = false;
+                l.Reason = "not activated";
+
+                _entities.UserLogins.Add(l);
+                _entities.SaveChanges();
             }
             else
             {
-
-                if (u != null)
-                {
-                    result = SignInManager.PasswordSignIn(u.UserName, model.Password, model.RememberMe, shouldLockout: false);
-                }
+                result = SignInManager.PasswordSignIn(u.UserName, model.Password, model.RememberMe, shouldLockout: false);
 
                 switch (result)
                 {
                     case SignInStatus.Success:
+                        // in principle, this user is logged in, however, we have to check for bans first
+                        var ban = _entities.UserBanlist.FirstOrDefault(x => x.UserId == u.Id && x.IsBanned);
+                        if (ban != null)
+                        {
+                            if(ban.IsBanned && ban.ExpiresOn != null && ban.ExpiresOn.Value < DateTime.Now)
+                            {
+                                // kill the auth token from the response
+                                HttpContext.Response.Cookies.Remove(ConfigurationManager.AppSettings["CookieName"]);
+
+                                // sign out
+                                AuthenticationManager.SignOut();
+                                ban.User = u;
+                                l.Success = false;
+                                l.Reason = "banned";
+                                _entities.UserLogins.Add(l);
+                                _entities.SaveChanges();
+
+                                return View("~/Areas/user/Views/Account/Banned.cshtml", ban);
+                            }
+                            else
+                            {
+                                // unbanned, delete the row
+                                _entities.UserBanlist.Remove(ban);
+                            }
+                        }
+
+                        l.Success = true;
+                        l.Reason = "";
+
+                        _entities.UserLogins.Add(l);
+                        _entities.SaveChanges();
                         return RedirectToLocal(returnUrl);
                     case SignInStatus.LockedOut:
                         return View("Lockout");
                     case SignInStatus.RequiresVerification:
+                        // 2FA, not handled currently
                         return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                     case SignInStatus.Failure:
                     default:
-                        ModelState.AddModelError("", "Ungültiger Anmeldeversuch.");
+
+                        l.Success = false;
+                        l.Reason = "wrong-password";
+
+                        _entities.UserLogins.Add(l);
+                        _entities.SaveChanges();
+
+                        ModelState.AddModelError("", "Benutzername, E-Mail-Adresse oder Passwort falsch.");
                         break;
                 }
             }
@@ -236,7 +308,7 @@ namespace Pokefans.Areas.user.Controllers
         [AllowAnonymous]
         public ActionResult ConfirmEmail(int userId, string code)
         {
-            if (userId == null || code == null)
+            if (code == null)
             {
                 return View("Error");
             }
@@ -370,10 +442,7 @@ namespace Pokefans.Areas.user.Controllers
         public ActionResult SendCode(string returnUrl, bool rememberMe)
         {
             var userId = SignInManager.GetVerifiedUserId();
-            if (userId == null)
-            {
-                return View("Error");
-            }
+
             var userFactors = UserManager.GetValidTwoFactorProviders(userId);
             var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
             return View("~/Areas/user/Views/Account/SendCode.cshtml", new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });

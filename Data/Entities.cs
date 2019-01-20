@@ -10,6 +10,7 @@ using Pokefans.Data.Strategy;
 using Pokefans.Data.Tracker;
 using Pokefans.Data.UserData;
 using Pokefans.Data.Wifi;
+using Pokefans.Data.Base;
 
 
 namespace Pokefans.Data
@@ -67,6 +68,8 @@ namespace Pokefans.Data
         public virtual DbSet<UserLoginProvider> UserLoginProvides { get; set; }
 
         public virtual DbSet<DsgvoComplianceInfo> DsgvoComplianceInfos { get; set; }
+
+        public virtual DbSet<UserBan> UserBanlist { get; set; }
 
         #endregion
 

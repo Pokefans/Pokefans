@@ -31,7 +31,7 @@
                 @Widgets.Spinner("wifi-report-table-spinner")
                 <p class="text-info" style="display: none" data-bind="visible: tableData().length == 0 && loaded">Wunderbar! Keine Meldungen.</p>
                 <p class="text-danger" style="display: none" data-bind="visible: error"><i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. <a data-bind="click: loadData">Diagramm neu laden</a></p>
-                <a href="btn btn-default" href="@Url.Action("Reports", "Wifi")">Alle Meldungen</a>
+                <a class="btn btn-default" href="@Url.Action("Reports", "Wifi")">Alle Meldungen</a>
             </div>
         </div>
     </div>

@@ -1,23 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using System.Web;
 using System.Web.Mvc;
 using ChartJSCore.Models;
+using Lucene.Net.Analysis;
+using Lucene.Net.Index;
+using Lucene.Net.QueryParsers;
+using Lucene.Net.Search;
+using Microsoft.AspNet.Identity;
+using Pokefans.Areas.mitarbeit.Models;
 using Pokefans.Data;
 using Pokefans.Data.Wifi;
 using Pokefans.Util;
+using Pokefans.Util.Search;
+using Pokefans.Caching;
 
 namespace Pokefans.Controllers
 {
-    [Authorize(Roles="wifi-moderator")]
+    [Authorize(Roles = "wifi-moderator")]
     public class WifiController : Controller
     {
 
         Entities db;
+        NotificationManager notificationManager;
+        private Analyzer analyzer;
+        private Searcher searcher;
+        private IndexWriter writer;
+        Cache cache;
 
-        public WifiController(Entities ents)
+        public WifiController(Entities ents, NotificationManager mgr, IndexWriter wrtr, Searcher srchr, Analyzer ana, Cache c)
         {
             db = ents;
+            notificationManager = mgr;
+            analyzer = ana;
+            searcher = srchr;
+            writer = wrtr;
+            cache = c;
         }
 
         public ActionResult Index()
@@ -45,17 +65,225 @@ namespace Pokefans.Controllers
             return View("~/Areas/mitarbeit/Views/Wifi/Reports.cshtml", reports);
         }
 
-        public ActionResult SelectOffer(int start = 0)
-        {
-            return View("~/Areas/mitarbeit/Views/Wifi/SelectOffer.cshtml");
-        }
-
-        public ActionResult Modify(int id)
-        {
-            return View("~/Areas/mitarbeit/Views/WiFi/Modify.cshtml");
-        }
-
         #region Wifi Dashboard API
+
+        [AllowCors]
+        public ActionResult Report(int id)
+        {
+            string profilebase = Url.Profile("");
+            string offerbase = Url.Map("tausch/detail/", null);
+
+            var result = (from x in db.OfferReports.Include("User").Include("Offer").Include("Offer.User")
+                          where x.Id == id
+                          select x)
+                         .AsEnumerable()
+                         .Select(x => new // dynamic object generation must be done with LINQ to Object
+                         {                 // because DateTime.ToString()
+                             title = x.Offer.Title,
+                             reportingUser = new
+                             {
+                                 name = x.User.UserName,
+                                 css = x.User.Color,
+                                 url = profilebase + x.User.Url
+                             },
+                             user = new
+                             {
+                                 name = x.Offer.User.UserName,
+                                 css = x.Offer.User.Color,
+                                 url = profilebase + x.Offer.User.Url
+                             },
+                             reportText = x.Comment,
+                             time = x.ReportedOn.ToString("dd.MM.yyyy HH:mm"),
+                             offerUrl = offerbase + x.Offer.Id.ToString(),
+                             canDelete = x.Offer.Status != TradingStatus.Completed,
+                             isDeleted = x.Offer.Status == TradingStatus.Deleted,
+                             isResolved = x.Resolved,
+                             isCheat = x.Offer.CheatUsed
+                         }).FirstOrDefault();
+
+            return Json(result, JsonRequestBehavior.AllowGet);
+        }
+
+        [AllowCors]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Cheat(int id, string comment)
+        {
+            var offer = (from s in db.OfferReports
+                         join x in db.WifiOffers on s.OfferId equals x.Id
+                         where s.Id == id
+                         select x).FirstOrDefault();
+
+            if (offer != null)
+            {
+
+                TradingNoteViewModel nvm = new TradingNoteViewModel()
+                {
+                    Offer = offer,
+                    Comment = comment
+                };
+                int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+                Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
+
+                offer.CheatUsed = !offer.CheatUsed;
+                db.SetModified(offer);
+
+
+
+
+                if (offer.CheatUsed)
+                {
+                    notificationManager.SendNotification(offer.UserId, $"Dein Tauschangebot <a href=\"{Url.Map("tausch/" + offer.Id.ToString(), "")}\">{HttpUtility.HtmlEncode(offer.Title)}</a> wurde von" +
+                                                                    $"einem_r Moderator_in als Cheat markiert. Bitte achte in Zukunft darauf, deine Angebote korrekt zu kennzeichnen.",
+                                                         "<i class=\"fa fa-refresh\"></i>");
+
+
+                    UserNote n = new UserNote()
+                    {
+                        AuthorId = uid,
+                        ActionId = actions["tb-offer-cheat-add"],
+                        Created = DateTime.Now,
+                        IsDeletable = false,
+                        RoleIdNeeded = db.Roles.First(x => x.Name == "wifi-moderator").Id,
+                        UserId = offer.UserId,
+                        Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/WifiOfferCheatAdd.cshtml", nvm),
+                        UnparsedContent = ""
+                    };
+
+                    db.UserNotes.Add(n);
+                }
+                else
+                {
+                    UserNote n = new UserNote()
+                    {
+                        AuthorId = uid,
+                        ActionId = actions["tb-offer-cheat-remove"],
+                        Created = DateTime.Now,
+                        IsDeletable = false,
+                        RoleIdNeeded = db.Roles.First(x => x.Name == "wifi-moderator").Id,
+                        UserId = offer.UserId,
+                        Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/WifiOfferRemove.cshtml", nvm),
+                        UnparsedContent = ""
+                    };
+
+                    db.UserNotes.Add(n);
+                }
+
+                db.SaveChanges();
+            }
+
+            return Report(id);
+        }
+
+        [AllowCors]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Delete(int id, string comment)
+        {
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            var offer = (from s in db.OfferReports
+                         join x in db.WifiOffers on s.OfferId equals x.Id
+                         where s.Id == id
+                         select x).FirstOrDefault();
+
+            TradingNoteViewModel nvm = new TradingNoteViewModel()
+            {
+                Offer = offer,
+                Comment = comment
+            };
+            Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
+
+            if (offer != null && offer.Status != TradingStatus.Completed)
+            {
+                if (offer.Status == TradingStatus.Deleted)
+                {
+                    offer.Status = TradingStatus.Offer;
+
+                    writer.AddDocument(DocumentGenerator.WifiOffer((NormalOffer)offer));
+
+                    notificationManager.SendNotification(offer.UserId, $"Dein Tauschangebot <a href=\"{Url.Map("tausch/" + offer.Id.ToString(), "")}\">{HttpUtility.HtmlEncode(offer.Title)}</a> wurde von" +
+                                                                       $"der Moderation wieder freigeschalten. Viel Spaß beim Tauschen!",
+                                                         "<i class=\"fa fa-refresh\"></i>");
+
+                    UserNote n = new UserNote()
+                    {
+                        AuthorId = uid,
+                        ActionId = actions["tb-offer-reopened"],
+                        Created = DateTime.Now,
+                        IsDeletable = false,
+                        RoleIdNeeded = db.Roles.First(x => x.Name == "wifi-moderator").Id,
+                        UserId = offer.UserId,
+                        Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/WifiOfferReopened.cshtml", nvm),
+                        UnparsedContent = ""
+                    };
+
+                    db.UserNotes.Add(n);
+                }
+                else
+                {
+                    if (offer.Status == TradingStatus.PartnerChosen)
+                    {
+                        // delete the trade log
+                        TradeLog log = db.TradeLogs.First(x => x.OfferId == offer.Id);
+                        db.TradeLogs.Remove(log);
+                    }
+                    offer.Status = TradingStatus.Deleted;
+
+                    // remove from the search index
+                    var query = new BooleanQuery();
+
+                    var typeQuery = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "type", analyzer);
+                    query.Add(typeQuery.Parse("wifioffer"), Occur.MUST);
+
+                    var idQuery = new QueryParser(Lucene.Net.Util.Version.LUCENE_30, "Id", analyzer);
+                    query.Add(idQuery.Parse(offer.Id.ToString()), Occur.MUST);
+
+                    writer.DeleteDocuments(query);
+
+                    notificationManager.SendNotification(offer.UserId, $"Dein Tauschangebot <a href=\"{Url.Map("tausch/" + offer.Id.ToString(), "")}\">{HttpUtility.HtmlEncode(offer.Title)}</a> wurde von" +
+                                                                    $"der Moderation wegen eines Regelverstoßes gelöscht. Bitte halte dich in Zukunft an unsere Community-Richtlinien!",
+                                                         "<i class=\"fa fa-refresh\"></i>");
+
+                    UserNote n = new UserNote()
+                    {
+                        AuthorId = uid,
+                        ActionId = actions["tb-offer-deleted"],
+                        Created = DateTime.Now,
+                        IsDeletable = false,
+                        RoleIdNeeded = db.Roles.First(x => x.Name == "wifi-moderator").Id,
+                        UserId = offer.UserId,
+                        Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/WifiOfferDeleted.cshtml", nvm),
+                        UnparsedContent = ""
+                    };
+
+                    db.UserNotes.Add(n);
+                }
+                db.SetModified(offer);
+                db.SaveChanges();
+            }
+
+            return Report(id);
+        }
+
+        [AllowCors]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Resolve(int id)
+        {
+            var report = db.OfferReports.Include("Offer").FirstOrDefault(x => x.Id == id);
+            report.Resolved = !report.Resolved;
+            db.SetModified(report);
+            db.SaveChanges();
+
+            var offer = report.Offer;
+
+            notificationManager.SendNotification(report.UserId, $"Deine Meldung zum Tausch <a href=\"{Url.Map("tausch/" + offer.Id.ToString(), "")}\">{HttpUtility.HtmlEncode(offer.Title)}</a> wurde gerade von" +
+                                                            $"einem_r Moderator_in bearbeitet. Danke für deine Mithilfe!",
+                                                 "<i class=\"fa fa-refresh\"></i>");
+
+            return Report(id);
+        }
 
         [AllowCors]
         public ActionResult Statistics()
@@ -122,7 +350,7 @@ namespace Pokefans.Controllers
                 Data = ReportsPerDay.Select(x => (double)x.Value).ToList(),
                 BackgroundColor = "rgba(60,141,188,1)"
             });
-        
+
 
             chart.Options.Legend = new Legend();
             chart.Options.Legend.Display = true;
@@ -157,7 +385,7 @@ namespace Pokefans.Controllers
             var barData = new List<double>();
             var bgColor = new List<string>();
 
-            foreach(var gen in generations)
+            foreach (var gen in generations)
             {
                 barData.Add(db.WifiOffers.Count(x => x.Generation == gen));
                 bgColor.Add("rgba(60, 141, 188, 1)");
@@ -197,7 +425,7 @@ namespace Pokefans.Controllers
                                from z in db.Pokemon
                                where k == z.Id
                                select new { Id = k, pokemon = z.Name.German }
-                           join b in 
+                           join b in
                              from x in db.WifiOffers
                              where x.Status == TradingStatus.Offer
                              && x.CreationDate >= fromDate && x.CreationDate <= untilDate
@@ -208,7 +436,7 @@ namespace Pokefans.Controllers
                            from b in tb.DefaultIfEmpty(new { Id = -1, offen = 0 })
                            join c in
                              from x in db.WifiOffers
-                             where x.Status == TradingStatus.Completed 
+                             where x.Status == TradingStatus.Completed
                                && x.CreationDate >= fromDate && x.CreationDate <= untilDate
                                && x.PokemonId != null
                              group x by x.PokemonId into completed

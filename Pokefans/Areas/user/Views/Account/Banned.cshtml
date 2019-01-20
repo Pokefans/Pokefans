@@ -1,0 +1,25 @@
+﻿@*Coypright 2019 the pokefans authors. see copying.md for legal info*@
+@model  Pokefans.Data.Base.UserBan
+@{
+    SiteTitle = "Anmeldung fehlgeschlagen";
+    SiteHeader = "Anmeldung fehlgeschlagen";
+    SiteDescription = "";
+    ActiveMenuKey = "";
+
+}
+
+<h1>Anmeldung fehlgeschlagen</h1>
+<p>Du bist 
+    @if(Model.ExpiresOn.HasValue)
+    {
+        <text>bis zum @Model.ExpiresOn.Value.ToString("dd.MM.yyyy HH:mm") gesperrt.</text>
+    }
+    else
+    {
+        <text>dauerhaft gesperrt.</text>
+    }
+</p>
+<p>Weitere Informationen:</p>
+<p>@Model.Reason</p>
+<hr />
+<p>Wenn du das für einen Fehler hältst, <a href="mailto:forum@pokefans.net?subject=Sperre auf pokefans.net&body=Username: @Model.User.UserName">kontaktiere die Administration</a>.</p>

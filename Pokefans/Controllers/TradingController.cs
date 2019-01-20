@@ -392,6 +392,14 @@ namespace Pokefans.Controllers
                                          .Include("Pokeball")
                                          .Include("Nature").OfType<NormalOffer>().First(g => g.Id == id);
 
+            if(o.Status == TradingStatus.Deleted && !User.IsInRole("wifi-moderator"))
+            {
+
+                HttpContext.Response.StatusCode = 403;
+                HttpContext.Response.Status = "Forbidden"; 
+                return View("~/Views/Trading/Errors/ModerationDeleted.cshtml");
+            }
+
             ViewBag.OfferCount = db.WifiOffers.Where(g => g.UserId == o.UserId).Count();
 
             int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
@@ -409,7 +417,7 @@ namespace Pokefans.Controllers
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 User currentUser = userManager.FindByNameAsync(HttpContext.User.Identity.Name).Result;
-                cvm.CanHideComment = currentUser.IsInRole("fanart-moderator", cache, db);
+                cvm.CanHideComment = currentUser.IsInRole("wifi-moderator", cache, db);
                 cvm.CurrentUser = currentUser;
             }
             else
@@ -472,6 +480,8 @@ namespace Pokefans.Controllers
             db.TradeLogs.Add(log);
             db.SaveChanges();
 
+            removeFromSearch(offer);
+
             notificationManager.SendNotification(i.UserId, $"Du wurdest als Tauschpartner für <a href=\"{Url.Map("tausch/" + offer.Id.ToString(), "")}\">{HttpUtility.HtmlEncode(offer.Title)}</a> ausgewählt." +
                                                             "Der/Die Anbieter_in wird sich bald bei dir melden.",
                                                  "<i class=\"fa fa-refresh\"></i>");
@@ -502,6 +512,13 @@ namespace Pokefans.Controllers
             db.SetModified(offer);
             db.SaveChanges();
 
+            removeFromSearch(offer);
+
+            return RedirectToAction("Manage", new { id });
+        }
+
+        private void removeFromSearch(Offer offer)
+        {
             // remove from the search index
             var query = new BooleanQuery();
 
@@ -512,9 +529,8 @@ namespace Pokefans.Controllers
             query.Add(idQuery.Parse(offer.Id.ToString()), Occur.MUST);
 
             writer.DeleteDocuments(query);
-
-            return RedirectToAction("Manage", new { id });
         }
+
 
         [Authorize]
         public ActionResult Reopen(int id)
@@ -538,6 +554,8 @@ namespace Pokefans.Controllers
 
             db.SetModified(offer);
             db.SaveChanges();
+
+            writer.AddDocument(DocumentGenerator.WifiOffer((NormalOffer)offer));
 
             return RedirectToAction("Manage", new { id });
         }
@@ -602,6 +620,8 @@ namespace Pokefans.Controllers
             db.SetModified(offer);
 
             db.SaveChanges();
+
+            writer.AddDocument(DocumentGenerator.WifiOffer((NormalOffer)offer));
 
             return RedirectToAction("Manage", new { id });
         }

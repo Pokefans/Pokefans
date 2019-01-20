@@ -50,7 +50,7 @@ namespace Pokefans.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "E-Mail")]
+        [Display(Name = "E-Mail oder Benutzername")]
         [EmailAddress]
         public string Email { get; set; }
 

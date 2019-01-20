@@ -82,11 +82,12 @@ namespace dbtool
 
             if (migrationcount <= 0)
             {
-                Console.WriteLine("Yay! Everything already up to date.");
-                return;
+                Console.WriteLine("Yay! Everything already up to date. Running Seed()...");
             }
-
-            Console.WriteLine("Applying {0} pending migrations - Please wait...", migrationcount);
+            else
+            {
+                Console.WriteLine("Applying {0} pending migrations - Please wait...", migrationcount);
+            }
 
             migrator.Update();
         }

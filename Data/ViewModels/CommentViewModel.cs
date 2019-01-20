@@ -25,6 +25,7 @@ namespace Pokefans.Data.ViewModels
             ParentCommentId = c.ParentCommentId;
             CommentId = c.Id;
             Author = c.Author.UserName;
+            AuthorUser = c.Author;
             AuthorId = c.AuthorId;
             AvatarFileName = c.Author.MiniAvatarFileName;
             DisplayPublic = c.DisplayPublic;
@@ -49,6 +50,9 @@ namespace Pokefans.Data.ViewModels
         public bool GravatarEnabled { get; set; }
         [JsonIgnore]
         protected string Email { get; set; }
+        [JsonIgnore]
+        public User AuthorUser { get; set; }
+
         public string AvatarUrl 
         {
 			get

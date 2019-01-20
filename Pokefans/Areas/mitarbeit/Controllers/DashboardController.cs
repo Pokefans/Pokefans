@@ -53,13 +53,13 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     user = new
                     {
                         url = x.Offer.User.Url,
-                        displayCSS = x.Offer.User.DisplayCss,
+                        displayCSS = x.Offer.User.Color,
                         name = x.Offer.User.UserName
                     },
                     reporter = new
                     {
                         url = x.User.Url,
-                        displayCSS = x.User.DisplayCss,
+                        displayCSS = x.User.Color,
                         name = x.User.UserName
                     }
                 });
@@ -142,13 +142,13 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                     user = new
                     {
                         url = x.From.Url,
-                        displayCSS = x.From.DisplayCss,
+                        displayCSS = x.From.Color,
                         name = x.From.UserName
                     },
                     reporter = new
                     {
                         url = x.Reporter.Url,
-                        displayCSS = x.Reporter.DisplayCss,
+                        displayCSS = x.Reporter.Color,
                         name = x.Reporter.UserName
                     }
                 });

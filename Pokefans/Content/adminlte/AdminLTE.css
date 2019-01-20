@@ -4127,6 +4127,11 @@ table.text-center th {
     border-left: 4px solid #eea236;
 }
 
+#outernotifications {
+    max-height: 200px;
+    overflow-y: scroll;
+}
+
 /* loading spinner */
 .bokeh {
     border: 0.01em solid rgba(150, 150, 150, 0.1);
@@ -4238,3 +4243,57 @@ table.text-center th {
 .statistics-large {
     font-size: 24px;
 }
+
+.user-admin {
+    font-weight: bold;
+    color: #a00;
+}
+
+    a.user-admin:hover, a.user-admin:active, .user-admin a:hover, .user-admin a:active {
+        color: #a00;
+    }
+
+.user-bl {
+    font-weight: bold;
+    color: #a04770;
+}
+
+    a.user-bl:hover, a.user-bl:active, .user-bl a:hover, .user-bl a:active {
+        color: #a04770;
+    }
+
+.user-gm {
+    font-weight: bold;
+    color: #459933;
+}
+
+    a.user-gm:hover, a.user-gm:active, .user-gm a:hover, .user-gm a:active {
+        color: #459933;
+    }
+
+.user-ba {
+    font-weight: bold;
+    color: #218370;
+}
+
+    a.user-ba:hover, a.user-ba:active, .user-ba a:hover, .user-ba a:active {
+        color: #218370;
+    }
+
+.user-ma {
+    font-weight: bold;
+    color: #336698;
+}
+
+    a.user-ma:hover, a.user-ma:active, .user-ma a:hover, .user-ma a:active {
+        color: #336698;
+    }
+
+.user-em {
+    font-weight: bold;
+    color: #52606D;
+}
+
+    a.user-em:hover, a.user-em:active, .user-em a:hover, .user-em a:active {
+        color: #52606D;
+    }

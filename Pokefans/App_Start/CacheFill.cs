@@ -50,7 +50,11 @@ namespace Pokefans.App_Start
             // BVS-Visible roles
             Dictionary<int, string> bvsRoles = new Dictionary<int, string>();
 
-            ents.Roles.Where(x => x.Name == "global-moderator" || x.Name == "bereichsassistent" || x.Name == "bereichsleiter" || x.Name == "administrator" || x.Name == "super-admin")
+            ents.Roles.Where(x => x.Name == "global-moderator" || 
+                             x.Name == "bereichsassistent" || 
+                             x.Name == "bereichsleiter" || 
+                             x.Name == "administrator" || 
+                             x.Name == "super-admin")
                       .ToList()
                       .ForEach(x => bvsRoles.Add(x.Id, x.FriendlyName));
 

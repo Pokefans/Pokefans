@@ -1,4 +1,5 @@
-// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+ï»¿// Copyright 2015 the pokefans-core authors. See copying.md for legal info.
+
 namespace Pokefans.Data.Migrations
 {
     using System;
@@ -150,7 +151,7 @@ namespace Pokefans.Data.Migrations
                     new Role()
                     {
                         Name = "wifi-moderator",
-                        FriendlyName = "Tauschb?rsenmoderator"
+                        FriendlyName = "TauschbÃ¶rsenmoderator"
                     }
                 );
 
@@ -283,11 +284,11 @@ namespace Pokefans.Data.Migrations
                         Name = "Fanart-Galerie",
                         IsTargeted = false
                     });
-            if (!context.UserAdvertisingForms.Any(x => x.Name == "Pokédex-Kommentar"))
+            if (!context.UserAdvertisingForms.Any(x => x.Name == "PokÃ©dex-Kommentar"))
                 context.UserAdvertisingForms.Add(
                     new UserAdvertisingForm()
                     {
-                        Name = "Pokédex-Kommentar",
+                        Name = "PokÃ©dex-Kommentar",
                         IsTargeted = false
                     });
             context.SaveChanges();
@@ -312,27 +313,27 @@ namespace Pokefans.Data.Migrations
                         CodeHandle = "advertising",
                         IsUserSelectable = false
                     });
-            if (!context.UserNoteActions.Any(x => x.Name == "Signaturlöschung"))
+            if (!context.UserNoteActions.Any(x => x.Name == "SignaturlÃ¶schung"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
                     {
-                        Name = "Signaturlöschung",
+                        Name = "SignaturlÃ¶schung",
                         CodeHandle = "delete-signature",
                         IsUserSelectable = false
                     });
-            if (!context.UserNoteActions.Any(x => x.Name == "Avatarlöschung"))
+            if (!context.UserNoteActions.Any(x => x.Name == "AvatarlÃ¶schung"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
                     {
-                        Name = "Avatarlöschung",
+                        Name = "AvatarlÃ¶schung",
                         CodeHandle = "delete-avatar",
                         IsUserSelectable = false
                     });
-            if (!context.UserNoteActions.Any(x => x.Name == "Mini-Avatarlöschung"))
+            if (!context.UserNoteActions.Any(x => x.Name == "Mini-AvatarlÃ¶schung"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
                     {
-                        Name = "Mini-Avatarlöschung",
+                        Name = "Mini-AvatarlÃ¶schung",
                         CodeHandle = "delete-miniavatar",
                         IsUserSelectable = false
                     });
@@ -344,22 +345,50 @@ namespace Pokefans.Data.Migrations
                         CodeHandle = "lock-account",
                         IsUserSelectable = false
                     });
-            if (!context.UserNoteActions.Any(x => x.Name == "Sperre (Tauschbörse)"))
+            if (!context.UserNoteActions.Any(x => x.Name == "Sperre (TauschbÃ¶rse)"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
                     {
-                        Name = "Sperre (Tauschbörse)",
+                        Name = "Sperre (TauschbÃ¶rse)",
                         CodeHandle = "lock-account-tb",
                         IsUserSelectable = false
                     });
-            if (!context.UserNoteActions.Any(x => x.Name == "Betrug in der Tauschbörse"))
+
+            if (!context.UserNoteActions.Any(x => x.CodeHandle == "tb-offer-deleted"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
                     {
-                        Name = "Betrug in der Tauschbörse",
-                        CodeHandle = "tb-fraud",
+                        Name = "TauschbÃ¶rse: Angebot gel?scht",
+                        CodeHandle = "tb-offer-deleted",
                         IsUserSelectable = false
                     });
+
+            if (!context.UserNoteActions.Any(x => x.CodeHandle == "tb-offer-reopened"))
+                context.UserNoteActions.Add(
+                    new UserNoteAction()
+                    {
+                        Name = "TauschbÃ¶rse: Angebot erneut freigegeben",
+                        CodeHandle = "tb-offer-reopened",
+                        IsUserSelectable = false
+                    });
+
+            if (!context.UserNoteActions.Any(x => x.CodeHandle == "tb-offer-cheat-add"))
+                context.UserNoteActions.Add(
+                    new UserNoteAction()
+                    {
+                        Name = "TauschbÃ¶rse: Angebot als Cheat markiert",
+                        CodeHandle = "tb-offer-cheat-add",
+                        IsUserSelectable = false
+                    });
+            if (!context.UserNoteActions.Any(x => x.CodeHandle == "tb-offer-cheat-remove"))
+                context.UserNoteActions.Add(
+                    new UserNoteAction()
+                    {
+                        Name = "TauschbÃ¶rse: Angebot als Legit markiert",
+                        CodeHandle = "tb-offer-cheat-remove",
+                        IsUserSelectable = false
+                    });
+
             if (!context.UserNoteActions.Any(x => x.Name == "Doppelaccount"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
@@ -410,11 +439,11 @@ namespace Pokefans.Data.Migrations
                         Name = "Sperre im Chat",
                         IsUserSelectable = true
                     });
-            if (!context.UserNoteActions.Any(x => x.Name == "Vorschlag zum Rangträger"))
+            if (!context.UserNoteActions.Any(x => x.Name == "Vorschlag zum Rangtré‹‘er"))
                 context.UserNoteActions.Add(
                     new UserNoteAction()
                     {
-                        Name = "Vorschlag zum Rangträger",
+                        Name = "Vorschlag zum Rangtré‹‘er",
                         IsUserSelectable = true
                     });
 

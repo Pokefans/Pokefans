@@ -363,6 +363,18 @@
     <Compile Include="Migrations\201901151440550_WifiBanreason.Designer.cs">
         <DependentUpon>201901151440550_WifiBanreason.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901181633014_UserColorClass.cs" />
+    <Compile Include="Migrations\201901181633014_UserColorClass.Designer.cs">
+        <DependentUpon>201901181633014_UserColorClass.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901201755417_UserBans.cs" />
+    <Compile Include="Migrations\201901201755417_UserBans.Designer.cs">
+        <DependentUpon>201901201755417_UserBans.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201901201804159_UserBanReason.cs" />
+    <Compile Include="Migrations\201901201804159_UserBanReason.Designer.cs">
+        <DependentUpon>201901201804159_UserBanReason.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -382,21 +394,21 @@
     <Compile Include="Pokedex\PokemonTier.cs" />
     <Compile Include="Pokedex\PokemonTiers.cs" />
     <Compile Include="Pokedex\PokemonType.cs" />
-    <Compile Include="System\Role.cs" />
-    <Compile Include="System\PermissionLogEntry.cs" />
+    <Compile Include="Base\Role.cs" />
+    <Compile Include="Base\PermissionLogEntry.cs" />
     <Compile Include="Entities.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="System\RoleChainEntry.cs" />
+    <Compile Include="Base\RoleChainEntry.cs" />
     <Compile Include="Content\ToDo.cs" />
-    <Compile Include="System\User.cs" />
+    <Compile Include="Base\User.cs" />
     <Compile Include="User\UserAdvertising.cs" />
     <Compile Include="User\UserAdvertisingForm.cs" />
-    <Compile Include="System\UserLogin.cs" />
-    <Compile Include="System\UserLoginProvider.cs" />
+    <Compile Include="Base\UserLogin.cs" />
+    <Compile Include="Base\UserLoginProvider.cs" />
     <Compile Include="User\UserMultiaccount.cs" />
     <Compile Include="User\UserNote.cs" />
     <Compile Include="User\UserNoteAction.cs" />
-    <Compile Include="System\UserPermission.cs" />
+    <Compile Include="Base\UserPermission.cs" />
     <Compile Include="Pokedex\Attack.cs" />
     <Compile Include="Pokedex\MultilanguageName.cs" />
     <Compile Include="Pokedex\AttackTarget.cs" />
@@ -503,9 +515,10 @@
     <Compile Include="Forum\ThreadPrefix.cs" />
     <Compile Include="Forum\BoardEnabledPrefixes.cs" />
     <Compile Include="User\PrivateMessageReport.cs" />
-    <Compile Include="System\DsgvoComplianceInfo.cs" />
+    <Compile Include="Base\DsgvoComplianceInfo.cs" />
     <Compile Include="Mysql8MigrationSqlGenerator.cs" />
     <Compile Include="Wifi\OfferReport.cs" />
+    <Compile Include="Base\UserBan.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config">
@@ -709,6 +722,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901151440550_WifiBanreason.resx">
         <DependentUpon>201901151440550_WifiBanreason.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901181633014_UserColorClass.resx">
+        <DependentUpon>201901181633014_UserColorClass.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901201755417_UserBans.resx">
+        <DependentUpon>201901201755417_UserBans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901201804159_UserBanReason.resx">
+        <DependentUpon>201901201804159_UserBanReason.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

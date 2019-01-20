@@ -1,7 +1,9 @@
+using System;
+using System.Data.Entity.Migrations;
 namespace Pokefans.Data.Migrations
 {
-    using System;
-    using System.Data.Entity.Migrations;
+
+
     
     public partial class TrackingSource : DbMigration
     {

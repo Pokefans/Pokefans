@@ -15,7 +15,7 @@ header, main, footer, nav {
 #mainbody {
     padding: $mainbody-padding;
     display: flex;
-    @include media-breakpoint-down("lg") {
+    @include media-breakpoint-down("md") {
         flex-direction: column;
     }
 }

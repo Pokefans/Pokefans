@@ -23,7 +23,7 @@
     <input type="hidden" name="id" value="@Model.Id" />
     @Html.AntiForgeryToken()
 
-    <textarea class="form-control" rows="10" placeholder="Text hier eingeben"></textarea>
+    <textarea class="form-control" name="comment" rows="10" placeholder="Text hier eingeben"></textarea>
     <button type="submit" class="btn btn-primary">Meldung abschicken</button>
     <a class="btn btn-link" href="@Url.Action("Details", "Trading", new { id = Model.Id })">Zurück zum Angebot</a>
 </form>

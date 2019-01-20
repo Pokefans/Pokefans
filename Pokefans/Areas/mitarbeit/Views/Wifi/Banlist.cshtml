@@ -1,6 +1,6 @@
 ﻿@*Copyright 2019 the pokefans authors. See copying.md for legal info.*@
 @using Pokefans.Data.Wifi
-@model List<WifiBanlist>
+@model IQueryable<WifiBanlist>
     @{
         SiteTitle = "Pokefans | Wifi-Banliste";
         SiteHeader = "Wifi-Banliste";
@@ -27,7 +27,7 @@
                     @foreach (WifiBanlist ban in Model)
                     {
                         <tr>
-                            <td><a href="@Url.Action("Notes", "User", new { id = ban.UserId })" class="@ban.User.DisplayCss">@ban.User.UserName</a></td>
+                            <td><a href="@Url.Action("Notes", "User", new { id = ban.UserId })" class="@ban.User.Color">@ban.User.UserName</a></td>
                             <td>@tickCross(ban.CanAddOffers) @expire(ban.ExpireAddOffers)</td>
                             <td>@tickCross(ban.CanInterest) @expire(ban.ExpireInterest)</td>
                             <td><a href="@Url.Action("Bans", "User", new { id = ban.UserId })"><i class="fa fa-info-circle fa-lg"></i></a></td>
@@ -37,7 +37,7 @@
             </table>
             @if (ViewBag.Start > 0) {
                 int start = ViewBag.Start - 50;
-                if (start < 0) { } start = 0; }
+                if (start < 0) { start = 0; }
                 <a href="@Url.Action("Banlist", "Wifi", new { start = start })" class="btn btn-default">Vorherige</a>
             }
             @if(ViewBag.HasMore) {

@@ -33,7 +33,7 @@
                         <span class="label label-default" style="background-color: @Model.Labels[label.PrivateMessageLabelId].Color">@Model.Labels[label.PrivateMessageLabelId].Label</span>
                         }
                     </td>
-                    <td><a href="@Url.Map("profile/" + message.From.Url, "user")">@message.From.UserName</a></td>
+                    <td><a class="@message.From.Color" href="@Url.Map("profile/" + message.From.Url, "user")">@message.From.UserName</a></td>
                     <td>@message.Message.Sent.ToString("dd.MM.yyyy HH:mm")</td>
                 </tr>
                 }

@@ -129,6 +129,7 @@
     <Compile Include="ForumSecurity.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="MailSettingsSection.cs" />
+    <Compile Include="phpBBCryptoServiceProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cache\Cache.csproj">

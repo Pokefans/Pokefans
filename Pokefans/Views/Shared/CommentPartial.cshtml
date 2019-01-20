@@ -87,7 +87,7 @@
 
                     <div class="mb-1 small text-muted">
                         <a data-role="commentLink" href="@string.Format("#k{0}", comment.CommentId)">#</a>
-                        von <span data-role="commentAuthor">@comment.Author</span>@*TODO: Link*@
+                        von <span data-role="commentAuthor"><a href="@Url.Profile(comment.AuthorUser)" class="@comment.AuthorUser.Color">@comment.Author</a></span>
                         am <time data-role="commentTime">@comment.SubmitTime.ToString("d.M.yyyy HH:mm")</time>
 
                         <span class="pull-right">
