@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Controllers/UserController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Views/User/Bans.cshtml">
     <Files>
       <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="183" Column="16" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans.cshtml" Line="27" Column="73" />
-      <File FileName="Pokefans/Scripts/backend/bvs/bans.js" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Views/Account/Login.cshtml" Line="4" Column="32" />
-      <File FileName="Data/Base/User.cs" Line="124" Column="9" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans.cshtml" Line="47" Column="112" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans.js" Line="8" Column="46" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="12" Column="54" />
+      <File FileName="Pokefans/Scripts/backend/wifi/reports.js" Line="3" Column="1" />
+      <File FileName="Data/Base/UserBan.cs" Line="20" Column="45" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

@@ -501,7 +501,6 @@
     <Content Include="Scripts\sfc\arcrypt.js" />
     <Content Include="Scripts\sfc\arcrypt2.js" />
     <Content Include="Scripts\trading\add.js" />
-    <Content Include="Scripts\_references.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -654,13 +653,11 @@
     <Content Include="Areas\mitarbeit\Views\_NoteTemplates\WifiOfferDeleted.cshtml" />
     <Content Include="Areas\mitarbeit\Views\_NoteTemplates\WifiOfferReopened.cshtml" />
     <Content Include="Scripts\lib\knockout\daterangepicker.js" />
-    <Content Include="Scripts\lib\knockout\daterangepicker.min.js" />
     <Content Include="Scripts\lib\knockout\knockout.chart.js" />
     <Content Include="Scripts\lib\knockout\knockout.mapping.js" />
     <Content Include="Scripts\lib\knockout\knockout-3.4.0.debug.js" />
     <Content Include="Scripts\lib\knockout\knockout-3.4.0.js" />
     <Content Include="Scripts\lib\knockout\knockout-pre-rendered.js" />
-    <Content Include="Scripts\lib\knockout\knockout-pre-rendered.min.js" />
     <Content Include="Scripts\lib\ace\ace.js" />
     <Content Include="Scripts\lib\ace\content-edit.js" />
     <Content Include="Scripts\lib\ace\loadace.js" />
@@ -673,13 +670,9 @@
     <Content Include="Scripts\lib\ace\worker-html.js" />
     <Content Include="Scripts\lib\trumbowyg\de.min.js" />
     <Content Include="Scripts\lib\trumbowyg\trumbowyg.colors.js" />
-    <Content Include="Scripts\lib\trumbowyg\trumbowyg.colors.min.js" />
     <Content Include="Scripts\lib\trumbowyg\trumbowyg.emoji.js" />
-    <Content Include="Scripts\lib\trumbowyg\trumbowyg.emoji.min.js" />
     <Content Include="Scripts\lib\trumbowyg\trumbowyg.js" />
-    <Content Include="Scripts\lib\trumbowyg\trumbowyg.min.js" />
     <Content Include="Scripts\lib\trumbowyg\trumbowyg.table.js" />
-    <Content Include="Scripts\lib\trumbowyg\trumbowyg.table.min.js" />
     <Content Include="Scripts\lib\i18n\ar.js" />
     <Content Include="Scripts\lib\i18n\az.js" />
     <Content Include="Scripts\lib\i18n\bg.js" />
@@ -729,13 +722,9 @@
     <Content Include="Scripts\lib\i18n\zh-TW.js" />
     <Content Include="Scripts\lib\bs4\bootstrap.js" />
     <Content Include="Scripts\lib\waypoints\jquery.waypoints.js" />
-    <Content Include="Scripts\lib\waypoints\jquery.waypoints.min.js" />
     <Content Include="Scripts\lib\waypoints\shortcuts\infinite.js" />
-    <Content Include="Scripts\lib\waypoints\shortcuts\infinite.min.js" />
     <Content Include="Scripts\lib\waypoints\shortcuts\inview.js" />
-    <Content Include="Scripts\lib\waypoints\shortcuts\inview.min.js" />
     <Content Include="Scripts\lib\waypoints\shortcuts\sticky.js" />
-    <Content Include="Scripts\lib\waypoints\shortcuts\sticky.min.js" />
     <Content Include="Scripts\sfc\lightboxstart.js" />
     <Content Include="Scripts\lib\ekko-lightbox.js" />
     <Content Include="Scripts\lib\bloodhound.js" />
@@ -746,14 +735,10 @@
     <Content Include="Scripts\lib\editable\bootstrap-editable.js" />
     <Content Include="Scripts\lib\editable\bootstrap-editable.min.js" />
     <Content Include="Scripts\lib\jquery.validate.js" />
-    <Content Include="Scripts\lib\jquery.validate.min.js" />
     <Content Include="Scripts\lib\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\lib\jquery.validate.unobtrusive.min.js" />
     <None Include="Scripts\lib\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\lib\jquery-2.1.3.js" />
     <None Include="Scripts\lib\jquery-2.1.3.intellisense.js" />
-    <Content Include="Scripts\lib\jquery-2.1.3.min.js" />
-    <Content Include="Scripts\lib\jquery-2.1.3.min.map" />
     <Content Include="Scripts\lib\modernizr-2.8.3.js" />
     <Content Include="Scripts\lib\moment.js" />
     <Content Include="Scripts\lib\moment-with-locales.js" />
@@ -770,12 +755,9 @@
     <Content Include="Scripts\lib\dropzone\dropzone.css" />
     <Content Include="Scripts\lib\dropzone\dropzone.js" />
     <Content Include="Scripts\lib\dropzone\dropzone.min.css" />
-    <Content Include="Scripts\lib\dropzone\dropzone.min.js" />
     <Content Include="Scripts\lib\dropzone\dropzone-amd-module.js" />
-    <Content Include="Scripts\lib\dropzone\dropzone-amd-module.min.js" />
     <Content Include="Scripts\common\cookieconsent.js" />
     <Content Include="Scripts\lib\charts\Chart.bundle.js" />
-    <Content Include="Scripts\lib\charts\Chart.bundle.min.js" />
     <Content Include="Scripts\user\pm-compose.js" />
     <Content Include="Scripts\user\pm-labels.js" />
     <Content Include="Scripts\backend\bvs\ad_vertising.js" />
@@ -783,6 +765,9 @@
     <Content Include="Scripts\backend\bvs\multiaccounts.js" />
     <Content Include="Scripts\backend\bvs\rolemanager.js" />
     <Content Include="Areas\user\Views\Account\Banned.cshtml" />
+    <Content Include="Scripts\backend\bvs\bans\fanart.js" />
+    <Content Include="Scripts\lib\bs3\bootstrap.js" />
+    <Content Include="Scripts\common\getCSRF.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -831,6 +816,7 @@
     <Folder Include="Scripts\lib\charts\" />
     <Folder Include="Scripts\user\" />
     <Folder Include="Scripts\backend\bvs\" />
+    <Folder Include="Scripts\backend\bvs\bans\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -874,6 +860,9 @@
     <MonoDevelop>
       <Properties>
         <XspParameters Port="8080" Address="127.0.0.1" SslMode="None" SslProtocol="Default" KeyType="None" CertFile="" KeyFile="" PasswordOptions="None" Password="" Verbose="True" />
+        <Policies>
+          <StandardHeader IncludeInNewFiles="True" Text="Copyright ${Year} the pokefans authors. see copying.md for legal info." />
+        </Policies>
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
