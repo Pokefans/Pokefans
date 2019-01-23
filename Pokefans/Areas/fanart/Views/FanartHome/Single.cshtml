@@ -9,7 +9,7 @@
 
 <h1>@SiteHeader</h1>
 <div class="fanart-image">
-    <img src="@Html.ResourceLink("/fanart/uploads/" + Model.Fanart.Url, "files")" class="img-responsive" />
+    <img src="@Html.ResourceLink("/fanart/uploads/" + Model.Fanart.Url, "files")" class="img-fluid" />
 </div>
 <div class="fanart-description">
     @Html.Raw(Model.Fanart.Description)
