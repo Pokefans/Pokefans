@@ -51,7 +51,6 @@ namespace Pokefans.Models
     {
         [Required]
         [Display(Name = "E-Mail oder Benutzername")]
-        [EmailAddress]
         public string Email { get; set; }
 
         [Required]

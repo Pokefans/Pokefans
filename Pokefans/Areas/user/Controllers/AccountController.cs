@@ -132,7 +132,8 @@ namespace Pokefans.Areas.user.Controllers
             UserLogin l = new UserLogin
             {
                 Ip = SecurityUtils.GetIPAddressAsString(HttpContext),
-                Time = DateTime.Now
+                Time = DateTime.Now,
+                UserId = u.Id
             };
 
             if (!u.EmailConfirmed)
