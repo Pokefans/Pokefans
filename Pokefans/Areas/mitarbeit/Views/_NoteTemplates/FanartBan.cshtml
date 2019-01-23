@@ -1,0 +1,21 @@
+﻿@*Copyright 2019 the pokefans authors. See copying.md for legal info*@
+@model Pokefans.Data.Fanwork.FanartBan
+
+<p>Fanart-Verwendungseinschränkungen wurden geändert. Die neuen Einstellungen sind:</p>
+<p>
+    @printSetting(Model.CanDelete, "Löschen möglich")
+    @printSetting(Model.CanUpload, "Hochladen möglich")
+    @printSetting(Model.CanRate, "Bewerten möglich")
+    @printSetting(Model.CanEdit, "Bearbeiten möglich")
+</p>
+
+@helper printSetting(bool value, string message) {
+    <span>
+        @if(value) {
+            <i class="fa fa-check-square text-success"></i> @message
+        }
+        else {
+            <i class="fa fa-times-circle text-danger"></i> @message
+        }
+    </span>
+}

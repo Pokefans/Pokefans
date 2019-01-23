@@ -375,6 +375,10 @@
     <Compile Include="Migrations\201901201804159_UserBanReason.Designer.cs">
         <DependentUpon>201901201804159_UserBanReason.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201901221137149_BanSomething.cs" />
+    <Compile Include="Migrations\201901221137149_BanSomething.Designer.cs">
+        <DependentUpon>201901221137149_BanSomething.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Migrations\MySqlHistoryContext.cs" />
     <Compile Include="Pokedex\Ability.cs" />
@@ -731,6 +735,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201901201804159_UserBanReason.resx">
         <DependentUpon>201901201804159_UserBanReason.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201901221137149_BanSomething.resx">
+        <DependentUpon>201901221137149_BanSomething.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

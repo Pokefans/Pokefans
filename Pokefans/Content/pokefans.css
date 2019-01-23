@@ -10352,6 +10352,11 @@ table.private-messages tr th:last-child, table.private-messages tr td:last-child
   border-left: 4px solid #eea236;
 }
 
+.popover-notifications {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
 .user-admin {
   font-weight: bold;
   color: #a00;

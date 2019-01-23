@@ -1,0 +1,16 @@
+﻿@*Copyright 2019 the pokefans authors. See copying.md for legal info*@
+@model UserBanNoteViewModel
+
+<p>
+    Benutzer wurde
+    @if (Model.Ban.ExpiresOn.HasValue)
+    {
+        <text> zum @Model.Ban.ExpiresOn.Value.ToString("dd.MM.yyyy HH:mm") gesperrt.</text>
+    }
+    else
+    {
+        <text>dauerhaft gesperrt.</text>
+    }
+</p>
+<p>Weitere Informationen:</p>
+<p>@Model.Message</p>

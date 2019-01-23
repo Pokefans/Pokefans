@@ -389,6 +389,7 @@
     <Compile Include="Areas\user\Controllers\NotificationsController.cs" />
     <Compile Include="Areas\mitarbeit\Controllers\WifiController.cs" />
     <Compile Include="Areas\mitarbeit\Models\TradingNoteViewModel.cs" />
+    <Compile Include="Areas\mitarbeit\Models\UserBanNoteViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-tagsinput.css" />
@@ -768,6 +769,16 @@
     <Content Include="Scripts\backend\bvs\bans\fanart.js" />
     <Content Include="Scripts\lib\bs3\bootstrap.js" />
     <Content Include="Scripts\common\getCSRF.js" />
+    <Content Include="Scripts\backend\bvs\bans\global.js" />
+    <Content Include="Areas\mitarbeit\Views\User\Bans\_GlobalBanPartial.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\User\Bans\_FanartBanPartial.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\_NoteTemplates\Ban.cshtml" />
+    <Content Include="Areas\mitarbeit\Views\_NoteTemplates\FanartBan.cshtml" />
+    <Content Include="Scripts\backend\bvs\bans\wifi.js" />
+    <Content Include="Areas\mitarbeit\Views\User\Bans\_WifiBanPartial.cshtml" />
+    <Content Include="Content\flatpickr.css" />
+    <Content Include="Scripts\lib\flatpickr.js" />
+    <Content Include="Scripts\lib\bs4\popper.js" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -817,6 +828,7 @@
     <Folder Include="Scripts\user\" />
     <Folder Include="Scripts\backend\bvs\" />
     <Folder Include="Scripts\backend\bvs\bans\" />
+    <Folder Include="Areas\mitarbeit\Views\User\Bans\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

@@ -70,6 +70,11 @@ table.private-messages {
     }
 }
 
+.popover-notifications {
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
 // user colors
 @each $rank, $color in $user-colors {
     .user-#{$rank}, {

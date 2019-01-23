@@ -53,6 +53,7 @@ namespace Pokefans
                     "~/Scripts/lib/modernizr-*"));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
+                    "~/Scripts/lib/bs4/popper.js",
                     "~/Scripts/lib/bs4/bootstrap.js",
                     "~/Scripts/common/cookieconsent.js"
                 ));
@@ -92,7 +93,8 @@ namespace Pokefans
                     "~/Content/editable/bootstrap-editable.css",
                     "~/Content/font-awesome.css",
                     "~/Content/select2-bootstrap.css",
-                    "~/Content/adminlte/datetimepicker.css"
+                    "~/Content/adminlte/datetimepicker.css",
+                    "~/Content/flatpickr.css"
                 ));
 
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
@@ -118,11 +120,15 @@ namespace Pokefans
             bundles.Add(new ScriptBundle("~/bundles/backend").Include(
                     "~/Scripts/lib/select2.js",
                     "~/Scripts/lib/editable/bootstrap-editable.js",
+                    "~/Scripts/lib/flatpickr.js",
                     "~/Scripts/backend/bvs/ad_vertising.js",
                     "~/Scripts/backend/bvs/multiaccounts.js",
                     "~/Scripts/backend/bvs/rolemanager.js",
                     "~/Scripts/backend/fanart/categories.js",
                     "~/Scripts/backend/fanart/edit.js",
+                    "~/Scripts/backend/bvs/bans/fanart.js",
+                    "~/Scripts/backend/bvs/bans/global.js",
+                    "~/Scripts/backend/bvs/bans/wifi.js",
                     "~/Scripts/backend/bvs/bans.js",
                     "~/Scripts/common/bbCodeEdit.js",
                     "~/Scripts/backend/wifi/reports.js"

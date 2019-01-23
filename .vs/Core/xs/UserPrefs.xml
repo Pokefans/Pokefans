@@ -1,13 +1,21 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Views/User/Bans.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Controllers/UserApiController.cs">
     <Files>
-      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="183" Column="16" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans.cshtml" Line="47" Column="112" />
-      <File FileName="Pokefans/Scripts/backend/bvs/bans.js" Line="8" Column="46" />
-      <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="12" Column="54" />
-      <File FileName="Pokefans/Scripts/backend/wifi/reports.js" Line="3" Column="1" />
-      <File FileName="Data/Base/UserBan.cs" Line="20" Column="45" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="296" Column="46" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans.cshtml" Line="24" Column="86" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/global.js" Line="40" Column="25" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_GlobalBanPartial.cshtml" Line="46" Column="52" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="18" Column="31" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans.js" Line="1" Column="76" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/wifi.js" Line="5" Column="2" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_WifiBanPartial.cshtml" Line="36" Column="135" />
+      <File FileName="Data/Wifi/WifiBanlist.cs" Line="1" Column="1" />
+      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="55" Column="73" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_FanartBanPartial.cshtml" Line="1" Column="1" />
+      <File FileName="Pokefans/Views/Shared/_Layout.cshtml" Line="1" Column="1" />
+      <File FileName="Pokefans/scss/_user.scss" Line="73" Column="23" />
+      <File FileName="Pokefans/Controllers/UserApiController.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />

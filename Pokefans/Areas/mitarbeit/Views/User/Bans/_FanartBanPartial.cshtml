@@ -1,0 +1,57 @@
+﻿@*Copyright 2016-2019 the pokefans authors. See copying.md for legal info.*@
+@model UserBanViewModel
+<div class="col-md-6">
+    <div class="box">
+        <div class="box-header">
+            <h3 class="box-title">Fanart-Banstatus</h3>
+        </div>
+        <div class="box-body">
+            <p>Lege hier den Banstatus fest. Ein nicht gesetzter Haken bedeutet, dass der Benutzer diese Aktion nicht ausführen darf.</p>
+            @{
+                string disabled = "disabled";
+                if (User.IsInRole("fanart-moderator"))
+                {
+                    disabled = "";
+                }
+                bool canEdit = Model.FanartBan == null ? true : Model.FanartBan.CanEdit;
+                bool canDelete = Model.FanartBan == null ? true : Model.FanartBan.CanDelete;
+                bool canUpload = Model.FanartBan == null ? true : Model.FanartBan.CanUpload;
+                bool canRate = Model.FanartBan == null ? true : Model.FanartBan.CanRate;
+            }
+            <form role="form"
+                  id="fanart-bans"
+                  data-bind="with: fanartBans"
+                  data-endpoint="@Url.Action("ModifyFanartBan", "User")">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" data-bind="init, value: id" value="@Model.User.Id" />
+                <div class="checkbox">
+                    <label>
+                        <input data-bind="init, checked: CanEdit" type="checkbox" name="CanEdit" @disabled @(canEdit ? "checked" : "")> Eigene Einreichungen bearbeiten
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input data-bind="init, checked: CanDelete" type="checkbox" name="CanDelete" @disabled @(canDelete ? "checked" : "")> Eigene Einreichungen löschen
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input data-bind="init, checked: CanUpload" type="checkbox" name="CanUpload" @disabled @(canUpload ? "checked" : "")> Neue Einreichungen hochladen
+                    </label>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input data-bind="init, checked: CanRate" type="checkbox" name="CanRate" @disabled @(canRate ? "checked" : "")> Einreichungen bewerten
+                    </label>
+                </div>
+                @if (User.IsInRole("fanart-moderator"))
+                {
+                    <button class="btn btn-primary" id="fanart-banhammer" data-bind="">Aktualisieren</button>
+                }
+            </form>
+        </div>
+        <div class="overlay" data-bind="visible: loading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</div>

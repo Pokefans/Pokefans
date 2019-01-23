@@ -13,6 +13,10 @@ using Pokefans.Util;
 using Ganss.XSS;
 using System.Data.Entity.Validation;
 using Pokefans.Data.Fanwork;
+using System.Security.Claims;
+using Microsoft.AspNet.Identity;
+using Pokefans.Data.Base;
+using Pokefans.Data.Wifi;
 
 namespace Pokefans.Areas.mitarbeit.Controllers
 {
@@ -187,6 +191,139 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             return View("~/Areas/mitarbeit/Views/User/Bans.cshtml", ubvm);
         }
 
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [Authorize(Roles="global-moderator")]
+        public ActionResult UpdateBan(int id, string reason, string bvs, DateTime? expireTime)
+        {
+            // check if the user id is valid
+            if (!db.Users.Any(x => x.Id == id))
+                return HttpNotFound();
+
+            // get the current users id
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
+            // ... and the accompanying users
+            User banner = db.Users.Find(uid);
+            User bannee = db.Users.Find(id);
+
+            // superadmins cannot get banned.
+            if(bannee.IsInRole("super-administrator", cache, db))
+            {
+                // haha, nice try.
+                Response.StatusCode = 403;
+                Response.Status = "Forbidden";
+                return Json(null);
+            }
+
+            // for all other stuff:
+            // superadmins can ban anyone.
+            // gm's cannot ban each other.
+            if (bannee.IsInRole("global-moderator", cache, db) &&
+               banner.IsInRole("global-moderator", cache, db) &&
+              !banner.IsInRole("super-administrator", cache, db))
+            {
+                Response.StatusCode = 403;
+                Response.Status = "Forbidden";
+                return Json(null);
+            }
+
+            // is this user already banned? if so, unban him.
+            if(db.UserBanlist.Any(x => x.UserId == id))
+            {
+                UserBan b = db.UserBanlist.First(x => x.UserId == id);
+                db.UserBanlist.Remove(b);
+                db.SaveChanges();
+
+                return Json(new
+                {
+                    Message = bannee.UserName + " ist nicht gesperrt.",
+                    Button = "Sperren"
+                });
+            }
+
+            UserBan ban = new UserBan();
+            ban.IsBanned = true;
+            ban.ExpiresOn = expireTime;
+            ban.BanReason = reason;
+            ban.UserId = bannee.Id;
+
+            db.UserBanlist.Add(ban);
+            db.SaveChanges();
+
+            ban.User = bannee;
+
+            string message = bannee.UserName + " ist ";
+            if(expireTime != null)
+            {
+                message += "bis zum " + expireTime.Value.ToString("dd.MM.yyyy HH:mm");
+            }
+            else
+            {
+                message += "dauerhaft";
+            }
+
+            message += " gesperrt.";
+            Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
+
+            UserNote n = new UserNote()
+            {
+                AuthorId = uid,
+                ActionId = actions["lock-account"],
+                Created = DateTime.Now,
+                IsDeletable = false,
+                RoleIdNeeded = db.Roles.First(x => x.Name == "moderator").Id,
+                UserId = id,
+                Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/Ban.cshtml", new UserBanNoteViewModel()
+                {
+                    Message = bvs,
+                    Ban = ban
+                }),
+                UnparsedContent = ""
+            };
+            db.UserNotes.Add(n);
+            db.SaveChanges();
+
+            return Json(new
+            {
+                Message = message,
+                Button = "Entsperren"
+            });
+        }
+
+        [ValidateAntiForgeryToken]
+        [HttpPost]
+        [Authorize(Roles = "wifi-moderator")]
+        public ActionResult WifiBan(int id, bool add, bool interest, DateTime? addExpire, DateTime? interestExpire)
+        {
+            WifiBanlist ban = db.WifiBanlist.FirstOrDefault(x => x.UserId == id);
+            bool dbadd = false;
+
+            if (ban == null)
+            {
+                ban = new WifiBanlist();
+                dbadd = true;
+            }
+
+            ban.CanAddOffers = add;
+            ban.CanInterest = interest;
+
+            if(addExpire != null)
+                ban.ExpireAddOffers = addExpire;
+
+            if (interestExpire != null)
+                ban.ExpireInterest = interestExpire;
+
+            if (dbadd)
+                db.WifiBanlist.Add(ban);
+            else
+                db.SetModified(ban);
+
+            db.SaveChanges();
+
+            return Json(null);
+        }
+
         // POST: api/user/bans/fanart
         [ValidateAntiForgeryToken]
         [HttpPost]
@@ -206,6 +343,8 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 Response.TrySkipIisCustomErrors = true;
                 return Json(false);
             }
+
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
 
             FanartBanlist fb = db.FanartBanlist.FirstOrDefault(g => g.UserId == id);
 
@@ -231,6 +370,22 @@ namespace Pokefans.Areas.mitarbeit.Controllers
 
                 db.SetModified(fb);
             }
+
+            fb.User = idproof;
+
+            Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
+
+            UserNote n = new UserNote()
+            {
+                AuthorId = uid,
+                ActionId = actions["lock-account"],
+                Created = DateTime.Now,
+                IsDeletable = false,
+                RoleIdNeeded = db.Roles.First(x => x.Name == "moderator").Id,
+                UserId = id,
+                Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/FanartBan.cshtml", fb),
+                UnparsedContent = ""
+            };
 
             db.SaveChanges();
             

@@ -10,7 +10,6 @@ function FanartBansViewModel(endpoint) {
 
     this.loading = ko.observable(false);
     this.error = ko.observable();
-    this.__RequestVerificationToken = getCSRFToken();
 
     this.endpoint = endpoint;
 
@@ -22,7 +21,14 @@ function FanartBansViewModel(endpoint) {
         $.ajax({
             type: "POST",
             url: self.endpoint,
-            data: ko.toJSON(self), // serializes the form's elements.
+            data:  {
+                CanEdit: self.CanEdit,
+                CanDelete: self.CanDelete,
+                CanUpload: self.CanUpload,
+                CanRate: self.CanRate,
+                id: self.id,
+                __RequestVerificationToken: getCSRFToken();
+            },
             success: function (data) {
                 ko.mapping.fromJSON(data, self);
                 this.loading(false);

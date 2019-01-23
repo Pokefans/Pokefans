@@ -1,0 +1,42 @@
+﻿@*Copyright 2019 the pokefans authors. see copying.md for legal info*@
+@model UserBanViewModel
+
+@{
+    Pokefans.Data.Wifi.WifiBanlist wiban = Model.WifiBan;
+}
+
+<div class="col-md-6"
+     data-bind="with: wifiBan"
+     data-endpoint="@Url.Action("WifiBan", "User")"
+     id="wifiban">
+    <div class="box box-default">
+        <div class="box-header">
+            <h3 class="box-title">Wifi-Bans</h3>
+        </div>
+        <div class="box-body">
+            @{
+                string disabled = "disabled";
+                if (User.IsInRole("fanart-moderator"))
+                {
+                    disabled = "";
+                }
+
+                bool canAdd = wiban == null ? true : wiban.CanAddOffers;
+                bool canInterest = wiban == null ? true : wiban.CanInterest;
+            }
+            <p>
+                Hier kannst du den Sperrstatus in der Tauschbörse fest. Ein nicht gesetzter Haken bedeutet, dass die Sperre in Kraft ist; falls im Kalender ein Datum gewählt ist,
+                läuft die Sperre zu diesem Zeitpunkt aus.
+            </p>
+            <form>
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="id" data-bind="init, value: id" value="@Model.User.Id" />
+                <div class="checkbox">
+                    <label>
+                        <input data-bind="init, checked: canAdd" type="checkbox" name="CanAdd" @disabled @(canAdd ? "checked" : "")> Neue Angebote hinzufügen
+                    </label>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

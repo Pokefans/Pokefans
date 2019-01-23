@@ -122,6 +122,18 @@ namespace Pokefans.Areas.mitarbeit
                     new { action = "Bans", Controller = "User" }
                 ));
 
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/user/bans/user",
+                    new { action = "UpdateBan", Controller = "User"}
+                ));
+
+            context.Routes.Add(new DomainRoute(
+                    "mitarbeit." + ConfigurationManager.AppSettings["Domain"],
+                    "api/v1/user/bans/wifi",
+                    new { action = "WifiBan", Controller = "User" }
+                ));
+
             // Fanart
             context.Routes.Add(new DomainRoute(
                     "mitarbeit."+ConfigurationManager.AppSettings["Domain"],

@@ -1,0 +1,79 @@
+﻿@*Copyright 2016-2019 the pokefans authors. See copying.md for legal info.*@
+@model UserBanViewModel
+<div class="col-md-6">
+    <div class="box" data-bind="with: globalBan" id="globalban" data-endpoint="@Url.Action("UpdateBan", "User")">
+        <div class="box-header">
+            <h3 class="box-title">Seitenweite Sperrung</h3>
+        </div>
+        <div class="box-body">
+            <p class="text-danger" style="display: none" data-bind="init, visible: error">
+                <i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. Bitte nochmal versuchen.
+            </p>
+            <p data-bind="init, text: banMessage">
+                @Model.User.UserName ist
+                @if (Model.GlobalBan != null && Model.GlobalBan.IsBanned)
+                {
+                    isGlobalBanned = true;
+                    if (Model.User.LockedOutDate.HasValue)
+                    {
+                        <text>gesperrt bis zum @Model.User.LockedOutDate.Value.ToString("d.M.yyyy, HH:mm:ss").</text>
+                    }
+                    else
+                    {
+                        <text>dauerhaft gesperrt.</text>
+                    }
+                }
+                else
+                {
+                    <text>nicht gesperrt.</text>
+                }
+            </p>
+            @if (User.IsInRole("global-moderator"))
+            {
+                <form class="form">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="id" data-bind="init, value: id" value="@Model.User.Id" />
+                    <div class="form-group">
+                        <label for="userReason">Dem gesperrten angezeigter Grund:</label>
+                        <textarea class="form-control" data-bind="init, textInput: reason">@Model.GlobalBan.BanReason</textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bvsNote">Notizen für die BVS:</label>
+                        <textarea class="form-control" data-bind="textInput: bvs"></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label>Enddatum (optional)</label>
+                        <div class="flatpickr" id="globalbanexpirepicker">
+                            @*flatpickr changes are handled in the view model.*@
+                            <input type="text" placeholder="Datum wählen..." data-input>
+
+                            <span class="input-group-btn">
+                                <button class="btn btn-default" title="toggle" data-toggle>
+                                    <i class="fa fa-calender-o fa-lg"></i>
+                                </button>
+
+                                <button class="btn btn-danger" title="clear" data-clear>
+                                    <i class="fa fa-times fa-lg"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                    <button class="btn btn-danger" data-bind="init, text: banButton, click: update">
+                        @if (isGlobalBanned)
+                        {
+                            <text>Entsperren</text>
+                        }
+                        else
+                        {
+                            <text>Sperren</text>
+                        }
+
+                    </button>
+                </form>
+            }
+        </div>
+        <div class="overlay" data-bind="visible: loading">
+            <i class="fa fa-refresh fa-spin"></i>
+        </div>
+    </div>
+</div>
