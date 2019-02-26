@@ -127,7 +127,7 @@
     <Compile Include="WebSecurity.cs" />
     <Compile Include="ApplicationSigninManager.cs" />
     <Compile Include="ForumSecurity.cs" />
-    <Compile Include="EmailService.cs" />
+    <Compile Include="PokefansEmailService.cs" />
     <Compile Include="MailSettingsSection.cs" />
     <Compile Include="phpBBCryptoServiceProvider.cs" />
   </ItemGroup>

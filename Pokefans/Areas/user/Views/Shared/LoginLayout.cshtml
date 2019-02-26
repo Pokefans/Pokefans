@@ -1,0 +1,44 @@
+﻿@* Copyright 2015-2016 the pokefans-core authors. See copying.md for legal info. *@
+<!DOCTYPE html>
+<html class="h-100">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@SiteTitle</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @if (IsSectionDefined("CustomHeaders"))
+    {
+        @RenderSection("CustomHeaders")
+    }
+</head>
+<body class="h-100">
+    <div class="container h-100">
+        <div class="row align-items-center justify-content-center h-100">
+
+            <div class="col-sm-6 col-md-4">
+                <div class="wrap p-3">
+                    <div class="text-center"><a href="@Url.Map("", null)"><img src="//static.pokefans.net/images/logo.svg" style="height:50px;"></a></div>
+                    @RenderBody()
+                </div>
+                <div class="small text-light pt-2">
+                    <div class="clearfix">
+                        <p class="float-left mb-0"><a href="http://pokefans.net/pokefans/impressum" class="text-light">Impressum</a> <a href="http://pokefans.net/pokefans/impressum#datenschutz"  class="text-light">Datenschutz</a></p>
+                        <p class="float-right mb-0"><a href="http://www.facebook.com/pokefans.net" class="text-light"><i class="fa fa-facebook-official fa-2x"></i></a> <a href="http://pinterest.com/pokefans/pins/" class="text-light"><i class="fa fa-pinterest-square fa-2x"></i></a> <a href="http://www.youtube.com/user/pokefansnet" class="text-light"><i class="fa fa-youtube-square fa-2x"></i></a> <a href="http://twitter.com/PokefansNET" class="text-light"><i class="fa fa-twitter-square fa-2x"></i></a> <a href="https://github.com/Pokefans/Pokefans" class="text-light"><i class="fa fa-github-square fa-2x"></i></a>
+                        </p>
+                    </div>
+                    <p>&copy; 2006 - @DateTime.Now.Year. Pokefans ist eine private Pokémon-Fanseite. <span class="note">Emojis von <a href="https://www.emojione.com" class="text-light">EmojiOne</a>.</span> </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/global")
+    <script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/1.0.9/cookieconsent.min.js"></script>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

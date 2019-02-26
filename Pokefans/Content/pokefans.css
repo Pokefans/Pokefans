@@ -10013,7 +10013,7 @@ body {
   background-size: cover;
 }
 
-body > .container > .wrap {
+body > .container > .wrap, body > .container > .row > div > .wrap {
   box-shadow: 0 0 10px 2px #222;
   background-color: #fff;
 }
@@ -10409,6 +10409,19 @@ a.user-ma:hover, a.user-ma:active, .user-ma a:hover, .user-ma a:active {
 
 a.user-em:hover, a.user-em:active, .user-em a:hover, .user-em a:active {
   color: #52606D;
+}
+
+.striketext {
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid #212529;
+  line-height: 0.1em;
+  margin: 10px 0 20px;
+}
+
+.striketext span {
+  background: #fff;
+  padding: 0 10px;
 }
 
 #intro menu li {

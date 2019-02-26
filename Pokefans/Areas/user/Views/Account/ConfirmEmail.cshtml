@@ -1,10 +1,10 @@
 ﻿@{
-    ViewBag.Title = "E-Mail bestätigen";
+        Layout = "~/Areas/user/Views/Shared/LoginLayout.cshtml";
+        ViewBag.Title = "E-Mail bestätigen";
 }
 
-<h2>@ViewBag.Title.</h2>
-<div>
-    <p>
-        Danke für die Bestätigung Ihrer E-Mail. Bitte @Html.ActionLink("klicken Sie hier, um sich anzumelden", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })
-    </p>
-</div>
+<h2 class="text-center">Email bestätigt</h2>
+
+<p>Deine Registrierung auf Pokefans ist damit abgeschlossen. Du kannst dich nun anmelden. Viel Spaß in unserer Community!</p>
+
+<a href="@Url.Action("Login")" class="btn btn-success">Zur Anmeldung</a>

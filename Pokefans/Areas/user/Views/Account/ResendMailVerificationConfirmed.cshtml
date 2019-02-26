@@ -1,6 +1,10 @@
 ﻿@using Pokefans.Models
 @{
-    ViewBag.Title = "Aktivierungs-E-Mail erneut senden";
+        Layout = "~/Areas/user/Views/Shared/LoginLayout.cshtml";
+        ViewBag.Title = "Aktivierungs-E-Mail erneut senden";
 }
 
-<div class="alert alert-success">Wenn deine E-Mail-Adresse bei uns registriert ist, haben wir dir einen neuen Aktivierungsschlüssel zugesandt. <a href="@Url.Map("", "")">Zur Startseite</a></div>
+<h2 class="text-center">Aktivierungs-E-Mail erneut senden</h2>
+
+<div class="alert alert-success">Wenn deine E-Mail-Adresse bei uns registriert ist, haben wir dir einen neuen Aktivierungsschlüssel zugesandt.</div>
+<a href="@Url.Map("", "")" class="btn btn-link">Zur Startseite</a>

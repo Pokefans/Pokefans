@@ -779,6 +779,7 @@
     <Content Include="Content\flatpickr.css" />
     <Content Include="Scripts\lib\flatpickr.js" />
     <Content Include="Scripts\lib\bs4\popper.js" />
+    <Content Include="Areas\user\Views\Shared\LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

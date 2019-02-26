@@ -87,3 +87,17 @@ table.private-messages {
         }
     }
 }
+
+// stuff for login
+.striketext {
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid $body-color;
+    line-height: 0.1em;
+    margin: 10px 0 20px;
+
+     span {
+        background: $body-bg;
+        padding: 0 10px;
+    }
+}

@@ -64,9 +64,9 @@ body {
     background: url("/contrib/alola.jpg") no-repeat fixed;
     background-size: cover;
 
-    & > .container > .wrap {
+    & > .container > .wrap, & > .container > .row > div > .wrap {
         box-shadow: 0 0 10px 2px #222;
-        background-color: #fff;
+        background-color: $body-bg;
     }
 }
 

@@ -295,7 +295,7 @@ namespace Pokefans.Areas.user.Controllers
                     var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     UserManager.SendEmail(user.Id, "[Pokefans] E-Mail bestätigen", this.RenderViewToString("~/Areas/user/Mails/Confirm.cshtml", new ConfirmationMailViewModel() { User = user, CallbackUrl = callbackUrl, ConfirmationKey = code}));
 
-                    return Redirect(Url.Map("/", null));
+                    return Redirect(Url.Map("/", null)); // TODO: confirmation page
                 }
                 AddErrors(result);
             }
@@ -328,7 +328,7 @@ namespace Pokefans.Areas.user.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult ResendMailVerificationConfirm(string mail) {
-            User u = _entities.Users.FirstOrDefault(x => x.Email == mail);
+            User u = UserManager.FindByEmail(mail);
 
             if (u != null && u.EmailConfirmed == false)
             {
@@ -357,7 +357,7 @@ namespace Pokefans.Areas.user.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = UserManager.FindByName(model.Email);
+                var user = UserManager.FindByEmail(model.Email);
                 if (user == null || !(UserManager.IsEmailConfirmed(user.Id)))
                 {
                     // Nicht anzeigen, dass der Benutzer nicht vorhanden ist oder nicht bestätigt wurde.

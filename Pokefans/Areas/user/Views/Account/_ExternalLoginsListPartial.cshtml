@@ -1,8 +1,6 @@
 ﻿@model Pokefans.Models.ExternalLoginListViewModel
 @using Microsoft.Owin.Security
 
-<h4>Einen anderen Dienst zum Anmelden verwenden.</h4>
-<hr />
 @{
     var loginProviders = Context.GetOwinContext().Authentication.GetExternalAuthenticationTypes();
     if (loginProviders.Count() == 0) {

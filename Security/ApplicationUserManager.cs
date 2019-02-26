@@ -52,7 +52,7 @@ namespace Pokefans.Security
                 Subject = "Sicherheitscode",
                 BodyFormat = "Ihr Sicherheitscode lautet {0}"
             });
-            this.EmailService = new EmailService();
+            this.EmailService = new PokefansEmailService();
 
             if (dataProtectionProvider != null)
             {

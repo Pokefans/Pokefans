@@ -58,7 +58,7 @@ namespace Pokefans.Models
         [Display(Name = "Kennwort")]
         public string Password { get; set; }
 
-        [Display(Name = "Speichern?")]
+        [Display(Name = "Angemeldet bleiben")]
         public bool RememberMe { get; set; }
     }
 
@@ -86,7 +86,10 @@ namespace Pokefans.Models
         [Compare("Password", ErrorMessage = "Das Kennwort entspricht nicht dem Bestätigungskennwort.")]
         public string ConfirmPassword { get; set; }
 
-        
+        [Required]
+        public bool AcceptedToS { get; set; }
+
+
     }
 
     public class ResetPasswordViewModel
