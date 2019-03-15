@@ -10,6 +10,7 @@ function WifiBanViewModel(endpoint) {
     this.id = ko.observable();
 
     this.endpoint = endpoint;
+    var self = this;
 
     var canAddPicker = flatpickr($("#wificanaddexpirepicker"), {
         wrap: true,
@@ -36,8 +37,8 @@ function WifiBanViewModel(endpoint) {
         this.loading(true);
 
         var postdata = {
-                CanAddOffers: self.canAdd,
-                CanInterest: self.canInterest,
+                add: self.canAdd,
+                interest: self.canInterest,
                 id: self.id,
                 __RequestVerificationToken: getCSRFToken()
             };
@@ -45,12 +46,13 @@ function WifiBanViewModel(endpoint) {
         if(canAddPicker.selectedDates.length > 0) {
             // javascript is a piece of utter crap
             var date = canAddPicker.selectedDates[0];
-            postdata.ExpireAddOffers = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+            postdata.addExpire = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
         }
-      if(canInterestPicker.selectedDates.length > 0) {
+
+        if(canInterestPicker.selectedDates.length > 0) {
             // javascript is a piece of utter crap
             var date = canInterestPicker.selectedDates[0];
-            postdata.ExpireInterest = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
+            postdata.interestExpire = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
         }
 
         $.ajax({
@@ -59,6 +61,7 @@ function WifiBanViewModel(endpoint) {
             data: postdata,
             success: function (data) {
                 self.loading(false);
+                self.error(false);
             },
             error: function() {
                 self.error(true);

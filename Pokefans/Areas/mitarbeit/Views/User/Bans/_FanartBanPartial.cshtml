@@ -6,6 +6,9 @@
             <h3 class="box-title">Fanart-Banstatus</h3>
         </div>
         <div class="box-body">
+            <p class="text-danger" style="display: none" data-bind="init, visible: error">
+                <i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. Bitte nochmal versuchen.
+            </p>
             <p>Lege hier den Banstatus fest. Ein nicht gesetzter Haken bedeutet, dass der Benutzer diese Aktion nicht ausführen darf.</p>
             @{
                 string disabled = "disabled";

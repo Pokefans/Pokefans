@@ -302,6 +302,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             if (ban == null)
             {
                 ban = new WifiBanlist();
+                ban.UserId = id;
                 dbadd = true;
             }
 

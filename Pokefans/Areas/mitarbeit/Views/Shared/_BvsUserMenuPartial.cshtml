@@ -21,6 +21,6 @@
         <li class="@(Model.Active == "userpage" ? "active" : null)"><a href="@Url.Action("ManageUserpage", "User", new {id = Model.Id}, true)">Nutzerseite sperren</a></li>
         <li class="@(Model.Active == "bans" ? "active" : null)"><a href="@Url.Action("Bans", "User", new {id = Model.Id}, true)">Benutzer sperren</a></li>
     }
-    <li><a href="@Url.Action("Profil", "User", new { id = Model.Url }, "user", null)">Profil anzeigen</a></li>
+    <li><a href="@Url.Profile(Model.Url)" target="_blank">Profil anzeigen <i class="fa fa-external-link"></i></a></li>
 </ul>
 

@@ -14,15 +14,21 @@
             <h3 class="box-title">Wifi-Bans</h3>
         </div>
         <div class="box-body">
+            <p class="text-danger" style="display: none" data-bind="init, visible: error">
+                <i class="fa fa-exclamation-triangle fa-lg"></i> Ups, da lief etwas schief. Bitte nochmal versuchen.
+            </p>
             @{
-                string disabled = "disabled";
-                if (User.IsInRole("fanart-moderator"))
-                {
-                    disabled = "";
-                }
+        string disabled = "disabled";
+        if (User.IsInRole("fanart-moderator"))
+        {
+            disabled = "";
+        }
 
-                bool canAdd = wiban == null ? true : wiban.CanAddOffers;
-                bool canInterest = wiban == null ? true : wiban.CanInterest;
+        bool canAdd = wiban == null ? true : wiban.CanAddOffers;
+        bool canInterest = wiban == null ? true : wiban.CanInterest;
+
+        string expireAdd = wiban != null && wiban.ExpireAddOffers.HasValue ? wiban.ExpireAddOffers.Value.ToString("yyyy-MM-dd HH:mm") : "";
+        string expireInterest = wiban != null && wiban.ExpireInterest.HasValue ? wiban.ExpireInterest.Value.ToString("yyyy-MM-dd HH:mm") : "";
             }
             <p>
                 Hier kannst du den Sperrstatus in der Tauschbörse fest. Ein nicht gesetzter Haken bedeutet, dass die Sperre in Kraft ist; falls im Kalender ein Datum gewählt ist,
@@ -36,16 +42,53 @@
                         <input data-bind="init, checked: canAdd" type="checkbox" name="CanAdd" @disabled @(canAdd ? "checked" : "")> Neue Angebote hinzufügen
                     </label>
                 </div>
+                <div class="form-group">
+                    <label>Enddatum (optional)</label>
+                    <div class="flatpickr input-group" id="wificanaddexpirepicker">
+                        @*flatpickr changes are handled in the view model.*@
+                        <input type="text" placeholder="Datum wählen..." value="@expireAdd" data-input>
+
+                        <span class="input-group-btn">
+                            <a class="btn btn-default" title="toggle" data-toggle>
+                                <i class="fa fa-calendar-o fa-lg"></i>
+                            </a>
+
+                            <a class="btn btn-default" title="clear" data-clear>
+                                <i class="fa fa-times fa-lg text-danger"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
                 <div class="checkbox">
                     <label>
                         <input data-bind="init, checked: canInterest" type="checkbox" name="CanAdd" @disabled @(canInterest ? "checked" : "")> Kann sich auf Angebote melden
                     </label>
                 </div>
+                <div class="form-group">
+                    <label>Enddatum (optional)</label>
+                    <div class="flatpickr input-group" id="wificaninterestexpirepicker">
+                        @*flatpickr changes are handled in the view model.*@
+                        <input type="text" placeholder="Datum wählen..." value="@expireInterest" data-input>
+
+                        <span class="input-group-btn">
+                            <a class="btn btn-default" title="toggle" data-toggle>
+                                <i class="fa fa-calendar-o fa-lg"></i>
+                            </a>
+
+                            <a class="btn btn-default" title="clear" data-clear>
+                                <i class="fa fa-times fa-lg text-danger"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
                 @if (User.IsInRole("fanart-moderator"))
-                {
-                    <button class="btn btn-primary" data-bind="click: update">Speichern</button>
-                }
+        {
+            <button class="btn btn-primary" data-bind="click: update">Speichern</button>
+}
             </form>
+        </div>
+        <div class="overlay" data-bind="visible: loading">
+            <i class="fa fa-refresh fa-spin"></i>
         </div>
     </div>
 </div>
