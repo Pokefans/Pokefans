@@ -786,6 +786,7 @@
     <Content Include="Content\backend\datetimepicker.min.css" />
     <Content Include="Scripts\lib\adminlte\adminlte.js" />
     <None Include="Scripts\lib\adminlte\adminlte.js.map" />
+    <Content Include="Areas\mitarbeit\Views\_NoteTemplates\WifiBan.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

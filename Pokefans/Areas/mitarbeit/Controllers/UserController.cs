@@ -296,6 +296,17 @@ namespace Pokefans.Areas.mitarbeit.Controllers
         [Authorize(Roles = "wifi-moderator")]
         public ActionResult WifiBan(int id, bool add, bool interest, DateTime? addExpire, DateTime? interestExpire)
         {
+            User idproof = userManager.FindByIdAsync(id).Result;
+
+            if (idproof == null)
+            {
+                Response.StatusCode = 400;
+                Response.TrySkipIisCustomErrors = true;
+                return Json(false);
+            }
+
+            int uid = int.Parse(((ClaimsIdentity)HttpContext.User.Identity).GetUserId());
+
             WifiBanlist ban = db.WifiBanlist.FirstOrDefault(x => x.UserId == id);
             bool dbadd = false;
 
@@ -320,9 +331,25 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             else
                 db.SetModified(ban);
 
+            Dictionary<string, int> actions = cache.Get<Dictionary<string, int>>("SystemUserNoteActions");
+
+            UserNote n = new UserNote()
+            {
+                AuthorId = uid,
+                ActionId = actions["lock-account"],
+                Created = DateTime.Now,
+                IsDeletable = false,
+                RoleIdNeeded = db.Roles.First(x => x.Name == "moderator").Id,
+                UserId = id,
+                Content = this.RenderViewToString("~/Areas/mitarbeit/Views/_NoteTemplates/WifiBan.cshtml", ban),
+                UnparsedContent = ""
+            };
+
+            db.UserNotes.Add(n);
+
             db.SaveChanges();
 
-            return Json(null);
+            return Json(true);
         }
 
         // POST: api/user/bans/fanart
