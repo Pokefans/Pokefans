@@ -2,4 +2,7 @@
 
 function WifiBanViewModel(endpoint) {
 
+    this.loading = ko.observable(false);
+    this.canAdd = ko.observable();
+    this.id = ko.observable();
 }

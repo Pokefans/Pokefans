@@ -1,6 +1,6 @@
 ﻿// Copyright 2019 the pokefans authors. See copying.md for legal info
 
-function GlobalBansViewModel(endpoint) {
+function GlobalBanViewModel(endpoint) {
     this.error = ko.observable();
     this.loading = ko.observable(false);
     this.id = ko.observable();
@@ -10,6 +10,7 @@ function GlobalBansViewModel(endpoint) {
     this.banButton = ko.observable();
 
     this.endpoint = endpoint;
+    this.csrftoken = getCSRFToken();
 
     var expirepicker = flatpickr($("#globalbanexpirepicker"), {
         wrap: true,
@@ -24,13 +25,16 @@ function GlobalBansViewModel(endpoint) {
     var self = this;
     this.update = function() {
         var mydata = {
-                id = self.id,
-                reason = self.reason,
-                bvs = self.bvs,
+                id: self.id,
+                reason: self.reason,
+                bvs: self.bvs,
+                __RequestVerificationToken: self.csrftoken
             };
 
         if(expirepicker.selectedDates.length > 0) {
-            mydata.expireTime = expirepicker.selectedDates[0].toString("Y-m-d H:i");
+            // javascript is a piece of utter crap
+            var date = expirepicker.selectedDates[0];
+            mydata.expireTime = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " + date.getHours() + ":" + date.getMinutes();
         }
 
         self.loading(true);

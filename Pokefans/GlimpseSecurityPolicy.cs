@@ -5,7 +5,7 @@ using Glimpse.Core.Extensibility;
 
 namespace Pokefans
 {
-    public class GlimpseSecurityPolicy:IRuntimePolicy
+    public class GlimpseSecurityPolicy : IRuntimePolicy
     {
         public RuntimePolicy Execute(IRuntimePolicyContext policyContext)
         {

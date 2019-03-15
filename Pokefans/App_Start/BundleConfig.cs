@@ -121,6 +121,7 @@ namespace Pokefans
                     "~/Scripts/lib/select2.js",
                     "~/Scripts/lib/editable/bootstrap-editable.js",
                     "~/Scripts/lib/flatpickr.js",
+                    "~/Scripts/common/getCSRF.js",
                     "~/Scripts/backend/bvs/ad_vertising.js",
                     "~/Scripts/backend/bvs/multiaccounts.js",
                     "~/Scripts/backend/bvs/rolemanager.js",

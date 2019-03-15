@@ -6,5 +6,5 @@ function BvsBansViewModel() {
     this.wifiBan = new WifiBanViewModel($("#wifiban").data("endpoint")); 
 }
 
-if(document.getElementById("#bvs-bans") != undefined)
+if(document.getElementById("bvs-bans") != undefined)
     ko.applyBindings(new BvsBansViewModel());

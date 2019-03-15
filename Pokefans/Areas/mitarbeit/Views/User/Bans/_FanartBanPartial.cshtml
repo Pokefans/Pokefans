@@ -1,7 +1,7 @@
 ﻿@*Copyright 2016-2019 the pokefans authors. See copying.md for legal info.*@
 @model UserBanViewModel
 <div class="col-md-6">
-    <div class="box">
+    <div class="box" data-bind="with: fanartBans">
         <div class="box-header">
             <h3 class="box-title">Fanart-Banstatus</h3>
         </div>
@@ -20,7 +20,7 @@
             }
             <form role="form"
                   id="fanart-bans"
-                  data-bind="with: fanartBans"
+
                   data-endpoint="@Url.Action("ModifyFanartBan", "User")">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="id" data-bind="init, value: id" value="@Model.User.Id" />

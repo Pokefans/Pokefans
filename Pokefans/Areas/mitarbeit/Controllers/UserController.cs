@@ -208,7 +208,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             User bannee = db.Users.Find(id);
 
             // superadmins cannot get banned.
-            if(bannee.IsInRole("super-administrator", cache, db))
+            if(bannee.IsInRole("superadmin", cache, db))
             {
                 // haha, nice try.
                 Response.StatusCode = 403;
@@ -221,7 +221,7 @@ namespace Pokefans.Areas.mitarbeit.Controllers
             // gm's cannot ban each other.
             if (bannee.IsInRole("global-moderator", cache, db) &&
                banner.IsInRole("global-moderator", cache, db) &&
-              !banner.IsInRole("super-administrator", cache, db))
+              !banner.IsInRole("superadmin", cache, db))
             {
                 Response.StatusCode = 403;
                 Response.Status = "Forbidden";

@@ -156,7 +156,7 @@ namespace Pokefans.Areas.user.Controllers
                         var ban = _entities.UserBanlist.FirstOrDefault(x => x.UserId == u.Id && x.IsBanned);
                         if (ban != null)
                         {
-                            if(ban.IsBanned && ban.ExpiresOn != null && ban.ExpiresOn.Value < DateTime.Now)
+                            if(ban.IsBanned && ban.ExpiresOn != null && ban.ExpiresOn.Value > DateTime.Now)
                             {
                                 // kill the auth token from the response
                                 HttpContext.Response.Cookies.Remove(ConfigurationManager.AppSettings["CookieName"]);

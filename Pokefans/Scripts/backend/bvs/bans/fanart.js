@@ -27,7 +27,7 @@ function FanartBansViewModel(endpoint) {
                 CanUpload: self.CanUpload,
                 CanRate: self.CanRate,
                 id: self.id,
-                __RequestVerificationToken: getCSRFToken();
+                __RequestVerificationToken: getCSRFToken()
             },
             success: function (data) {
                 ko.mapping.fromJSON(data, self);
