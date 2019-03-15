@@ -1,0 +1,16 @@
+﻿//TODO: replace with variables
+
+.notification {
+    border-bottom: 1px solid #eee;
+    margin-bottom: 1em;
+    padding: 0.5em;
+}
+
+.notification.unread {
+    border-left: 4px solid #eea236;
+}
+
+#outernotifications {
+    max-height: 200px;
+    overflow-y: scroll;
+}

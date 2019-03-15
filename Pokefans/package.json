@@ -6,7 +6,9 @@
   "scripts": {
     "dist": "npm-run-all css-* post-*",
     "css-pokefans": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss/pokefans.scss Content/pokefans.css",
-    "post-pokefans": "postcss --config node_modules/bootstrap/build/postcss.config.js --replace Content/pokefans.css"
+    "css-mitarbeit": "node-sass --output-style expanded --source-map true --source-map-contents true --precision 6 scss/mitarbeit.scss Content/mitarbeit.css",
+    "post-pokefans": "postcss --config node_modules/bootstrap/build/postcss.config.js --replace Content/pokefans.css",
+    "post-mitarbeit":"postcss --config node_modules/bootstrap/build/postcss.config.js --replace Content/mitarbeit.css"
   },
   "author": "",
   "license": "AGPL-3.0-or-later",

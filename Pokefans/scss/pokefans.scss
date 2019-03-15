@@ -2,6 +2,8 @@
 
 // include our own variables
 @import "variables";
+// import shared variables with the backend
+@import "globalvariables";
 
 // then include bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
@@ -18,6 +20,7 @@
 @import "sticky";
 @import "trading";
 @import "user";
+@import "usercolors";
 
 // legacy stuff
 // not sure if this still needs to be around.

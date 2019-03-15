@@ -1,61 +1,34 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/fanart/Controllers/ManageController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Views/_Layout.cshtml">
     <Files>
-      <File FileName="Pokefans/Web.config" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="390" Column="33" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_GlobalBanPartial.cshtml" Line="7" Column="113" />
-      <File FileName="Data/Base/UserBan.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Views/Account/Banned.cshtml" Line="4" Column="61" />
-      <File FileName="Pokefans/Areas/user/Views/Account/Login.cshtml" Line="5" Column="5" />
-      <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="32" Column="39" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_FanartBanPartial.cshtml" Line="22" Column="29" />
-      <File FileName="Pokefans/Scripts/backend/bvs/bans.js" Line="4" Column="57" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/_NoteTemplates/FanartBan.cshtml" Line="2" Column="43" />
-      <File FileName="Pokefans/Areas/fanart/Controllers/FanartHomeController.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/fanart/Controllers/ApiController.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/fanart/Controllers/ManageController.cs" Line="1" Column="1" />
+      <File FileName="Data/Wifi/WifiBanlist.cs" Line="1" Column="1" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_WifiBanPartial.cshtml" Line="44" Column="56" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/wifi.js" Line="60" Column="39" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="43" Column="12" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/global.js" Line="38" Column="10" />
+      <File FileName="Pokefans/Content/adminlte/AdminLTE.css" Line="4299" Column="6" />
+      <File FileName="Pokefans/scss/_user.scss" Line="76" Column="2" />
+      <File FileName="Pokefans/scss/mitarbeit.scss" Line="43" Column="55" />
+      <File FileName="Pokefans/scss/_forum.scss" Line="1" Column="1" />
+      <File FileName="Pokefans/scss/_usercolors.scss" Line="15" Column="2" />
+      <File FileName="Pokefans/scss/_variables.scss" Line="71" Column="25" />
+      <File FileName="Pokefans/scss/pokefans.scss" Line="5" Column="44" />
+      <File FileName="Pokefans/scss/_globalvariables.scss" Line="4" Column="101" />
+      <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="114" Column="13" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/_Layout.cshtml" Line="357" Column="47" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Core" expanded="True">
-            <Node name="lib" expanded="True">
-              <Node name="Data" expanded="True">
-                <Node name="Base" expanded="True" />
-                <Node name="Fanwork" expanded="True" />
-              </Node>
-            </Node>
             <Node name="Pokefans" expanded="True">
               <Node name="Areas" expanded="True">
-                <Node name="fanart" expanded="True">
-                  <Node name="Controllers" expanded="True">
-                    <Node name="ManageController.cs" selected="True" />
-                  </Node>
-                </Node>
                 <Node name="mitarbeit" expanded="True">
-                  <Node name="Controllers" expanded="True" />
                   <Node name="Views" expanded="True">
-                    <Node name="_NoteTemplates" expanded="True" />
-                    <Node name="User" expanded="True">
-                      <Node name="Bans" expanded="True" />
-                    </Node>
+                    <Node name="_Layout.cshtml" selected="True" />
                   </Node>
                 </Node>
-                <Node name="user" expanded="True">
-                  <Node name="Controllers" expanded="True" />
-                  <Node name="Views" expanded="True">
-                    <Node name="Account" expanded="True" />
-                  </Node>
-                </Node>
-              </Node>
-              <Node name="Scripts" expanded="True">
-                <Node name="backend" expanded="True">
-                  <Node name="bvs" expanded="True">
-                    <Node name="bans" expanded="True" />
-                  </Node>
-                </Node>
-                <Node name="common" expanded="True" />
               </Node>
             </Node>
           </Node>

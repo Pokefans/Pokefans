@@ -1,0 +1,15 @@
+﻿// copyright 2019 the pokefans authors. see copying.md for legal info
+
+// user colors
+@each $rank, $color in $user-colors {
+    .user-#{$rank}, {
+        font-weight: bold;
+        color: $color;
+    }
+
+    a.user-#{$rank}, .user-#{$rank} a {
+        &:hover, &:active {
+            color: $color;
+        }
+    }
+}

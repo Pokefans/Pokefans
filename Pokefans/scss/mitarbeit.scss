@@ -1,0 +1,61 @@
+// copyright 2019 the pokefans authors. see copying.md for legal info
+
+// Bootstrap
+// ---------------------------------------------------
+@import "../node_modules/bootstrap/scss/functions";
+@import "../adminLTE/build/scss/bootstrap-variables";
+@import "../node_modules/bootstrap/scss/bootstrap";
+// VARIABLES AND MIXINS
+// ---------------------------------------------------
+@import "../adminLTE/build/scss/variables";
+@import "globalvariables";
+
+@import "../adminLTE/build/scss/mixins";
+// Core
+// ---------------------------------------------------
+@import "../adminLTE/build/scss/layout";
+// COMPONENTS
+// ---------------------------------------------------
+@import "../adminLTE/build/scss/main-header";
+@import "../adminLTE/build/scss/brand";
+@import "../adminLTE/build/scss/main-sidebar";
+@import "../adminLTE/build/scss/sidebar-mini";
+@import "../adminLTE/build/scss/control-sidebar";
+@import "../adminLTE/build/scss/dropdown";
+@import "../adminLTE/build/scss/forms";
+@import "../adminLTE/build/scss/progress-bars";
+@import "../adminLTE/build/scss/small-box";
+@import "../adminLTE/build/scss/cards";
+@import "../adminLTE/build/scss/info-box";
+@import "../adminLTE/build/scss/timeline";
+@import "../adminLTE/build/scss/buttons";
+@import "../adminLTE/build/scss/callout";
+@import "../adminLTE/build/scss/alerts";
+@import "../adminLTE/build/scss/navs";
+@import "../adminLTE/build/scss/products";
+@import "../adminLTE/build/scss/table";
+@import "../adminLTE/build/scss/labels";
+@import "../adminLTE/build/scss/direct-chat";
+@import "../adminLTE/build/scss/users-list";
+@import "../adminLTE/build/scss/carousel";
+@import "../adminLTE/build/scss/social-widgets";
+// PAGES
+// ---------------------------------------------------
+@import "../adminLTE/build/scss/404_500_errors";
+// Plugins
+// ---------------------------------------------------
+@import "../adminLTE/build/scss/fullcalendar";
+@import "../adminLTE/build/scss/select2";
+// Miscellaneous
+// ---------------------------------------------------
+@import "../adminLTE/build/scss/miscellaneous";
+@import "../adminLTE/build/scss/print";
+@import "../adminLTE/build/scss/text";
+@import "../adminLTE/build/scss/elevation";
+
+
+// pokefans specifics
+@import "mitarbeit/notifications";
+@import "usercolors";
+
+@import "animations/spinner"; // TODO: replace with overlay spinner?

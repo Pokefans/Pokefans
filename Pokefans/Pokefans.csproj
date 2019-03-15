@@ -622,8 +622,6 @@
     <Content Include="Areas\mitarbeit\Views\Wifi\_Activity.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Wifi\_Toplist.cshtml" />
     <Content Include="Scripts\backend\dashboard\data.js" />
-    <Content Include="Content\adminlte\datetimepicker.css" />
-    <Content Include="Content\adminlte\datetimepicker.min.css" />
     <Content Include="Areas\mitarbeit\Views\Wifi\Banlist.cshtml" />
     <Content Include="Areas\mitarbeit\Views\Wifi\Reports.cshtml" />
     <Content Include="Content\select2-bootstrap.css" />
@@ -730,9 +728,9 @@
     <Content Include="Scripts\lib\ekko-lightbox.js" />
     <Content Include="Scripts\lib\bloodhound.js" />
     <Content Include="Scripts\lib\bootstrap-tagsinput.js" />
-    <Content Include="Scripts\lib\adminlte\app.js" />
-    <Content Include="Scripts\lib\adminlte\bootstrap.js" />
-    <Content Include="Scripts\lib\adminlte\jquery.slimscroll.js" />
+    <Content Include="Scripts\lib\adminlte-bs3\app.js" />
+    <Content Include="Scripts\lib\adminlte-bs3\bootstrap.js" />
+    <Content Include="Scripts\lib\adminlte-bs3\jquery.slimscroll.js" />
     <Content Include="Scripts\lib\editable\bootstrap-editable.js" />
     <Content Include="Scripts\lib\editable\bootstrap-editable.min.js" />
     <Content Include="Scripts\lib\jquery.validate.js" />
@@ -780,6 +778,14 @@
     <Content Include="Scripts\lib\flatpickr.js" />
     <Content Include="Scripts\lib\bs4\popper.js" />
     <Content Include="Areas\user\Views\Shared\LoginLayout.cshtml" />
+    <Content Include="scss\mitarbeit.scss" />
+    <Content Include="scss\mitarbeit\_notifications.scss" />
+    <Content Include="scss\_usercolors.scss" />
+    <Content Include="scss\_globalvariables.scss" />
+    <Content Include="Content\backend\datetimepicker.css" />
+    <Content Include="Content\backend\datetimepicker.min.css" />
+    <Content Include="Scripts\lib\adminlte\adminlte.js" />
+    <None Include="Scripts\lib\adminlte\adminlte.js.map" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -821,7 +827,7 @@
     <Folder Include="Scripts\lib\bs4\" />
     <Folder Include="Scripts\lib\bs3\" />
     <Folder Include="Scripts\lib\waypoints\" />
-    <Folder Include="Scripts\lib\adminlte\" />
+    <Folder Include="Scripts\lib\adminlte-bs3\" />
     <Folder Include="Scripts\lib\editable\" />
     <Folder Include="Scripts\common\" />
     <Folder Include="Scripts\lib\dropzone\" />
@@ -830,6 +836,8 @@
     <Folder Include="Scripts\backend\bvs\" />
     <Folder Include="Scripts\backend\bvs\bans\" />
     <Folder Include="Areas\mitarbeit\Views\User\Bans\" />
+    <Folder Include="scss\mitarbeit\" />
+    <Folder Include="Scripts\lib\adminlte\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

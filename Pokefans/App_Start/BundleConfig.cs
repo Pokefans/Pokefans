@@ -86,21 +86,34 @@ namespace Pokefans
                 ));
 
             // Admin Area specific bundles
-            bundles.Add(new StyleBundle("~/bundles/adminlte").Include(
-                    "~/Content/adminlte/bootstrap.css",
-                    "~/Content/adminlte/AdminLTE.css",
-                    "~/Content/adminlte/skin-blue.css",
+            bundles.Add(new StyleBundle("~/bundles/adminlte-bs3").Include(
+                    "~/Content/adminlte-bs3/bootstrap.css",
+                    "~/Content/adminlte-bs3/AdminLTE.css",
+                    "~/Content/adminlte-bs3/skin-blue.css",
                     "~/Content/editable/bootstrap-editable.css",
                     "~/Content/font-awesome.css",
                     "~/Content/select2-bootstrap.css",
-                    "~/Content/adminlte/datetimepicker.css",
+                    "~/Content/backend/datetimepicker.css",
                     "~/Content/flatpickr.css"
                 ));
 
+            // Admin Area specific bundles
+            bundles.Add(new StyleBundle("~/bundles/adminlte").Include(
+                    "~/Content/mitarbeit.css",
+                    "~/Content/editable/bootstrap-editable.css",
+                    "~/Content/font-awesome.css",
+                    "~/Content/backend/datetimepicker.css",
+                    "~/Content/flatpickr.css"
+                ));
+
+            bundles.Add(new ScriptBundle("~/bundles/adminlte-js-bs3").Include(
+                    "~/Scripts/lib/adminlte-bs3/bootstrap.js",
+                    "~/Scripts/lib/adminlte-bs3/app.js",
+                    "~/Scripts/lib/adminlte-bs3/jquery.slimscroll.js"
+                ));
+
             bundles.Add(new ScriptBundle("~/bundles/adminlte-js").Include(
-                    "~/Scripts/lib/adminlte/bootstrap.js",
-                    "~/Scripts/lib/adminlte/app.js",
-                    "~/Scripts/lib/adminlte/jquery.slimscroll.js"
+                    "~/Scripts/lib/adminlte/adminlte.js"
                 ));
 
             // Ace Editor

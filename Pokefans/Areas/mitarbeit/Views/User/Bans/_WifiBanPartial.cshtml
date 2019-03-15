@@ -36,6 +36,15 @@
                         <input data-bind="init, checked: canAdd" type="checkbox" name="CanAdd" @disabled @(canAdd ? "checked" : "")> Neue Angebote hinzufügen
                     </label>
                 </div>
+                <div class="checkbox">
+                    <label>
+                        <input data-bind="init, checked: canInterest" type="checkbox" name="CanAdd" @disabled @(canInterest ? "checked" : "")> Kann sich auf Angebote melden
+                    </label>
+                </div>
+                @if (User.IsInRole("fanart-moderator"))
+                {
+                    <button class="btn btn-primary" data-bind="click: update">Speichern</button>
+                }
             </form>
         </div>
     </div>
