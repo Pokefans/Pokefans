@@ -1,13 +1,13 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Views/_NoteTemplates/WifiBan.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="pokecli/App.config">
     <Files>
       <File FileName="Data/Wifi/WifiBanlist.cs" Line="1" Column="1" />
       <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_WifiBanPartial.cshtml" Line="31" Column="50" />
       <File FileName="Pokefans/Scripts/backend/bvs/bans/wifi.js" Line="64" Column="35" />
       <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="43" Column="12" />
       <File FileName="Pokefans/Scripts/backend/bvs/bans/global.js" Line="38" Column="10" />
-      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="342" Column="78" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="351" Column="13" />
       <File FileName="Pokefans/Controllers/HomeController.cs" Line="1" Column="1" />
       <File FileName="Pokefans/Controllers/TradingController.cs" Line="1" Column="1" />
       <File FileName="Pokefans/App_Start/BundleConfig.cs" Line="114" Column="1" />
@@ -15,7 +15,14 @@
       <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_FanartBanPartial.cshtml" Line="11" Column="17" />
       <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_GlobalBanPartial.cshtml" Line="49" Column="25" />
       <File FileName="Pokefans/Areas/mitarbeit/Views/Shared/_BvsUserMenuPartial.cshtml" Line="24" Column="106" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/_NoteTemplates/WifiBan.cshtml" Line="1" Column="1" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/_NoteTemplates/WifiBan.cshtml" Line="7" Column="5" />
+      <File FileName="Pokefans/Areas/forum/Controllers/ForumController.cs" Line="1" Column="1" />
+      <File FileName="Pokefans/Areas/forum/Controllers/BoardIndexController.cs" Line="20" Column="30" />
+      <File FileName="Security/ForumSecurity.cs" Line="71" Column="56" />
+      <File FileName="pokecli/Program.cs" Line="1" Column="1" />
+      <File FileName="pokecli/RegenerateSearchIndexCommand.cs" Line="24" Column="13" />
+      <File FileName="pokecli/ListRolesCommand.cs" Line="51" Column="22" />
+      <File FileName="pokecli/App.config" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -25,22 +32,17 @@
               <Node name="Data" expanded="True">
                 <Node name="Wifi" expanded="True" />
               </Node>
+              <Node name="Security" expanded="True" />
               <Node name="Util" expanded="True" />
+            </Node>
+            <Node name="pokecli" expanded="True">
+              <Node name="App.config" selected="True" />
             </Node>
             <Node name="Pokefans" expanded="True">
               <Node name="App_Start" expanded="True" />
               <Node name="Areas" expanded="True">
-                <Node name="mitarbeit" expanded="True">
+                <Node name="forum" expanded="True">
                   <Node name="Controllers" expanded="True" />
-                  <Node name="Views" expanded="True">
-                    <Node name="_NoteTemplates" expanded="True">
-                      <Node name="WifiBan.cshtml" selected="True" />
-                    </Node>
-                    <Node name="Shared" expanded="True" />
-                    <Node name="User" expanded="True">
-                      <Node name="Bans" expanded="True" />
-                    </Node>
-                  </Node>
                 </Node>
               </Node>
               <Node name="Content" expanded="True" />

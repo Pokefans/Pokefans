@@ -122,6 +122,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RegenerateSearchIndexCommand.cs" />
+    <Compile Include="AddPrivilegeCommand.cs" />
+    <Compile Include="ListRolesCommand.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

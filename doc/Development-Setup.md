@@ -2,8 +2,12 @@
 
 These steps are neccessary to go debugging:
 ## Windows
+
+Running and working on Windows has its benefits and drawbacks. A major drawback is the clusterfuck that's called IIS and/or IIS Express. Because we use subdomains, you can either edit the bindings in IISExpress (and need to run it as admin), or use local IIS (and run Visual Studio as admin, because why the f not). Alas, here is the list of things to do:
+
 1. Download and Install Visual Studio (Community), 2015 or greater.
 2. Download the git distribution of your trust
+3. Download and Install node, and put npm in your path.
 3. Clone the project
 4. Open Visual Studio as Administrator (**important**)
 5. Install the full IIS in the Windows control panel. Make sure you install .NET with it.
@@ -13,15 +17,15 @@ These steps are neccessary to go debugging:
 8. Configure the Web.Config from the Pokefans project to suit your needs. Make sure all specified Paths exist or strange things may happen, including, but not limited to the apocalypse and the release of all your shinies.
 9. Open the NuGet Package Manager Console, and type in Update-Database to migrate the database to the newest version. Make sure "Pokefans" is your startup project and the connection string in the Web.confg is valid.
 10. It may be a good idea to run `pokecli regen-search-index` to regenerate the search indexes. If you load demo data, this is neccessary for searching (and a whole lot of other features) to work properly.
-11. Now run the project. Your browser should open and display your local pokefans start page.
+11. Now run the project. Your browser should open and display your local pokefans start page. Important: this step needs node to function properly because nobody can compile CSS in, say, python.
 12. Register an account
-13. Use `pokecli add-privilege -u <username> -p <privilege handle>` to add yourself to the "mitarbeiter", "super-administrator", "moderator" and "role-manager" privileges.
-14. Log out of the website and log in again. You can now go to mitarbeit.pokefans.rocks and use the user management system to give yourself the remaining privileges.
+13. Use `pokecli add-role -u <username> -r <role handle>` to add yourself to the "mitarbeiter", "super-administrator", "moderator" and "role-manager" roles.
+14. Log out of the website and log in again. You can now go to mitarbeit.pokefans.rocks and use the user management system to give yourself the remaining roles.
 
 ## Linux
 1. Download and Install mono
-2. You need a really up to date mono. The one from the Arch Linux Repositories or the xamarin repositories will do. Debian stables mono is too old. Ubuntu probably too.
 2. Download and Install monodevelop
+3. Download and Install nodejs.
 3. If not already present, install xsp
 4. Clone and Build the Project
 5. Configure the Web.Config to your likings.
@@ -29,11 +33,13 @@ These steps are neccessary to go debugging:
 7. It may be a good idea to run `pokecli regen-search-index` to regenerate the search indexes. If you load demo data, this is neccessary for searching (and a whole lot of other features) to work properly.
 8. run the project and open pokefans.rocks in your browser.
 9. Register an account
-10. Use `pokecli add-privilege -u <username> -p <privilege handle>` to add yourself to the "mitarbeiter", "super-administrator", "moderator" and "role-manager" privileges
-11. Log out of the website and log in again. You can now go to mitarbeit.pokefans.rocks and use the user management system to give yourself the remaining privileges.
+10. Use `pokecli add-role -u <username> -r <role handle>` to add yourself to the "mitarbeiter", "super-administrator", "moderator" and "role-manager" roles
+11. Log out of the website and log in again. You can now go to mitarbeit.pokefans.rocks and use the user management system to give yourself the remaining roles.
 
 ## Mac OSX
-I have no Idea. But it should be similar to Linux, except you don't have a package manager and are left to yourself. If you have a working setup, edit this.
+1. Install Visual Studio for Mac
+2. Install nodejs (eg. via Homebrew)
+3. Follow the Linux tutorial from Point 4 onwards.
 
 # Code-Style
 See CodeStyle.cs in this Directory.
