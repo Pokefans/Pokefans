@@ -387,9 +387,11 @@ namespace Pokefans.Areas.mitarbeit.Controllers
                 UnparsedContent = ""
             };
 
+            db.UserNotes.Add(n);
+
             db.SaveChanges();
-            
-            return Json(true);
+
+            return Json(new { fb.CanDelete, fb.CanEdit, fb.CanRate, fb.CanUpload });
         }
 
         // GET: mitarbeit/user/{id}/neue-notiz

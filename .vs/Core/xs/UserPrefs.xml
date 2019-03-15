@@ -1,14 +1,20 @@
 ﻿<Properties StartupConfiguration="{159F43D2-36A5-4B92-BBD4-5FE13F520F1D}|">
   <MonoDevelop.Ide.ItemProperties.Pokefans PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/mitarbeit/Controllers/UserController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Pokefans/Areas/fanart/Controllers/ManageController.cs">
     <Files>
       <File FileName="Pokefans/Web.config" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="232" Column="1" />
-      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_GlobalBanPartial.cshtml" Line="22" Column="62" />
+      <File FileName="Pokefans/Areas/mitarbeit/Controllers/UserController.cs" Line="390" Column="33" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_GlobalBanPartial.cshtml" Line="7" Column="113" />
       <File FileName="Data/Base/UserBan.cs" Line="1" Column="1" />
-      <File FileName="Pokefans/Areas/user/Controllers/AccountController.cs" Line="163" Column="1" />
       <File FileName="Pokefans/Areas/user/Views/Account/Banned.cshtml" Line="4" Column="61" />
       <File FileName="Pokefans/Areas/user/Views/Account/Login.cshtml" Line="5" Column="5" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans/fanart.js" Line="32" Column="39" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/User/Bans/_FanartBanPartial.cshtml" Line="22" Column="29" />
+      <File FileName="Pokefans/Scripts/backend/bvs/bans.js" Line="4" Column="57" />
+      <File FileName="Pokefans/Areas/mitarbeit/Views/_NoteTemplates/FanartBan.cshtml" Line="2" Column="43" />
+      <File FileName="Pokefans/Areas/fanart/Controllers/FanartHomeController.cs" Line="1" Column="1" />
+      <File FileName="Pokefans/Areas/fanart/Controllers/ApiController.cs" Line="1" Column="1" />
+      <File FileName="Pokefans/Areas/fanart/Controllers/ManageController.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,15 +23,20 @@
             <Node name="lib" expanded="True">
               <Node name="Data" expanded="True">
                 <Node name="Base" expanded="True" />
+                <Node name="Fanwork" expanded="True" />
               </Node>
             </Node>
             <Node name="Pokefans" expanded="True">
               <Node name="Areas" expanded="True">
-                <Node name="mitarbeit" expanded="True">
+                <Node name="fanart" expanded="True">
                   <Node name="Controllers" expanded="True">
-                    <Node name="UserController.cs" selected="True" />
+                    <Node name="ManageController.cs" selected="True" />
                   </Node>
+                </Node>
+                <Node name="mitarbeit" expanded="True">
+                  <Node name="Controllers" expanded="True" />
                   <Node name="Views" expanded="True">
+                    <Node name="_NoteTemplates" expanded="True" />
                     <Node name="User" expanded="True">
                       <Node name="Bans" expanded="True" />
                     </Node>

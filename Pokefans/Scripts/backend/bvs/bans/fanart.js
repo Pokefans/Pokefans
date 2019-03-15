@@ -30,12 +30,15 @@ function FanartBansViewModel(endpoint) {
                 __RequestVerificationToken: getCSRFToken()
             },
             success: function (data) {
-                ko.mapping.fromJSON(data, self);
-                this.loading(false);
+                self.CanEdit = data.CanEdit;
+                self.CanDelete = data.CanDelete;
+                self.CanUpload = data.CanUpload;
+                self.CanRate = data.CanRate;
+                self.loading(false);
             },
             error: function() {
-                this.error(true);
-                this.loading(false);
+                self.error(true);
+                self.loading(false);
             }
         });
     }

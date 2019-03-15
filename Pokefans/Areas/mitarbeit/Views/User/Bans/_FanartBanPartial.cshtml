@@ -19,8 +19,7 @@
                 bool canRate = Model.FanartBan == null ? true : Model.FanartBan.CanRate;
             }
             <form role="form"
-                  id="fanart-bans"
-
+                  id="fanartbans"
                   data-endpoint="@Url.Action("ModifyFanartBan", "User")">
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="id" data-bind="init, value: id" value="@Model.User.Id" />
@@ -46,7 +45,7 @@
                 </div>
                 @if (User.IsInRole("fanart-moderator"))
                 {
-                    <button class="btn btn-primary" id="fanart-banhammer" data-bind="">Aktualisieren</button>
+                    <button class="btn btn-primary" id="fanart-banhammer" data-bind="click: update">Aktualisieren</button>
                 }
             </form>
         </div>
