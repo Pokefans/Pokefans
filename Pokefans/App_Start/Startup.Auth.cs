@@ -94,11 +94,21 @@ namespace Pokefans
                 var path = PathString.FromUriComponent(absoluteUri);
                 if (path == context.OwinContext.Request.PathBase + context.Options.LoginPath)
                 {
+                    string port = "";
+
                     if (bool.Parse(ConfigurationManager.AppSettings["HttpsLoginPage"]))
+                    {
                         context.RedirectUri = "https://";
+                        port = context.Request.Uri.Port == 443 ? "" : ":" + context.Request.Uri.Port;
+                    }
                     else
+                    {
                         context.RedirectUri = "http://";
-                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + "/anmeldung";
+                        port = context.Request.Uri.Port == 80 ? "" : ":" + context.Request.Uri.Port;
+                    }
+
+
+                    context.RedirectUri += "user." + ConfigurationManager.AppSettings["Domain"] + port + "/anmeldung";
                     context.RedirectUri += new QueryString(
                             context.Options.ReturnUrlParameter,
                             context.Request.Uri.AbsoluteUri).ToString();
